@@ -1,0 +1,9 @@
+server:
+  port: 7777
+  servlet:
+    context-path: /fm
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/fm_database
+    username: postgres
+    password: 1111
