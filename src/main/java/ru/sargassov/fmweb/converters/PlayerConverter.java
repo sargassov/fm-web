@@ -22,7 +22,6 @@ public class PlayerConverter {
 
 
     public PlayerDto entityToDto(Player player){
-        log.info("PlayerConverter.entityToDto");
         PlayerDto pDto = new PlayerDto();
         pDto.setId(player.getId());
         pDto.setName(player.getName());

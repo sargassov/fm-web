@@ -15,6 +15,7 @@ public class GameService {
     private final LeagueService leagueService;
     private final SponsorService sponsorService;
     private final TeamService teamService;
+    private final PlacementService placementService;
     private LeagueDto leagueDto;
 
 
@@ -26,6 +27,9 @@ public class GameService {
         leagueDto.setYouthPool(juniorService.getAllJuniors());
         leagueDto.setTeamList(teamService.getAllTeams());
         teamService.fillTeams(leagueDto.getTeamList());
-        return leagueDto; //проверка работы через Json
+        placementService.createPlacementApi();
+        placementService.setPlacementsForAllTeams();
+        return leagueDto.getTeamList().stream()
+                .map(t -> t.getPlacementDto());
     }
 }

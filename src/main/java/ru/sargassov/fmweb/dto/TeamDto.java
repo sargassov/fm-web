@@ -26,7 +26,7 @@ public class TeamDto {
     private List<BankDto> loans;
 //    private List<Market> markets;
     private double startWealth;
-//    private Placement placement;
+    private PlacementDto placementDto;
     private int regularCapacity;
     private int temporaryTicketCost;
     private int teamPower;
