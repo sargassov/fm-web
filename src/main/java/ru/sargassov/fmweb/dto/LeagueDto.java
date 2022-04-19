@@ -22,7 +22,6 @@ public class LeagueDto {
     private List<SponsorDto> sponsorList;
     private List<TeamDto> teamList;
     private List<BankDto> banks;
-    private List<String> youthPool;
     private TeamDto userTeam;
 
     @PostConstruct
@@ -30,7 +29,6 @@ public class LeagueDto {
         sponsorList = new ArrayList<>();
         teamList = new ArrayList<>();
         banks = new ArrayList<>();
-        youthPool = new ArrayList<>();
     }
 //    private List<List<Day>> calendar;
 //    private List<Tour> allTourDates;

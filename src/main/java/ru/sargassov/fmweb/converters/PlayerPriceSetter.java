@@ -37,7 +37,7 @@ public class PlayerPriceSetter {
         ));
     }
 
-    public int createPrice(Player player){
+    public int createPrice(PlayerDto player){
 
         TechPrice techPrice = new TechPrice(zeroPrice);
 
@@ -49,12 +49,12 @@ public class PlayerPriceSetter {
         return (int) (techPrice.priceInDouble * 1_000_000);
     }
 
-    private void yearBirthValue(Player player, TechPrice techPrice) {
+    private void yearBirthValue(PlayerDto player, TechPrice techPrice) {
         if(player.getBirthYear() < 1988) techPrice.priceInDouble *= 0.8;
         if(player.getBirthYear() > 2000) techPrice.priceInDouble *= 1.2;
     }
 
-    private void captainValue(Player player, TechPrice techPrice) {
+    private void captainValue(PlayerDto player, TechPrice techPrice) {
 
         for (int i = 20, y = 0; i < 70; i += 10, y++) {
             if (player.getCaptainAble() > i && player.getCaptainAble() < i + 11)
@@ -79,7 +79,7 @@ public class PlayerPriceSetter {
         }
     }
 
-    private void init(Player player){
+    private void init(PlayerDto player){
         ables = Arrays.asList(player.getGkAble(),
                 player.getDefAble(),
                 player.getMidAble(),

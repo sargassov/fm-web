@@ -3,8 +3,8 @@ package ru.sargassov.fmweb.services;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import ru.sargassov.fmweb.api.JuniorPoolApi;
 import ru.sargassov.fmweb.dto.LeagueDto;
-import ru.sargassov.fmweb.dto.TeamDto;
 
 @Service
 @RequiredArgsConstructor
@@ -16,6 +16,7 @@ public class GameService {
     private final SponsorService sponsorService;
     private final TeamService teamService;
     private final PlacementService placementService;
+    private final JuniorPoolApi juniorPoolApi;
     private LeagueDto leagueDto;
 
 
@@ -24,12 +25,13 @@ public class GameService {
         leagueDto = leagueService.getRussianLeague();
         leagueDto.setSponsorList(sponsorService.getAllSponsors());
         leagueDto.setBanks(bankService.getAllBanks());
-        leagueDto.setYouthPool(juniorService.getAllJuniors());
         leagueDto.setTeamList(teamService.getAllTeams());
+        juniorService.createYouthPool();
         teamService.fillTeams(leagueDto.getTeamList());
+        teamService.juniorRecruitment();
         placementService.createPlacementApi();
         placementService.setPlacementsForAllTeams();
         return leagueDto.getTeamList().stream()
-                .map(t -> t.getPlacementDto());
+                .map(t -> t.getPlayerList().size());
     }
 }

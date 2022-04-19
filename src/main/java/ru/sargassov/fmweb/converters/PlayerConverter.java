@@ -2,15 +2,13 @@ package ru.sargassov.fmweb.converters;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.sargassov.fmweb.dto.LeagueDto;
 import ru.sargassov.fmweb.dto.PlayerDto;
-import ru.sargassov.fmweb.dto.PositionDto;
-import ru.sargassov.fmweb.dto.TeamDto;
 import ru.sargassov.fmweb.entities.Player;
 import ru.sargassov.fmweb.exceptions.TeamNotFoundException;
-import ru.sargassov.fmweb.services.TeamService;
+
+import java.util.Random;
 
 @Component
 @AllArgsConstructor
@@ -22,6 +20,9 @@ public class PlayerConverter {
 
 
     public PlayerDto entityToDto(Player player){
+        int trainingAbleValue = 20;
+        Random random = new Random();
+
         PlayerDto pDto = new PlayerDto();
         pDto.setId(player.getId());
         pDto.setName(player.getName());
@@ -34,13 +35,14 @@ public class PlayerConverter {
         pDto.setNumber(player.getNumber());
         pDto.setStrategyPlace(player.getStrategyPlace());
         pDto.setBirthYear(player.getBirthYear());
-        pDto.setPrice(playerPriceSetter.createPrice(player));
+        pDto.setTrainingAble(random.nextInt(trainingAbleValue));
         pDto.setPosition(positionConverter.entityToEnum(player.getPosition().getTitle()));
         pDto.setTeam(
                 leagueDto.getTeamList().stream()
                 .filter(t -> t.getId() == player.getTeam().getId())
                 .findFirst().orElseThrow(() ->
                         new TeamNotFoundException(String.format("Team with id = '%s' not found", player.getTeam().getId()))));
+        pDto.setPrice(playerPriceSetter.createPrice(pDto));
         return pDto;
     }
 
