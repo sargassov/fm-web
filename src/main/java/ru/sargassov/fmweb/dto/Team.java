@@ -2,31 +2,28 @@ package ru.sargassov.fmweb.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.apache.catalina.Manager;
-import ru.sargassov.fmweb.entities.Sponsor;
-import ru.sargassov.fmweb.entities.Stadium;
 
 import java.util.List;
 
 
 @Data
 @NoArgsConstructor
-public class TeamDto {
+public class Team {
     private long id;
     private String name;
     private HeadCoach headCoach;
     private double wealth;
-    private LeagueDto league;
-    private StadiumDto stadium;
-    private CityDto city;
+    private League league;
+    private Stadium stadium;
+    private City city;
     //__________________________
-    private SponsorDto sponsorDto;
+    private Sponsor sponsor;
     private List<Coach> coaches;
-    private List<PlayerDto> playerList;
-    private List<BankDto> loans;
+    private List<Player> playerList;
+    private List<Bank> loans;
 //    private List<Market> markets;
     private double startWealth;
-    private PlacementDto placementDto;
+    private Placement placement;
     private int regularCapacity;
     private int temporaryTicketCost;
     private int teamPower;

@@ -2,17 +2,19 @@ package ru.sargassov.fmweb.services;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.sargassov.fmweb.api.PlacementApi;
+import ru.sargassov.fmweb.api.TeamApi;
 import ru.sargassov.fmweb.converters.PlacementConverter;
-import ru.sargassov.fmweb.dto.LeagueDto;
-import ru.sargassov.fmweb.dto.TeamDto;
-import ru.sargassov.fmweb.entities.Placement;
+import ru.sargassov.fmweb.dto.League;
+import ru.sargassov.fmweb.dto.Placement;
+import ru.sargassov.fmweb.dto.Team;
+import ru.sargassov.fmweb.entities.PlacementEntity;
 import ru.sargassov.fmweb.repositories.PlacementRepository;
 
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -21,27 +23,36 @@ public class PlacementService {
     private final PlacementRepository placementRepository;
     private final PlacementApi placementApi;
     private final PlacementConverter placementConverter;
-    private final LeagueDto leagueDto;
+    private final TeamService teamService;
+    private final League league;
 
-    public List<Placement> findAllPlacements(){
+    public List<PlacementEntity> findAllPlacements(){
         return placementRepository.findAll();
     }
 
-    public void createPlacementApi() {
-        findAllPlacements().stream()
+    public void loadPlacements() {
+        placementApi.setPlacementApiList(findAllPlacements().stream()
         .map(placementConverter::entityToDto)
-        .forEach(placementApi::addPlacementDto);
+        .collect(Collectors.toList()));
+
+        setPlacementsForAllTeams();
     }
 
     public void setPlacementsForAllTeams() {
-        leagueDto.getTeamList().forEach(this::fillPlacement);
+        teamService.getTeamListFromApi().forEach(this::fillPlacement);
     }
 
-    public void fillPlacement(TeamDto teamDto) {
-        teamDto.setPlacementDto(
-                placementApi.getPlacementDto(new Random()
-                        .nextInt(placementApi.getSize())));
+    public void fillPlacement(Team team) {
 
+        int selected = (int) (Math.random() * placementApi.getSize());
+
+        team.setPlacement(
+                placementApi.getPlacement(selected));
+
+    }
+
+    public List<Placement> getPlacementsFromPlacementApi(){
+        return placementApi.getPlacementApiList();
     }
 }
 

@@ -2,20 +2,20 @@ package ru.sargassov.fmweb.converters;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
-import ru.sargassov.fmweb.dto.CityDto;
-import ru.sargassov.fmweb.dto.LeagueDto;
-import ru.sargassov.fmweb.entities.City;
+import ru.sargassov.fmweb.dto.City;
+import ru.sargassov.fmweb.dto.League;
+import ru.sargassov.fmweb.entities.CityEntity;
 
 @Component
 @AllArgsConstructor
 public class CityConverter {
-    private final LeagueDto leagueDto;
+    private final League league;
 
-    public CityDto entityToDto(City city){
-        CityDto cDto = new CityDto();
-        cDto.setId(city.getId());
-        cDto.setName(city.getName());
-        cDto.setLeague(leagueDto);
+    public City entityToDto(CityEntity cityEntity){
+        City cDto = new City();
+        cDto.setId(cityEntity.getId());
+        cDto.setName(cityEntity.getName());
+        cDto.setLeague(league);
         return cDto;
     }
 }

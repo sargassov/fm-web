@@ -1,6 +1,6 @@
 package ru.sargassov.fmweb.dto;
 
-public enum PositionDto {
+public enum Position {
     GOALKEEPER,
     DEFENDER,
     MIDFIELDER,

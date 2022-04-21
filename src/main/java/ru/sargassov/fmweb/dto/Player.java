@@ -4,11 +4,9 @@ package ru.sargassov.fmweb.dto;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-
 @Data
 @NoArgsConstructor
-public class PlayerDto {
+public class Player {
 
     private long id;
     private String name;
@@ -23,8 +21,8 @@ public class PlayerDto {
     private int birthYear;
     private int price;
 
-    private PositionDto position;
-    private TeamDto team;
+    private Position position;
+    private Team team;
     //------------------------
     private int tire;
     private int timeBeforeTreat;

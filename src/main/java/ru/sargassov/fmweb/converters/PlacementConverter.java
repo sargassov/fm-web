@@ -1,19 +1,18 @@
 package ru.sargassov.fmweb.converters;
 
 import org.springframework.stereotype.Component;
-import ru.sargassov.fmweb.dto.PlacementDto;
-import ru.sargassov.fmweb.entities.Placement;
+import ru.sargassov.fmweb.dto.Placement;
+import ru.sargassov.fmweb.entities.PlacementEntity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Component
 public class PlacementConverter {
-    public PlacementDto entityToDto(Placement placement){
-        PlacementDto pDto = new PlacementDto();
-        pDto.setId(placement.getId());
-        pDto.setName(placement.getName());
-        pDto.setRoles(roleUnpacker(placement.getRoles()));
+    public Placement entityToDto(PlacementEntity placementEntity){
+        Placement pDto = new Placement();
+        pDto.setId(placementEntity.getId());
+        pDto.setName(placementEntity.getName());
+        pDto.setRoles(roleUnpacker(placementEntity.getRoles()));
         return pDto;
     }
 

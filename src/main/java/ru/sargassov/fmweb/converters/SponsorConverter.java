@@ -1,21 +1,21 @@
 package ru.sargassov.fmweb.converters;
 
 import org.springframework.stereotype.Component;
-import ru.sargassov.fmweb.dto.SponsorDto;
-import ru.sargassov.fmweb.entities.Sponsor;
+import ru.sargassov.fmweb.dto.Sponsor;
+import ru.sargassov.fmweb.entities.SponsorEntity;
 
 @Component
 public class SponsorConverter {
-    public SponsorDto entityToDto(Sponsor sponsor){
-        SponsorDto sDto = new SponsorDto();
-        sDto.setId(sponsor.getId());
-        sDto.setName(sponsor.getName());
-        sDto.setDayWage(sponsor.getDayWage());
-        sDto.setMatchWage(sponsor.getMatchWage());
-        sDto.setGoalBonusWage(sponsor.getGoalBonusWage());
-        sDto.setWinWage(sponsor.getWinWage());
-        sDto.setDeuceWage(sponsor.getDeuceWage());
-        sDto.setContractBonusWage(sponsor.getContractBonusWage());
+    public Sponsor entityToDto(SponsorEntity sponsorEntity){
+        Sponsor sDto = new Sponsor();
+        sDto.setId(sponsorEntity.getId());
+        sDto.setName(sponsorEntity.getName());
+        sDto.setDayWage(sponsorEntity.getDayWage());
+        sDto.setMatchWage(sponsorEntity.getMatchWage());
+        sDto.setGoalBonusWage(sponsorEntity.getGoalBonusWage());
+        sDto.setWinWage(sponsorEntity.getWinWage());
+        sDto.setDeuceWage(sponsorEntity.getDeuceWage());
+        sDto.setContractBonusWage(sponsorEntity.getContractBonusWage());
         return sDto;
     }
 }

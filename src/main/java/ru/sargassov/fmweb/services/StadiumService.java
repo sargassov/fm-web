@@ -1,18 +1,18 @@
 package ru.sargassov.fmweb.services;
 
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.sargassov.fmweb.dto.StadiumDto;
+import ru.sargassov.fmweb.dto.Stadium;
 import ru.sargassov.fmweb.repositories.StadiumRepository;
 
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class StadiumService {
     private final StadiumRepository stadiumRepository;
 
-    public List<StadiumDto> getAllStadiums(){
+    public List<Stadium> getAllStadiums(){
         stadiumRepository.findAll();
         return null;
     }

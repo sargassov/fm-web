@@ -2,25 +2,24 @@ package ru.sargassov.fmweb.converters;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
-import ru.sargassov.fmweb.dto.CityDto;
-import ru.sargassov.fmweb.dto.LeagueDto;
-import ru.sargassov.fmweb.dto.StadiumDto;
-import ru.sargassov.fmweb.dto.TeamDto;
-import ru.sargassov.fmweb.entities.Stadium;
+import ru.sargassov.fmweb.dto.League;
+import ru.sargassov.fmweb.dto.Stadium;
+import ru.sargassov.fmweb.dto.Team;
+import ru.sargassov.fmweb.entities.StadiumEntity;
 
 @Component
 @AllArgsConstructor
 public class StadiumConverter {
-    private final LeagueDto leagueDto;
+    private final League league;
     private final CityConverter cityConverter;
 
-    public StadiumDto entityToDto(Stadium stadium, TeamDto tDto){
-        StadiumDto sDto = new StadiumDto();
-        sDto.setId(stadium.getId());
-        sDto.setTitle(stadium.getTitle());
-        sDto.setLeague(leagueDto);
-        sDto.setFullCapacity(stadium.getFullCapacity());
-        sDto.setCity(cityConverter.entityToDto(stadium.getCity()));
+    public Stadium entityToDto(StadiumEntity stadiumEntity, Team tDto){
+        Stadium sDto = new Stadium();
+        sDto.setId(stadiumEntity.getId());
+        sDto.setTitle(stadiumEntity.getTitle());
+        sDto.setLeague(league);
+        sDto.setFullCapacity(stadiumEntity.getFullCapacity());
+        sDto.setCity(cityConverter.entityToDto(stadiumEntity.getCityEntity()));
         sDto.setTeam(tDto);
         return sDto;
     }

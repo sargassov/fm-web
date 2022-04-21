@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Table(name = "players")
 @Data
 @NoArgsConstructor
-public class Player {
+public class PlayerEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,10 +52,10 @@ public class Player {
 
     @OneToOne
     @JoinColumn(name = "id_positions")
-    private Position position;
+    private PositionEntity positionEntity;
 
     @ManyToOne
     @JoinColumn(name = "id_teams")
-    private Team team;
+    private TeamEntity teamEntity;
 }
 

@@ -1,35 +1,22 @@
 package ru.sargassov.fmweb.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import ru.sargassov.fmweb.entities.League;
 
 import javax.annotation.PostConstruct;
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
 @NoArgsConstructor
 @Component
-public class LeagueDto {
+public class League {
     private Long id;
     private String name;
     //-------------------
-    private List<SponsorDto> sponsorList;
-    private List<TeamDto> teamList;
-    private List<BankDto> banks;
-    private TeamDto userTeam;
+    private Team userTeam;
 
-    @PostConstruct
-    public void init(){
-        sponsorList = new ArrayList<>();
-        teamList = new ArrayList<>();
-        banks = new ArrayList<>();
-    }
 //    private List<List<Day>> calendar;
 //    private List<Tour> allTourDates;
 

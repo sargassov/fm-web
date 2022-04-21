@@ -1,18 +1,18 @@
 package ru.sargassov.fmweb.services;
 
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.sargassov.fmweb.dto.CityDto;
+import ru.sargassov.fmweb.dto.City;
 import ru.sargassov.fmweb.repositories.CityRepository;
 
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class CityService {
     private final CityRepository cityRepository;
 
-    public List<CityDto> getAllCities(){
+    public List<City> getAllCities(){
         cityRepository.findAll();
         return null;
     }

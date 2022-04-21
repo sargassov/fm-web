@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Table(name = "stadiums")
 @Data
 @NoArgsConstructor
-public class Stadium {
+public class StadiumEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -23,13 +23,13 @@ public class Stadium {
 
     @ManyToOne
     @JoinColumn(name = "id_leagues")
-    private League league;
+    private LeagueEntity leagueEntity;
 
     @OneToOne
     @JoinColumn(name = "id_cities")
-    private City city;
+    private CityEntity cityEntity;
 
     @OneToOne
     @JoinColumn(name = "id_teams")
-    private Team team;
+    private TeamEntity teamEntity;
 }

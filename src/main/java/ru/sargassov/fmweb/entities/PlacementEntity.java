@@ -4,21 +4,21 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
-@Table(name = "cities")
+@Table(name = "placements")
 @Data
 @NoArgsConstructor
-public class City {
+public class PlacementEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "description")
     private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "id_leagues")
-    private League league;
+    @Column(name = "roles")
+    private String roles;
 }

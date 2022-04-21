@@ -3,18 +3,16 @@ package ru.sargassov.fmweb.dto;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-
 
 @Data
 @NoArgsConstructor
-public class StadiumDto {
+public class Stadium {
     private long id;
-    private TeamDto team;
+    private Team team;
     private String title;
-    private LeagueDto league;
+    private League league;
     private int fullCapacity;
-    private CityDto city;
+    private City city;
     //___________________________
 
     //    List<Integer> tempCapacityArr;

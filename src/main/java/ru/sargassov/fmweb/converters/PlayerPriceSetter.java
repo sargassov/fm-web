@@ -1,9 +1,8 @@
 package ru.sargassov.fmweb.converters;
 
 import org.springframework.stereotype.Component;
-import ru.sargassov.fmweb.dto.PlayerDto;
-import ru.sargassov.fmweb.dto.PositionDto;
-import ru.sargassov.fmweb.entities.Player;
+import ru.sargassov.fmweb.dto.Player;
+import ru.sargassov.fmweb.dto.Position;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,19 +24,19 @@ public class PlayerPriceSetter {
     private static final double[] priceCoeff = {0.01, 1.0, 2.5, 7.0, 34.0};
     private static final double[] mltpyCoeff = {0.01, 0.15, 0.45, 2.7, 6.5};
     private static final double[] captainCoeff = {1.1, 1.15, 1.2, 1.25, 1.3};
-    private static List<PositionDto> positions;
+    private static List<Position> positions;
     private List<Integer> ables;
 
     public PlayerPriceSetter() {
         positions = new ArrayList<>(List.of(
-                PositionDto.GOALKEEPER,
-                PositionDto.DEFENDER,
-                PositionDto.MIDFIELDER,
-                PositionDto.FORWARD
+                Position.GOALKEEPER,
+                Position.DEFENDER,
+                Position.MIDFIELDER,
+                Position.FORWARD
         ));
     }
 
-    public int createPrice(PlayerDto player){
+    public int createPrice(Player player){
 
         TechPrice techPrice = new TechPrice(zeroPrice);
 
@@ -49,12 +48,12 @@ public class PlayerPriceSetter {
         return (int) (techPrice.priceInDouble * 1_000_000);
     }
 
-    private void yearBirthValue(PlayerDto player, TechPrice techPrice) {
+    private void yearBirthValue(Player player, TechPrice techPrice) {
         if(player.getBirthYear() < 1988) techPrice.priceInDouble *= 0.8;
         if(player.getBirthYear() > 2000) techPrice.priceInDouble *= 1.2;
     }
 
-    private void captainValue(PlayerDto player, TechPrice techPrice) {
+    private void captainValue(Player player, TechPrice techPrice) {
 
         for (int i = 20, y = 0; i < 70; i += 10, y++) {
             if (player.getCaptainAble() > i && player.getCaptainAble() < i + 11)
@@ -79,7 +78,7 @@ public class PlayerPriceSetter {
         }
     }
 
-    private void init(PlayerDto player){
+    private void init(Player player){
         ables = Arrays.asList(player.getGkAble(),
                 player.getDefAble(),
                 player.getMidAble(),

@@ -1,18 +1,18 @@
 package ru.sargassov.fmweb.services;
 
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.sargassov.fmweb.dto.PositionDto;
+import ru.sargassov.fmweb.dto.Position;
 import ru.sargassov.fmweb.repositories.PositionRepository;
 
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class PositionService {
     private final PositionRepository positionRepository;
 
-    public List<PositionDto> getAllPositions(){
+    public List<Position> getAllPositions(){
         positionRepository.findAll();
         return null;
     }

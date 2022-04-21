@@ -1,37 +1,34 @@
 package ru.sargassov.fmweb.services;
 
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ru.sargassov.fmweb.api.JuniorPoolApi;
-import ru.sargassov.fmweb.dto.LeagueDto;
+import ru.sargassov.fmweb.dto.League;
 
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
 @Slf4j
 public class GameService {
-    private final BankService bankService;
-    private final JuniorService juniorService;
     private final LeagueService leagueService;
     private final SponsorService sponsorService;
+    private final BankService bankService;
+    private final JuniorService juniorService;
     private final TeamService teamService;
     private final PlacementService placementService;
-    private final JuniorPoolApi juniorPoolApi;
-    private LeagueDto leagueDto;
-
+    private final DrawService drawService;
+    private final DayService dayService;
+    private League league;
 
     public Object createNewGame() {
         log.info("GameService.createNewGame");
-        leagueDto = leagueService.getRussianLeague();
-        leagueDto.setSponsorList(sponsorService.getAllSponsors());
-        leagueDto.setBanks(bankService.getAllBanks());
-        leagueDto.setTeamList(teamService.getAllTeams());
-        juniorService.createYouthPool();
-        teamService.fillTeams(leagueDto.getTeamList());
-        teamService.juniorRecruitment();
-        placementService.createPlacementApi();
-        placementService.setPlacementsForAllTeams();
-        return leagueDto.getTeamList().stream()
-                .map(t -> t.getPlayerList().size());
+        league = leagueService.getRussianLeague();
+        sponsorService.loadSponsors();
+        bankService.loadBanks();
+        juniorService.loadYouthList();
+        teamService.loadTeams();
+        placementService.loadPlacements();
+        drawService.loadShedule();
+        dayService.loadCalendar();
+        return dayService.getCalendarFromApi().stream().map(d -> d.getDate().getMonth());
     }
 }

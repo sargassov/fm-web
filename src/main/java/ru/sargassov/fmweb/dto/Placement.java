@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import java.util.List;
 
 @Data
-public class PlacementDto {
+public class Placement {
     private Long id;
     private String name;
     private List<String> roles;

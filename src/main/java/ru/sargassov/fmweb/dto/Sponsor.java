@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 @Data
 @NoArgsConstructor
-public class SponsorDto {
+public class Sponsor {
     private long id;
     private String name;
     private int dayWage;

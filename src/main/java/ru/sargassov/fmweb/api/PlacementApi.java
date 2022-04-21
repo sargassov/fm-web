@@ -2,24 +2,22 @@ package ru.sargassov.fmweb.api;
 
 import lombok.Data;
 import org.springframework.stereotype.Component;
-import ru.sargassov.fmweb.dto.PlacementDto;
+import ru.sargassov.fmweb.dto.Placement;
+import ru.sargassov.fmweb.services.PlacementService;
 
 import java.util.*;
 
 @Component
 @Data
 public class PlacementApi {
-    private List<PlacementDto> placementApiList;
+    private List<Placement> placementApiList;
     private int size = 0;
 
-    public void addPlacementDto(PlacementDto placementDto){
-        if(placementApiList == null)
-            placementApiList = new ArrayList<>();
-        placementApiList.add(placementDto);
-        size += 1;
+    public void setPlacementApiList(List<Placement> placementApiList) {
+        this.placementApiList = placementApiList;
     }
 
-    public PlacementDto getPlacementDto(Integer num){
+    public Placement getPlacement(Integer num){
         if(placementApiList.size() > num){
             return placementApiList.get(num);
         }

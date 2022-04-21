@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Table(name = "leagues")
 @Data
 @NoArgsConstructor
-public class League {
+public class LeagueEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

@@ -10,7 +10,7 @@ import java.util.List;
 @Table(name = "teams")
 @Data
 @NoArgsConstructor
-public class Team {
+public class TeamEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -27,16 +27,16 @@ public class Team {
 
     @ManyToOne
     @JoinColumn(name = "id_leagues")
-    private League league;
+    private LeagueEntity leagueEntity;
 
     @OneToOne
     @JoinColumn(name = "id_stadiums")
-    private Stadium stadium;
+    private StadiumEntity stadiumEntity;
 
     @ManyToOne
     @JoinColumn(name = "id_cities")
-    private City city;
+    private CityEntity cityEntity;
 
-    @OneToMany(mappedBy = "team")
-    private List<Player> playerList;
+    @OneToMany(mappedBy = "teamEntity")
+    private List<PlayerEntity> playerEntityList;
 }

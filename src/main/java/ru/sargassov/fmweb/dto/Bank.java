@@ -8,7 +8,7 @@ import java.util.GregorianCalendar;
 
 @Data
 @NoArgsConstructor
-public class BankDto {
+public class Bank {
     private long id;
     private String title;
     private int percentDay;

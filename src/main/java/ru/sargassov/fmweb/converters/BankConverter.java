@@ -2,23 +2,22 @@ package ru.sargassov.fmweb.converters;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
-import ru.sargassov.fmweb.dto.BankDto;
-import ru.sargassov.fmweb.dto.LeagueDto;
-import ru.sargassov.fmweb.entities.Bank;
+import ru.sargassov.fmweb.dto.Bank;
+import ru.sargassov.fmweb.entities.BankEntity;
 
 @Component
 @AllArgsConstructor
 public class BankConverter {
 
-    public BankDto entityToDto(Bank bank){
-        BankDto bDto = new BankDto();
-        bDto.setId(bank.getId());
-        bDto.setTitle(bank.getTitle());
-        bDto.setPercentDay(bank.getPercentDay());
-        bDto.setPercentMonth(bank.getPercentMonth());
-        bDto.setPercentWeek(bank.getPercentWeek());
-        bDto.setFullLoanCoeff(bank.getFullLoanCoeff());
-        bDto.setMaxLoanAmount(bank.getMaxLoanAmount());
+    public Bank entityToDto(BankEntity bankEntity){
+        Bank bDto = new Bank();
+        bDto.setId(bankEntity.getId());
+        bDto.setTitle(bankEntity.getTitle());
+        bDto.setPercentDay(bankEntity.getPercentDay());
+        bDto.setPercentMonth(bankEntity.getPercentMonth());
+        bDto.setPercentWeek(bankEntity.getPercentWeek());
+        bDto.setFullLoanCoeff(bankEntity.getFullLoanCoeff());
+        bDto.setMaxLoanAmount(bankEntity.getMaxLoanAmount());
         return bDto;
     }
 }

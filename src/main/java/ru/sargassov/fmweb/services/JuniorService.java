@@ -1,41 +1,49 @@
 package ru.sargassov.fmweb.services;
 
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.sargassov.fmweb.api.JuniorPoolApi;
 import ru.sargassov.fmweb.converters.JuniorConverter;
-import ru.sargassov.fmweb.dto.PlayerDto;
-import ru.sargassov.fmweb.dto.PositionDto;
+import ru.sargassov.fmweb.dto.Player;
+import ru.sargassov.fmweb.dto.Position;
 import ru.sargassov.fmweb.repositories.JuniorRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
 @Slf4j
 public class JuniorService {
     private final JuniorRepository juniorRepository;
     private final JuniorConverter juniorConverter;
     private final JuniorPoolApi juniorPoolApi;
 
-    public void createYouthPool(){
+    public void loadYouthList(){
         log.info("JuniorService.createYouthPool");
-        juniorRepository.findAll().stream()
+        juniorPoolApi.setYouthApiList(juniorRepository.findAll().stream()
                 .map(juniorConverter::entityToString)
-                .forEach(juniorPoolApi::addYouthPlayer);
+                .collect(Collectors.toList()));
     }
 
-    public PlayerDto getYoungPlayer(PositionDto positionDto){
+    public List<String> getNamesFromJuniorPoolApi(){
+        return juniorPoolApi.getYouthApiList();
+    }
+
+    public Player getYoungPlayer(Position position){
+        log.info("JuniorService.getYoungPlayer");
         Random random = new Random();
-        PlayerDto playerDto = new PlayerDto();
-        playerDto.setName(juniorPoolApi.getYouthPlayerName(random.nextInt(juniorPoolApi.getSize())));
-        playerDto.setPosition(positionDto);
-        juniorConverter.nameToPlayerDto(playerDto);
+        Player player = new Player();
+        int selected = random.nextInt(juniorPoolApi.getYouthApiList().size());
+
+        String name = juniorPoolApi.getYouthPlayerName(selected);
+        player.setName(name);
+        player.setPosition(position);
+        juniorConverter.nameToPlayerDto(player);
 
 
-        return playerDto;
+        return player;
     }
 }
