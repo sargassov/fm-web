@@ -19,7 +19,7 @@ public class GameService {
     private final DayService dayService;
     private League league;
 
-    public Object createNewGame() {
+    public void createNewGame() {
         log.info("GameService.createNewGame");
         league = leagueService.getRussianLeague();
         sponsorService.loadSponsors();
@@ -29,6 +29,5 @@ public class GameService {
         placementService.loadPlacements();
         drawService.loadShedule();
         dayService.loadCalendar();
-        return dayService.getCalendarFromApi().stream().map(d -> d.getDate().getMonth());
     }
 }

@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.sargassov.fmweb.services.GameService;
 
@@ -15,8 +16,14 @@ public class GameController {
     private final GameService gameService;
 
     @GetMapping("/new")
-    public Object createNewGame() {
+    public void createNewGame() {
         log.info("GameController.createNewGame");
-        return gameService.createNewGame();
+        gameService.createNewGame();
     }
+
+    @PostMapping("/new_user")
+    public void addUserInfo(){
+
+    }
+
 }
