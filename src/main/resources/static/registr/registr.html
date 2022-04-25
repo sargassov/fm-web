@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<html ng-app="registr">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>New Manager Registration</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+		crossorigin="anonymous"></script>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.11/ngStorage.min.js"></script>
+	<script src="registr.js"></script>
+	<link rel="stylesheet" href="registr.css">
+
+</head>
+
+<body>
+<h4 class="header">New Manager info registration</h4>
+
+<div class="container" ng-controller="registrController">
+		<hr>
+		<p></p>
+
+		<h6 class="comment">Set all forms</h6>
+		<form novalidate class="registr_form">
+			<input class="form-control" type="text" placeholder="Name" ng-model="user.name">
+			<p></p>
+			<input class="form-control" type="text" placeholder="Lastname" ng-model="user.lastname">
+			<p></p>
+			<input class="form-control" type="text" placeholder="Where are you from"
+				   ng-model="user.homeTown">
+			<p></p>
+			<p>
+				<select class="form-control" type="text" placeholder="Your Club"  ng-model="user.teamName">
+					<option>Select your team</option>
+					<option class="ahmat">Ahmat</option>
+					<option class="arsenal">Arsenal</option>
+					<option class="cska">CSKA</option>
+					<option class="dinamo">Dinamo</option>
+					<option class="krasnodar">Krasnodar</option>
+					<option class="krylia">Krylia Sovetov</option>
+					<option class="loko">Lokomotiv</option>
+					<option class="orenburg">Orenburg</option>
+					<option class="rostov">Rostov</option>
+					<option class="rubin">Rubin</option>
+					<option class="sochi">Sochi</option>
+					<option class="spartak">Spartak</option>
+					<option class="tambov">Tambov</option>
+					<option class="ufa">Ufa</option>
+					<option class="ural">Ural</option>
+					<option class="zenit">Zenit</option>
+				</select>
+
+			</p>
+
+			<p></p>
+
+			<button class="btn btn-primary" ng-click="createNewGame()">Save</button>
+			<button class="btn btn-secondary" ng-click="clearForm()">Clear</button>
+
+		</form>
+
+	<script src="registr.js"></script>
+	<script src="../index.js"></script>
+<!--	<script src="editor.js"></script>-->
+<!--	<script src="new_user.js"></script>-->
+</div>
+
+
+
+
+</body>
+
+</html>

@@ -1,4 +1,4 @@
-angular.module('index', ['ngStorage']).controller('indexController', function ($scope, $rootScope, $http, $localStorage) {
+angular.module('registr', ['ngStorage']).controller('registrController', function ($scope, $rootScope, $http, $localStorage) {
     const contextPath = 'http://localhost:7777/fm';
 
 //     if ($localStorage.springWebUser) {
@@ -40,14 +40,14 @@ angular.module('index', ['ngStorage']).controller('indexController', function ($
 //             return false;
 //         }
 //     };
-//     $scope.createNewGame = function () {
-//         $http.get(contextPath + '/new')
-//             .then(function successCallback(response) {
-//
-//             }, function errorCallback(response) {
-//                 alert('NEW GAME WAS NOT CREATED');
-//             });
-//     };
+    $scope.createNewGame = function () {
+        $http.post(contextPath + '/new_game', $scope.user)
+            .then(function successCallback(response) {
+
+            }, function errorCallback(response) {
+                alert('NEW GAME WAS NOT CREATED');
+            });
+    };
 
 
 });
