@@ -1,16 +1,14 @@
 package ru.sargassov.fmweb.converters;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import ru.sargassov.fmweb.api.TeamApi;
 import ru.sargassov.fmweb.dto.League;
 import ru.sargassov.fmweb.dto.Player;
 import ru.sargassov.fmweb.dto.Stadium;
 import ru.sargassov.fmweb.dto.Team;
-import ru.sargassov.fmweb.dto.days.Day;
-import ru.sargassov.fmweb.dto.days.Match;
-import ru.sargassov.fmweb.dto.days.TourDay;
-import ru.sargassov.fmweb.dto.days.TrainDay;
+import ru.sargassov.fmweb.dto.days.*;
 import ru.sargassov.fmweb.entities.DayEntity;
 import ru.sargassov.fmweb.exceptions.PresentDayNotFoundException;
 import ru.sargassov.fmweb.exceptions.TeamNotFoundException;
@@ -20,6 +18,7 @@ import java.util.List;
 
 @Component
 @AllArgsConstructor
+@Slf4j
 public class DayConverter {
     private final TeamApi teamApi;
 
@@ -57,5 +56,14 @@ public class DayConverter {
         }
 
         return matches;
+    }
+
+    public DayDto dtoToPresentDayRequest(Day presentDay) {
+        DayDto dayDto = new DayDto();
+        dayDto.setDay(presentDay.getDate().getDayOfMonth());
+        dayDto.setMonth(presentDay.getDate().getMonth().toString());
+        dayDto.setYear(presentDay.getDate().getYear());
+        log.info(dayDto.toString());
+        return dayDto;
     }
 }

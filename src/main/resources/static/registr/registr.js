@@ -43,7 +43,7 @@ angular.module('registr', ['ngStorage']).controller('registrController', functio
     $scope.createNewGame = function () {
         $http.post(contextPath + '/new_game', $scope.user)
             .then(function successCallback(response) {
-
+                window.location.href = '../main_menu/main_menu.html';
             }, function errorCallback(response) {
                 alert('NEW GAME WAS NOT CREATED');
             });

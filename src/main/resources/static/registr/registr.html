@@ -30,15 +30,19 @@
 
 		<h6 class="comment">Set all forms</h6>
 		<form novalidate class="registr_form">
-			<input class="form-control" type="text" placeholder="Name" ng-model="user.name">
-			<p></p>
-			<input class="form-control" type="text" placeholder="Lastname" ng-model="user.lastname">
-			<p></p>
-			<input class="form-control" type="text" placeholder="Where are you from"
-				   ng-model="user.homeTown">
+			<div class="centerdiv">
+				<input class="form-control" type="text" placeholder="Name" ng-model="user.name">
+				<p></p>
+				<input class="form-control" type="text" placeholder="Lastname" ng-model="user.lastname">
+				<p></p>
+				<input class="form-control" type="text" placeholder="Where are you from"
+					   ng-model="user.homeTown">
+			</div>
+
 			<p></p>
 			<p>
-				<select class="form-control" type="text" placeholder="Your Club"  ng-model="user.teamName">
+
+				<select class="form-control" placeholder="Choose Your club" ng-model="user.teamName">
 					<option>Select your team</option>
 					<option class="ahmat">Ahmat</option>
 					<option class="arsenal">Arsenal</option>
@@ -60,16 +64,14 @@
 
 			</p>
 
-			<p></p>
-
-			<button class="btn btn-primary" ng-click="createNewGame()">Save</button>
+			<button class="btn btn-primary" href="../main_menu/main_menu.html" ng-click="createNewGame()">Save</button>
 			<button class="btn btn-secondary" ng-click="clearForm()">Clear</button>
 
 		</form>
 
 	<script src="registr.js"></script>
 	<script src="../index.js"></script>
-<!--	<script src="editor.js"></script>-->
+	<script src="../main_menu/main_menu.js"></script>
 <!--	<script src="new_user.js"></script>-->
 </div>
 

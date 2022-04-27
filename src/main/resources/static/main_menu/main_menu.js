@@ -1,4 +1,4 @@
-angular.module('index', ['ngStorage']).controller('indexController', function ($scope, $rootScope, $http, $localStorage) {
+angular.module('main_menu', ['ngStorage']).controller('main_menuController', function ($scope, $rootScope, $http, $localStorage) {
     const contextPath = 'http://localhost:7777/fm';
 
 //     if ($localStorage.springWebUser) {
@@ -40,14 +40,15 @@ angular.module('index', ['ngStorage']).controller('indexController', function ($
 //             return false;
 //         }
 //     };
-    $scope.createNewGame = function () {
-        $http.get(contextPath + '/new')
+    $scope.getActualDate = function () {
+        $http.get(contextPath + '/dates')
             .then(function successCallback(response) {
-
+                $scope.today = response.data;
             }, function errorCallback(response) {
-                alert('NEW GAME WAS NOT CREATED');
+                alert('PRESENT DAY NOT FOUND');
             });
     };
 
 
+    $scope.getActualDate();
 });

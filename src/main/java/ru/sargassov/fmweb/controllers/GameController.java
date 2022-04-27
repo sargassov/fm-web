@@ -18,12 +18,11 @@ public class GameController {
     private final GameService gameService;
 
     @PostMapping("/new_game")
+    // необходим булеан
     public void createNewGame(@RequestBody UserData userData) {
         log.info("GameController.createNewGame");
-        gameService.createNewGame();
-        System.out.println(userData);
+        gameService.createNewGame(userData);
     }
-
 //    @PostMapping("/new_user")
 //    public void addUserInfo(@RequestBody UserData userData){
 //

@@ -69,4 +69,8 @@ public class TeamService {
     public Team getTeamByIdFromApi(Long id){
         return teamApi.findTeamById(id);
     }
+
+    public Team getTeamByNameFromApi(String name){
+        return teamApi.findByName(name);
+    }
 }

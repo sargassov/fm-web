@@ -1,21 +1,46 @@
 body {
-    background-image: url(registr.jpg);
-    box-sizing: border-box;
+    background-image: url(main_menu.jpg);
     background-size: cover;
 }
 
-.form-control {
+.main_link {
+    font-family: "Arial Black", fantasy;
+    font-size: 26px;
+    text-align: -moz-center;
+    color: snow;
+}
+
+.header {
+    text-align: center;
+    font-family: "Arial Black", fantasy;
+    font-size: 26px;
+    text-align: -moz-center;
+    color: snow;
+}
+
+.tryright {
+    text-align: right;
+}
+
+.date_show {
+    text-align: center;
+    font-family: "Arial Black", fantasy;
+    color: snow;
+}
+
+
+
+
+
+/* .form-control {
     font-family: Verdana, Geneva, Tahoma, sans-serif
 }
 
+.container,
 .form-control,
-.registr_form{
+.registr_form {
     text-align: center;
-    align-items: center;
-}
-
-.centerdiv{
-    text-align: center;
+    box-sizing: border-box;
 }
 
 .ahmat,
@@ -129,7 +154,7 @@ body {
     color: rgb(69, 68, 158);
     background-color: rgb(255, 255, 255);
 }
-
+ */
 
 /* .newGameText {
     font-family: Arial, Helvetica, sans-serif;

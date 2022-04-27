@@ -1,7 +1,6 @@
 package ru.sargassov.fmweb.dto;
 
 import lombok.Data;
-import java.util.Date;
 
 @Data
 public class UserData {

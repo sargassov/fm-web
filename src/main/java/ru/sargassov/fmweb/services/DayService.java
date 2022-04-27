@@ -6,6 +6,7 @@ import ru.sargassov.fmweb.api.CalendarApi;
 import ru.sargassov.fmweb.api.DrawApi;
 import ru.sargassov.fmweb.converters.DayConverter;
 import ru.sargassov.fmweb.dto.days.Day;
+import ru.sargassov.fmweb.dto.days.DayDto;
 import ru.sargassov.fmweb.dto.days.TourDay;
 import ru.sargassov.fmweb.entities.DayEntity;
 import ru.sargassov.fmweb.repositories.DayRepository;
@@ -47,5 +48,9 @@ public class DayService {
 
     public List<Day> getCalendarFromApi(){
         return calendarApi.getCalendarApiList();
+    }
+
+    public DayDto getActualDateFromApi() {
+        return dayConverter.dtoToPresentDayRequest(calendarApi.getPresentDay());
     }
 }

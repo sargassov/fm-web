@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.sargassov.fmweb.dto.League;
+import ru.sargassov.fmweb.dto.UserData;
 
 @Service
 @AllArgsConstructor
@@ -17,9 +18,10 @@ public class GameService {
     private final PlacementService placementService;
     private final DrawService drawService;
     private final DayService dayService;
+    private final UserService userService;
     private League league;
 
-    public void createNewGame() {
+    public void createNewGame(UserData userData) {
         log.info("GameService.createNewGame");
         league = leagueService.getRussianLeague();
         sponsorService.loadSponsors();
@@ -29,5 +31,6 @@ public class GameService {
         placementService.loadPlacements();
         drawService.loadShedule();
         dayService.loadCalendar();
+        userService.fillUserApi(userData);
     }
 }
