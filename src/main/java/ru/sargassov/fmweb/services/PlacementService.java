@@ -2,6 +2,7 @@ package ru.sargassov.fmweb.services;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.sargassov.fmweb.api.PlacementApi;
 import ru.sargassov.fmweb.api.TeamApi;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 @Data
+@Slf4j
 public class PlacementService {
     private final PlacementRepository placementRepository;
     private final PlacementApi placementApi;
@@ -31,11 +33,18 @@ public class PlacementService {
     }
 
     public void loadPlacements() {
+        log.info("PlacementService.loadPlacements");
         placementApi.setPlacementApiList(findAllPlacements().stream()
         .map(placementConverter::entityToDto)
         .collect(Collectors.toList()));
 
         setPlacementsForAllTeams();
+        fillPlacementForAllTeams();
+        //установить игроков для каждой расстановки
+    }
+
+    private void fillPlacementForAllTeams() {
+        teamService.fillPlacementForAllTeams();
     }
 
     public void setPlacementsForAllTeams() {
@@ -44,10 +53,9 @@ public class PlacementService {
 
     public void fillPlacement(Team team) {
 
-        int selected = (int) (Math.random() * placementApi.getSize());
+        int selected = (int) (Math.random() * placementApi.getPlacementApiList().size());
 
-        team.setPlacement(
-                placementApi.getPlacement(selected));
+        team.setPlacement(placementApi.getPlacement(selected));
 
     }
 

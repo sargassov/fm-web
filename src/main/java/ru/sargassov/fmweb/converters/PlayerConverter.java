@@ -39,6 +39,7 @@ public class PlayerConverter {
         pDto.setBirthYear(playerEntity.getBirthYear());
         pDto.setTrainingAble(random.nextInt(trainingAbleValue));
         pDto.setPosition(positionConverter.entityToEnum(playerEntity.getPositionEntity().getTitle()));
+        pDto.guessPower();
         pDto.setTeam(teamApi.getTeamApiList()
                 .stream()
                 .filter(t -> t.getId() == playerEntity.getTeamEntity().getId())

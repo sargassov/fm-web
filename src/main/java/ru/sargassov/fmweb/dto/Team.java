@@ -35,7 +35,14 @@ public class Team {
     public final int maxValueOfLoans = 5;
     public final int maxValueOfCoaches = 6;
 
-//    public Team(String info) {
+    @Override
+    public String toString() {
+        return "Team{" +
+                "name='" + name + '\'' +
+                '}';
+    }
+
+    //    public Team(String info) {
 //        //        markets = new ArrayList<>();
 //        coaches = new ArrayList<>();
 //        playerList = new ArrayList<>();

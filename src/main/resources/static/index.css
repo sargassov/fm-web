@@ -11,6 +11,10 @@ body {
     color: snow;
 }
 
+.right_link{
+    text-align: right;
+}
+
 .loadGameText {
     font-family: "Arial Black", fantasy;
     font-size: 26px;

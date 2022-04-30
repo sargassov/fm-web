@@ -20,6 +20,7 @@ public class Player {
     private int strategyPlace;
     private int birthYear;
     private int price;
+    private int power;
 
     private Position position;
     private Team team;
@@ -30,11 +31,47 @@ public class Player {
     private int trainingAble;
     private int trainingBalance;
     private boolean isInjury;
-    private boolean firstEleven;
+    private boolean firstEighteen;
     private boolean isCapitan;
 
     private final static Integer youngPlayerBirthYear = 2004;
-//    private static PlayerPriceSetter priceSetter;
+
+    public void guessPower(){
+        if(position.equals(Position.GOALKEEPER)) power = gkAble;
+        else if(position.equals(Position.DEFENDER)) power = defAble;
+        else if(position.equals(Position.MIDFIELDER)) power = midAble;
+        else power = forwAble;
+    }
+
+    public boolean equalsPosition(Role role){
+        int subGkNum = 11;
+        int subDefNum = 14;
+        int subMidNum = 16;
+        int subForwNum = 18;
+
+
+        if(position.equals(Position.GOALKEEPER) && role.getTitle().equals("Goalkeeper")) return true;
+        if(position.equals(Position.DEFENDER) && role.getTitle().equals("Defender")) return true;
+        if(position.equals(Position.MIDFIELDER) && role.getTitle().equals("Midfielder")) return true;
+        if(position.equals(Position.FORWARD) && role.getTitle().equals("Forward")) return true;
+        if(role.getTitle().equals("S")){
+            if(role.getPosNumber() == subGkNum && position.equals(Position.GOALKEEPER)) return true;
+            else if(role.getPosNumber() < subDefNum && position.equals(Position.DEFENDER)) return true;
+            else if(role.getPosNumber() < subMidNum && position.equals(Position.MIDFIELDER)) return true;
+            else if(role.getPosNumber() < subForwNum && position.equals(Position.FORWARD)) return true;
+        }
+
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        return "Player{" +
+                "name='" + name + '\'' +
+                '}';
+    }
+
+    //    private static PlayerPriceSetter priceSetter;
 //    private static List<Position> positions;
 //    private List<Integer> ables;
 }

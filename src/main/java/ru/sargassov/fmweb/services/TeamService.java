@@ -6,8 +6,11 @@ import org.springframework.stereotype.Service;
 import ru.sargassov.fmweb.api.TeamApi;
 import ru.sargassov.fmweb.converters.TeamConverter;
 import ru.sargassov.fmweb.dto.*;
+import ru.sargassov.fmweb.exceptions.PlayerNotFoundException;
+import ru.sargassov.fmweb.exceptions.SheduleInTourNotFoundException;
 import ru.sargassov.fmweb.repositories.TeamRepository;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -72,5 +75,77 @@ public class TeamService {
 
     public Team getTeamByNameFromApi(String name){
         return teamApi.findByName(name);
+    }
+
+    public void fillPlacementForAllTeams() {
+        getTeamListFromApi().stream()
+                .forEach(t -> {
+                    autoFillPlacement(t);
+                    captainAppointment(t);
+                    t.setTeamPower(powerTeamCounter(t));
+                });
+    }
+
+    private void autoFillPlacement(Team t) {
+        log.info("TeamService.autoFillPlacement for " + t.getName());
+
+        List<Player> playerList = t.getPlayerList().stream()
+                .filter(p -> !p.isInjury())
+                .collect(Collectors.toList()); // только здоровые игроки
+
+        t.getPlacement().getRoles().forEach(role -> {
+            log.info(t.getName() + " " + role.getTitle());
+            List<Player> suitablePlayers = getSuitablePlayers(playerList, role).stream()
+                    .filter(p -> p.getStrategyPlace() == -100)
+                    .collect(Collectors.toList()); // подходящие игроки на конкретную позицию
+
+            Player selected = (findBest(suitablePlayers));
+            selected.setFirstEighteen(true);
+            selected.setStrategyPlace(role.getPosNumber());
+        });
+    }
+
+    private Player findBest(List<Player> suitablePlayers) {
+        Player best = suitablePlayers.stream().sorted((o1, o2) ->
+                Integer.compare(o2.getPower(), o1.getPower()))
+                .limit(1)
+                .findFirst()
+                .orElseThrow(() ->
+                        new PlayerNotFoundException("Player in method TeamService.findBest() not found"));
+        log.info(best.getName());
+        return best;
+    }
+
+    private List<Player> getSuitablePlayers(List<Player> playerList, Role role) {
+        List<Player> pl =  playerList.stream()
+                .filter(p -> p.equalsPosition(role))
+                .collect(Collectors.toList());
+        return pl;
+    }
+
+    private void captainAppointment(Team team) {
+        Player player = team.getPlayerList().stream().sorted((o1, o2) -> Integer.compare(o2.getCaptainAble(), o1.getCaptainAble()))
+                .limit(1)
+                .findFirst()
+                .orElseThrow(() ->
+                        new PlayerNotFoundException("Player in method TeamService.captainAppointment() not found"));
+
+        player.setCapitan(true);
+    }
+
+    public static int powerTeamCounter(Team team) {
+        int power = 0;
+
+        List<Player> playerList = team.getPlayerList().stream()
+                .filter(p -> p.getStrategyPlace() > -1 && p.getStrategyPlace() < 11)
+                .collect(Collectors.toList());
+
+        for(Player p: playerList){
+            power += p.getPower();
+            if(p.isCapitan())
+                power += p.getCaptainAble();
+        }
+
+        return power / 11;
     }
 }
