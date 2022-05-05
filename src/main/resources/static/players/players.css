@@ -1,0 +1,22 @@
+body {
+    background-image: url(players.jpg);
+    background-size: cover;
+}
+
+.header {
+    text-align: center;
+    font-family: "Arial Black", fantasy;
+    font-size: 26px;
+    color: snow;
+}
+
+.date_show {
+    text-align: center;
+    font-family: "Arial Black", fantasy;
+    color: snow;
+}
+
+.cell {
+    font-family: "Arial Black", fantasy;
+    color: snow;
+}

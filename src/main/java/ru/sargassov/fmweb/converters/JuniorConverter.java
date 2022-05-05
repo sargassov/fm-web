@@ -58,9 +58,21 @@ public class JuniorConverter {
         int bottomCraftValue = 60;
         int craftValue = random.nextInt(averageCraftValue) + bottomCraftValue;
 
-        if(pDto.getPosition().equals(Position.GOALKEEPER)) pDto.setGkAble(craftValue);
-        else if(pDto.getPosition().equals(Position.DEFENDER)) pDto.setDefAble(craftValue);
-        else if(pDto.getPosition().equals(Position.MIDFIELDER)) pDto.setMidAble(craftValue);
-        else pDto.setForwAble(craftValue);
+        if(pDto.getPosition().equals(Position.GOALKEEPER)){
+            pDto.setGkAble(craftValue);
+            pDto.setPower(pDto.getGkAble());
+        }
+        else if(pDto.getPosition().equals(Position.DEFENDER)){
+            pDto.setDefAble(craftValue);
+            pDto.setPower(pDto.getDefAble());
+        }
+        else if(pDto.getPosition().equals(Position.MIDFIELDER)) {
+            pDto.setMidAble(craftValue);
+            pDto.setPower(pDto.getMidAble());
+        }
+        else {
+            pDto.setForwAble(craftValue);
+            pDto.setPower(pDto.getForwAble());
+        }
     }
 }

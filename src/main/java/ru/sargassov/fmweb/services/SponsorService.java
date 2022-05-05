@@ -6,9 +6,11 @@ import org.springframework.stereotype.Service;
 import ru.sargassov.fmweb.api.SponsorApi;
 import ru.sargassov.fmweb.converters.SponsorConverter;
 import ru.sargassov.fmweb.dto.Sponsor;
+import ru.sargassov.fmweb.dto.Team;
 import ru.sargassov.fmweb.repositories.SponsorRepository;
 
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 @Service
@@ -17,6 +19,7 @@ import java.util.stream.Collectors;
 public class SponsorService {
     private final SponsorRepository sponsorRepository;
     private final SponsorConverter sponsorConverter;
+    private final TeamService teamService;
     private final SponsorApi sponsorApi;
 
     public List<Sponsor> getSponsorsFromApi(){
@@ -24,8 +27,25 @@ public class SponsorService {
     }
 
     public void loadSponsors(){
-        log.info("SponsorSerive.loadSponsors");
+        log.info("SponsorService.loadSponsors");
         sponsorApi.setSponsorApiList(sponsorRepository.findAll().stream()
                 .map(sponsorConverter::entityToDto).collect(Collectors.toList()));
+
+        getRandomSponsorForAllTeams();
     }
+
+    private void getRandomSponsorForAllTeams() {
+        teamService.getTeamListFromApi().forEach(this::fillSponsor);
+    }
+
+    private void fillSponsor(Team t) {
+        int size = sponsorApi.getSponsorApiList().size();
+        int random = (int) (Math.random() * size) + 1;
+        Sponsor sponsor = sponsorApi.getSponsorFromApiById(random);
+
+        t.setSponsor(sponsor);
+        sponsor.signContractWithClub(t);
+    }
+    /////////////////////////////////////////////////////////////////////стартовые методы
+
 }

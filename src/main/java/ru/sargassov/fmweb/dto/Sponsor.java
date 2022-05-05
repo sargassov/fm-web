@@ -16,7 +16,12 @@ public class Sponsor {
     private int winWage;
     private int deuceWage;
     private int contractBonusWage;
+    private final int multyCoeff = 1_000_000;
     //---------------------------
+
+    public void signContractWithClub(Team t){
+        t.setWealth(t.getWealth() + contractBonusWage / multyCoeff);
+    }
 
     //    private String name;
 //

@@ -1,9 +1,13 @@
 package ru.sargassov.fmweb.services;
 
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import ru.sargassov.fmweb.api.TeamApi;
+import ru.sargassov.fmweb.api.UserApi;
+import ru.sargassov.fmweb.comparators.TeamsPlayersComparators;
 import ru.sargassov.fmweb.converters.TeamConverter;
 import ru.sargassov.fmweb.dto.*;
 import ru.sargassov.fmweb.exceptions.PlayerNotFoundException;
@@ -15,7 +19,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Slf4j
 public class TeamService {
     private final TeamRepository teamRepository;
@@ -23,6 +27,8 @@ public class TeamService {
     private final PlayerService playerService;
     private final JuniorService juniorService;
     private final TeamApi teamApi;
+    private final UserApi userApi;
+    private final TeamsPlayersComparators teamsPlayersComparators;
 
     public void loadTeams(){
         teamApi.setTeamApiList(findAll());
@@ -59,10 +65,26 @@ public class TeamService {
                 for (int i = 0; i < maxValueOfYoungPlayersForOnePosition; i++) {
                     Player player = juniorService.getYoungPlayer(currentPosition);
                     player.setTeam(currentTeam);
+                    player.setNumber(randomGuessNum(currentTeam));
                     currentTeam.getPlayerList().add(player);
                 }
             }
         }
+    }
+
+    private int randomGuessNum(Team currentTeam) {
+        int num = 99;
+        List<Integer> ints = currentTeam.getPlayerList()
+                .stream().map(Player::getNumber)
+                .collect(Collectors.toList());
+
+        while (true){
+            if(ints.contains(num))
+                num--;
+            else
+                break;
+        }
+        return num;
     }
 
     public List<Team> getTeamListFromApi() {
@@ -147,5 +169,28 @@ public class TeamService {
         }
 
         return power / 11;
+    }
+    ///////////////////////////////////////////////////////////////стартовые методы
+
+//    public List<PlayerOnPagePlayersDto> getAllPlayersByUserTeam() {
+//        log.info("TeamService.getAllPlayersByUserTeam()");
+//        List<Player> players = teamApi.findUserTeam(userApi.getTeam().getName())
+//                .getPlayerList();
+//        players.sort(Comparator.comparing(Player::getName));
+//        return playerService.getPlayerOnPagePlayersDtoFromPlayer(players);
+//    }
+
+    public String getNameOfUserTeam() {
+        return userApi.getTeam().getName();
+    }
+
+    public List<PlayerOnPagePlayersDto> getAllPlayersByUserTeam(Integer parameter) {
+        log.info("TeamService.getAllPlayersByUserTeam()");
+        List<Player> players = teamApi.findUserTeam(userApi.getTeam().getName())
+                .getPlayerList();
+        List<PlayerOnPagePlayersDto> playerOnPagePlayersDtos = playerService.getPlayerOnPagePlayersDtoFromPlayer(players);
+
+        playerOnPagePlayersDtos.sort(teamsPlayersComparators.getComparators().get(parameter));
+        return playerOnPagePlayersDtos;
     }
 }

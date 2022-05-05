@@ -24,11 +24,11 @@ public class GameService {
     public void createNewGame(UserData userData) {
         log.info("GameService.createNewGame");
         league = leagueService.getRussianLeague();
-        sponsorService.loadSponsors();
         bankService.loadBanks();
         juniorService.loadYouthList();
         teamService.loadTeams();
         placementService.loadPlacements();
+        sponsorService.loadSponsors();
         drawService.loadShedule();
         dayService.loadCalendar();
         userService.fillUserApi(userData);
