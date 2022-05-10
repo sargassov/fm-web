@@ -5,8 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.sargassov.fmweb.api.JuniorPoolApi;
 import ru.sargassov.fmweb.converters.JuniorConverter;
-import ru.sargassov.fmweb.dto.Player;
-import ru.sargassov.fmweb.dto.Position;
+import ru.sargassov.fmweb.intermediate_entites.Player;
+import ru.sargassov.fmweb.intermediate_entites.Position;
 import ru.sargassov.fmweb.repositories.JuniorRepository;
 
 import java.util.List;

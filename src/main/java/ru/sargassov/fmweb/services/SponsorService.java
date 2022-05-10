@@ -5,12 +5,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.sargassov.fmweb.api.SponsorApi;
 import ru.sargassov.fmweb.converters.SponsorConverter;
-import ru.sargassov.fmweb.dto.Sponsor;
-import ru.sargassov.fmweb.dto.Team;
+import ru.sargassov.fmweb.intermediate_entites.Sponsor;
+import ru.sargassov.fmweb.intermediate_entites.Team;
 import ru.sargassov.fmweb.repositories.SponsorRepository;
 
 import java.util.List;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 @Service

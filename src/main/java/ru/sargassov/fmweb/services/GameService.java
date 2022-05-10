@@ -3,7 +3,7 @@ package ru.sargassov.fmweb.services;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ru.sargassov.fmweb.dto.League;
+import ru.sargassov.fmweb.intermediate_entites.League;
 import ru.sargassov.fmweb.dto.UserData;
 
 @Service

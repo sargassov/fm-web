@@ -1,9 +1,7 @@
 package ru.sargassov.fmweb.services;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import ru.sargassov.fmweb.api.TeamApi;
 import ru.sargassov.fmweb.api.UserApi;
@@ -11,10 +9,9 @@ import ru.sargassov.fmweb.comparators.TeamsPlayersComparators;
 import ru.sargassov.fmweb.converters.TeamConverter;
 import ru.sargassov.fmweb.dto.*;
 import ru.sargassov.fmweb.exceptions.PlayerNotFoundException;
-import ru.sargassov.fmweb.exceptions.SheduleInTourNotFoundException;
+import ru.sargassov.fmweb.intermediate_entites.*;
 import ru.sargassov.fmweb.repositories.TeamRepository;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -104,11 +101,11 @@ public class TeamService {
                 .forEach(t -> {
                     autoFillPlacement(t);
                     captainAppointment(t);
-                    t.setTeamPower(powerTeamCounter(t));
+                    powerTeamCounter(t);
                 });
     }
 
-    private void autoFillPlacement(Team t) {
+    public void autoFillPlacement(Team t) {
         log.info("TeamService.autoFillPlacement for " + t.getName());
 
         List<Player> playerList = t.getPlayerList().stream()
@@ -155,7 +152,7 @@ public class TeamService {
         player.setCapitan(true);
     }
 
-    public static int powerTeamCounter(Team team) {
+    public void powerTeamCounter(Team team) {
         int power = 0;
 
         List<Player> playerList = team.getPlayerList().stream()
@@ -167,21 +164,13 @@ public class TeamService {
             if(p.isCapitan())
                 power += p.getCaptainAble();
         }
-
-        return power / 11;
+        team.setTeamPower(power / 11);
     }
     ///////////////////////////////////////////////////////////////стартовые методы
 
-//    public List<PlayerOnPagePlayersDto> getAllPlayersByUserTeam() {
-//        log.info("TeamService.getAllPlayersByUserTeam()");
-//        List<Player> players = teamApi.findUserTeam(userApi.getTeam().getName())
-//                .getPlayerList();
-//        players.sort(Comparator.comparing(Player::getName));
-//        return playerService.getPlayerOnPagePlayersDtoFromPlayer(players);
-//    }
 
-    public String getNameOfUserTeam() {
-        return userApi.getTeam().getName();
+    public TeamOnPagePlayersDto getNameOfUserTeam() {
+        return teamConverter.dtoToTeamOnPagePlayersDto(userApi.getTeam());
     }
 
     public List<PlayerOnPagePlayersDto> getAllPlayersByUserTeam(Integer parameter) {
@@ -192,5 +181,12 @@ public class TeamService {
 
         playerOnPagePlayersDtos.sort(teamsPlayersComparators.getComparators().get(parameter));
         return playerOnPagePlayersDtos;
+    }
+
+    public void deletePlayerFromCurrentPlacement(Long id) {
+        Team team = userApi.getTeam();
+        Player player = team.findPlayerById(id);
+        player.setStrategyPlace(-100);
+        powerTeamCounter(team);
     }
 }

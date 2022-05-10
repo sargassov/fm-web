@@ -1,12 +1,8 @@
-package ru.sargassov.fmweb.dto;
+package ru.sargassov.fmweb.intermediate_entites;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
-
-import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.List;
 
 @Data
 @NoArgsConstructor

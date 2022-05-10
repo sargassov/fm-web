@@ -1,6 +1,5 @@
-package ru.sargassov.fmweb.dto.days;
+package ru.sargassov.fmweb.intermediate_entites.days;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data

@@ -4,10 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.sargassov.fmweb.dto.Player;
 import ru.sargassov.fmweb.dto.PlayerOnPagePlayersDto;
+import ru.sargassov.fmweb.dto.TeamOnPagePlayersDto;
 import ru.sargassov.fmweb.services.TeamService;
 
 import java.util.List;
@@ -31,7 +30,7 @@ public class TeamController {
     }
 
     @GetMapping("/team/name")
-    public String getNameOfUserTeam() {
+    public TeamOnPagePlayersDto getNameOfUserTeam() {
         log.info("TeamController.getNameOfUserTeam()");
         return teamService.getNameOfUserTeam();
     }

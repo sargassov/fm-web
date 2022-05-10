@@ -3,8 +3,7 @@ package ru.sargassov.fmweb.api;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
-import ru.sargassov.fmweb.dto.Bank;
-import ru.sargassov.fmweb.services.BankService;
+import ru.sargassov.fmweb.intermediate_entites.Bank;
 
 import java.util.List;
 

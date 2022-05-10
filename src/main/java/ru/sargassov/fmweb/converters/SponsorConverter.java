@@ -1,7 +1,7 @@
 package ru.sargassov.fmweb.converters;
 
 import org.springframework.stereotype.Component;
-import ru.sargassov.fmweb.dto.Sponsor;
+import ru.sargassov.fmweb.intermediate_entites.Sponsor;
 import ru.sargassov.fmweb.entities.SponsorEntity;
 
 @Component

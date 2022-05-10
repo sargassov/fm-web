@@ -1,7 +1,7 @@
 package ru.sargassov.fmweb.converters;
 
 import org.springframework.stereotype.Component;
-import ru.sargassov.fmweb.dto.Position;
+import ru.sargassov.fmweb.intermediate_entites.Position;
 
 @Component
 public class PositionConverter {

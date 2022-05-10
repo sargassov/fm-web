@@ -5,16 +5,18 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.sargassov.fmweb.api.PlacementApi;
-import ru.sargassov.fmweb.api.TeamApi;
+import ru.sargassov.fmweb.api.UserApi;
 import ru.sargassov.fmweb.converters.PlacementConverter;
-import ru.sargassov.fmweb.dto.League;
-import ru.sargassov.fmweb.dto.Placement;
-import ru.sargassov.fmweb.dto.Team;
+import ru.sargassov.fmweb.dto.PlacementData;
+import ru.sargassov.fmweb.dto.PlacementOnPagePlacementsDto;
+import ru.sargassov.fmweb.dto.PlayerOnPagePlacementsDto;
+import ru.sargassov.fmweb.intermediate_entites.League;
+import ru.sargassov.fmweb.intermediate_entites.Placement;
+import ru.sargassov.fmweb.intermediate_entites.Team;
 import ru.sargassov.fmweb.entities.PlacementEntity;
 import ru.sargassov.fmweb.repositories.PlacementRepository;
 
 import java.util.List;
-import java.util.Random;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,7 +28,9 @@ public class PlacementService {
     private final PlacementApi placementApi;
     private final PlacementConverter placementConverter;
     private final TeamService teamService;
+    private final PlayerService playerService;
     private final League league;
+    private final UserApi userApi;
 
     public List<PlacementEntity> findAllPlacements(){
         return placementRepository.findAll();
@@ -52,15 +56,34 @@ public class PlacementService {
     }
 
     public void fillPlacement(Team team) {
-
         int selected = (int) (Math.random() * placementApi.getPlacementApiList().size());
-
-        team.setPlacement(placementApi.getPlacement(selected));
-
+        team.setPlacement(placementApi.getPlacementByNumber(selected));
     }
 
     public List<Placement> getPlacementsFromPlacementApi(){
         return placementApi.getPlacementApiList();
+    }
+
+    public PlacementOnPagePlacementsDto getCurrentPlacementInfo() {
+        return placementConverter.getPlacementOnPagePlacementsDtoFromTeam(userApi.getTeam());
+    }
+
+    public void setNewPlacement(PlacementData placementData) {
+        Placement placement = placementApi.getPlacementByTitle(placementData.getTitle());
+        Team userTeam = userApi.getTeam();
+        userTeam.setPlacement(placement);
+        userTeam.setTeamPower(0);
+        playerService.resetAllStrategyPlaces(userTeam);
+    }
+
+    public void autoFillCurrentPlacement() {
+        Team userTeam = userApi.getTeam();
+        teamService.autoFillPlacement(userTeam);
+        teamService.powerTeamCounter(userTeam);
+    }
+
+    public void deletePlayerFromCurrentPlacement(Long id) {
+        teamService.deletePlayerFromCurrentPlacement(id);
     }
 }
 

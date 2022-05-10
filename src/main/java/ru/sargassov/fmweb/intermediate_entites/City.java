@@ -1,4 +1,4 @@
-package ru.sargassov.fmweb.dto;
+package ru.sargassov.fmweb.intermediate_entites;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

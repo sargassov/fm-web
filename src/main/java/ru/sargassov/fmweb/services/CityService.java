@@ -2,7 +2,7 @@ package ru.sargassov.fmweb.services;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.sargassov.fmweb.dto.City;
+import ru.sargassov.fmweb.intermediate_entites.City;
 import ru.sargassov.fmweb.repositories.CityRepository;
 
 import java.util.List;

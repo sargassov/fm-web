@@ -3,8 +3,8 @@ package ru.sargassov.fmweb.converters;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
-import ru.sargassov.fmweb.dto.Player;
-import ru.sargassov.fmweb.dto.Position;
+import ru.sargassov.fmweb.intermediate_entites.Player;
+import ru.sargassov.fmweb.intermediate_entites.Position;
 import ru.sargassov.fmweb.entities.JuniorEntity;
 
 import java.util.Random;

@@ -1,10 +1,9 @@
-package ru.sargassov.fmweb.dto.days;
+package ru.sargassov.fmweb.intermediate_entites.days;
 
 import lombok.Data;
-import ru.sargassov.fmweb.dto.League;
-import ru.sargassov.fmweb.dto.Player;
-import ru.sargassov.fmweb.dto.Stadium;
-import ru.sargassov.fmweb.dto.Team;
+import ru.sargassov.fmweb.intermediate_entites.Player;
+import ru.sargassov.fmweb.intermediate_entites.Stadium;
+import ru.sargassov.fmweb.intermediate_entites.Team;
 
 import java.util.List;
 

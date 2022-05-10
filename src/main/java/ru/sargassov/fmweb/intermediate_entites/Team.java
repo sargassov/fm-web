@@ -1,7 +1,9 @@
-package ru.sargassov.fmweb.dto;
+package ru.sargassov.fmweb.intermediate_entites;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.sargassov.fmweb.exceptions.PlayerNotFoundException;
+import ru.sargassov.fmweb.exceptions.TeamNotFoundException;
 
 import java.util.List;
 
@@ -40,6 +42,14 @@ public class Team {
         return "Team{" +
                 "name='" + name + '\'' +
                 '}';
+    }
+
+    public Player findPlayerById(Long id) {
+        return playerList.stream()
+                .filter(p -> p.getId() == id)
+                .findFirst()
+                .orElseThrow(() ->
+                        new PlayerNotFoundException(String.format("Player with id = %d not found", id)));
     }
 
     //    public Team(String info) {

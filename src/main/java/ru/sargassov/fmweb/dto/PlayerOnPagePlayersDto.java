@@ -2,8 +2,6 @@ package ru.sargassov.fmweb.dto;
 
 import lombok.Data;
 
-import java.math.BigDecimal;
-
 @Data
 public class PlayerOnPagePlayersDto {
     private long id;
@@ -23,6 +21,6 @@ public class PlayerOnPagePlayersDto {
     private int power;
     private int tire;
     private int timeBeforeTreat;
-    private BigDecimal price;
+    private double price;
     private int number;
 }

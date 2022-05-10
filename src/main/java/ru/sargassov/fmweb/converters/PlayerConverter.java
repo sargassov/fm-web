@@ -4,18 +4,16 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import ru.sargassov.fmweb.api.TeamApi;
-import ru.sargassov.fmweb.dto.League;
-import ru.sargassov.fmweb.dto.Player;
+import ru.sargassov.fmweb.dto.PlacementOnPagePlacementsDto;
+import ru.sargassov.fmweb.dto.PlayerOnPagePlacementsDto;
+import ru.sargassov.fmweb.intermediate_entites.Player;
 import ru.sargassov.fmweb.dto.PlayerOnPagePlayersDto;
 import ru.sargassov.fmweb.entities.PlayerEntity;
 import ru.sargassov.fmweb.exceptions.TeamNotFoundException;
-import ru.sargassov.fmweb.services.TeamService;
+import ru.sargassov.fmweb.intermediate_entites.Team;
 
-import java.math.BigDecimal;
-import java.util.List;
+import java.util.Optional;
 import java.util.Random;
-
-import static java.math.BigDecimal.ROUND_DOWN;
 
 @Component
 @AllArgsConstructor
@@ -74,9 +72,21 @@ public class PlayerConverter {
         pOnPageDto.setPower(player.getPower());
         pOnPageDto.setTimeBeforeTreat(player.getTimeBeforeTreat());
         pOnPageDto.setTire(player.getTire());
-        pOnPageDto.setPrice(BigDecimal.valueOf(player.getPrice() / 1_000_000));
+        pOnPageDto.setPrice((double)player.getPrice() / 1_000_000);
         pOnPageDto.setNumber(player.getNumber());
 
         return pOnPageDto;
     }
+
+    public PlayerOnPagePlacementsDto getPlayerOnPagePlacementsDtoFromPlayer(Player p) {
+        PlayerOnPagePlacementsDto pOnPagePlDto = new PlayerOnPagePlacementsDto();
+        pOnPagePlDto.setId(p.getId());
+        pOnPagePlDto.setName(p.getName());
+        pOnPagePlDto.setStrategyPlace(p.getStrategyPlace());
+        pOnPagePlDto.setNumber(p.getNumber());
+        pOnPagePlDto.setPower(p.getPower());
+        pOnPagePlDto.setPosition(p.getPosition().toString());
+        return pOnPagePlDto;
+    }
+
 }

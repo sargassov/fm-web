@@ -3,11 +3,10 @@ package ru.sargassov.fmweb.services;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.sargassov.fmweb.api.CalendarApi;
-import ru.sargassov.fmweb.api.DrawApi;
 import ru.sargassov.fmweb.converters.DayConverter;
-import ru.sargassov.fmweb.dto.days.Day;
-import ru.sargassov.fmweb.dto.days.DayDto;
-import ru.sargassov.fmweb.dto.days.TourDay;
+import ru.sargassov.fmweb.intermediate_entites.days.Day;
+import ru.sargassov.fmweb.intermediate_entites.days.DayDto;
+import ru.sargassov.fmweb.intermediate_entites.days.TourDay;
 import ru.sargassov.fmweb.entities.DayEntity;
 import ru.sargassov.fmweb.repositories.DayRepository;
 

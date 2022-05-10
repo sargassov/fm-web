@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.sargassov.fmweb.dto.*;
 import ru.sargassov.fmweb.entities.TeamEntity;
+import ru.sargassov.fmweb.intermediate_entites.HeadCoach;
+import ru.sargassov.fmweb.intermediate_entites.League;
+import ru.sargassov.fmweb.intermediate_entites.Team;
 
 import java.util.ArrayList;
 
@@ -26,12 +29,15 @@ public class TeamConverter {
         //------------------------
         tDto.setStartWealth(tDto.getWealth());
         tDto.setCoaches(new ArrayList<>());
-//        tDto.setPlayerList(team.getPlayerList().stream()
-//                .map(playerConverter::entityToDto)
-//                .collect(Collectors.toList()));
         tDto.setLoans(new ArrayList<>());
 //    private List<Market> markets;
 //    private Placement placement;
         return tDto;
+    }
+
+    public TeamOnPagePlayersDto dtoToTeamOnPagePlayersDto(Team team){
+        TeamOnPagePlayersDto tOnPageDto = new TeamOnPagePlayersDto();
+        tOnPageDto.setName(team.getName());
+        return tOnPageDto;
     }
 }

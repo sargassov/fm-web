@@ -2,18 +2,17 @@ package ru.sargassov.fmweb.services;
 
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import ru.sargassov.fmweb.api.TeamApi;
 import ru.sargassov.fmweb.converters.PlayerConverter;
-import ru.sargassov.fmweb.dto.Player;
+import ru.sargassov.fmweb.dto.PlayerOnPagePlacementsDto;
+import ru.sargassov.fmweb.intermediate_entites.Player;
 import ru.sargassov.fmweb.dto.PlayerOnPagePlayersDto;
+import ru.sargassov.fmweb.intermediate_entites.Team;
 import ru.sargassov.fmweb.repositories.PlayerRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,5 +34,23 @@ public class PlayerService {
         return playerList.stream()
                 .map(playerConverter::getPlayerOnPagePlayersDtoFromPlayer)
                 .collect(Collectors.toList());
+    }
+
+    public void resetAllStrategyPlaces(Team userTeam) {
+        userTeam.getPlayerList().forEach(p -> p.setStrategyPlace(-100));
+    }
+
+    public List<PlayerOnPagePlacementsDto> setEmptyBlankPlacement(Team userTeam) {
+        int teamSize = 18;
+        List<PlayerOnPagePlacementsDto> dtoList = new ArrayList<>(teamSize);
+        for(int i = 0; i < teamSize; i++){
+            final int finalI = i;
+            Optional<Player> player = userTeam.getPlayerList().stream()
+                    .filter(p -> p.getStrategyPlace() == finalI)
+                    .findFirst();
+            if(player.isPresent()) dtoList.add(playerConverter.getPlayerOnPagePlacementsDtoFromPlayer(player.get()));
+            else dtoList.add(new PlayerOnPagePlacementsDto());
+        }
+        return dtoList;
     }
 }

@@ -1,4 +1,4 @@
-package ru.sargassov.fmweb.dto;
+package ru.sargassov.fmweb.intermediate_entites;
 
 public enum Position {
     GOALKEEPER,

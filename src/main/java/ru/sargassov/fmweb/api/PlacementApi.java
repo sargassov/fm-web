@@ -2,8 +2,8 @@ package ru.sargassov.fmweb.api;
 
 import lombok.Data;
 import org.springframework.stereotype.Component;
-import ru.sargassov.fmweb.dto.Placement;
-import ru.sargassov.fmweb.services.PlacementService;
+import ru.sargassov.fmweb.exceptions.PresentDayNotFoundException;
+import ru.sargassov.fmweb.intermediate_entites.Placement;
 
 import java.util.*;
 
@@ -17,10 +17,18 @@ public class PlacementApi {
         this.placementApiList = placementApiList;
     }
 
-    public Placement getPlacement(Integer num){
+    public Placement getPlacementByNumber(Integer num){
         if(placementApiList.size() > num){
             return placementApiList.get(num);
         }
         throw new IndexOutOfBoundsException("Wrong tactic #" + num + " in request");
+    }
+
+    public Placement getPlacementByTitle(String title){
+        return placementApiList.stream()
+                .filter(p -> p.getName().equals(title))
+                .findFirst()
+                .orElseThrow(() ->
+                        new PresentDayNotFoundException("Present day not found in calendar"));
     }
 }

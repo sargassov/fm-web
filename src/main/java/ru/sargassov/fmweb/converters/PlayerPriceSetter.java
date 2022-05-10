@@ -1,8 +1,8 @@
 package ru.sargassov.fmweb.converters;
 
 import org.springframework.stereotype.Component;
-import ru.sargassov.fmweb.dto.Player;
-import ru.sargassov.fmweb.dto.Position;
+import ru.sargassov.fmweb.intermediate_entites.Player;
+import ru.sargassov.fmweb.intermediate_entites.Position;
 
 import java.util.ArrayList;
 import java.util.Arrays;

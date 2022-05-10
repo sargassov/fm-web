@@ -4,9 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import ru.sargassov.fmweb.dto.Team;
+import ru.sargassov.fmweb.intermediate_entites.Team;
 import ru.sargassov.fmweb.exceptions.TeamNotFoundException;
-import ru.sargassov.fmweb.services.TeamService;
 
 import java.util.List;
 

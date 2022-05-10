@@ -2,7 +2,7 @@ package ru.sargassov.fmweb.converters;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
-import ru.sargassov.fmweb.dto.Bank;
+import ru.sargassov.fmweb.intermediate_entites.Bank;
 import ru.sargassov.fmweb.entities.BankEntity;
 
 @Component

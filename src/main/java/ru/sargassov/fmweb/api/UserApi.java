@@ -2,7 +2,7 @@ package ru.sargassov.fmweb.api;
 
 import lombok.Data;
 import org.springframework.stereotype.Component;
-import ru.sargassov.fmweb.dto.Team;
+import ru.sargassov.fmweb.intermediate_entites.Team;
 
 @Component
 @Data

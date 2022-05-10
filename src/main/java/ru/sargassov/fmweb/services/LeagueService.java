@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.sargassov.fmweb.converters.LeagueConverter;
-import ru.sargassov.fmweb.dto.League;
+import ru.sargassov.fmweb.intermediate_entites.League;
 import ru.sargassov.fmweb.exceptions.LeagueNotFoundException;
 import ru.sargassov.fmweb.repositories.LeagueRepository;
 

@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import ru.sargassov.fmweb.api.UserApi;
-import ru.sargassov.fmweb.dto.HeadCoach;
+import ru.sargassov.fmweb.intermediate_entites.HeadCoach;
 import ru.sargassov.fmweb.dto.UserData;
 import ru.sargassov.fmweb.services.TeamService;
 

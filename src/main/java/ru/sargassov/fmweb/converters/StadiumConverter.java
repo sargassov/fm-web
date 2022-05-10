@@ -2,9 +2,9 @@ package ru.sargassov.fmweb.converters;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
-import ru.sargassov.fmweb.dto.League;
-import ru.sargassov.fmweb.dto.Stadium;
-import ru.sargassov.fmweb.dto.Team;
+import ru.sargassov.fmweb.intermediate_entites.League;
+import ru.sargassov.fmweb.intermediate_entites.Stadium;
+import ru.sargassov.fmweb.intermediate_entites.Team;
 import ru.sargassov.fmweb.entities.StadiumEntity;
 
 @Component

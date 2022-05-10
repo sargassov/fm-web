@@ -1,4 +1,4 @@
-package ru.sargassov.fmweb.dto;
+package ru.sargassov.fmweb.intermediate_entites;
 
 
 import lombok.Data;
@@ -44,21 +44,16 @@ public class Player {
     }
 
     public boolean equalsPosition(Role role){
-        int subGkNum = 11;
-        int subDefNum = 14;
-        int subMidNum = 16;
-        int subForwNum = 18;
-
 
         if(position.equals(Position.GOALKEEPER) && role.getTitle().equals("Goalkeeper")) return true;
         if(position.equals(Position.DEFENDER) && role.getTitle().equals("Defender")) return true;
         if(position.equals(Position.MIDFIELDER) && role.getTitle().equals("Midfielder")) return true;
         if(position.equals(Position.FORWARD) && role.getTitle().equals("Forward")) return true;
-        if(role.getTitle().equals("S")){
-            if(role.getPosNumber() == subGkNum && position.equals(Position.GOALKEEPER)) return true;
-            else if(role.getPosNumber() < subDefNum && position.equals(Position.DEFENDER)) return true;
-            else if(role.getPosNumber() < subMidNum && position.equals(Position.MIDFIELDER)) return true;
-            else if(role.getPosNumber() < subForwNum && position.equals(Position.FORWARD)) return true;
+        if(role.getTitle().endsWith("S")){
+            if(position.equals(Position.GOALKEEPER) && role.getTitle().equals("GS")) return true;
+            else if(position.equals(Position.DEFENDER) && role.getTitle().equals("DS")) return true;
+            else if(position.equals(Position.MIDFIELDER) && role.getTitle().equals("MS")) return true;
+            else if(position.equals(Position.FORWARD) && role.getTitle().equals("FS")) return true;
         }
 
         return false;

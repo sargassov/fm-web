@@ -2,7 +2,7 @@ package ru.sargassov.fmweb.services;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.sargassov.fmweb.dto.Position;
+import ru.sargassov.fmweb.intermediate_entites.Position;
 import ru.sargassov.fmweb.repositories.PositionRepository;
 
 import java.util.List;

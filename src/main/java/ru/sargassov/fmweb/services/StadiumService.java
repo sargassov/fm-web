@@ -2,7 +2,7 @@ package ru.sargassov.fmweb.services;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.sargassov.fmweb.dto.Stadium;
+import ru.sargassov.fmweb.intermediate_entites.Stadium;
 import ru.sargassov.fmweb.repositories.StadiumRepository;
 
 import java.util.List;

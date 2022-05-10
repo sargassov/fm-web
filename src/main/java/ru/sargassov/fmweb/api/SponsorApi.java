@@ -3,10 +3,8 @@ package ru.sargassov.fmweb.api;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
-import ru.sargassov.fmweb.dto.Sponsor;
-import ru.sargassov.fmweb.exceptions.PresentDayNotFoundException;
+import ru.sargassov.fmweb.intermediate_entites.Sponsor;
 import ru.sargassov.fmweb.exceptions.SponsorNotFoundException;
-import ru.sargassov.fmweb.services.SponsorService;
 
 import java.util.List;
 
