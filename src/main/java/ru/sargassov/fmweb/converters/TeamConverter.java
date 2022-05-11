@@ -8,6 +8,8 @@ import ru.sargassov.fmweb.intermediate_entites.HeadCoach;
 import ru.sargassov.fmweb.intermediate_entites.League;
 import ru.sargassov.fmweb.intermediate_entites.Team;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 
 @Component
@@ -22,7 +24,7 @@ public class TeamConverter {
         tDto.setId(teamEntity.getId());
         tDto.setName(teamEntity.getName());
         tDto.setHeadCoach(new HeadCoach(teamEntity.getManager()));
-        tDto.setWealth(teamEntity.getWealth());
+        tDto.setWealth(BigDecimal.valueOf(teamEntity.getWealth()).setScale(2, RoundingMode.HALF_UP));
         tDto.setLeague(league);
         tDto.setStadium(stadiumConverter.entityToDto(teamEntity.getStadiumEntity(), tDto));
         tDto.setCity(cityConverter.entityToDto(teamEntity.getCityEntity()));

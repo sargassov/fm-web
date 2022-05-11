@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import ru.sargassov.fmweb.exceptions.PlayerNotFoundException;
 import ru.sargassov.fmweb.exceptions.TeamNotFoundException;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 
@@ -14,7 +15,7 @@ public class Team {
     private long id;
     private String name;
     private HeadCoach headCoach;
-    private double wealth;
+    private BigDecimal wealth;
     private League league;
     private Stadium stadium;
     private City city;
@@ -24,7 +25,7 @@ public class Team {
     private List<Player> playerList;
     private List<Bank> loans;
 //    private List<Market> markets;
-    private double startWealth;
+    private BigDecimal startWealth;
     private Placement placement;
     private int regularCapacity;
     private int temporaryTicketCost;
@@ -47,6 +48,14 @@ public class Team {
     public Player findPlayerById(Long id) {
         return playerList.stream()
                 .filter(p -> p.getId() == id)
+                .findFirst()
+                .orElseThrow(() ->
+                        new PlayerNotFoundException(String.format("Player with id = %d not found", id)));
+    }
+
+    public Player findPlayerByNumber(Integer number) {
+        return playerList.stream()
+                .filter(p -> p.getNumber() == number)
                 .findFirst()
                 .orElseThrow(() ->
                         new PlayerNotFoundException(String.format("Player with id = %d not found", id)));

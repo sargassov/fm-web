@@ -35,10 +35,10 @@ public class PlacementController {
     }
 
 
-    @DeleteMapping("/placement/delete/{id}")
-    public void deletePlayerFromCurrentPlacement(@PathVariable Long id) {
+    @DeleteMapping("/placement/delete/{number}")
+    public void deletePlayerFromCurrentPlacement(@PathVariable Integer number) {
         log.info("PlacementController.getCurrentPlacementInfo()");
-        placementService.deletePlayerFromCurrentPlacement(id);
+        placementService.deletePlayerFromCurrentPlacement(number);
     }
 
 }

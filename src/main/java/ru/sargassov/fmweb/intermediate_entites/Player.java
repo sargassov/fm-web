@@ -4,6 +4,8 @@ package ru.sargassov.fmweb.intermediate_entites;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Data
 @NoArgsConstructor
 public class Player {
@@ -19,7 +21,7 @@ public class Player {
     private int number;
     private int strategyPlace;
     private int birthYear;
-    private int price;
+    private BigDecimal price;
     private int power;
 
     private Position position;

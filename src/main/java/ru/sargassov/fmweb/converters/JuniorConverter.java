@@ -7,6 +7,8 @@ import ru.sargassov.fmweb.intermediate_entites.Player;
 import ru.sargassov.fmweb.intermediate_entites.Position;
 import ru.sargassov.fmweb.entities.JuniorEntity;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Random;
 
 @Component
@@ -39,7 +41,7 @@ public class JuniorConverter {
         pDto.setStrategyPlace(strategyPlaceStarting);
         pDto.setBirthYear(youngPlayerBirthYear);
         pDto.setTrainingAble(trainingAbleValue);
-        pDto.setPrice(playerPriceSetter.createPrice(pDto));
+        pDto.setPrice(BigDecimal.valueOf(playerPriceSetter.createPrice(pDto)).setScale(2, RoundingMode.HALF_UP));
     }
 
     private void setPositionCraft(Player pDto) {

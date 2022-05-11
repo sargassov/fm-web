@@ -82,8 +82,8 @@ public class PlacementService {
         teamService.powerTeamCounter(userTeam);
     }
 
-    public void deletePlayerFromCurrentPlacement(Long id) {
-        teamService.deletePlayerFromCurrentPlacement(id);
+    public void deletePlayerFromCurrentPlacement(Integer number) {
+        teamService.deletePlayerFromCurrentPlacement(number);
     }
 }
 

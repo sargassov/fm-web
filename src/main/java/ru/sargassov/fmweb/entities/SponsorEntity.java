@@ -19,20 +19,20 @@ public class SponsorEntity {
     private String name;
 
     @Column(name = "day_wage")
-    private Integer dayWage;
+    private Double dayWage;
 
     @Column(name = "match_wage")
-    private Integer matchWage;
+    private Double matchWage;
 
     @Column(name = "goal_bonus_wage")
-    private Integer goalBonusWage;
+    private Double goalBonusWage;
 
     @Column(name = "win_wage")
-    private Integer winWage;
+    private Double winWage;
 
     @Column(name = "deuce_wage")
-    private Integer deuceWage;
+    private Double deuceWage;
 
     @Column(name = "contract_bonus_wage")
-    private Integer contractBonusWage;
+    private Double contractBonusWage;
 }

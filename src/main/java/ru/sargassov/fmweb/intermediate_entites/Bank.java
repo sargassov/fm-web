@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.GregorianCalendar;
 
 @Data
@@ -15,7 +16,7 @@ public class Bank {
     private int percentWeek;
     private int percentMonth;
     private double fullLoanCoeff;
-    private int maxLoanAmount;
+    private BigDecimal maxLoanAmount;
     //=============================//
     private GregorianCalendar dateOfLoan;
     private GregorianCalendar remainsDate;

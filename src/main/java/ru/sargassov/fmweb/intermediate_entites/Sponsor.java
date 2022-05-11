@@ -3,22 +3,25 @@ package ru.sargassov.fmweb.intermediate_entites;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Data
 @NoArgsConstructor
 public class Sponsor {
     private long id;
     private String name;
-    private int dayWage;
-    private int matchWage;
-    private int goalBonusWage;
-    private int winWage;
-    private int deuceWage;
-    private int contractBonusWage;
+    private BigDecimal dayWage;
+    private BigDecimal matchWage;
+    private BigDecimal goalBonusWage;
+    private BigDecimal winWage;
+    private BigDecimal deuceWage;
+    private BigDecimal contractBonusWage;
     private final int multyCoeff = 1_000_000;
     //---------------------------
 
     public void signContractWithClub(Team t){
-        t.setWealth(t.getWealth() + contractBonusWage / multyCoeff);
+        t.setWealth(t.getWealth().add(contractBonusWage));
+//        t.setWealth(t.getWealth() + contractBonusWage / multyCoeff);
     }
 
     //    private String name;

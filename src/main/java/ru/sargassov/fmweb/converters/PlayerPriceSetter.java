@@ -36,7 +36,7 @@ public class PlayerPriceSetter {
         ));
     }
 
-    public int createPrice(Player player){
+    public double createPrice(Player player){
 
         TechPrice techPrice = new TechPrice(zeroPrice);
 
@@ -45,7 +45,7 @@ public class PlayerPriceSetter {
         captainValue(player, techPrice);
         yearBirthValue(player, techPrice);
 
-        return (int) (techPrice.priceInDouble * 1_000_000);
+        return techPrice.priceInDouble;
     }
 
     private void yearBirthValue(Player player, TechPrice techPrice) {

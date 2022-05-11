@@ -31,5 +31,5 @@ public class BankEntity {
     private Double fullLoanCoeff;
 
     @Column(name = "max_loan_amount")
-    private Integer maxLoanAmount;
+    private Double maxLoanAmount;
 }

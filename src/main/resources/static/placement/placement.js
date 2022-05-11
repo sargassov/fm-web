@@ -38,12 +38,12 @@ angular.module('placement', ['ngStorage']).controller('placementController', fun
             });
     };
 
-    $scope.deleteInPlacement = function (id) {
-        $http.delete(contextPath + '/placement/delete/' + id)
+    $scope.deleteInPlacement = function (number) {
+        $http.delete(contextPath + '/placement/delete/' + number)
             .then(function successCallback(response) {
                 $scope.loadCurrentPlacement();
             }, function errorCallback(response) {
-                alert('DELETING OF ' + name + ' NOT CORRECTING');
+                alert('DELETING OF ' + number + ' NOT CORRECTING');
             });
     };
 

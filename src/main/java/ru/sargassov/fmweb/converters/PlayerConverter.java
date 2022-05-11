@@ -12,6 +12,8 @@ import ru.sargassov.fmweb.entities.PlayerEntity;
 import ru.sargassov.fmweb.exceptions.TeamNotFoundException;
 import ru.sargassov.fmweb.intermediate_entites.Team;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Optional;
 import java.util.Random;
 
@@ -49,7 +51,7 @@ public class PlayerConverter {
                 .filter(t -> t.getId() == playerEntity.getTeamEntity().getId())
                 .findFirst().orElseThrow(() ->
                         new TeamNotFoundException(String.format("Team with id = '%s' not found", playerEntity.getTeamEntity().getId()))));
-        pDto.setPrice(playerPriceSetter.createPrice(pDto));
+        pDto.setPrice(BigDecimal.valueOf(playerPriceSetter.createPrice(pDto)).setScale(2, RoundingMode.HALF_UP));
         return pDto;
     }
 
@@ -72,11 +74,17 @@ public class PlayerConverter {
         pOnPageDto.setPower(player.getPower());
         pOnPageDto.setTimeBeforeTreat(player.getTimeBeforeTreat());
         pOnPageDto.setTire(player.getTire());
-        pOnPageDto.setPrice((double)player.getPrice() / 1_000_000);
+        pOnPageDto.setPrice(player.getPrice());
         pOnPageDto.setNumber(player.getNumber());
 
         return pOnPageDto;
     }
+
+//    private double priceView(double v) {
+//        String substr, s = "" + v;
+//        substr = s.substring(0, s.indexOf(".") + 3);
+//        return Double.parseDouble(substr);
+//    }
 
     public PlayerOnPagePlacementsDto getPlayerOnPagePlacementsDtoFromPlayer(Player p) {
         PlayerOnPagePlacementsDto pOnPagePlDto = new PlayerOnPagePlacementsDto();

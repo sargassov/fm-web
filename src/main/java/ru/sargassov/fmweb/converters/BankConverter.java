@@ -5,6 +5,8 @@ import org.springframework.stereotype.Component;
 import ru.sargassov.fmweb.intermediate_entites.Bank;
 import ru.sargassov.fmweb.entities.BankEntity;
 
+import java.math.BigDecimal;
+
 @Component
 @AllArgsConstructor
 public class BankConverter {
@@ -17,7 +19,7 @@ public class BankConverter {
         bDto.setPercentMonth(bankEntity.getPercentMonth());
         bDto.setPercentWeek(bankEntity.getPercentWeek());
         bDto.setFullLoanCoeff(bankEntity.getFullLoanCoeff());
-        bDto.setMaxLoanAmount(bankEntity.getMaxLoanAmount());
+        bDto.setMaxLoanAmount(BigDecimal.valueOf(bankEntity.getMaxLoanAmount()));
         return bDto;
     }
 }

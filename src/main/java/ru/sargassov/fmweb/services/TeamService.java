@@ -183,9 +183,9 @@ public class TeamService {
         return playerOnPagePlayersDtos;
     }
 
-    public void deletePlayerFromCurrentPlacement(Long id) {
+    public void deletePlayerFromCurrentPlacement(Integer number) {
         Team team = userApi.getTeam();
-        Player player = team.findPlayerById(id);
+        Player player = team.findPlayerByNumber(number);
         player.setStrategyPlace(-100);
         powerTeamCounter(team);
     }
