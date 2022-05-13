@@ -57,7 +57,6 @@ public class PlayerConverter {
 
     public PlayerOnPagePlayersDto getPlayerOnPagePlayersDtoFromPlayer(Player player) {
         PlayerOnPagePlayersDto pOnPageDto = new PlayerOnPagePlayersDto();
-        pOnPageDto.setId(player.getId());
         pOnPageDto.setName(player.getName());
         pOnPageDto.setNatio(player.getNatio());
         pOnPageDto.setClub(player.getTeam().getName());
@@ -79,12 +78,6 @@ public class PlayerConverter {
 
         return pOnPageDto;
     }
-
-//    private double priceView(double v) {
-//        String substr, s = "" + v;
-//        substr = s.substring(0, s.indexOf(".") + 3);
-//        return Double.parseDouble(substr);
-//    }
 
     public PlayerOnPagePlacementsDto getPlayerOnPagePlacementsDtoFromPlayer(Player p) {
         PlayerOnPagePlacementsDto pOnPagePlDto = new PlayerOnPagePlacementsDto();

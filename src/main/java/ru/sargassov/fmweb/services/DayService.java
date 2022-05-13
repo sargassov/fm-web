@@ -48,6 +48,7 @@ public class DayService {
     public List<Day> getCalendarFromApi(){
         return calendarApi.getCalendarApiList();
     }
+//    //////////////////////////////////////////////////////////////////////
 
     public DayDto getActualDateFromApi() {
         return dayConverter.dtoToPresentDayRequest(calendarApi.getPresentDay());

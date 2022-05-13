@@ -175,8 +175,7 @@ public class TeamService {
 
     public List<PlayerOnPagePlayersDto> getAllPlayersByUserTeam(Integer parameter) {
         log.info("TeamService.getAllPlayersByUserTeam()");
-        List<Player> players = teamApi.findUserTeam(userApi.getTeam().getName())
-                .getPlayerList();
+        List<Player> players = userApi.getUserTeam().getPlayerList();
         List<PlayerOnPagePlayersDto> playerOnPagePlayersDtos = playerService.getPlayerOnPagePlayersDtoFromPlayer(players);
 
         playerOnPagePlayersDtos.sort(teamsPlayersComparators.getComparators().get(parameter));
@@ -185,8 +184,10 @@ public class TeamService {
 
     public void deletePlayerFromCurrentPlacement(Integer number) {
         Team team = userApi.getTeam();
-        Player player = team.findPlayerByNumber(number);
+        Player player = userApi.getPlayerByNumberFromUserTeam(number);
         player.setStrategyPlace(-100);
         powerTeamCounter(team);
     }
+//    //////////////////////////////////////////////////////////////////////////////
+
 }

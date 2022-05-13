@@ -35,12 +35,4 @@ public class TeamApi {
                         new TeamNotFoundException(String.format("Team with id = '%s' not found", id)));
     }
 
-    public Team findUserTeam(String name){
-        log.info("TeamApi.findUserTeam()");
-        return teamApiList.stream()
-                .filter(t -> t.getName().equals(name))
-                .findFirst().orElseThrow(() ->
-                        new TeamNotFoundException(String.format("Userteam = '%s' not found", name)));
-    }
-
 }

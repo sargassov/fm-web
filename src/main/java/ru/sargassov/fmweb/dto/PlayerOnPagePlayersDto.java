@@ -6,7 +6,6 @@ import java.math.BigDecimal;
 
 @Data
 public class PlayerOnPagePlayersDto {
-    private long id;
     private String name;
     private String club;
     private String natio;

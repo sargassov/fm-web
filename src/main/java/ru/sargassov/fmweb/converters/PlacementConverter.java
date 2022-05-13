@@ -56,15 +56,6 @@ public class PlacementConverter {
         pOnPagePlDto.setCurrentTeamPower(userTeam.getTeamPower());
         pOnPagePlDto.setSize(0);
         pOnPagePlDto.setPlayers(setPlayersDtoForPlacement(userTeam, pOnPagePlDto));
-
-
-//                userTeam.getPlayerList().
-//                        stream()
-//                        .filter(p -> p.getStrategyPlace() >= 0)
-//                        .map(p -> playerConverter.getPlayerOnPagePlacementsDtoFromPlayer(p))
-//                        .sorted(Comparator.comparing(PlayerOnPagePlacementsDto::getStrategyPlace))
-//                        .collect(Collectors.toList()));
-
         return pOnPagePlDto;
     }
 

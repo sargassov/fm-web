@@ -37,8 +37,18 @@ angular.module('players', ['ngStorage']).controller('playersController', functio
             });
     };
 
+    $scope.getInfoAboutPlayer = function (name) {
+        $http.get(contextPath + '/player/' + name)
+            .then(function successCallback(response) {
+                $localStorage.rootPlayer = response.data;
+                window.location.href = '../player_window/player_window.html';
+            }, function errorCallback(response) {
+                alert('PLAYERS WITH NAME ' + name + ' NOT FOUND');
+            });
+    };
 
-    $scope.getActualDate()
+
+    $scope.getActualDate();
     $scope.loadPlayersSort(0);
     $scope.getUserTeamName();
 });
