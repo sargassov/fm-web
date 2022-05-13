@@ -20,6 +20,7 @@ public class PlayerOnPagePlayersDto {
     private int birthYear;
     private int strategyPlace;
     private int power;
+    private String captain;
     private int tire;
     private int timeBeforeTreat;
     private BigDecimal price;

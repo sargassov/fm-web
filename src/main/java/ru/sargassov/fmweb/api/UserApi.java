@@ -32,6 +32,15 @@ public class UserApi {
                         new PlayerNotFoundException(String.format("Player with name = %s not found", name)));
     }
 
+    public Player getCaptainOfUserTeam(){
+        return team.getPlayerList()
+                .stream()
+                .filter(p -> p.isCapitan())
+                .findFirst()
+                .orElseThrow(() ->
+                        new PlayerNotFoundException("Team hasn't a captain"));
+    }
+
     public Team getUserTeam() {
         return team;
     }

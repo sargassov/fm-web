@@ -152,6 +152,20 @@ public class TeamService {
         player.setCapitan(true);
     }
 
+    public void setNewCaptainHandle(String name){
+        Player nowCap = null, futureCap;
+        try{
+            nowCap = userApi.getCaptainOfUserTeam();
+        }
+        catch (RuntimeException r) {
+            log.error("Captain function is not avalible");
+        }
+        futureCap = userApi.getPlayerByNameFromUserTeam(name);
+
+        nowCap.setCapitan(false);
+        futureCap.setCapitan(true);
+    }
+
     public void powerTeamCounter(Team team) {
         int power = 0;
 
@@ -181,6 +195,7 @@ public class TeamService {
         playerOnPagePlayersDtos.sort(teamsPlayersComparators.getComparators().get(parameter));
         return playerOnPagePlayersDtos;
     }
+
 
     public void deletePlayerFromCurrentPlacement(Integer number) {
         Team team = userApi.getTeam();

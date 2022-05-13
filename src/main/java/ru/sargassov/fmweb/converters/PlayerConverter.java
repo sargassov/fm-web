@@ -59,6 +59,7 @@ public class PlayerConverter {
         PlayerOnPagePlayersDto pOnPageDto = new PlayerOnPagePlayersDto();
         pOnPageDto.setName(player.getName());
         pOnPageDto.setNatio(player.getNatio());
+        pOnPageDto.setCaptain(booleanToString(player.isCapitan()));
         pOnPageDto.setClub(player.getTeam().getName());
         pOnPageDto.setPosition(player.getPosition().toString());
         pOnPageDto.setGkAble(player.getGkAble());
@@ -77,6 +78,11 @@ public class PlayerConverter {
         pOnPageDto.setNumber(player.getNumber());
 
         return pOnPageDto;
+    }
+
+    private String booleanToString(boolean capitan) {
+        if(capitan) return "Captain";
+        return "";
     }
 
     public PlayerOnPagePlacementsDto getPlayerOnPagePlacementsDtoFromPlayer(Player p) {
