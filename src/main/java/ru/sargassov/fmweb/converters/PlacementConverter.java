@@ -1,7 +1,6 @@
 package ru.sargassov.fmweb.converters;
 
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import ru.sargassov.fmweb.constants.Constant;
@@ -70,7 +69,7 @@ public class PlacementConverter {
             final int finalI = i;
             Optional<Player> opt = playerList.stream().filter(p -> p.getStrategyPlace() == finalI).findFirst();
             if(opt.isPresent()){
-                dtoList.add(playerConverter.getPlayerOnPagePlacementsDtoFromPlayer(opt.get()));
+                dtoList.add(playerConverter.getPlayerOnPagePlacementsDtoFromIntermediateEntity(opt.get()));
                 pOnPagePlDto.setSize(pOnPagePlDto.getSize() + 1);
             }
             else {

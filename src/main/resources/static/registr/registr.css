@@ -8,15 +8,23 @@ body {
     font-family: Verdana, Geneva, Tahoma, sans-serif
 }
 
-.form-control,
-.registr_form{
-    text-align: center;
-    align-items: center;
-}
+/*.form-control,*/
+/*.registr_form{*/
+/*    text-align: center;*/
+/*    align-items: center;*/
+/*}*/
 
-.centerdiv{
+/*.centerdiv{*/
+/*    text-align: center;*/
+/*    margin-left: 260px;*/
+/*}*/
+
+input[type=text],
+input[type=number],
+select[typeof=text]{
     text-align: center;
-    margin-left: 260px;
+    width:400px;
+    height: 20px;
 }
 
 .ahmat,

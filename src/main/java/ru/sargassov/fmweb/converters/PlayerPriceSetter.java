@@ -1,6 +1,7 @@
 package ru.sargassov.fmweb.converters;
 
 import org.springframework.stereotype.Component;
+import ru.sargassov.fmweb.dto.CreatedPlayerDto;
 import ru.sargassov.fmweb.intermediate_entites.Player;
 import ru.sargassov.fmweb.intermediate_entites.Position;
 

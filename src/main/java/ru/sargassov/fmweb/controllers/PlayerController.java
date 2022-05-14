@@ -2,21 +2,15 @@ package ru.sargassov.fmweb.controllers;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
-import ru.sargassov.fmweb.dto.PlacementOnPagePlacementsDto;
-import ru.sargassov.fmweb.dto.PlayerOnPagePlacementsDto;
-import ru.sargassov.fmweb.dto.PlayerOnPagePlayersDto;
+import org.springframework.web.bind.annotation.*;
+import ru.sargassov.fmweb.dto.*;
 import ru.sargassov.fmweb.services.PlayerService;
-import ru.sargassov.fmweb.services.TeamService;
 
 @RestController
 @AllArgsConstructor
 @Slf4j
 public class PlayerController {
     private final PlayerService playerService;
-    private final TeamService teamService;
 
     @GetMapping("/player/{name}")
     public PlayerOnPagePlayersDto getOnePlayerForIndividualPlayerPage(@PathVariable String name) {
@@ -34,5 +28,17 @@ public class PlayerController {
     public PlayerOnPagePlayersDto getPrevPlayerByNumer(@PathVariable Integer number) {
         log.info("PlayerController.getPrevPlayerByNumer()");
         return playerService.getAnotherPlayerByNumber(number, -1);
+    }
+
+    @PostMapping("/player/new/create")
+    public void createNewPlayer(@RequestBody CreatedPlayerDto createdPlayerDto) {
+        log.info("PlayerController.createNewPlayer");
+        playerService.createNewPlayer(createdPlayerDto);
+    }
+
+    @PostMapping("/player/new/cost")
+    public PlayersPriceOnPageCreatePlayerDto guessNewPlayerCost(@RequestBody CreatedPlayerDto createdPlayerDto) {
+        log.info("PlayerController.guessNewPlayerCost()");
+        return playerService.guessNewPlayerCost(createdPlayerDto);
     }
 }

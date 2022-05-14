@@ -1,0 +1,30 @@
+body {
+    background-image: url(youth_academy.jpg);
+    background-size: cover;
+}
+
+.header {
+    text-align: center;
+    font-family: "Arial Black", fantasy;
+    font-size: 26px;
+    color: snow;
+}
+
+.date_show {
+    text-align: center;
+    font-family: "Arial Black", fantasy;
+    color: snow;
+}
+
+.cell,
+.linktext {
+    font-family: "Arial Black", fantasy;
+    color: snow;
+}
+
+.academy_text {
+    text-align: center;
+    font-family: "Arial Black", fantasy;
+    color: snow;
+    font-size: 20px;
+}

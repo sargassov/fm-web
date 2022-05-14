@@ -3,8 +3,11 @@ package ru.sargassov.fmweb.intermediate_entites;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import ru.sargassov.fmweb.converters.PlayerPriceSetter;
 
 import java.math.BigDecimal;
+import java.util.Random;
 
 @Data
 @NoArgsConstructor
@@ -66,6 +69,39 @@ public class Player {
         return "Player{" +
                 "name='" + name + '\'' +
                 '}';
+    }
+
+    public void guessPosition(String pos) {
+        Position[] positions = Position.values();
+        for(Position p : positions)
+            if(p.toString().equals(pos))
+                this.position = p;
+    }
+
+    public void guessTrainigAble(){
+        int trainingAbleValue = 20;
+        int trainingAbleBottomValue = 10;
+        Random random = new Random();
+
+        trainingAble = random.nextInt(trainingAbleValue) + trainingAbleBottomValue;
+    }
+
+    public void guessNumber(int number) {
+
+        boolean flag = true;
+        do{
+            int finalNumber = number;
+            flag = team.getPlayerList().stream().anyMatch(p -> p.getNumber() == finalNumber);
+
+            if(flag){
+                number++;
+                System.out.println(number);
+                if(number == 100)
+                    number = 1;
+            } else{
+                this.number = number;
+            }
+        }while (flag);
     }
 
     //    private static PlayerPriceSetter priceSetter;

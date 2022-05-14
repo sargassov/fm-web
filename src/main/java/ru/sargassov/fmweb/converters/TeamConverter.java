@@ -40,6 +40,7 @@ public class TeamConverter {
     public TeamOnPagePlayersDto dtoToTeamOnPagePlayersDto(Team team){
         TeamOnPagePlayersDto tOnPageDto = new TeamOnPagePlayersDto();
         tOnPageDto.setName(team.getName());
+        tOnPageDto.setWealth(team.getWealth().setScale(2, RoundingMode.HALF_UP));
         return tOnPageDto;
     }
 }
