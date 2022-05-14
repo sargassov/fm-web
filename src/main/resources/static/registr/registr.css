@@ -19,12 +19,24 @@ body {
 /*    margin-left: 260px;*/
 /*}*/
 
+button{
+    margin: auto;
+    align-content: center;
+    align-items: center;
+    align-self: center;
+    text-align: center;
+}
+
 input[type=text],
 input[type=number],
 select[typeof=text]{
+    margin: auto;
+    align-content: center;
+    align-items: center;
+    align-self: center;
     text-align: center;
     width:400px;
-    height: 20px;
+    height: 35px;
 }
 
 .ahmat,

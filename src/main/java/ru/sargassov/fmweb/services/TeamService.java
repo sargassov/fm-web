@@ -4,10 +4,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.sargassov.fmweb.api.TeamApi;
-import ru.sargassov.fmweb.api.UserApi;
 import ru.sargassov.fmweb.comparators.TeamsPlayersComparators;
 import ru.sargassov.fmweb.converters.TeamConverter;
 import ru.sargassov.fmweb.dto.*;
+import ru.sargassov.fmweb.dto.player_dtos.PlayerSoftSkillDto;
 import ru.sargassov.fmweb.exceptions.PlayerNotFoundException;
 import ru.sargassov.fmweb.intermediate_entites.*;
 import ru.sargassov.fmweb.repositories.TeamRepository;
@@ -23,8 +23,8 @@ public class TeamService {
     private final TeamConverter teamConverter;
     private final PlayerService playerService;
     private final JuniorService juniorService;
+    private final UserService userService;
     private final TeamApi teamApi;
-    private final UserApi userApi;
     private final TeamsPlayersComparators teamsPlayersComparators;
 
     public void loadTeams(){
@@ -136,10 +136,9 @@ public class TeamService {
     }
 
     private List<Player> getSuitablePlayers(List<Player> playerList, Role role) {
-        List<Player> pl =  playerList.stream()
+        return playerList.stream()
                 .filter(p -> p.equalsPosition(role))
                 .collect(Collectors.toList());
-        return pl;
     }
 
     private void captainAppointment(Team team) {
@@ -155,12 +154,12 @@ public class TeamService {
     public void setNewCaptainHandle(String name){
         Player nowCap = null, futureCap;
         try{
-            nowCap = userApi.getCaptainOfUserTeam();
+            nowCap = userService.getCaptainOfUserTeam();
         }
         catch (RuntimeException r) {
             log.error("Captain function is not avalible");
         }
-        futureCap = userApi.getPlayerByNameFromUserTeam(name);
+        futureCap = userService.getPlayerByNameFromUserTeam(name);
 
         nowCap.setCapitan(false);
         futureCap.setCapitan(true);
@@ -184,22 +183,22 @@ public class TeamService {
 
 
     public TeamOnPagePlayersDto getNameOfUserTeam() {
-        return teamConverter.dtoToTeamOnPagePlayersDto(userApi.getTeam());
+        return teamConverter.dtoToTeamOnPagePlayersDto(userService.getUserTeam());
     }
 
-    public List<PlayerOnPagePlayersDto> getAllPlayersByUserTeam(Integer parameter) {
+    public List<PlayerSoftSkillDto> getAllPlayersByUserTeam(Integer parameter) {
         log.info("TeamService.getAllPlayersByUserTeam()");
-        List<Player> players = userApi.getUserTeam().getPlayerList();
-        List<PlayerOnPagePlayersDto> playerOnPagePlayersDtos = playerService.getPlayerOnPagePlayersDtoFromPlayer(players);
+        List<Player> players = userService.getUserTeam().getPlayerList();
+        List<PlayerSoftSkillDto> playerSoftSkillDtos = playerService.getPlayerOnPagePlayersDtoFromPlayer(players);
 
-        playerOnPagePlayersDtos.sort(teamsPlayersComparators.getComparators().get(parameter));
-        return playerOnPagePlayersDtos;
+        playerSoftSkillDtos.sort(teamsPlayersComparators.getComparators().get(parameter));
+        return playerSoftSkillDtos;
     }
 
 
     public void deletePlayerFromCurrentPlacement(Integer number) {
-        Team team = userApi.getTeam();
-        Player player = userApi.getPlayerByNumberFromUserTeam(number);
+        Team team = userService.getUserTeam();
+        Player player = userService.getPlayerByNumberFromUserTeam(number);
         player.setStrategyPlace(-100);
         powerTeamCounter(team);
     }

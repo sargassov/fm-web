@@ -39,7 +39,7 @@ public class Player {
     private boolean firstEighteen;
     private boolean isCapitan;
 
-    private final static Integer youngPlayerBirthYear = 2004;
+    public final static Integer youngPlayerBirthYear = 2004;
 
     public void guessPower(){
         if(position.equals(Position.GOALKEEPER)) power = gkAble;

@@ -4,13 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ru.sargassov.fmweb.api.UserApi;
 import ru.sargassov.fmweb.converters.PlayerConverter;
-import ru.sargassov.fmweb.dto.CreatedPlayerDto;
-import ru.sargassov.fmweb.dto.PlayersPriceOnPageCreatePlayerDto;
-import ru.sargassov.fmweb.exceptions.ValidationException;
+import ru.sargassov.fmweb.dto.player_dtos.CreatedPlayerDto;
+import ru.sargassov.fmweb.dto.PriceResponce;
 import ru.sargassov.fmweb.intermediate_entites.Player;
-import ru.sargassov.fmweb.dto.PlayerOnPagePlayersDto;
+import ru.sargassov.fmweb.dto.player_dtos.PlayerSoftSkillDto;
 import ru.sargassov.fmweb.intermediate_entites.Team;
 import ru.sargassov.fmweb.repositories.PlayerRepository;
 import ru.sargassov.fmweb.validators.CreatedPlayersValidator;
@@ -24,7 +22,7 @@ import java.util.stream.Collectors;
 public class PlayerService {
     private final PlayerRepository playerRepository;
     private final PlayerConverter playerConverter;
-    private final UserApi userApi;
+    private final UserService userService;
     private final CreatedPlayersValidator createdPlayersValidator;
 
     @SneakyThrows
@@ -36,9 +34,9 @@ public class PlayerService {
                 .map(playerConverter::getIntermediateEntityFromEntity).collect(Collectors.toList());
     }
 
-    public List<PlayerOnPagePlayersDto> getPlayerOnPagePlayersDtoFromPlayer(List<Player> playerList) {
+    public List<PlayerSoftSkillDto> getPlayerOnPagePlayersDtoFromPlayer(List<Player> playerList) {
         return playerList.stream()
-                .map(playerConverter::getPlayerOnPagePlayersDtoFromIntermediateEntity)
+                .map(playerConverter::getPlayerSoftSkillDtoFromIntermediateEntity)
                 .collect(Collectors.toList());
     }
 
@@ -46,17 +44,17 @@ public class PlayerService {
         userTeam.getPlayerList().forEach(p -> p.setStrategyPlace(-100));
     }
 
-    public PlayerOnPagePlayersDto getOnePlayerOnPagePlacementsDtoFromPlayer(String name){
-        Player p = userApi.getPlayerByNameFromUserTeam(name);
-        return playerConverter.getPlayerOnPagePlayersDtoFromIntermediateEntity(p);
+    public PlayerSoftSkillDto getOnePlayerOnPagePlacementsDtoFromPlayer(String name){
+        Player p = userService.getPlayerByNameFromUserTeam(name);
+        return playerConverter.getPlayerSoftSkillDtoFromIntermediateEntity(p);
     }
 
-    public PlayerOnPagePlayersDto getAnotherPlayerByNumber(Integer number, int i) {
+    public PlayerSoftSkillDto getAnotherPlayerByNumber(Integer number, int i) {
         Player p = null;
 
         do {
             try {
-                p = userApi.getPlayerByNumberFromUserTeam(number += i);
+                p = userService.getPlayerByNumberFromUserTeam(number += i);
             } catch (RuntimeException r){
                 log.error("Player with number = " + number + " not found");
                 if (number > 99 && i > 0) number = 0;
@@ -64,12 +62,12 @@ public class PlayerService {
             }
         } while(p == null);
 
-        return playerConverter.getPlayerOnPagePlayersDtoFromIntermediateEntity(p);
+        return playerConverter.getPlayerSoftSkillDtoFromIntermediateEntity(p);
     }
 
     public void createNewPlayer(CreatedPlayerDto createdPlayerDto) {
         createdPlayersValidator.newPlayervValidate(createdPlayerDto);
-        Team team = userApi.getTeam();
+        Team team = userService.getUserTeam();
 
         Player player = playerConverter.getIntermediateEntityFromCreatedDto(createdPlayerDto);
         createdPlayersValidator.teamEnoughCreditsValidate(player, team);
@@ -77,10 +75,10 @@ public class PlayerService {
         team.getPlayerList().add(player);
     }
 
-    public PlayersPriceOnPageCreatePlayerDto guessNewPlayerCost(CreatedPlayerDto createdPlayerDto) {
+    public PriceResponce guessNewPlayerCost(CreatedPlayerDto createdPlayerDto) {
         createdPlayersValidator.newPlayervValidate(createdPlayerDto);
 
-        PlayersPriceOnPageCreatePlayerDto cp = new PlayersPriceOnPageCreatePlayerDto();
+        PriceResponce cp = new PriceResponce();
                 cp.setPrice("The price of the " + createdPlayerDto.getName() + " is " +
                 playerConverter.getPriceOfIntermediateEntityFromCreatedDto(createdPlayerDto) + " mln $,");
                 return cp;

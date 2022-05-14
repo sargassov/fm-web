@@ -5,11 +5,9 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.sargassov.fmweb.api.PlacementApi;
-import ru.sargassov.fmweb.api.UserApi;
 import ru.sargassov.fmweb.converters.PlacementConverter;
 import ru.sargassov.fmweb.dto.PlacementData;
 import ru.sargassov.fmweb.dto.PlacementOnPagePlacementsDto;
-import ru.sargassov.fmweb.dto.PlayerOnPagePlacementsDto;
 import ru.sargassov.fmweb.intermediate_entites.League;
 import ru.sargassov.fmweb.intermediate_entites.Placement;
 import ru.sargassov.fmweb.intermediate_entites.Team;
@@ -30,7 +28,7 @@ public class PlacementService {
     private final TeamService teamService;
     private final PlayerService playerService;
     private final League league;
-    private final UserApi userApi;
+    private final UserService userService;
 
     public List<PlacementEntity> findAllPlacements(){
         return placementRepository.findAll();
@@ -65,19 +63,19 @@ public class PlacementService {
     }
 
     public PlacementOnPagePlacementsDto getCurrentPlacementInfo() {
-        return placementConverter.getPlacementOnPagePlacementsDtoFromTeam(userApi.getTeam());
+        return placementConverter.getPlacementOnPagePlacementsDtoFromTeam(userService.getUserTeam());
     }
 
     public void setNewPlacement(PlacementData placementData) {
         Placement placement = placementApi.getPlacementByTitle(placementData.getTitle());
-        Team userTeam = userApi.getTeam();
+        Team userTeam = userService.getUserTeam();
         userTeam.setPlacement(placement);
         userTeam.setTeamPower(0);
         playerService.resetAllStrategyPlaces(userTeam);
     }
 
     public void autoFillCurrentPlacement() {
-        Team userTeam = userApi.getTeam();
+        Team userTeam = userService.getUserTeam();
         teamService.autoFillPlacement(userTeam);
         teamService.powerTeamCounter(userTeam);
     }

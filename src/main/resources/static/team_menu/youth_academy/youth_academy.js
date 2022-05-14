@@ -1,17 +1,29 @@
 angular.module('youth_academy', ['ngStorage']).controller('youth_academyController', function ($scope, $rootScope, $http, $localStorage) {
     const contextPath = 'http://localhost:7777/fm';
 
-    $scope.isUserAlreadyVisited() = function () {
+    $scope.invokeYoungPlayer = function (player) {
+        $http.post(contextPath + '/junior/new/create', player)
+            .then(function successCallback(response) {
+                window.location.href = 'youth_academy.html';
+                $scope.isUserAlreadyVisited();
+                $scope.message = response.data.response;
+            }, function errorCallback(response) {
+                alert('YOUNG PLAYER WAS NOT INVOKED');
+            });
+    };
+
+    $scope.isUserAlreadyVisited = function () {
         $http.get(contextPath + '/junior')
             .then(function successCallback(response) {
                 $scope.loadRandomYoungPlayers();
+                $scope.message = response.data.response;
             }, function errorCallback(response) {
                 alert('YOU HAVE ALREADY VISITED THE ACADEMY TODAY');
             });
     }
 
     $scope.loadRandomYoungPlayers = function () {
-        $http.get(contextPath + '/junior/all_five/')
+        $http.get(contextPath + '/junior/all_five')
             .then(function successCallback(response) {
                 $scope.Players = response.data;
             }, function errorCallback(response) {

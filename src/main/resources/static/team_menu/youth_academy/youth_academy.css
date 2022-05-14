@@ -28,3 +28,10 @@ body {
     color: snow;
     font-size: 20px;
 }
+
+.low_header{
+    text-align: center;
+    font-family: "Arial Black", fantasy;
+    font-size: 20px;
+    color: snow;
+}

@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import ru.sargassov.fmweb.constants.Constant;
 import ru.sargassov.fmweb.dto.PlacementOnPagePlacementsDto;
-import ru.sargassov.fmweb.dto.PlayerOnPagePlacementsDto;
+import ru.sargassov.fmweb.dto.player_dtos.PlayerOnPagePlacementsDto;
 import ru.sargassov.fmweb.intermediate_entites.Placement;
 import ru.sargassov.fmweb.intermediate_entites.Player;
 import ru.sargassov.fmweb.intermediate_entites.Role;
@@ -69,7 +69,7 @@ public class PlacementConverter {
             final int finalI = i;
             Optional<Player> opt = playerList.stream().filter(p -> p.getStrategyPlace() == finalI).findFirst();
             if(opt.isPresent()){
-                dtoList.add(playerConverter.getPlayerOnPagePlacementsDtoFromIntermediateEntity(opt.get()));
+                dtoList.add(playerConverter.getPlayerHardSkillDtoFromIntermediateEntity(opt.get()));
                 pOnPagePlDto.setSize(pOnPagePlDto.getSize() + 1);
             }
             else {

@@ -1,14 +1,11 @@
-package ru.sargassov.fmweb.dto;
+package ru.sargassov.fmweb.dto.player_dtos;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class PlayerOnPagePlacementsDto {
-    private Long id;
-    private String name;
+public class PlayerOnPagePlacementsDto extends PlayerDto {
     private Integer strategyPlace;
     private Integer number;
     private String position;

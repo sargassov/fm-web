@@ -13,6 +13,7 @@ public class UserApi {
     private String name;
     private String homeTown;
     private Team team;
+    private boolean visitToYouthAcademyToday;
 
     public Player getPlayerByNumberFromUserTeam(int num){
         return team.getPlayerList()

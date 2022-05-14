@@ -5,6 +5,6 @@ import lombok.Data;
 import java.math.BigDecimal;
 
 @Data
-public class PlayersPriceOnPageCreatePlayerDto {
+public class PriceResponce {
     private String price;
 }

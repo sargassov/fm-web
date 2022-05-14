@@ -4,10 +4,12 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import ru.sargassov.fmweb.converters.PlayerConverter;
+import ru.sargassov.fmweb.intermediate_entites.Player;
 import ru.sargassov.fmweb.services.JuniorService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Component
 @Data
@@ -35,5 +37,19 @@ public class JuniorPoolApi {
             return name;
         }
         throw new IndexOutOfBoundsException("Wrong player #" + num + " in request");
+    }
+
+    public List<String> getRandomFiveYoungPlyers() {
+        List<String> juniors = new ArrayList<>();
+        Random random = new Random();
+
+        for (int x = 0; x < 5; x++) {
+            juniors.add(youthApiList.get(random.nextInt(youthApiList.size())));
+        }
+        return juniors;
+    }
+
+    public void deleteFromApiList(String name) {
+        youthApiList.remove(name);
     }
 }

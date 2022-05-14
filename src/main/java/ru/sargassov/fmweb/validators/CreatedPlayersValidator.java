@@ -2,7 +2,7 @@ package ru.sargassov.fmweb.validators;
 
 import lombok.Data;
 import org.springframework.stereotype.Component;
-import ru.sargassov.fmweb.dto.CreatedPlayerDto;
+import ru.sargassov.fmweb.dto.player_dtos.CreatedPlayerDto;
 import ru.sargassov.fmweb.exceptions.ValidationException;
 import ru.sargassov.fmweb.intermediate_entites.Player;
 import ru.sargassov.fmweb.intermediate_entites.Team;

@@ -5,20 +5,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import ru.sargassov.fmweb.api.TeamApi;
 import ru.sargassov.fmweb.api.UserApi;
-import ru.sargassov.fmweb.dto.CreatedPlayerDto;
-import ru.sargassov.fmweb.dto.PlacementOnPagePlacementsDto;
-import ru.sargassov.fmweb.dto.PlayerOnPagePlacementsDto;
+import ru.sargassov.fmweb.dto.player_dtos.*;
 import ru.sargassov.fmweb.intermediate_entites.Player;
-import ru.sargassov.fmweb.dto.PlayerOnPagePlayersDto;
 import ru.sargassov.fmweb.entities.PlayerEntity;
 import ru.sargassov.fmweb.exceptions.TeamNotFoundException;
-import ru.sargassov.fmweb.intermediate_entites.Position;
-import ru.sargassov.fmweb.intermediate_entites.Team;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.Optional;
-import java.util.Random;
 
 @Component
 @AllArgsConstructor
@@ -56,21 +49,14 @@ public class PlayerConverter {
         return pDto;
     }
 
-    public PlayerOnPagePlayersDto getPlayerOnPagePlayersDtoFromIntermediateEntity(Player player) {
-        PlayerOnPagePlayersDto pOnPageDto = new PlayerOnPagePlayersDto();
-        pOnPageDto.setName(player.getName());
-        pOnPageDto.setNatio(player.getNatio());
+    public PlayerSoftSkillDto getPlayerSoftSkillDtoFromIntermediateEntity(Player player) {
+        PlayerSoftSkillDto pOnPageDto = new PlayerSoftSkillDto();
+        complectSkillsOfPlayerDto(pOnPageDto, player);
+        complectSkillsOfPlayerHardSkillDto(pOnPageDto, player);
+        complectSkillCreatedPlayerDto(pOnPageDto, player);
         pOnPageDto.setCaptain(booleanToString(player.isCapitan()));
         pOnPageDto.setClub(player.getTeam().getName());
-        pOnPageDto.setPosition(player.getPosition().toString());
-        pOnPageDto.setGkAble(player.getGkAble());
-        pOnPageDto.setDefAble(player.getDefAble());
-        pOnPageDto.setMidAble(player.getMidAble());
-        pOnPageDto.setForwAble(player.getForwAble());
-        pOnPageDto.setCaptainAble(player.getCaptainAble());
         pOnPageDto.setInjury(player.isInjury());
-        pOnPageDto.setTrainingAble(player.getTrainingAble());
-        pOnPageDto.setBirthYear(player.getBirthYear());
         pOnPageDto.setStrategyPlace(player.getStrategyPlace() + 1);
         pOnPageDto.setPower(player.getPower());
         pOnPageDto.setTimeBeforeTreat(player.getTimeBeforeTreat());
@@ -81,15 +67,36 @@ public class PlayerConverter {
         return pOnPageDto;
     }
 
+
+    public void complectSkillsOfPlayerDto(PlayerDto pDto, Player p){
+        pDto.setId(p.getId());
+        pDto.setName(p.getName());
+    }
+
+    public void complectSkillsOfPlayerHardSkillDto(PlayerHardSkillDto pDto, Player p){
+        pDto.setGkAble(p.getGkAble());
+        pDto.setDefAble(p.getDefAble());
+        pDto.setMidAble(p.getMidAble());
+        pDto.setForwAble(p.getForwAble());
+        pDto.setPosition(p.getPosition().toString());
+        pDto.setNatio(p.getNatio());
+        pDto.setCaptainAble(p.getCaptainAble());
+        pDto.setBirthYear(p.getBirthYear());
+    }
+
+    private void complectSkillCreatedPlayerDto(CreatedPlayerDto pDto, Player p){
+        pDto.setTrainingAble(p.getTrainingAble());
+        pDto.setNumber(p.getNumber());
+    }
+
     private String booleanToString(boolean capitan) {
         if(capitan) return "Captain";
         return "";
     }
 
-    public PlayerOnPagePlacementsDto getPlayerOnPagePlacementsDtoFromIntermediateEntity(Player p) {
+    public PlayerOnPagePlacementsDto getPlayerHardSkillDtoFromIntermediateEntity(Player p) {
         PlayerOnPagePlacementsDto pOnPagePlDto = new PlayerOnPagePlacementsDto();
-        pOnPagePlDto.setId(p.getId());
-        pOnPagePlDto.setName(p.getName());
+        complectSkillsOfPlayerDto(pOnPagePlDto, p);
         pOnPagePlDto.setStrategyPlace(p.getStrategyPlace());
         pOnPagePlDto.setNumber(p.getNumber());
         pOnPagePlDto.setPower(p.getPower());
@@ -97,19 +104,23 @@ public class PlayerConverter {
         return pOnPagePlDto;
     }
 
+    private void setSkillsOfIntermediateEntity(Player p, PlayerHardSkillDto playerHardSkillDto){
+        p.setGkAble(playerHardSkillDto.getGkAble());
+        p.setDefAble(playerHardSkillDto.getDefAble());
+        p.setMidAble(playerHardSkillDto.getMidAble());
+        p.setForwAble(playerHardSkillDto.getForwAble());
+        p.setCaptainAble(playerHardSkillDto.getCaptainAble());
+        p.setBirthYear(playerHardSkillDto.getBirthYear());
+        p.guessPosition(playerHardSkillDto.getPosition());
+        guessPrice(p);
+    }
+
     public Player getIntermediateEntityFromCreatedDto(CreatedPlayerDto createdPlayerDto) {
         Player p = new Player();
         p.setName(createdPlayerDto.getName());
         p.setNatio(createdPlayerDto.getNatio());
-        p.setGkAble(createdPlayerDto.getGkAble());
-        p.setDefAble(createdPlayerDto.getDefAble());
-        p.setMidAble(createdPlayerDto.getMidAble());
-        p.setForwAble(createdPlayerDto.getForwAble());
-        p.setCaptainAble(createdPlayerDto.getCaptainAble());
-        p.setBirthYear(createdPlayerDto.getBirthYear());
-        p.guessPosition(createdPlayerDto.getPosition());
+        setSkillsOfIntermediateEntity(p, createdPlayerDto);
         p.setStrategyPlace(-100);
-        guessPrice(p);
         p.guessPower();
         p.setTeam(userApi.getTeam());
         p.guessNumber(createdPlayerDto.getNumber());
@@ -117,16 +128,9 @@ public class PlayerConverter {
         return p;
     }
 
-    public BigDecimal getPriceOfIntermediateEntityFromCreatedDto(CreatedPlayerDto createdPlayerDto) {
+    public BigDecimal getPriceOfIntermediateEntityFromCreatedDto(PlayerHardSkillDto playerHardSkillDto) {
         Player p = new Player();
-        p.setGkAble(createdPlayerDto.getGkAble());
-        p.setDefAble(createdPlayerDto.getDefAble());
-        p.setMidAble(createdPlayerDto.getMidAble());
-        p.setForwAble(createdPlayerDto.getForwAble());
-        p.setCaptainAble(createdPlayerDto.getCaptainAble());
-        p.setBirthYear(createdPlayerDto.getBirthYear());
-        p.guessPosition(createdPlayerDto.getPosition());
-        guessPrice(p);
+        setSkillsOfIntermediateEntity(p, playerHardSkillDto);
         return BigDecimal.valueOf(playerPriceSetter.createPrice(p)).setScale(2, RoundingMode.HALF_UP);
     }
 

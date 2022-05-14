@@ -3,8 +3,9 @@ package ru.sargassov.fmweb.controllers;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-import ru.sargassov.fmweb.dto.PlayerOnPagePlacementsDto;
-import ru.sargassov.fmweb.dto.PlayerOnPagePlayersDto;
+import ru.sargassov.fmweb.dto.TextResponce;
+import ru.sargassov.fmweb.dto.player_dtos.JuniorDto;
+import ru.sargassov.fmweb.dto.player_dtos.PlayerSoftSkillDto;
 import ru.sargassov.fmweb.dto.TeamOnPagePlayersDto;
 import ru.sargassov.fmweb.services.TeamService;
 
@@ -17,7 +18,7 @@ public class TeamController {
     private final TeamService teamService;
 
     @GetMapping("/team/players/{parameter}")
-    public List<PlayerOnPagePlayersDto> getAllPlayersByUserTeam(@PathVariable int parameter) {
+    public List<PlayerSoftSkillDto> getAllPlayersByUserTeam(@PathVariable int parameter) {
         log.info("TeamController.getAllPlayersByUserTeam(parameter)");
         return teamService.getAllPlayersByUserTeam(parameter);
     }

@@ -5,10 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import ru.sargassov.fmweb.dto.PlacementData;
 import ru.sargassov.fmweb.dto.PlacementOnPagePlacementsDto;
-import ru.sargassov.fmweb.dto.PlayerOnPagePlacementsDto;
 import ru.sargassov.fmweb.services.PlacementService;
-
-import java.util.List;
 
 @RestController
 @AllArgsConstructor

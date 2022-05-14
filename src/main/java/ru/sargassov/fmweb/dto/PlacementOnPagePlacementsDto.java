@@ -1,6 +1,7 @@
 package ru.sargassov.fmweb.dto;
 
 import lombok.Data;
+import ru.sargassov.fmweb.dto.player_dtos.PlayerOnPagePlacementsDto;
 
 import java.util.List;
 

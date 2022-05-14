@@ -4,7 +4,7 @@ angular.module('create_player', ['ngStorage']).controller('create_playerControll
     $scope.createNewPlayer = function () {
         $http.post(contextPath + '/player/new/create', $scope.player)
             .then(function successCallback(response) {
-                window.location.href = '../create_player/create_player.html';
+                window.location.href = 'create_player.html';
                 $scope.getUserTeamName();
             }, function errorCallback(response) {
                 alert('NEW PLAYER WAS NOT CREATED');
