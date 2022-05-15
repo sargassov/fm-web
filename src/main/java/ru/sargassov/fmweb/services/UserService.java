@@ -8,8 +8,11 @@ import ru.sargassov.fmweb.converters.UserConverter;
 import ru.sargassov.fmweb.dto.TextResponce;
 import ru.sargassov.fmweb.dto.UserData;
 import ru.sargassov.fmweb.exceptions.YouthAcademyException;
+import ru.sargassov.fmweb.intermediate_entites.Coach;
 import ru.sargassov.fmweb.intermediate_entites.Player;
 import ru.sargassov.fmweb.intermediate_entites.Team;
+
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -60,4 +63,8 @@ public class UserService {
     public void visit() {
         userApi.setVisitToYouthAcademyToday(true);
     }
+
+    public List<Player> getPlayerListFromUserTeam() {return userApi.getTeam().getPlayerList();}
+
+    public List<Coach> getCoachListFromUserTeam() {return userApi.getTeam().getCoaches();}
 }

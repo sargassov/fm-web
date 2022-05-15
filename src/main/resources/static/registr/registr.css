@@ -19,11 +19,11 @@ body {
 /*    margin-left: 260px;*/
 /*}*/
 
-button{
-    margin: auto;
-    align-content: center;
+
+.div-button{
     align-items: center;
     align-self: center;
+    align-content: center;
     text-align: center;
 }
 
