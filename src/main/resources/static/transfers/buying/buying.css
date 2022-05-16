@@ -1,0 +1,34 @@
+body {
+    background-image: url(buying.jpg);
+    background-size: cover;
+}
+
+.header {
+    text-align: center;
+    font-family: "Arial Black", fantasy;
+    font-size: 26px;
+    color: snow;
+}
+
+.date_show {
+    text-align: center;
+    font-family: "Arial Black", fantasy;
+    color: snow;
+}
+
+.cell,
+.linktext {
+    font-family: "Arial Black", fantasy;
+    size: 30px;
+    color: snow;
+}
+
+.oppenent_team_name,
+.your_team_name{
+    text-align: center;
+    font-family: "Arial Black", fantasy;
+    color: snow;
+}
+
+#scrolltable { margin-top: 20px; height: 200px; overflow: auto; }
+#scrolltable th div { position: absolute; margin-top: -20px; }

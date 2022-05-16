@@ -7,7 +7,7 @@ angular.module('player_window', ['ngStorage']).controller('player_windowControll
     };
 
     $scope.getAnotherPlayerPlus = function (number) {
-        $http.get(contextPath + '/player/next/' + number)
+        $http.get(contextPath + '/player/vision/next/' + number)
             .then(function successCallback(response) {
                 $scope.player = response.data;
             }, function errorCallback(response) {
@@ -16,7 +16,7 @@ angular.module('player_window', ['ngStorage']).controller('player_windowControll
     };
 
     $scope.getAnotherPlayerMinus = function (number) {
-        $http.get(contextPath + '/player/prev/' + number)
+        $http.get(contextPath + '/player/vision/prev/' + number)
             .then(function successCallback(response) {
                 $scope.player = response.data;
             }, function errorCallback(response) {

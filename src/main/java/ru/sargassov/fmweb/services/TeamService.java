@@ -14,6 +14,7 @@ import ru.sargassov.fmweb.exceptions.PlayerNotFoundException;
 import ru.sargassov.fmweb.intermediate_entites.*;
 import ru.sargassov.fmweb.repositories.TeamRepository;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -186,7 +187,9 @@ public class TeamService {
 
 
     public TeamOnPagePlayersDto getNameOfUserTeam() {
-        return teamConverter.dtoToTeamOnPagePlayersDto(userService.getUserTeam());
+        TeamOnPagePlayersDto teamDto = teamConverter.dtoToTeamOnPagePlayersDto(userService.getUserTeam());
+        teamDto.setTeamFullSize(userService.getUserTeam().getPlayerList().size());
+        return teamDto;
     }
 
     public List<PlayerSoftSkillDto> getAllPlayersByUserTeam(Integer parameter) {
@@ -215,4 +218,47 @@ public class TeamService {
         playerOnTrainingDtos.sort(trainingPlayersComparators.getComparators().get(parameter));
         return playerOnTrainingDtos;
     }
+        //////////////////////////////////////////////////////////////////////////////
+
+    public TeamOnPagePlayersDto getNameOfOpponentTeam(Integer parameter, Integer delta) {
+        List<Team> teams = teamApi.getTeamApiList().stream()
+                .sorted(Comparator.comparing(Team::getName))
+                .collect(Collectors.toList());
+
+        parameter += delta;
+        if(parameter >= teams.size()) parameter = 0;
+        if(parameter < 0) parameter = teams.size() - 1;
+        if(teams.get(parameter) == userService.getUserTeam() && delta == 1) parameter += 1;
+        if(teams.get(parameter) == userService.getUserTeam() && delta == -1) parameter -= 1;
+
+        TeamOnPagePlayersDto teamDto = teamConverter.dtoToTeamOnPagePlayersDto(teams.get(parameter));
+        teamDto.setParameter(parameter);
+        teamDto.setPlayerParameter(-1);
+        teamDto.setTeamFullSize(teams.get(parameter).getPlayerList().size());
+        teamDto.setSortParameter(0);
+        return teamDto;
+    }
+
+    public List<PlayerSoftSkillDto> getAllPlayersByOtherTeam(String name, Integer playerParameter, Integer sortParameter) {
+        log.info("TeamService.getAllPlayersByOtherTeam(name)");
+        List<Player> players = teamApi.findByName(name).getPlayerList();
+        List<PlayerSoftSkillDto> playerSoftSkillDtos = playerService.getPlayerSoftSkillDtoFromPlayer(players);
+
+        if(playerParameter < 0) playerParameter = 0;
+        if(playerParameter > playerSoftSkillDtos.size() - 10) playerParameter = playerSoftSkillDtos.size() - 10;
+        return playerSoftSkillDtos.stream()
+                .sorted(teamsPlayersComparators.getComparators().get(sortParameter))
+                .skip(playerParameter)
+                .limit(10)
+                .collect(Collectors.toList());
+    }
+
+//    public List<PlayerSoftSkillDto> getAllPlayersByUserTeam(Integer parameter) {
+//        log.info("TeamService.getAllPlayersByUserTeam()");
+//        List<Player> players = userService.getUserTeam().getPlayerList();
+//        List<PlayerSoftSkillDto> playerSoftSkillDtos = playerService.getPlayerSoftSkillDtoFromPlayer(players);
+//
+//        playerSoftSkillDtos.sort(teamsPlayersComparators.getComparators().get(parameter));
+//        return playerSoftSkillDtos;
+//    }
 }

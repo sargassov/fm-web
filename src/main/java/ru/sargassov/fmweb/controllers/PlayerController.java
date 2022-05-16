@@ -20,13 +20,13 @@ public class PlayerController {
         return playerService.getOnePlayerOnPagePlacementsDtoFromPlayer(name);
     }
 
-    @GetMapping("/player/next/{number}")
+    @GetMapping("/player/vision/next/{number}")
     public PlayerSoftSkillDto getNextPlayerByNumer(@PathVariable Integer number) {
         log.info("PlayerController.getNextPlayerByNumer()");
         return playerService.getAnotherPlayerByNumber(number, 1);
     }
 
-    @GetMapping("/player/prev/{number}")
+    @GetMapping("/player/vision/prev/{number}")
     public PlayerSoftSkillDto getPrevPlayerByNumer(@PathVariable Integer number) {
         log.info("PlayerController.getPrevPlayerByNumer()");
         return playerService.getAnotherPlayerByNumber(number, -1);

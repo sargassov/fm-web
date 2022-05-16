@@ -6,6 +6,10 @@ import java.math.BigDecimal;
 
 @Data
 public class TeamOnPagePlayersDto {
-    String name;
-    BigDecimal wealth;
+    private String name;
+    private BigDecimal wealth;
+    private Integer parameter;
+    private Integer playerParameter;
+    private Integer teamFullSize;
+    private Integer sortParameter;
 }

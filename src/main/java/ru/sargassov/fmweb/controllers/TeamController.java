@@ -41,4 +41,44 @@ public class TeamController {
         log.info("TeamController.getAllPlayersByUserTeam(parameter)");
         return teamService.getAllPlayersOnTrainingByUserTeam(parameter);
     }
+
+    @GetMapping("/team/name/next/{parameter}")
+    public TeamOnPagePlayersDto getNextNameOfOpponentTeam(@PathVariable Integer parameter) {
+        log.info("TeamController.getNextNameOfOpponentTeam()");
+        return teamService.getNameOfOpponentTeam(parameter, 1);
+    }
+
+    @GetMapping("/team/name/prev/{parameter}")
+    public TeamOnPagePlayersDto getPrevNameOfOpponentTeam(@PathVariable Integer parameter) {
+        log.info("TeamController.getPrevNameOfOpponentTeam()");
+        return teamService.getNameOfOpponentTeam(parameter, - 1);
+    }
+
+    @PutMapping("/team/{name}/players/prev/{sortParameter}")
+    public List<PlayerSoftSkillDto> getTenPlayersFromPrevByOtherTeam(@PathVariable String name, @PathVariable Integer sortParameter, @RequestBody Integer playerParameter) {
+        log.info("TeamController.getTenPlayersFromPrevByOtherTeam");
+        return teamService.getAllPlayersByOtherTeam(name, playerParameter - 1, sortParameter);
+    }
+
+    @PutMapping("/team/{name}/players/next/{sortParameter}")
+    public List<PlayerSoftSkillDto> getTenPlayersFromNextByOtherTeam(@PathVariable String name, @PathVariable Integer sortParameter, @RequestBody Integer playerParameter) {
+        log.info("TeamController.getTenPlayersFromNextByOtherTeam");
+        return teamService.getAllPlayersByOtherTeam(name, playerParameter + 1, sortParameter);
+    }
+
+    @PutMapping("/team/userteam/players/prev/{sortParameter}")
+    public List<PlayerSoftSkillDto> getTenPlayersFromPrevByUserTeam(@PathVariable Integer sortParameter, @RequestBody Integer playerParameter) {
+        log.info("TeamController.getTenPlayersFromPrevByUserTeam");
+        String name = teamService.getNameOfUserTeam().getName();
+        return teamService.getAllPlayersByOtherTeam(name, playerParameter - 1, sortParameter);
+    }
+
+    @PutMapping("/team/userteam/players/next/{sortParameter}")
+    public List<PlayerSoftSkillDto> getTenPlayersFromNextByUserTeam(@PathVariable Integer sortParameter, @RequestBody Integer playerParameter) {
+        log.info("TeamController.getTenPlayersFromNextByUserTeam");
+        String name = teamService.getNameOfUserTeam().getName();
+        return teamService.getAllPlayersByOtherTeam(name, playerParameter + 1, sortParameter);
+    }
+
+
 }
