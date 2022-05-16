@@ -50,4 +50,11 @@ public class CoachController {
         log.info("CoachController.deleteCoachByCount");
         coachService.deleteCoachByCount(count);
     }
+
+    @PutMapping("/coach/program/{count}/{program}")
+    public void changeTrainingProgram(@PathVariable Integer count, @PathVariable Integer program) {
+        log.info("CoachController.changeTrainingProgram");
+        coachService.changeTrainingProgram(count, program);
+    }
+
 }

@@ -15,17 +15,38 @@ public class Coach {
     private CoachProgram coachProgram;
     private Player playerOnTraining;
     private BigDecimal price;
+    private int trainingAble;
 
     public enum CoachProgram {
-        STANDART,
-        INTENSIVE,
-        HARD
+        STANDART(1),
+        INTENSIVE(1.5),
+        HARD(2);
+
+        private final double programCode;
+
+        CoachProgram(double programCode){
+            this.programCode = programCode;
+        }
+
+        public double getProgramCode() {
+            return programCode;
+        }
     }
 
     public enum CoachType {
-        LOCAL,
-        PROFESSIONAL,
-        WORLD_CLASS
+        LOCAL(1),
+        PROFESSIONAL(1.5),
+        WORLD_CLASS(2);
+
+        private final double typeCode;
+
+        CoachType(double typeCode){
+            this.typeCode = typeCode;
+        }
+
+        public double getTypeCode() {
+            return typeCode;
+        }
     }
 
 }

@@ -1,14 +1,12 @@
-angular.module('add_new_coach', ['ngStorage']).controller('add_new_coachController', function ($scope, $rootScope, $http, $localStorage) {
+angular.module('training_programs', ['ngStorage']).controller('training_programsController', function ($scope, $rootScope, $http, $localStorage) {
     const contextPath = 'http://localhost:7777/fm';
 
-    $scope.addNewCoach = function () {
-        $http.post(contextPath + '/coach/new/create', $scope.coach)
-            .then(function successCallback() {
-                window.history.back();
-                // window.location.reload();
-                window.location.href('../coaches/coaches.html');
-            }, function errorCallback() {
-                alert('NEW COACH WAS NOT ADD');
+    $scope.loadCoaches = function () {
+        $http.get(contextPath + '/coach/all')
+            .then(function successCallback(response) {
+                $scope.Coaches = response.data;
+            }, function errorCallback(response) {
+                alert('COACH PROGRAMS OF YOUR TEAM NOT FOUND');
             });
     };
 
@@ -30,16 +28,17 @@ angular.module('add_new_coach', ['ngStorage']).controller('add_new_coachControll
             });
     };
 
-    $scope.guessCost = function () {
-        $http.post(contextPath + '/coach/new/cost', $scope.coach)
+    $scope.changeProgram = function (count, progrId) {
+        $http.put(contextPath + '/coach/program/' + count + '/' + progrId)
             .then(function successCallback(response) {
-                $scope.cost = response.data;
-                $scope.getUserTeamName();
+                $scope.loadCoaches();
             }, function errorCallback(response) {
-                alert('CANT GET COACH COST');
+                alert('COACH PROGRAM CHANGE FAILURE')
             });
-    }
+    };
+
 
     $scope.getActualDate();
+    $scope.loadCoaches();
     $scope.getUserTeamName();
 });

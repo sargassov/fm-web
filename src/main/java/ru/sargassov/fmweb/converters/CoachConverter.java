@@ -17,7 +17,7 @@ public class CoachConverter {
             cDto.setPlayerOnTraining("N/N");
         else{
             cDto.setPlayerOnTraining(coach.getPlayerOnTraining().getName());
-            cDto.setPlayerTrAble(coach.getPlayerOnTraining().getTrainingAble());
+            cDto.setPlayerTrAble(coach.getTrainingAble());
         }
 
         return cDto;

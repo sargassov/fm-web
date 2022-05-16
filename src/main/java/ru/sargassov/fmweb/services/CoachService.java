@@ -56,27 +56,77 @@ public class CoachService {
         }
     }
 
-    public void changePlayerOnTrain(CoachDto coachDto) {
-        Coach coach = userService.getCoachListFromUserTeam().get(coachDto.getCount());
-        List<Player> players = userService.getPlayerListFromUserTeam().stream()
+    private List<Player> getBusyPlayers(){
+       return userService.getCoachListFromUserTeam().stream()
+                .map(Coach::getPlayerOnTraining)
+                .collect(Collectors.toList());
+    }
+
+    private List<Player> getPlayerComparingByNumberAndPositionOfCoach(Coach coach){
+        return userService.getPlayerListFromUserTeam().stream()
                 .filter(p -> p.getPosition().equals(coach.getPosition()))
                 .sorted(Comparator.comparing(Player::getNumber))
                 .collect(Collectors.toList());
+    }
+
+    public void changePlayerOnTrain(CoachDto coachDto) {
+        Coach coach = userService.getCoachListFromUserTeam().get(coachDto.getCount());
+        List<Player> players = getPlayerComparingByNumberAndPositionOfCoach(coach);
+        Player p;
+
+        coach.setCoachProgram(Coach.CoachProgram.STANDART);
+        coach.setTrainingAble(0);
 
         if(coachDto.getPlayerOnTraining().equals("N/N")){
-            coach.setPlayerOnTraining(players.get(0));
+            int countPlayerInList = 0;
+            selectingPlayerOnTrain(players, countPlayerInList, coach);
             return;
         }
 
-        Player p = userService.getPlayerByNameFromUserTeam(coachDto.getPlayerOnTraining());
-        int countPlayerInTeam = players.indexOf(p) + 1;
-        if(countPlayerInTeam == players.size())
-            countPlayerInTeam = 0;
-        coach.setPlayerOnTraining(players.get(countPlayerInTeam));
+        p = userService.getPlayerByNameFromUserTeam(coachDto.getPlayerOnTraining());
+        int countPlayerInList = players.indexOf(p);
+        selectingPlayerOnTrain(players, countPlayerInList, coach);
+    }
+
+    private void selectingPlayerOnTrain(List<Player> players, int countPlayerInList, Coach coach) {
+        for(int x = 0; x < players.size(); x++){
+            if(getBusyPlayers().contains(players.get(countPlayerInList))){
+                countPlayerInList++;
+                if(countPlayerInList == players.size()) countPlayerInList = 0;
+                continue;
+            }
+            break;
+        }
+        coach.setPlayerOnTraining(players.get(countPlayerInList));
+        guessTrainingAble(coach, coach.getPlayerOnTraining());
+    }
+
+    private void guessTrainingAble(Coach coach, Player player) {
+        double possibleTrainingAble = 1.0;
+        possibleTrainingAble *= coach.getCoachProgram().getProgramCode();
+        possibleTrainingAble *= coach.getType().getTypeCode();
+        coach.setTrainingAble((int) (possibleTrainingAble * player.getTrainingAble()));
     }
 
     public void deleteCoachByCount(Integer count) {
         List<Coach> coaches = userService.getCoachListFromUserTeam();
         coaches.remove(coaches.get(count));
+        replaceCounters(coaches);
+    }
+
+    private void replaceCounters(List<Coach> coaches) {
+        for (int i = 0; i < coaches.size(); i++) {
+            Coach coach = coaches.get(i);
+            coach.setCount(i);
+        }
+    }
+
+    public void changeTrainingProgram(Integer count, Integer program) {
+        Coach coach = userService.getCoachListFromUserTeam().get(count);
+        Coach.CoachProgram[] allPrograms = Coach.CoachProgram.values();
+        coach.setCoachProgram(allPrograms[program]);
+
+        Player player = coach.getPlayerOnTraining();
+        guessTrainingAble(coach, player);
     }
 }
