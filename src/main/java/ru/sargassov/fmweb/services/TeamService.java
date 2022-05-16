@@ -5,8 +5,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.sargassov.fmweb.api.TeamApi;
 import ru.sargassov.fmweb.comparators.TeamsPlayersComparators;
+import ru.sargassov.fmweb.comparators.TrainingPlayersComparators;
 import ru.sargassov.fmweb.converters.TeamConverter;
 import ru.sargassov.fmweb.dto.*;
+import ru.sargassov.fmweb.dto.player_dtos.PlayerOnTrainingDto;
 import ru.sargassov.fmweb.dto.player_dtos.PlayerSoftSkillDto;
 import ru.sargassov.fmweb.exceptions.PlayerNotFoundException;
 import ru.sargassov.fmweb.intermediate_entites.*;
@@ -26,6 +28,7 @@ public class TeamService {
     private final UserService userService;
     private final TeamApi teamApi;
     private final TeamsPlayersComparators teamsPlayersComparators;
+    private final TrainingPlayersComparators trainingPlayersComparators;
 
     public void loadTeams(){
         teamApi.setTeamApiList(findAll());
@@ -189,7 +192,7 @@ public class TeamService {
     public List<PlayerSoftSkillDto> getAllPlayersByUserTeam(Integer parameter) {
         log.info("TeamService.getAllPlayersByUserTeam()");
         List<Player> players = userService.getUserTeam().getPlayerList();
-        List<PlayerSoftSkillDto> playerSoftSkillDtos = playerService.getPlayerOnPagePlayersDtoFromPlayer(players);
+        List<PlayerSoftSkillDto> playerSoftSkillDtos = playerService.getPlayerSoftSkillDtoFromPlayer(players);
 
         playerSoftSkillDtos.sort(teamsPlayersComparators.getComparators().get(parameter));
         return playerSoftSkillDtos;
@@ -204,4 +207,12 @@ public class TeamService {
     }
 //    //////////////////////////////////////////////////////////////////////////////
 
+    public List<PlayerOnTrainingDto> getAllPlayersOnTrainingByUserTeam(Integer parameter) {
+        log.info("TeamService.getAllPlayersOnTrainingByUserTeam()");
+        List<Player> players = userService.getUserTeam().getPlayerList();
+        List<PlayerOnTrainingDto> playerOnTrainingDtos = playerService.getPlayerOnTrainingDtoFromPlayer(players);
+
+        playerOnTrainingDtos.sort(trainingPlayersComparators.getComparators().get(parameter));
+        return playerOnTrainingDtos;
+    }
 }

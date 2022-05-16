@@ -10,7 +10,7 @@ import java.util.List;
 @Component
 @Getter
 public class TeamsPlayersComparators {
-    private List<Comparator<PlayerSoftSkillDto>> comparators = new ArrayList<>(List.of(
+    private final List<Comparator<PlayerSoftSkillDto>> comparators = new ArrayList<>(List.of(
             Comparator.comparing(PlayerSoftSkillDto::getName),
             Comparator.comparing(PlayerSoftSkillDto::getClub),
             Comparator.comparing(PlayerSoftSkillDto::getNatio),

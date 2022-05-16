@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import ru.sargassov.fmweb.dto.TextResponce;
 import ru.sargassov.fmweb.dto.player_dtos.JuniorDto;
+import ru.sargassov.fmweb.dto.player_dtos.PlayerOnTrainingDto;
 import ru.sargassov.fmweb.dto.player_dtos.PlayerSoftSkillDto;
 import ru.sargassov.fmweb.dto.TeamOnPagePlayersDto;
 import ru.sargassov.fmweb.services.TeamService;
@@ -35,5 +36,9 @@ public class TeamController {
         teamService.setNewCaptainHandle(name);
     }
 
-
+    @GetMapping("/team/players_on_training/{parameter}")
+    public List<PlayerOnTrainingDto> getAllPlayersOnTrainingByUserTeam(@PathVariable Integer parameter) {
+        log.info("TeamController.getAllPlayersByUserTeam(parameter)");
+        return teamService.getAllPlayersOnTrainingByUserTeam(parameter);
+    }
 }

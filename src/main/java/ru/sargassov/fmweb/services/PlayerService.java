@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import ru.sargassov.fmweb.converters.PlayerConverter;
 import ru.sargassov.fmweb.dto.player_dtos.CreatedPlayerDto;
 import ru.sargassov.fmweb.dto.PriceResponce;
+import ru.sargassov.fmweb.dto.player_dtos.PlayerOnTrainingDto;
 import ru.sargassov.fmweb.intermediate_entites.Player;
 import ru.sargassov.fmweb.dto.player_dtos.PlayerSoftSkillDto;
 import ru.sargassov.fmweb.intermediate_entites.Team;
@@ -34,7 +35,7 @@ public class PlayerService {
                 .map(playerConverter::getIntermediateEntityFromEntity).collect(Collectors.toList());
     }
 
-    public List<PlayerSoftSkillDto> getPlayerOnPagePlayersDtoFromPlayer(List<Player> playerList) {
+    public List<PlayerSoftSkillDto> getPlayerSoftSkillDtoFromPlayer(List<Player> playerList) {
         return playerList.stream()
                 .map(playerConverter::getPlayerSoftSkillDtoFromIntermediateEntity)
                 .collect(Collectors.toList());
@@ -82,5 +83,11 @@ public class PlayerService {
                 cp.setPrice("The price of the " + createdPlayerDto.getName() + " is " +
                 playerConverter.getPriceOfIntermediateEntityFromCreatedDto(createdPlayerDto) + " mln $,");
                 return cp;
+    }
+
+    public List<PlayerOnTrainingDto> getPlayerOnTrainingDtoFromPlayer(List<Player> players) {
+        return players.stream()
+                .map(playerConverter::getPlayerOnTrainingDtoFromPlayer)
+                .collect(Collectors.toList());
     }
 }

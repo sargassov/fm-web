@@ -5,8 +5,8 @@ angular.module('add_new_coach', ['ngStorage']).controller('add_new_coachControll
         $http.post(contextPath + '/coach/new/create', $scope.coach)
             .then(function successCallback() {
                 window.history.back();
-                // window.location.reload();
-                window.location.href('../coaches/coaches.html');
+                window.location.reload();
+                // window.location.href('../coaches/coaches.html');
             }, function errorCallback() {
                 alert('NEW COACH WAS NOT ADD');
             });

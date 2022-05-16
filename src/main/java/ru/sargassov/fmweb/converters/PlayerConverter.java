@@ -6,12 +6,17 @@ import org.springframework.stereotype.Component;
 import ru.sargassov.fmweb.api.TeamApi;
 import ru.sargassov.fmweb.api.UserApi;
 import ru.sargassov.fmweb.dto.player_dtos.*;
+import ru.sargassov.fmweb.exceptions.CoachException;
+import ru.sargassov.fmweb.intermediate_entites.Coach;
 import ru.sargassov.fmweb.intermediate_entites.Player;
 import ru.sargassov.fmweb.entities.PlayerEntity;
 import ru.sargassov.fmweb.exceptions.TeamNotFoundException;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 @AllArgsConstructor
@@ -139,6 +144,36 @@ public class PlayerConverter {
     }
 
 
+    public PlayerOnTrainingDto getPlayerOnTrainingDtoFromPlayer(Player p) {
+        List<Coach> coaches = userApi.getTeam().getCoaches();
+        List<Player> coachPlayers = coaches.stream()
+                .map(Coach::getPlayerOnTraining)
+                .collect(Collectors.toList());
 
+        PlayerOnTrainingDto pDto = new PlayerOnTrainingDto();
+        complectSkillsOfPlayerDto(pDto, p);
+        pDto.setTrainingBalance(p.getTrainingBalance());
+        pDto.setPosition(p.getPosition().toString());
+        pDto.setTire(p.getTire());
 
+        if(coachPlayers.contains(p)){
+            Coach coach = getCoachForCurrentPlayer(coaches, p);
+            pDto.setOnTraining(coach.getType().toString() + "/" + coach.getCoachProgram().toString());
+            pDto.setTrainingAble(coach.getTrainingAble());
+            return pDto;
+        }
+
+        pDto.setOnTraining("");
+        pDto.setTrainingAble(p.getTrainingAble());
+        return pDto;
+    }
+
+    private Coach getCoachForCurrentPlayer(List<Coach> coaches, Player p) {
+        Optional<Coach> coachOpt = coaches.stream().filter(c -> c.getPlayerOnTraining() == p).findFirst();
+        if(coachOpt.isEmpty()){
+            log.error("Coach was not found");
+            throw new CoachException("Coach was not found");
+        }
+        return coachOpt.get();
+    }
 }
