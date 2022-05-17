@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 public class TeamOnPagePlayersDto {
     private String name;
     private BigDecimal wealth;
-    private Integer parameter;
+    private Integer countParameter;
     private Integer playerParameter;
     private Integer teamFullSize;
     private Integer sortParameter;

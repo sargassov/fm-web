@@ -187,9 +187,15 @@ public class TeamService {
 
 
     public TeamOnPagePlayersDto getNameOfUserTeam() {
-        TeamOnPagePlayersDto teamDto = teamConverter.dtoToTeamOnPagePlayersDto(userService.getUserTeam());
-        teamDto.setTeamFullSize(userService.getUserTeam().getPlayerList().size());
-        return teamDto;
+        Team userTeam = userService.getUserTeam();
+        int index = teamApi.getTeamApiList().stream()
+                .sorted(Comparator.comparing(Team::getName))
+                .collect(Collectors.toList())
+                .indexOf(userTeam);
+
+        TeamOnPagePlayersDto userTeamDto = teamConverter.dtoToTeamOnPagePlayersDto(userTeam);
+        userTeamDto.setCountParameter(index);
+        return userTeamDto;
     }
 
     public List<PlayerSoftSkillDto> getAllPlayersByUserTeam(Integer parameter) {
@@ -232,14 +238,11 @@ public class TeamService {
         if(teams.get(parameter) == userService.getUserTeam() && delta == -1) parameter -= 1;
 
         TeamOnPagePlayersDto teamDto = teamConverter.dtoToTeamOnPagePlayersDto(teams.get(parameter));
-        teamDto.setParameter(parameter);
-        teamDto.setPlayerParameter(-1);
-        teamDto.setTeamFullSize(teams.get(parameter).getPlayerList().size());
-        teamDto.setSortParameter(0);
+        teamDto.setCountParameter(parameter);
         return teamDto;
     }
 
-    public List<PlayerSoftSkillDto> getAllPlayersByOtherTeam(String name, Integer playerParameter, Integer sortParameter) {
+    public List<PlayerSoftSkillDto> getTenPlayersFromNextTeam(String name, Integer playerParameter, Integer sortParameter) {
         log.info("TeamService.getAllPlayersByOtherTeam(name)");
         List<Player> players = teamApi.findByName(name).getPlayerList();
         List<PlayerSoftSkillDto> playerSoftSkillDtos = playerService.getPlayerSoftSkillDtoFromPlayer(players);
@@ -252,13 +255,4 @@ public class TeamService {
                 .limit(10)
                 .collect(Collectors.toList());
     }
-
-//    public List<PlayerSoftSkillDto> getAllPlayersByUserTeam(Integer parameter) {
-//        log.info("TeamService.getAllPlayersByUserTeam()");
-//        List<Player> players = userService.getUserTeam().getPlayerList();
-//        List<PlayerSoftSkillDto> playerSoftSkillDtos = playerService.getPlayerSoftSkillDtoFromPlayer(players);
-//
-//        playerSoftSkillDtos.sort(teamsPlayersComparators.getComparators().get(parameter));
-//        return playerSoftSkillDtos;
-//    }
 }

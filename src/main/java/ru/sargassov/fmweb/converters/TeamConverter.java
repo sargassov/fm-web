@@ -41,6 +41,9 @@ public class TeamConverter {
         TeamOnPagePlayersDto tOnPageDto = new TeamOnPagePlayersDto();
         tOnPageDto.setName(team.getName());
         tOnPageDto.setWealth(team.getWealth().setScale(2, RoundingMode.HALF_UP));
+        tOnPageDto.setTeamFullSize(team.getPlayerList().size());
+        tOnPageDto.setPlayerParameter(-1);
+        tOnPageDto.setSortParameter(0);
         return tOnPageDto;
     }
 }
