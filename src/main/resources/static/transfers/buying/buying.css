@@ -29,6 +29,3 @@ body {
     font-family: "Arial Black", fantasy;
     color: snow;
 }
-
-#scrolltable { margin-top: 20px; height: 200px; overflow: auto; }
-#scrolltable th div { position: absolute; margin-top: -20px; }

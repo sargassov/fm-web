@@ -55,4 +55,10 @@ public class TeamController {
         return teamService.getTenPlayersFromNextTeam(name, teamDto.getPlayerParameter() + teamDto.getDelta(), teamDto.getSortParameter());
     }
 
+    @PostMapping("/team/players/buy")
+    public void buyNewPlayer(@RequestBody PlayerSoftSkillDto o) {
+        log.info("TeamController.buyNewPlayer()");
+        teamService.buyNewPlayer(o);
+    }
+
 }

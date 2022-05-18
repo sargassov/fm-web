@@ -90,6 +90,17 @@ angular.module('buying', ['ngStorage']).controller('buyingController', function 
             });
     };
 
+    $scope.buyPlayer = function (o) {
+        $http.post(contextPath + '/team/players/buy', o)
+            .then(function successCallback(response) {
+                alert('YOU HAVE ALREADY BOUGHT ' + o.name + ' IN ' + $scope.team.name + ' FOR ' + o.price + ' mln $');
+                $scope.getUserTeamName();
+                $scope.getNextOppenentTeamName($scope.opponentTeam.countParameter - 1, 1);
+            }, function errorCallback(response) {
+                alert('YOU CANT BUY THIS PLAYER');
+            });
+    };
+
     $scope.getActualDate();
     $scope.getUserTeamName();
     $scope.getNextOppenentTeamName(-1, 1);

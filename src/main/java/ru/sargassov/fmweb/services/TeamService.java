@@ -11,6 +11,7 @@ import ru.sargassov.fmweb.dto.*;
 import ru.sargassov.fmweb.dto.player_dtos.PlayerOnTrainingDto;
 import ru.sargassov.fmweb.dto.player_dtos.PlayerSoftSkillDto;
 import ru.sargassov.fmweb.exceptions.PlayerNotFoundException;
+import ru.sargassov.fmweb.exceptions.TooExpensiveException;
 import ru.sargassov.fmweb.intermediate_entites.*;
 import ru.sargassov.fmweb.repositories.TeamRepository;
 
@@ -64,13 +65,17 @@ public class TeamService {
         for(Team currentTeam : teamList){
             for(Position currentPosition : Position.values()){
                 for (int i = 0; i < maxValueOfYoungPlayersForOnePosition; i++) {
-                    Player player = juniorService.getYoungPlayer(currentPosition);
-                    player.setTeam(currentTeam);
-                    player.setNumber(randomGuessNum(currentTeam));
-                    currentTeam.getPlayerList().add(player);
+                    addJuniorToTeam(currentTeam, currentPosition);
                 }
             }
         }
+    }
+
+    private void addJuniorToTeam(Team currentTeam, Position currentPosition){
+        Player player = juniorService.getYoungPlayer(currentPosition);
+        player.setTeam(currentTeam);
+        player.setNumber(randomGuessNum(currentTeam));
+        currentTeam.getPlayerList().add(player);
     }
 
     private int randomGuessNum(Team currentTeam) {
@@ -254,5 +259,28 @@ public class TeamService {
                 .skip(playerParameter)
                 .limit(10)
                 .collect(Collectors.toList());
+    }
+
+    public void buyNewPlayer(PlayerSoftSkillDto playerSoftSkillDto) {
+        Team opponentTeam = teamApi.findByName(playerSoftSkillDto.getClub());
+        Team userTeam = userService.getUserTeam();
+        Player player = opponentTeam.findPlayerByName(playerSoftSkillDto.getName());
+
+        if(userTeam.getWealth().compareTo(player.getPrice()) < 0)
+            throw new TooExpensiveException("Player " + player.getName() +
+                    " have price = " + player.getPrice() + " is too expensive for " + userTeam.getName());
+
+        userTeam.setWealth(userTeam.getWealth().subtract(player.getPrice()));
+        opponentTeam.setWealth(opponentTeam.getWealth().add(player.getPrice()));
+        player.setStrategyPlace(-100);
+        player.setCapitan(false);
+        player.setTeam(userTeam);
+        userTeam.getPlayerList().add(player);
+        player.guessNumber(player.getNumber());
+
+        opponentTeam.getPlayerList().remove(player);
+        addJuniorToTeam(opponentTeam, player.getPosition());
+        captainAppointment(opponentTeam);
+
     }
 }
