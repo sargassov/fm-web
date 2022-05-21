@@ -2,7 +2,7 @@ package ru.sargassov.fmweb.services;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.sargassov.fmweb.api.DrawApi;
+import ru.sargassov.fmweb.api_temporary_classes_group.DrawApi;
 import ru.sargassov.fmweb.intermediate_entites.Team;
 import ru.sargassov.fmweb.entities.DrawEntity;
 import ru.sargassov.fmweb.repositories.DrawRepository;

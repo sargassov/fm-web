@@ -1,18 +1,16 @@
-package ru.sargassov.fmweb.api;
+package ru.sargassov.fmweb.api_temporary_classes_group;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
 import ru.sargassov.fmweb.exceptions.SheduleInTourNotFoundException;
-import ru.sargassov.fmweb.services.DrawService;
 
 import java.util.List;
 
 @Component
 @AllArgsConstructor
 @Getter
-public class DrawApi {
+public class DrawApi { //TEMPORARY CLASS
     private List<List<String>> sheduleApiList;
 
     public void setSheduleApiList(List<List<String>> sheduleApiList) {

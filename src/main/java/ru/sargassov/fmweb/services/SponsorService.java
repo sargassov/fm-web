@@ -3,7 +3,7 @@ package ru.sargassov.fmweb.services;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ru.sargassov.fmweb.api.SponsorApi;
+import ru.sargassov.fmweb.api_temporary_classes_group.SponsorApi;
 import ru.sargassov.fmweb.converters.SponsorConverter;
 import ru.sargassov.fmweb.intermediate_entites.Sponsor;
 import ru.sargassov.fmweb.intermediate_entites.Team;

@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ru.sargassov.fmweb.api.PlacementApi;
+import ru.sargassov.fmweb.api_temporary_classes_group.PlacementApi;
 import ru.sargassov.fmweb.converters.PlacementConverter;
 import ru.sargassov.fmweb.dto.PlacementData;
 import ru.sargassov.fmweb.dto.PlacementOnPagePlacementsDto;

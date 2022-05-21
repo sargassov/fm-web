@@ -1,4 +1,4 @@
-package ru.sargassov.fmweb.api;
+package ru.sargassov.fmweb.api_temporary_classes_group;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,7 +13,7 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @Slf4j
-public class TeamApi {
+public class TeamApi { //TEMPORARY CLASS
     private List<Team> teamApiList;
 
     public void setTeamApiList(List<Team> teamApiList) {

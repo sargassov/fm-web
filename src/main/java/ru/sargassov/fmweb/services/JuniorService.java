@@ -3,7 +3,7 @@ package ru.sargassov.fmweb.services;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ru.sargassov.fmweb.api.JuniorPoolApi;
+import ru.sargassov.fmweb.api_temporary_classes_group.JuniorPoolApi;
 import ru.sargassov.fmweb.converters.JuniorConverter;
 import ru.sargassov.fmweb.dto.player_dtos.JuniorDto;
 import ru.sargassov.fmweb.dto.TextResponce;

@@ -3,8 +3,8 @@ package ru.sargassov.fmweb.converters;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import ru.sargassov.fmweb.api.TeamApi;
-import ru.sargassov.fmweb.api.UserApi;
+import ru.sargassov.fmweb.api_temporary_classes_group.TeamApi;
+import ru.sargassov.fmweb.api_temporary_classes_group.UserApi;
 import ru.sargassov.fmweb.dto.player_dtos.*;
 import ru.sargassov.fmweb.exceptions.CoachException;
 import ru.sargassov.fmweb.intermediate_entites.Coach;
@@ -175,5 +175,12 @@ public class PlayerConverter {
             throw new CoachException("Coach was not found");
         }
         return coachOpt.get();
+    }
+
+    public IdNamePricePlayerDto getIdNamePricePlayerDtoFromPlayer(Player p) {
+        IdNamePricePlayerDto pDto = new IdNamePricePlayerDto();
+        complectSkillsOfPlayerDto(pDto, p);
+        pDto.setPrice(p.getPrice().divide(BigDecimal.valueOf(2), RoundingMode.HALF_UP));
+        return pDto;
     }
 }

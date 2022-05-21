@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import ru.sargassov.fmweb.converters.PlayerConverter;
 import ru.sargassov.fmweb.dto.player_dtos.CreatedPlayerDto;
 import ru.sargassov.fmweb.dto.PriceResponce;
+import ru.sargassov.fmweb.dto.player_dtos.IdNamePricePlayerDto;
 import ru.sargassov.fmweb.dto.player_dtos.PlayerOnTrainingDto;
 import ru.sargassov.fmweb.intermediate_entites.Player;
 import ru.sargassov.fmweb.dto.player_dtos.PlayerSoftSkillDto;
@@ -14,6 +15,7 @@ import ru.sargassov.fmweb.intermediate_entites.Team;
 import ru.sargassov.fmweb.repositories.PlayerRepository;
 import ru.sargassov.fmweb.validators.CreatedPlayersValidator;
 
+import javax.persistence.Id;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -89,5 +91,9 @@ public class PlayerService {
         return players.stream()
                 .map(playerConverter::getPlayerOnTrainingDtoFromPlayer)
                 .collect(Collectors.toList());
+    }
+
+    public IdNamePricePlayerDto getIdNamePricePlayerDtoFromPlayer(Player p) {
+        return playerConverter.getIdNamePricePlayerDtoFromPlayer(p);
     }
 }

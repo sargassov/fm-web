@@ -2,7 +2,7 @@ package ru.sargassov.fmweb.services;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.sargassov.fmweb.api.CalendarApi;
+import ru.sargassov.fmweb.api_temporary_classes_group.CalendarApi;
 import ru.sargassov.fmweb.converters.DayConverter;
 import ru.sargassov.fmweb.intermediate_entites.days.Day;
 import ru.sargassov.fmweb.intermediate_entites.days.DayDto;

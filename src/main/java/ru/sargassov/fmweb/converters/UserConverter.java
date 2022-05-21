@@ -3,11 +3,10 @@ package ru.sargassov.fmweb.converters;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import ru.sargassov.fmweb.api.TeamApi;
-import ru.sargassov.fmweb.api.UserApi;
+import ru.sargassov.fmweb.api_temporary_classes_group.TeamApi;
+import ru.sargassov.fmweb.api_temporary_classes_group.UserApi;
 import ru.sargassov.fmweb.intermediate_entites.HeadCoach;
 import ru.sargassov.fmweb.dto.UserData;
-import ru.sargassov.fmweb.services.TeamService;
 
 @Component
 @AllArgsConstructor

@@ -1,4 +1,4 @@
-package ru.sargassov.fmweb.api;
+package ru.sargassov.fmweb.api_temporary_classes_group;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,7 +12,7 @@ import java.util.List;
 @Component
 @AllArgsConstructor
 @Getter
-public class CalendarApi {
+public class CalendarApi { //TEMPORARY CLASS
     private List<Day> calendarApiList;
 
     public void setCalendarApiList(List<Day> calendarApiList) {

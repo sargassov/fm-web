@@ -1,4 +1,4 @@
-package ru.sargassov.fmweb.api;
+package ru.sargassov.fmweb.api_temporary_classes_group;
 
 import lombok.Data;
 import org.springframework.stereotype.Component;
@@ -9,7 +9,7 @@ import java.util.*;
 
 @Component
 @Data
-public class PlacementApi {
+public class PlacementApi { //TEMPORARY CLASS
     private List<Placement> placementApiList;
     private int size = 0;
 

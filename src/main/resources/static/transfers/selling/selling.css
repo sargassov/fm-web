@@ -1,0 +1,20 @@
+body {
+    background-image: url(selling.jpg);
+    background-size: cover;
+}
+
+.header {
+    text-align: center;
+    font-family: "Arial Black", fantasy;
+    font-size: 26px;
+    color: snow;
+}
+
+.cell,
+.linktext,
+.team_wealth_info,
+.date_show{
+    text-align: center;
+    font-family: "Arial Black", fantasy;
+    color: snow;
+}

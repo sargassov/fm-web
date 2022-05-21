@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import ru.sargassov.fmweb.dto.TeamTransInformationDto;
 import ru.sargassov.fmweb.dto.TextResponce;
+import ru.sargassov.fmweb.dto.player_dtos.IdNamePricePlayerDto;
 import ru.sargassov.fmweb.dto.player_dtos.JuniorDto;
 import ru.sargassov.fmweb.dto.player_dtos.PlayerOnTrainingDto;
 import ru.sargassov.fmweb.dto.player_dtos.PlayerSoftSkillDto;
@@ -59,6 +60,18 @@ public class TeamController {
     public void buyNewPlayer(@RequestBody PlayerSoftSkillDto o) {
         log.info("TeamController.buyNewPlayer()");
         teamService.buyNewPlayer(o);
+    }
+
+    @DeleteMapping("/team/players/sell/{name}")
+    public void sellPlayer(@PathVariable String name) {
+        log.info("TeamController.sellPlayer()");
+        teamService.sellPlayer(name);
+    }
+
+    @GetMapping("/team/players/selllist")
+    public List<IdNamePricePlayerDto> getSellingList() {
+        log.info("TeamController.getSellingList(parameter)");
+        return teamService.getSellingList();
     }
 
 }

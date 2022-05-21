@@ -1,15 +1,14 @@
-package ru.sargassov.fmweb.api;
+package ru.sargassov.fmweb.api_temporary_classes_group;
 
 import lombok.Data;
 import org.springframework.stereotype.Component;
 import ru.sargassov.fmweb.exceptions.PlayerNotFoundException;
-import ru.sargassov.fmweb.exceptions.TeamNotFoundException;
 import ru.sargassov.fmweb.intermediate_entites.Player;
 import ru.sargassov.fmweb.intermediate_entites.Team;
 
 @Component
 @Data
-public class UserApi {
+public class UserApi { //TEMPORARY CLASS
     private String name;
     private String homeTown;
     private Team team;

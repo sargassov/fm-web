@@ -1,4 +1,4 @@
-package ru.sargassov.fmweb.api;
+package ru.sargassov.fmweb.api_temporary_classes_group;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,7 +11,7 @@ import java.util.List;
 @Component
 @AllArgsConstructor
 @Getter
-public class SponsorApi {
+public class SponsorApi { //TEMPORARY CLASS
     private List<Sponsor> sponsorApiList;
 
     public void setSponsorApiList(List<Sponsor> sponsorApiList) {

@@ -3,18 +3,23 @@ package ru.sargassov.fmweb.services;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ru.sargassov.fmweb.api.TeamApi;
+import ru.sargassov.fmweb.api_temporary_classes_group.TeamApi;
 import ru.sargassov.fmweb.comparators.TeamsPlayersComparators;
 import ru.sargassov.fmweb.comparators.TrainingPlayersComparators;
 import ru.sargassov.fmweb.converters.TeamConverter;
 import ru.sargassov.fmweb.dto.*;
+import ru.sargassov.fmweb.dto.player_dtos.IdNamePricePlayerDto;
 import ru.sargassov.fmweb.dto.player_dtos.PlayerOnTrainingDto;
 import ru.sargassov.fmweb.dto.player_dtos.PlayerSoftSkillDto;
 import ru.sargassov.fmweb.exceptions.PlayerNotFoundException;
 import ru.sargassov.fmweb.exceptions.TooExpensiveException;
+import ru.sargassov.fmweb.exceptions.TransferException;
 import ru.sargassov.fmweb.intermediate_entites.*;
 import ru.sargassov.fmweb.repositories.TeamRepository;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -248,7 +253,7 @@ public class TeamService {
     }
 
     public List<PlayerSoftSkillDto> getTenPlayersFromNextTeam(String name, Integer playerParameter, Integer sortParameter) {
-        log.info("TeamService.getAllPlayersByOtherTeam(name)");
+        log.info("TeamService.getTenPlayersFromNextTeam(name)");
         List<Player> players = teamApi.findByName(name).getPlayerList();
         List<PlayerSoftSkillDto> playerSoftSkillDtos = playerService.getPlayerSoftSkillDtoFromPlayer(players);
 
@@ -282,5 +287,22 @@ public class TeamService {
         addJuniorToTeam(opponentTeam, player.getPosition());
         captainAppointment(opponentTeam);
 
+    }
+
+    public void sellPlayer(String name) {
+        Team userTeam = userService.getUserTeam();
+        Player player = userTeam.findPlayerByName(name);
+        if(userTeam.getPlayerList().size() == 18)
+            throw new TransferException("You can't have less than 18 players in your team");
+        userTeam.getPlayerList().remove(player);
+        BigDecimal halfPriceOfPlayeer = player.getPrice().divide(BigDecimal.valueOf(2), RoundingMode.HALF_UP);
+        userTeam.setWealth(userTeam.getWealth().add(halfPriceOfPlayeer));
+    }
+
+    public List<IdNamePricePlayerDto> getSellingList() {
+        return userService.getUserTeam().getPlayerList().stream()
+                .map(playerService::getIdNamePricePlayerDtoFromPlayer)
+                .sorted(Comparator.comparing(IdNamePricePlayerDto::getPrice, Comparator.reverseOrder()))
+                .collect(Collectors.toList());
     }
 }

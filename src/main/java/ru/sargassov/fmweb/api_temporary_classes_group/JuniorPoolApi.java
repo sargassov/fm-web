@@ -1,11 +1,8 @@
-package ru.sargassov.fmweb.api;
+package ru.sargassov.fmweb.api_temporary_classes_group;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import ru.sargassov.fmweb.converters.PlayerConverter;
-import ru.sargassov.fmweb.intermediate_entites.Player;
-import ru.sargassov.fmweb.services.JuniorService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +11,7 @@ import java.util.Random;
 @Component
 @Data
 @Slf4j
-public class JuniorPoolApi {
+public class JuniorPoolApi { //TEMPORARY CLASS
     private List<String> youthApiList;
     private int size = 0;
 
