@@ -3,8 +3,10 @@ package ru.sargassov.fmweb.api_temporary_classes_group;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
+import ru.sargassov.fmweb.exceptions.CalendarException;
 import ru.sargassov.fmweb.intermediate_entites.days.Day;
 import ru.sargassov.fmweb.exceptions.PresentDayNotFoundException;
+import ru.sargassov.fmweb.intermediate_entites.days.TourDay;
 
 import java.util.List;
 
@@ -25,5 +27,13 @@ public class CalendarApi { //TEMPORARY CLASS
                 .findFirst()
                 .orElseThrow(() ->
                         new PresentDayNotFoundException("Present day not found in calendar"));
+    }
+
+    public TourDay getTour(int parameter){
+        return (TourDay) calendarApiList.stream()
+                .filter(d -> d instanceof TourDay && ((TourDay) d).getCountOfTour() == parameter)
+                .findFirst()
+                .orElseThrow(() ->
+                        new CalendarException("Tour #" + parameter + " was not found"));
     }
 }

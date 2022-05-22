@@ -1,4 +1,4 @@
-package ru.sargassov.fmweb.intermediate_entites.days;
+package ru.sargassov.fmweb.dto.days_dtos;
 
 import lombok.Data;
 

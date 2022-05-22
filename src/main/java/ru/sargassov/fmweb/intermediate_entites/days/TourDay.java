@@ -10,6 +10,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TourDay extends Day{
+    private int countOfTour;
     private List<Match> matches;
 
     @Override

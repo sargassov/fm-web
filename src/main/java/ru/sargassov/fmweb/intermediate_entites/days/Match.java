@@ -1,6 +1,7 @@
 package ru.sargassov.fmweb.intermediate_entites.days;
 
 import lombok.Data;
+import ru.sargassov.fmweb.intermediate_entites.Goal;
 import ru.sargassov.fmweb.intermediate_entites.Player;
 import ru.sargassov.fmweb.intermediate_entites.Stadium;
 import ru.sargassov.fmweb.intermediate_entites.Team;
@@ -14,7 +15,7 @@ public class Match {
     private Team away;
     private Stadium stadium;
 
-    private List<Player> scorePlayers;
+    private List<Goal> scorePlayers;
 
     private int homeScore;
     private int awayScore;

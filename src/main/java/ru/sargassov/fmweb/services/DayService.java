@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.sargassov.fmweb.api_temporary_classes_group.CalendarApi;
 import ru.sargassov.fmweb.converters.DayConverter;
 import ru.sargassov.fmweb.intermediate_entites.days.Day;
-import ru.sargassov.fmweb.intermediate_entites.days.DayDto;
+import ru.sargassov.fmweb.dto.days_dtos.DayDto;
 import ru.sargassov.fmweb.intermediate_entites.days.TourDay;
 import ru.sargassov.fmweb.entities.DayEntity;
 import ru.sargassov.fmweb.repositories.DayRepository;
@@ -39,7 +39,8 @@ public class DayService {
         for(Day d : calendar){
             if(d instanceof TourDay){
                 ((TourDay) d).setMatches(
-                        dayConverter.descriptionOfTourToMatches(shedule.get(countSheduleTours)));
+                        dayConverter.descriptionOfTourToMatches(shedule.get(countSheduleTours++)));
+                ((TourDay) d).setCountOfTour(countSheduleTours);
             }
         }
         calendarApi.setCalendarApiList(calendar);
