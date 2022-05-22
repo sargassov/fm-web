@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<html ng-app="playing_calendar">
+<html ng-app="visual_calendar">
 
 <head>
     <meta charset="UTF-8">
@@ -16,46 +16,44 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.11/ngStorage.min.js"></script>
-    <script src="playing_calendar.js"></script>
-    <link rel="stylesheet" href="playing_calendar.css">
+    <script src="visual_calendar.js"></script>
+    <link rel="stylesheet" href="visual_calendar.css">
 
 </head>
 
 <body>
-<div class="container" ng-controller="playing_calendarController">
-    <h4 class="header">{{league.name}} playing calendar</h4>
+<div class="container" ng-controller="visual_calendarController">
+    <h4 class="header">{{team.name}} visual calendar</h4>
     <hr>
     <p class="date_show">Today is {{today.day}} {{today.month}} {{today.year}}</p>
     <p></p>
     <a class="linktext" href="../calendar.html">Back to Calendar Menu</a><br>
-    <h4 class="matchday_header" >{{matchday.tour}} tour</h4>
+    <h4 class="header">{{monthName.name}}</h4>
+    <div class="div_button">
+        <td><button class="btn btn-warning" ng-click="loadMonth(eventsCoeff - 1)">Previous Month</button></td>
+        <td><button class="btn btn-warning" ng-click="loadMonth(eventsCoeff + 1)">Next Month</button></td>
+    </div>
+
     <table class="table table-hover">
         <tr>
-            <td class="cell">Date</td>
-            <td class="cell">Match</td>
-            <td class="cell">Final Score</td>
-            <td class="cell">Goals</td>
-            <td class="cell">Stadium</td>
-
+            <td class="cell">Day</td>
+            <td class="cell">Type</td>
+            <td class="cell">Event</td>
+            <td class="cell">Is Passed</td>
         </tr>
         <tbody>
-        <tr ng-repeat="m in matches">
-            <td class="cell">{{matchday.date}}</td>
-            <td class="cell">{{m.homeTeam}} - {{m.awayTeam}}</td>
-            <td class="cell">{{m.score}}</td>
-            <td class="cell">{{m.goals}}</td>
-            <td class="cell">{{m.stadium}}</td>
-
+        <tr ng-repeat="e in events">
+            <td class="cell">{{e.date}}</td>
+            <td class="cell">{{e.type}}</td>
+            <td class="cell">{{e.event}}</td>
+            <td class="cell">{{e.passed}}</td>
         </tr>
         </tbody>
     </table>
     <p></p>
-    <td><button class="btn btn-primary" ng-click="loadTour(matchday.tour - 1)">Previous Tour</button></td>
-    <td><button class="btn btn-primary" ng-click="loadTour(matchday.tour + 1)">Next Tour</button></td>
-
-
 
 </div>
+
 
 
 
