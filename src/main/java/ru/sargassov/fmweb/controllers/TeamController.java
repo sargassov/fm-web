@@ -3,6 +3,7 @@ package ru.sargassov.fmweb.controllers;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+import ru.sargassov.fmweb.dto.FinanceDto;
 import ru.sargassov.fmweb.dto.TeamTransInformationDto;
 import ru.sargassov.fmweb.dto.TextResponce;
 import ru.sargassov.fmweb.dto.player_dtos.IdNamePricePlayerDto;
@@ -72,6 +73,12 @@ public class TeamController {
     public List<IdNamePricePlayerDto> getSellingList() {
         log.info("TeamController.getSellingList(parameter)");
         return teamService.getSellingList();
+    }
+
+    @GetMapping("/team/finance/income")
+    public List<FinanceDto> gelAllIncomes() {
+        log.info("FinanceController.gelAllIncomes");
+        return teamService.gelAllIncomes();
     }
 
 }

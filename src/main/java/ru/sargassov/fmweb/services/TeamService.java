@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import ru.sargassov.fmweb.api_temporary_classes_group.TeamApi;
 import ru.sargassov.fmweb.comparators.TeamsPlayersComparators;
 import ru.sargassov.fmweb.comparators.TrainingPlayersComparators;
+import ru.sargassov.fmweb.constants.FinanceAnalytics;
 import ru.sargassov.fmweb.converters.TeamConverter;
 import ru.sargassov.fmweb.dto.*;
 import ru.sargassov.fmweb.dto.player_dtos.IdNamePricePlayerDto;
@@ -19,7 +20,6 @@ import ru.sargassov.fmweb.repositories.TeamRepository;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -305,4 +305,11 @@ public class TeamService {
                 .sorted(Comparator.comparing(IdNamePricePlayerDto::getPrice, Comparator.reverseOrder()))
                 .collect(Collectors.toList());
     }
+
+    public List<FinanceDto> gelAllIncomes() {
+        Team team = userService.getUserTeam();
+        return FinanceAnalytics.getIncomes(team);
+    }
 }
+
+

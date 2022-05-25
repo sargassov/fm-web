@@ -45,28 +45,18 @@ public class Team {
                 '}';
     }
 
-    public Player findPlayerById(Long id) {
-        return playerList.stream()
-                .filter(p -> p.getId() == id)
-                .findFirst()
-                .orElseThrow(() ->
-                        new PlayerNotFoundException(String.format("Player with id = %d not found", id)));
-    }
-
-    public Player findPlayerByNumber(Integer number) {
-        return playerList.stream()
-                .filter(p -> p.getNumber() == number)
-                .findFirst()
-                .orElseThrow(() ->
-                        new PlayerNotFoundException(String.format("Player with id = %d not found", id)));
-    }
-
     public Player findPlayerByName(String name) {
         return playerList.stream()
                 .filter(p -> p.getName().equals(name))
                 .findFirst()
                 .orElseThrow(() ->
                         new PlayerNotFoundException(String.format("Player with name = %s not found", name)));
+    }
+
+    public BigDecimal getAllPlayersCost() {
+        BigDecimal allPlayersCost = BigDecimal.valueOf(0);
+        for(Player p : playerList) allPlayersCost = allPlayersCost.add(p.getPrice());
+        return allPlayersCost;
     }
 
 
