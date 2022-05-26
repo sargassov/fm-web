@@ -7,6 +7,9 @@ import ru.sargassov.fmweb.exceptions.TeamNotFoundException;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 
 @Data
@@ -26,14 +29,14 @@ public class Team {
     private List<Bank> loans;
 //    private List<Market> markets;
     private BigDecimal startWealth;
+    private BigDecimal transferExpenses;
+    private BigDecimal personalExpenses;
+    private BigDecimal marketExpenses;
+    private BigDecimal stadiumExpenses;
     private Placement placement;
     private int regularCapacity;
     private int temporaryTicketCost;
     private int teamPower;
-    private long transferExpenses;
-    private long personalExpenses;
-    private long marketExpenses;
-    private long stadiumExpenses;
     private boolean changeSponsor;
     public final int maxValueOfLoans = 5;
     public final int maxValueOfCoaches = 6;
@@ -57,6 +60,60 @@ public class Team {
         BigDecimal allPlayersCost = BigDecimal.valueOf(0);
         for(Player p : playerList) allPlayersCost = allPlayersCost.add(p.getPrice());
         return allPlayersCost;
+    }
+
+    public BigDecimal getDailyExpenses(){
+        Function<Bank, BigDecimal> payPerDayFunction = Bank::getPayPerDay;
+        return getExpenses(payPerDayFunction);
+    }
+
+    public BigDecimal getWeeklyExpenses(){
+        Function<Bank, BigDecimal> payPerWeekFunction = Bank::getPayPerWeek;
+        return getExpenses(payPerWeekFunction);
+    }
+
+    public BigDecimal getMonthlyExpenses(){
+        Function<Bank, BigDecimal> payPerMonthFunction = Bank::getPayPerMonth;
+        return getExpenses(payPerMonthFunction);
+    }
+
+    private BigDecimal getExpenses(Function<Bank, BigDecimal> function) {
+        BigDecimal expenses = BigDecimal.valueOf(0);
+        for(Bank b : loans)
+            expenses = (BigDecimal)function;
+        return expenses;
+    }
+
+    public void addPersonalExpenses(BigDecimal value){
+        personalExpenses = personalExpenses.add(value);
+    }
+
+    public void substractPersonalExpenses(BigDecimal value){
+        personalExpenses = personalExpenses.subtract(value);
+    }
+
+    public void substractTransferExpenses(BigDecimal value){
+        transferExpenses = transferExpenses.subtract(value);
+    }
+
+    public void addTransferExpenses(BigDecimal value){
+        transferExpenses = transferExpenses.add(value);
+    }
+
+    public void addMarketExpenses(BigDecimal value){
+        marketExpenses = marketExpenses.add(value);
+    }
+
+    public void substractMarketExpenses(BigDecimal value){
+        marketExpenses = marketExpenses.subtract(value);
+    }
+
+    public void addStadiumExpenses(BigDecimal value){
+        stadiumExpenses = stadiumExpenses.add(value);
+    }
+
+    public void substractStadiumExpenses(BigDecimal value){
+        stadiumExpenses = stadiumExpenses.subtract(value);
     }
 
 

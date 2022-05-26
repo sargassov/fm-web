@@ -75,6 +75,7 @@ public class PlayerService {
         Player player = playerConverter.getIntermediateEntityFromCreatedDto(createdPlayerDto);
         createdPlayersValidator.teamEnoughCreditsValidate(player, team);
         team.setWealth(team.getWealth().subtract(player.getPrice()));
+        team.substractTransferExpenses(player.getPrice());
         team.getPlayerList().add(player);
     }
 

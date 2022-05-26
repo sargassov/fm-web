@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.GregorianCalendar;
 
 @Data
@@ -18,16 +19,16 @@ public class Bank {
     private double fullLoanCoeff;
     private BigDecimal maxLoanAmount;
     //=============================//
-    private GregorianCalendar dateOfLoan;
-    private GregorianCalendar remainsDate;
+    private LocalDate dateOfLoan;
+    private LocalDate remainsDate;
     private TypeOfReturn typeOfReturn;
-    private int payPerDay;
-    private int payPerWeek;
-    private int payPerMonth;
+    private BigDecimal payPerDay;
+    private BigDecimal payPerWeek;
+    private BigDecimal payPerMonth;
     private double fullLoanAmountValue;
-    private long tookMoney;
-    private long remainMoney;
-    private long alreadyPaid;
+    private BigDecimal tookMoney;
+    private BigDecimal remainMoney;
+    private BigDecimal alreadyPaid;
 
     public enum TypeOfReturn {PER_DAY, PER_WEEK, PER_MONTH};
 

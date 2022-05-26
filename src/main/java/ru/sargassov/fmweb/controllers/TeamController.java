@@ -54,7 +54,8 @@ public class TeamController {
     @PutMapping("/team/{name}/players")
     public List<PlayerSoftSkillDto> getTenPlayersFromNextTeam(@PathVariable String name, @RequestBody TeamTransInformationDto teamDto) {
         log.info("TeamController.getTenPlayersFromNextByOtherTeam");
-        return teamService.getTenPlayersFromNextTeam(name, teamDto.getPlayerParameter() + teamDto.getDelta(), teamDto.getSortParameter());
+        return teamService.getTenPlayersFromNextTeam(name,
+                teamDto.getPlayerParameter() + teamDto.getDelta(), teamDto.getSortParameter());
     }
 
     @PostMapping("/team/players/buy")
@@ -76,9 +77,15 @@ public class TeamController {
     }
 
     @GetMapping("/team/finance/income")
-    public List<FinanceDto> gelAllIncomes() {
-        log.info("FinanceController.gelAllIncomes");
+    public List<FinanceDto> getAllIncomes() {
+        log.info("TeamController.getAllIncomes");
         return teamService.gelAllIncomes();
+    }
+
+    @GetMapping("/team/finance/expenses")
+    public List<FinanceDto> getAllExpenses() {
+        log.info("TeamController.getAllExpenses");
+        return teamService.gelAllExpenses();
     }
 
 }

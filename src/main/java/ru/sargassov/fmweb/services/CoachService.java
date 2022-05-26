@@ -49,6 +49,7 @@ public class CoachService {
         else {
             List<Coach> coaches = team.getCoaches();
             team.setWealth(team.getWealth().subtract(coach.getPrice()));
+            team.substractPersonalExpenses(coach.getPrice());
             if(coaches == null)
                 coaches = new ArrayList<>();
             coaches.add(coach);

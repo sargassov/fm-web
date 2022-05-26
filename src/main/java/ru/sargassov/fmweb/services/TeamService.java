@@ -46,7 +46,7 @@ public class TeamService {
     public List<Team> findAll(){
         log.info("TeamService.getAllTeams");
         return teamRepository.findAll().stream()
-                .map(teamConverter::entityToDto).collect(Collectors.toList());
+                .map(teamConverter::entityToIntermediateEntity).collect(Collectors.toList());
     }
 
 //    public TeamDto getTeamInLeagueDtoById(Long id) {
@@ -276,6 +276,7 @@ public class TeamService {
                     " have price = " + player.getPrice() + " is too expensive for " + userTeam.getName());
 
         userTeam.setWealth(userTeam.getWealth().subtract(player.getPrice()));
+        userTeam.substractTransferExpenses(player.getPrice());
         opponentTeam.setWealth(opponentTeam.getWealth().add(player.getPrice()));
         player.setStrategyPlace(-100);
         player.setCapitan(false);
@@ -295,8 +296,9 @@ public class TeamService {
         if(userTeam.getPlayerList().size() == 18)
             throw new TransferException("You can't have less than 18 players in your team");
         userTeam.getPlayerList().remove(player);
-        BigDecimal halfPriceOfPlayeer = player.getPrice().divide(BigDecimal.valueOf(2), RoundingMode.HALF_UP);
-        userTeam.setWealth(userTeam.getWealth().add(halfPriceOfPlayeer));
+        BigDecimal halfPriceOfPlayer = player.getPrice().divide(BigDecimal.valueOf(2), RoundingMode.HALF_UP);
+        userTeam.setWealth(userTeam.getWealth().add(halfPriceOfPlayer));
+        userTeam.addTransferExpenses(halfPriceOfPlayer);
     }
 
     public List<IdNamePricePlayerDto> getSellingList() {
@@ -309,6 +311,11 @@ public class TeamService {
     public List<FinanceDto> gelAllIncomes() {
         Team team = userService.getUserTeam();
         return FinanceAnalytics.getIncomes(team);
+    }
+
+    public List<FinanceDto> gelAllExpenses() {
+        Team team = userService.getUserTeam();
+        return FinanceAnalytics.getExpenses(team);
     }
 }
 

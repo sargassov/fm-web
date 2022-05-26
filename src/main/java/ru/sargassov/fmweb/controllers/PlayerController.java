@@ -21,7 +21,7 @@ public class PlayerController {
     }
 
     @GetMapping("/player/vision/next/{number}")
-    public PlayerSoftSkillDto getNextPlayerByNumer(@PathVariable Integer number) {
+    public PlayerSoftSkillDto getNextPlayerByNumber(@PathVariable Integer number) {
         log.info("PlayerController.getNextPlayerByNumer()");
         return playerService.getAnotherPlayerByNumber(number, 1);
     }

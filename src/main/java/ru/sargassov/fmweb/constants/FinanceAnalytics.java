@@ -17,8 +17,14 @@ public class FinanceAnalytics {
     private static final String TEAM_WIN_WAGE = "Team's Win Wage";
     private static final String TEAM_DRAW_WAGE = "Team's Draw Wage";
     private static final String PROFICIT_DEFICIT = "Proficit(+)/Deficit(-)";
-
-
+    private static final String LOANS_VALUE = "Team's Value Of Loans";
+    private static final String TEAM_DAILY_EXPENSES = "Team's Daily expenses";
+    private static final String TEAM_WEEKLY_EXPENSES = "Team's Weekly expenses";
+    private static final String TEAM_MONTHLY_EXPENSES = "Team's Monthly expenses";
+    private static final String TEAM_TRANSFER_EXPENSES = "Team's Transfer expenses";
+    private static final String TEAM_PERSONAL_EXPENSES = "Team's Personal expenses";
+    private static final String TEAM_STADIUM_RENEWED_EXPENSES = "Team's Stadium renewed expenses";
+    private static final String TEAM_MARKET_EXPENSES = "Team's Market expenses";
 
     public static List<FinanceDto> getIncomes(Team userTeam){
         Sponsor sponsor = userTeam.getSponsor();
@@ -36,5 +42,22 @@ public class FinanceAnalytics {
                         .subtract(userTeam.getStartWealth()))
         ));
     }
+
+    public static List<FinanceDto> getExpenses(Team userTeam) {
+        return new ArrayList<>(List.of(
+                new FinanceDto(LOANS_VALUE, userTeam.getLoans().size()),
+                new FinanceDto(TEAM_DAILY_EXPENSES, userTeam.getDailyExpenses()),
+                new FinanceDto(TEAM_WEEKLY_EXPENSES, userTeam.getWeeklyExpenses()),
+                new FinanceDto(TEAM_MONTHLY_EXPENSES, userTeam.getMonthlyExpenses()),
+                new FinanceDto(TEAM_TRANSFER_EXPENSES, userTeam.getTransferExpenses()),
+                new FinanceDto(TEAM_PERSONAL_EXPENSES, userTeam.getPersonalExpenses()),
+                new FinanceDto(TEAM_STADIUM_RENEWED_EXPENSES, userTeam.getStadiumExpenses()),
+                new FinanceDto(TEAM_MARKET_EXPENSES, userTeam.getMarketExpenses()),
+                new FinanceDto(PROFICIT_DEFICIT, userTeam.getWealth()
+                        .subtract(userTeam.getStartWealth())))
+        );
+    }
+
+
 
 }

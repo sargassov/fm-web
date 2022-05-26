@@ -20,7 +20,7 @@ public class TeamConverter {
     private final StadiumConverter stadiumConverter;
     private final CityConverter cityConverter;
 
-    public Team entityToDto(TeamEntity teamEntity){
+    public Team entityToIntermediateEntity(TeamEntity teamEntity){
         Team tDto = new Team();
         tDto.setId(teamEntity.getId());
         tDto.setName(teamEntity.getName());
@@ -33,8 +33,10 @@ public class TeamConverter {
         tDto.setStartWealth(tDto.getWealth());
         tDto.setCoaches(new ArrayList<>());
         tDto.setLoans(new ArrayList<>());
-//    private List<Market> markets;
-//    private Placement placement;
+        tDto.setStadiumExpenses(BigDecimal.ZERO);
+        tDto.setPersonalExpenses(BigDecimal.ZERO);
+        tDto.setMarketExpenses(BigDecimal.ZERO);
+        tDto.setTransferExpenses(BigDecimal.ZERO);
         return tDto;
     }
 
