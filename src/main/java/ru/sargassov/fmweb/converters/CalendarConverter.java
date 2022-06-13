@@ -34,7 +34,7 @@ public class CalendarConverter {
         return eventDto;
     }
 
-    private String dateFormer(LocalDate localDate) {
+    public String dateFormer(LocalDate localDate) {
         return localDate.getDayOfMonth() + " " + localDate.getMonth() + " " + localDate.getYear();
     }
 
@@ -120,4 +120,5 @@ public class CalendarConverter {
         dto.setName(name);
         return dto;
     }
+
 }

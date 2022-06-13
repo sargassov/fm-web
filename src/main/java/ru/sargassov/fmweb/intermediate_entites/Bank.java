@@ -2,11 +2,12 @@ package ru.sargassov.fmweb.intermediate_entites;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.sargassov.fmweb.dto.BankDto;
+import ru.sargassov.fmweb.intermediate_entites.days.Day;
 
-import javax.persistence.*;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
-import java.util.GregorianCalendar;
 
 @Data
 @NoArgsConstructor
@@ -19,8 +20,8 @@ public class Bank {
     private double fullLoanCoeff;
     private BigDecimal maxLoanAmount;
     //=============================//
-    private LocalDate dateOfLoan;
-    private LocalDate remainsDate;
+    private Day dateOfLoan;
+    private Day remainsDate;
     private TypeOfReturn typeOfReturn;
     private BigDecimal payPerDay;
     private BigDecimal payPerWeek;
@@ -29,6 +30,30 @@ public class Bank {
     private BigDecimal tookMoney;
     private BigDecimal remainMoney;
     private BigDecimal alreadyPaid;
+
+    public static TypeOfReturn guessTypeOfReturn(String typeOfReturn) {
+        if(typeOfReturn.equals("PER_DAY")) return TypeOfReturn.PER_DAY;
+        else if(typeOfReturn.equals("PER_WEEK")) return TypeOfReturn.PER_WEEK;
+        else return TypeOfReturn.PER_MONTH;
+    }
+
+    public static Day guessRemainsDate(Day dateOfLoan, BankDto loan) {
+        Day remainsDay = new Day();
+        LocalDate startLocalDate = dateOfLoan.getDate();
+
+        if(loan.getTypeOfReturn().equals("PER_DAY")){
+            int valueDays = loan.getFullLoanCoeff().divide(loan.getPercentDay(), RoundingMode.HALF_UP).intValue() + 1;
+            remainsDay.setDate(startLocalDate.plusDays(valueDays));
+        } else if (loan.getTypeOfReturn().equals("PER_WEEK")) {
+            int valueWeeks = loan.getFullLoanCoeff().divide(loan.getPercentWeek(), RoundingMode.HALF_UP).intValue() + 1;
+            remainsDay.setDate(startLocalDate.plusWeeks(valueWeeks));
+        } else {
+            int valueMonths = loan.getFullLoanCoeff().divide(loan.getPercentMonth(), RoundingMode.HALF_UP).intValue() + 1;
+            remainsDay.setDate(startLocalDate.plusMonths(valueMonths));
+        }
+
+        return remainsDay;
+    }
 
     public enum TypeOfReturn {PER_DAY, PER_WEEK, PER_MONTH};
 

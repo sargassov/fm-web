@@ -2,6 +2,7 @@ package ru.sargassov.fmweb.intermediate_entites;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.sargassov.fmweb.exceptions.BankNotFoundException;
 import ru.sargassov.fmweb.exceptions.PlayerNotFoundException;
 import ru.sargassov.fmweb.exceptions.TeamNotFoundException;
 
@@ -38,8 +39,8 @@ public class Team {
     private int temporaryTicketCost;
     private int teamPower;
     private boolean changeSponsor;
-    public final int maxValueOfLoans = 5;
-    public final int maxValueOfCoaches = 6;
+    public static final int maxValueOfLoans = 5;
+    public static final int maxValueOfCoaches = 6;
 
     @Override
     public String toString() {
@@ -80,7 +81,7 @@ public class Team {
     private BigDecimal getExpenses(Function<Bank, BigDecimal> function) {
         BigDecimal expenses = BigDecimal.valueOf(0);
         for(Bank b : loans)
-            expenses = (BigDecimal)function;
+            expenses = expenses.add(function.apply(b));
         return expenses;
     }
 
@@ -116,6 +117,13 @@ public class Team {
         stadiumExpenses = stadiumExpenses.subtract(value);
     }
 
+    public Bank getBankInLoansListByTitle(String title){
+        return loans.stream()
+                .filter(b -> b.getTitle().equals(title))
+                .findFirst()
+                .orElseThrow(()
+                        -> new BankNotFoundException(String.format("Bank with title = %s not found", title)));
+    }
 
     //    public Team(String info) {
 //        //        markets = new ArrayList<>();

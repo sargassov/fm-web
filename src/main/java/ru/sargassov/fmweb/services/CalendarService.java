@@ -7,6 +7,7 @@ import ru.sargassov.fmweb.constants.Constant;
 import ru.sargassov.fmweb.converters.CalendarConverter;
 import ru.sargassov.fmweb.dto.NameOfMonthDto;
 import ru.sargassov.fmweb.dto.days_dtos.EventDto;
+import ru.sargassov.fmweb.intermediate_entites.days.Day;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,5 +38,9 @@ public class CalendarService {
         if(parameter == 11) parameter = 0;
         String s = Constant.Month.values()[parameter].toString();
         return calendarConverter.getNameOfMonthDtoFromConstant(s);
+    }
+
+    public Day getPresentDay() {
+        return calendarApi.getPresentDay();
     }
 }

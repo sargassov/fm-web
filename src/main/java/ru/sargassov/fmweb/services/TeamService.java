@@ -7,17 +7,23 @@ import ru.sargassov.fmweb.api_temporary_classes_group.TeamApi;
 import ru.sargassov.fmweb.comparators.TeamsPlayersComparators;
 import ru.sargassov.fmweb.comparators.TrainingPlayersComparators;
 import ru.sargassov.fmweb.constants.FinanceAnalytics;
+import ru.sargassov.fmweb.constants.TextConstant;
+import ru.sargassov.fmweb.converters.BankConverter;
 import ru.sargassov.fmweb.converters.TeamConverter;
 import ru.sargassov.fmweb.dto.*;
 import ru.sargassov.fmweb.dto.player_dtos.IdNamePricePlayerDto;
 import ru.sargassov.fmweb.dto.player_dtos.PlayerOnTrainingDto;
 import ru.sargassov.fmweb.dto.player_dtos.PlayerSoftSkillDto;
+import ru.sargassov.fmweb.exceptions.BankNotFoundException;
 import ru.sargassov.fmweb.exceptions.PlayerNotFoundException;
 import ru.sargassov.fmweb.exceptions.TooExpensiveException;
 import ru.sargassov.fmweb.exceptions.TransferException;
 import ru.sargassov.fmweb.intermediate_entites.*;
+import ru.sargassov.fmweb.intermediate_entites.days.Day;
 import ru.sargassov.fmweb.repositories.TeamRepository;
+import ru.sargassov.fmweb.validators.LoanValidator;
 
+import javax.xml.bind.ValidationException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Comparator;
@@ -36,6 +42,7 @@ public class TeamService {
     private final TeamApi teamApi;
     private final TeamsPlayersComparators teamsPlayersComparators;
     private final TrainingPlayersComparators trainingPlayersComparators;
+    private final BankService bankService;
 
     public void loadTeams(){
         teamApi.setTeamApiList(findAll());
@@ -48,13 +55,6 @@ public class TeamService {
         return teamRepository.findAll().stream()
                 .map(teamConverter::entityToIntermediateEntity).collect(Collectors.toList());
     }
-
-//    public TeamDto getTeamInLeagueDtoById(Long id) {
-//        log.info("TeamService.getTeamInLeagueDtoById");
-//        return leagueDto.getTeamList().stream()
-//                .filter(t -> t.getId() == id).findFirst().orElseThrow(()
-//                -> new RuntimeException("Team with id = " + id + " wasn't found"));
-//    }
 
     public void fillTeams(List<Team> teamList) {
         log.info("TeamService.fillTeams");
@@ -316,6 +316,45 @@ public class TeamService {
     public List<FinanceDto> gelAllExpenses() {
         Team team = userService.getUserTeam();
         return FinanceAnalytics.getExpenses(team);
+    }
+
+    public TextResponce getStartMessage() {
+        Team userTeam = userService.getUserTeam();
+        int banksValue = userTeam.getLoans().size();
+        TextResponce text = new TextResponce();
+        text.setResponse(TextConstant.getBanksStartMessage(userTeam, banksValue));
+        return text;
+    }
+
+
+    public List<LoanDto> loadCurrentLoans() {
+        Team userTeam = userService.getUserTeam();
+        BankConverter bc = bankService.getBankConverter();
+        return userTeam.getLoans().stream()
+                .map(b -> bc.getLoanDtoFromIntermediateEntity(b))
+                .collect(Collectors.toList());
+    }
+
+    public void remainCurrentLoan(LoanDto loan) {
+        Team team = userService.getUserTeam();
+
+        if (team.getWealth().compareTo(loan.getRemainsToPay()) < 0){
+            throw new TooExpensiveException(team.getName() + " haven't enough money (" + loan.getRemainsToPay() + ") to remains this loan!");
+        }
+
+        Bank bank = team.getBankInLoansListByTitle(loan.getTitle());
+        team.setWealth(team.getWealth().subtract(loan.getRemainsToPay()));
+        bank.setDateOfLoan(null);
+        bank.setRemainsDate(null);
+        bank.setPayPerDay(null);
+        bank.setPayPerWeek(null);
+        bank.setPayPerMonth(null);
+        bank.setFullLoanAmountValue(0.0);
+        bank.setTookMoney(null);
+        bank.setRemainMoney(null);
+        bank.setAlreadyPaid(null);
+        team.getLoans().remove(bank);
+        bankService.returnBankToApi(bank);
     }
 }
 

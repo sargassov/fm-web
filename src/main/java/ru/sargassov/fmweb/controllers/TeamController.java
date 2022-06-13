@@ -3,14 +3,10 @@ package ru.sargassov.fmweb.controllers;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-import ru.sargassov.fmweb.dto.FinanceDto;
-import ru.sargassov.fmweb.dto.TeamTransInformationDto;
-import ru.sargassov.fmweb.dto.TextResponce;
+import ru.sargassov.fmweb.dto.*;
 import ru.sargassov.fmweb.dto.player_dtos.IdNamePricePlayerDto;
-import ru.sargassov.fmweb.dto.player_dtos.JuniorDto;
 import ru.sargassov.fmweb.dto.player_dtos.PlayerOnTrainingDto;
 import ru.sargassov.fmweb.dto.player_dtos.PlayerSoftSkillDto;
-import ru.sargassov.fmweb.dto.TeamOnPagePlayersDto;
 import ru.sargassov.fmweb.services.TeamService;
 
 import java.util.List;
@@ -88,4 +84,21 @@ public class TeamController {
         return teamService.gelAllExpenses();
     }
 
+    @GetMapping("/team/finance/start_message")
+    public TextResponce getStartMessage() {
+        log.info("TeamController.getStartMessage");
+        return teamService.getStartMessage();
+    }
+
+    @GetMapping("/team/finance/load_loans")
+    public List<LoanDto> loadCurrentLoans() {
+        log.info("TeamController.loadCurrentLoans");
+        return teamService.loadCurrentLoans();
+    }
+
+    @PostMapping("/team/finance/reamin_loan")
+    public void remainCurrentLoan(@RequestBody LoanDto loan) {
+        log.info("TeamController.remainCurrentLoans");
+        teamService.remainCurrentLoan(loan);
+    }
 }

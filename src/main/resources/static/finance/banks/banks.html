@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<html ng-app="banks">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banks</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.11/ngStorage.min.js"></script>
+    <script src="banks.js"></script>
+    <link rel="stylesheet" href="banks.css">
+
+</head>
+
+<body>
+<div class="container" ng-controller="banksController">
+    <h4 class="header">Banks for {{team.name}}</h4>
+    <hr>
+    <p class="date_show">Today is {{today.day}} {{today.month}} {{today.year}}</p>
+    <p></p>
+    <a class="linktext" href="../finance.html">Back to Finance Menu</a><br>
+    <h5 class="header_5">{{start_message.response}}</h5>
+
+    <table class="table table-hover" >
+    <tr>
+        <td class="cell">Title</td>
+        <td class="cell">Loan Amount</td>
+        <td class="cell">Type Of Return</td>
+        <td class="cell">Loan Date</td>
+        <td class="cell">Remain Date</td>
+        <td class="cell">Already Paid</td>
+        <td class="cell">Remains to Pay</td>
+    </tr>
+    <tbody>
+    <tr ng-repeat="l in Loans">
+        <td class="cell">{{l.title}}</td>
+        <td class="cell">{{l.amount}}</td>
+        <td class="cell">{{l.tor}}</td>
+        <td class="cell">{{l.loanDate}}</td>
+        <td class="cell">{{l.remainDate}}</td>
+        <td class="cell">{{l.alreadyPaid}}</td>
+        <td class="cell">{{l.remainsToPay}}</td>
+        <td><button class="btn btn-primary" ng-click="payTheLoan(l)">Remains loan</button></td>
+    </tr>
+    </tbody>
+    </table>
+    <p></p>
+    <hr>
+
+    <div class="input_form" ng-show="canTakeMore()">
+        <h5 class="header_5">How much you want take?</h5>
+        <input class="form-control" type="number" max="85" min="10" required placeholder="How much you want take (from 10 to 85)" ng-model="loan.request">
+        <button class="btn btn-secondary" ng-click="loanRequest()">Check loan</button>
+        <div class="" ng-show="isClicked()">
+            <h4 class="potencial_bank_loans_header">Potencial bank loans</h4>
+            <table class="table table-hover">
+                <tr>
+                    <td class="cell">Title</td>
+                    <td class="cell">Day Wage</td>
+                    <td class="cell">Week Wage</td>
+                    <td class="cell">Month Wage</td>
+                    <td class="cell">Full Amount of Loan</td>
+                    <td class="cell">Max Loan Amount</td>
+                </tr>
+                <tbody>
+
+                <tr ng-repeat="p in potencialLoans">
+                    <td class="cell">{{p.title}}</td>
+                    <td class="cell">{{p.percentDay}}</td>
+                    <td class="cell">{{p.percentWeek}}</td>
+                    <td class="cell">{{p.percentMonth}}</td>
+                    <td class="cell">{{p.fullLoanCoeff}}</td>
+                    <td class="cell">{{p.maxLoanAmount}}</td>
+                    <td><button class="btn btn-primary" ng-click="takeNewLoan(p, 1)">Take Loan Per Day</button></td>
+                    <td><button class="btn btn-primary" ng-click="takeNewLoan(p, 2)">Take Loan Per Week</button></td>
+                    <td><button class="btn btn-primary" ng-click="takeNewLoan(p, 3)">Take Loan Per Month</button></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <h4 class="potencial_bank_loans_header" ng-show="!canTakeMore()">New loans are unavailable</h4>
+
+    <p></p>
+
+</div>
+
+
+
+
+</body>
+
+</html>
