@@ -14,16 +14,12 @@ import ru.sargassov.fmweb.dto.*;
 import ru.sargassov.fmweb.dto.player_dtos.IdNamePricePlayerDto;
 import ru.sargassov.fmweb.dto.player_dtos.PlayerOnTrainingDto;
 import ru.sargassov.fmweb.dto.player_dtos.PlayerSoftSkillDto;
-import ru.sargassov.fmweb.exceptions.BankNotFoundException;
 import ru.sargassov.fmweb.exceptions.PlayerNotFoundException;
 import ru.sargassov.fmweb.exceptions.TooExpensiveException;
 import ru.sargassov.fmweb.exceptions.TransferException;
 import ru.sargassov.fmweb.intermediate_entites.*;
-import ru.sargassov.fmweb.intermediate_entites.days.Day;
 import ru.sargassov.fmweb.repositories.TeamRepository;
-import ru.sargassov.fmweb.validators.LoanValidator;
 
-import javax.xml.bind.ValidationException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Comparator;
@@ -318,10 +314,10 @@ public class TeamService {
         return FinanceAnalytics.getExpenses(team);
     }
 
-    public TextResponce getStartMessage() {
+    public TextResponse getStartFinanceMessage() {
         Team userTeam = userService.getUserTeam();
         int banksValue = userTeam.getLoans().size();
-        TextResponce text = new TextResponce();
+        TextResponse text = new TextResponse();
         text.setResponse(TextConstant.getBanksStartMessage(userTeam, banksValue));
         return text;
     }
@@ -356,6 +352,16 @@ public class TeamService {
         team.getLoans().remove(bank);
         bankService.returnBankToApi(bank);
     }
+
+    public TextResponse getStartSponsorMessage() {
+        Team userTeam = userService.getUserTeam();
+        TextResponse responce = new TextResponse();
+        String answer = TextConstant.permissionToChangeSponsor(userTeam.isChangeSponsor());
+        responce.setResponse(answer);
+        return responce;
+    }
+
+
 }
 
 

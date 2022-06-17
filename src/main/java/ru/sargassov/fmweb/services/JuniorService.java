@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import ru.sargassov.fmweb.api_temporary_classes_group.JuniorPoolApi;
 import ru.sargassov.fmweb.converters.JuniorConverter;
 import ru.sargassov.fmweb.dto.player_dtos.JuniorDto;
-import ru.sargassov.fmweb.dto.TextResponce;
+import ru.sargassov.fmweb.dto.TextResponse;
 import ru.sargassov.fmweb.exceptions.YouthAcademyException;
 import ru.sargassov.fmweb.intermediate_entites.Player;
 import ru.sargassov.fmweb.intermediate_entites.Position;
@@ -52,7 +52,7 @@ public class JuniorService {
         return player;
     }
 
-    public TextResponce isUserVisitedYouthAcademyToday() {
+    public TextResponse isUserVisitedYouthAcademyToday() {
         return userService.isUserVisitedYouthAcademyToday();
     }
 
@@ -63,14 +63,14 @@ public class JuniorService {
                 .collect(Collectors.toList());
     }
 
-    public TextResponce invokeYoungPlayerInUserTeam(JuniorDto juniorDto) {
+    public TextResponse invokeYoungPlayerInUserTeam(JuniorDto juniorDto) {
         Team team = userService.getUserTeam();
         if(team.getWealth().compareTo(juniorDto.getPrice()) < 0){
             try{
                 throw new YouthAcademyException("The wealth of User team is less than young player price!");
             } catch (YouthAcademyException y){
                 log.error(y.getMessage());
-                return new TextResponce(y.getMessage());
+                return new TextResponse(y.getMessage());
             }
         }
         if(userService.isVisited()) {
@@ -82,6 +82,6 @@ public class JuniorService {
         team.getPlayerList().add(p);
         juniorPoolApi.deleteFromApiList(juniorDto.getName());
         userService.visit();
-        return new TextResponce("Player " + p.getName() + " was invoked in Your team");
+        return new TextResponse("Player " + p.getName() + " was invoked in Your team");
     }
 }

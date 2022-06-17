@@ -85,9 +85,9 @@ public class TeamController {
     }
 
     @GetMapping("/team/finance/start_message")
-    public TextResponce getStartMessage() {
-        log.info("TeamController.getStartMessage");
-        return teamService.getStartMessage();
+    public TextResponse getStartFinanceMessage() {
+        log.info("TeamController.getStartFinanceMessage");
+        return teamService.getStartFinanceMessage();
     }
 
     @GetMapping("/team/finance/load_loans")
@@ -100,5 +100,11 @@ public class TeamController {
     public void remainCurrentLoan(@RequestBody LoanDto loan) {
         log.info("TeamController.remainCurrentLoans");
         teamService.remainCurrentLoan(loan);
+    }
+
+    @GetMapping("/team/sponspor/start_message")
+    public TextResponse getStartSponsorMessage() {
+        log.info("TeamController.getStartSponsorMessage");
+        return teamService.getStartSponsorMessage();
     }
 }

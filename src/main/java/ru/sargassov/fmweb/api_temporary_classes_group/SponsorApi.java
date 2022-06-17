@@ -25,4 +25,12 @@ public class SponsorApi { //TEMPORARY CLASS
                 .orElseThrow(() ->
                         new SponsorNotFoundException(String.format("Sponsor with id = %d not found!", id)));
     }
+
+    public Sponsor getSponsorByName(String name) {
+        return sponsorApiList.stream()
+                .filter(s -> s.getName().equals(name))
+                .findFirst()
+                .orElseThrow(() ->
+                        new SponsorNotFoundException(String.format("Sponsor with name = %s not found!", name)));
+    }
 }

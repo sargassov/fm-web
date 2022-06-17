@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.sargassov.fmweb.api_temporary_classes_group.UserApi;
 import ru.sargassov.fmweb.converters.UserConverter;
-import ru.sargassov.fmweb.dto.TextResponce;
+import ru.sargassov.fmweb.dto.TextResponse;
 import ru.sargassov.fmweb.dto.UserData;
 import ru.sargassov.fmweb.exceptions.YouthAcademyException;
 import ru.sargassov.fmweb.intermediate_entites.Coach;
@@ -30,7 +30,7 @@ public class UserService {
         return userApi.isVisitToYouthAcademyToday();
     }
 
-    public TextResponce isUserVisitedYouthAcademyToday() {
+    public TextResponse isUserVisitedYouthAcademyToday() {
         log.info("UserService.isUserVisitedYouthAcademyToday");
         boolean visited = userApi.isVisitToYouthAcademyToday();
         if(visited)
@@ -38,10 +38,10 @@ public class UserService {
                 log.error("USER HAD ALREADY VISITED IN YOUTH ACADEMY");
                 throw new YouthAcademyException("You have already were in Youth Academy today");
             } catch (YouthAcademyException y){
-                return new TextResponce(y.getMessage());
+                return new TextResponse(y.getMessage());
             }
         else
-            return new TextResponce("Now, you can see new players from your club's academy.");
+            return new TextResponse("Now, you can see new players from your club's academy.");
     }
 
     public Team getUserTeam() {

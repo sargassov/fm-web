@@ -7,12 +7,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import ru.sargassov.fmweb.dto.player_dtos.JuniorDto;
-import ru.sargassov.fmweb.dto.TextResponce;
-import ru.sargassov.fmweb.intermediate_entites.Team;
+import ru.sargassov.fmweb.dto.TextResponse;
 import ru.sargassov.fmweb.services.JuniorService;
-import ru.sargassov.fmweb.services.TeamService;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -22,7 +19,7 @@ public class JuniorController {
     private final JuniorService juniorService;
 
     @GetMapping("/junior")
-    private TextResponce isUserVisitedYouthAcademyToday(){
+    private TextResponse isUserVisitedYouthAcademyToday(){
         return juniorService.isUserVisitedYouthAcademyToday();
     }
 
@@ -32,7 +29,7 @@ public class JuniorController {
     }
 
     @PostMapping("/junior/new/create")
-    private TextResponce invokeYoungPlayerInUserTeam(@RequestBody JuniorDto juniorDto){
+    private TextResponse invokeYoungPlayerInUserTeam(@RequestBody JuniorDto juniorDto){
         return juniorService.invokeYoungPlayerInUserTeam(juniorDto);
     }
 }
