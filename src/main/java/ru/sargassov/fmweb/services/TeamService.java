@@ -304,12 +304,12 @@ public class TeamService {
                 .collect(Collectors.toList());
     }
 
-    public List<FinanceDto> gelAllIncomes() {
+    public List<InformationDto> gelAllIncomes() {
         Team team = userService.getUserTeam();
         return FinanceAnalytics.getIncomes(team);
     }
 
-    public List<FinanceDto> gelAllExpenses() {
+    public List<InformationDto> gelAllExpenses() {
         Team team = userService.getUserTeam();
         return FinanceAnalytics.getExpenses(team);
     }

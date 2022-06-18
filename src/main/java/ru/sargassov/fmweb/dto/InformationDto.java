@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 
 @Data
 @AllArgsConstructor
-public class FinanceDto {
+public class InformationDto {
     private String type;
     private Object value;
 }

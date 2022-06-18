@@ -11,7 +11,6 @@ import ru.sargassov.fmweb.intermediate_entites.Team;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
-import java.util.List;
 
 @Component
 @AllArgsConstructor
@@ -27,7 +26,7 @@ public class TeamConverter {
         tDto.setHeadCoach(new HeadCoach(teamEntity.getManager()));
         tDto.setWealth(BigDecimal.valueOf(teamEntity.getWealth()).setScale(2, RoundingMode.HALF_UP));
         tDto.setLeague(league);
-        tDto.setStadium(stadiumConverter.entityToDto(teamEntity.getStadiumEntity(), tDto));
+        tDto.setStadium(stadiumConverter.getIntermediateEntityFromEntity(teamEntity.getStadiumEntity(), tDto));
         tDto.setCity(cityConverter.entityToDto(teamEntity.getCityEntity()));
         //------------------------
         tDto.setStartWealth(tDto.getWealth());

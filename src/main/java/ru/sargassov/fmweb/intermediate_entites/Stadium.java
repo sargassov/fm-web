@@ -3,6 +3,8 @@ package ru.sargassov.fmweb.intermediate_entites;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 
 @Data
 @NoArgsConstructor
@@ -11,28 +13,52 @@ public class Stadium {
     private Team team;
     private String title;
     private League league;
-    private int fullCapacity;
     private City city;
-    //___________________________
+    private int fullCapacity;
+//
+    private int vipCapacity;
+    private int familyCapacity;
+    private int fanCapacity;
+    private int simpleCapacity;
+    private int awayCapacity;
+    private int usualAverageCapacity;
+
+    private BigDecimal vipTicketCost;
+    private BigDecimal familyTicketCost;
+    private BigDecimal fanTicketCost;
+    private BigDecimal simpleTicketCost;
+    private BigDecimal awayTicketCost;
+
+    public BigDecimal getMatchTicketRevenue() {
+
+        BigDecimal[] ticketCosts = {
+                vipTicketCost,
+                familyTicketCost,
+                fanTicketCost,
+                simpleTicketCost,
+                awayTicketCost
+        };
+
+        BigDecimal[] ticketValues = {
+                BigDecimal.valueOf(vipCapacity),
+                BigDecimal.valueOf(familyCapacity),
+                BigDecimal.valueOf(fanCapacity),
+                BigDecimal.valueOf(simpleCapacity),
+                BigDecimal.valueOf(awayCapacity)
+        };
+        BigDecimal result = BigDecimal.ZERO;
+
+        for(int i = 0; i < ticketCosts.length; i++){
+            result = result.add(ticketCosts[i].multiply(ticketValues[i]));
+        }
+        return result;
+    }
+
 
     //    List<Integer> tempCapacityArr;
 //    List<Integer> tempCostArr;
 //
-//    private League league;
-//    private String title;
-//
-//    private int fullCapacity;
-//    private int vipCapacity;
-//    private int vipTicketCost;
-//    private int familyCapacity;
-//    private int familyTicketCost;
-//    private int fanCapacity;
-//    private int fanTicketCost;
-//    private int simpleCapacity;
-//    private int simpleTicketCost;
-//    private int awayCapacity;
-//    private int awayTicketCost;
-//    private int usualAverageCapacity;
+
 ////    private int capacityStad;
 //    private double stadiumExpenses;
 //

@@ -2,10 +2,10 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 14.2
--- Dumped by pg_dump version 14.2
+-- Dumped from database version 12.11
+-- Dumped by pg_dump version 12.11
 
--- Started on 2022-05-21 15:43:40
+-- Started on 2022-06-18 10:19:12
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -23,7 +23,7 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- TOC entry 218 (class 1259 OID 24652)
+-- TOC entry 202 (class 1259 OID 26296)
 -- Name: banks; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -41,7 +41,7 @@ CREATE TABLE public.banks (
 ALTER TABLE public.banks OWNER TO postgres;
 
 --
--- TOC entry 217 (class 1259 OID 24651)
+-- TOC entry 203 (class 1259 OID 26299)
 -- Name: banks_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -56,8 +56,8 @@ CREATE SEQUENCE public.banks_id_seq
 ALTER TABLE public.banks_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3448 (class 0 OID 0)
--- Dependencies: 217
+-- TOC entry 3015 (class 0 OID 0)
+-- Dependencies: 203
 -- Name: banks_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -65,7 +65,7 @@ ALTER SEQUENCE public.banks_id_seq OWNED BY public.banks.id;
 
 
 --
--- TOC entry 227 (class 1259 OID 24701)
+-- TOC entry 204 (class 1259 OID 26301)
 -- Name: cities; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -79,7 +79,7 @@ CREATE TABLE public.cities (
 ALTER TABLE public.cities OWNER TO postgres;
 
 --
--- TOC entry 226 (class 1259 OID 24700)
+-- TOC entry 205 (class 1259 OID 26304)
 -- Name: cities_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -94,8 +94,8 @@ CREATE SEQUENCE public.cities_id_seq
 ALTER TABLE public.cities_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3449 (class 0 OID 0)
--- Dependencies: 226
+-- TOC entry 3016 (class 0 OID 0)
+-- Dependencies: 205
 -- Name: cities_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -103,7 +103,7 @@ ALTER SEQUENCE public.cities_id_seq OWNED BY public.cities.id;
 
 
 --
--- TOC entry 236 (class 1259 OID 24777)
+-- TOC entry 206 (class 1259 OID 26306)
 -- Name: days; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -119,7 +119,7 @@ CREATE TABLE public.days (
 ALTER TABLE public.days OWNER TO postgres;
 
 --
--- TOC entry 235 (class 1259 OID 24776)
+-- TOC entry 207 (class 1259 OID 26309)
 -- Name: days_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -134,8 +134,8 @@ CREATE SEQUENCE public.days_id_seq
 ALTER TABLE public.days_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3450 (class 0 OID 0)
--- Dependencies: 235
+-- TOC entry 3017 (class 0 OID 0)
+-- Dependencies: 207
 -- Name: days_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -143,7 +143,7 @@ ALTER SEQUENCE public.days_id_seq OWNED BY public.days.id;
 
 
 --
--- TOC entry 234 (class 1259 OID 24770)
+-- TOC entry 208 (class 1259 OID 26311)
 -- Name: draws; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -156,7 +156,7 @@ CREATE TABLE public.draws (
 ALTER TABLE public.draws OWNER TO postgres;
 
 --
--- TOC entry 233 (class 1259 OID 24769)
+-- TOC entry 209 (class 1259 OID 26314)
 -- Name: draws_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -171,8 +171,8 @@ CREATE SEQUENCE public.draws_id_seq
 ALTER TABLE public.draws_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3451 (class 0 OID 0)
--- Dependencies: 233
+-- TOC entry 3018 (class 0 OID 0)
+-- Dependencies: 209
 -- Name: draws_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -180,7 +180,7 @@ ALTER SEQUENCE public.draws_id_seq OWNED BY public.draws.id;
 
 
 --
--- TOC entry 216 (class 1259 OID 24641)
+-- TOC entry 210 (class 1259 OID 26316)
 -- Name: juniors; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -193,7 +193,7 @@ CREATE TABLE public.juniors (
 ALTER TABLE public.juniors OWNER TO postgres;
 
 --
--- TOC entry 215 (class 1259 OID 24640)
+-- TOC entry 211 (class 1259 OID 26319)
 -- Name: juniors_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -208,8 +208,8 @@ CREATE SEQUENCE public.juniors_id_seq
 ALTER TABLE public.juniors_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3452 (class 0 OID 0)
--- Dependencies: 215
+-- TOC entry 3019 (class 0 OID 0)
+-- Dependencies: 211
 -- Name: juniors_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -217,7 +217,7 @@ ALTER SEQUENCE public.juniors_id_seq OWNED BY public.juniors.id;
 
 
 --
--- TOC entry 210 (class 1259 OID 16540)
+-- TOC entry 212 (class 1259 OID 26321)
 -- Name: leagues; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -230,7 +230,7 @@ CREATE TABLE public.leagues (
 ALTER TABLE public.leagues OWNER TO postgres;
 
 --
--- TOC entry 209 (class 1259 OID 16539)
+-- TOC entry 213 (class 1259 OID 26324)
 -- Name: leagues_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -245,8 +245,8 @@ CREATE SEQUENCE public.leagues_id_seq
 ALTER TABLE public.leagues_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3453 (class 0 OID 0)
--- Dependencies: 209
+-- TOC entry 3020 (class 0 OID 0)
+-- Dependencies: 213
 -- Name: leagues_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -254,7 +254,7 @@ ALTER SEQUENCE public.leagues_id_seq OWNED BY public.leagues.id;
 
 
 --
--- TOC entry 232 (class 1259 OID 24754)
+-- TOC entry 214 (class 1259 OID 26326)
 -- Name: placements; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -268,7 +268,7 @@ CREATE TABLE public.placements (
 ALTER TABLE public.placements OWNER TO postgres;
 
 --
--- TOC entry 231 (class 1259 OID 24753)
+-- TOC entry 215 (class 1259 OID 26332)
 -- Name: placements_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -284,8 +284,8 @@ CREATE SEQUENCE public.placements_id_seq
 ALTER TABLE public.placements_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3454 (class 0 OID 0)
--- Dependencies: 231
+-- TOC entry 3021 (class 0 OID 0)
+-- Dependencies: 215
 -- Name: placements_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -293,7 +293,7 @@ ALTER SEQUENCE public.placements_id_seq OWNED BY public.placements.id;
 
 
 --
--- TOC entry 212 (class 1259 OID 24577)
+-- TOC entry 216 (class 1259 OID 26334)
 -- Name: players; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -318,7 +318,7 @@ CREATE TABLE public.players (
 ALTER TABLE public.players OWNER TO postgres;
 
 --
--- TOC entry 211 (class 1259 OID 24576)
+-- TOC entry 217 (class 1259 OID 26340)
 -- Name: players_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -333,8 +333,8 @@ CREATE SEQUENCE public.players_id_seq
 ALTER TABLE public.players_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3455 (class 0 OID 0)
--- Dependencies: 211
+-- TOC entry 3022 (class 0 OID 0)
+-- Dependencies: 217
 -- Name: players_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -342,7 +342,7 @@ ALTER SEQUENCE public.players_id_seq OWNED BY public.players.id;
 
 
 --
--- TOC entry 229 (class 1259 OID 24713)
+-- TOC entry 218 (class 1259 OID 26342)
 -- Name: positions; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -356,7 +356,7 @@ CREATE TABLE public.positions (
 ALTER TABLE public.positions OWNER TO postgres;
 
 --
--- TOC entry 228 (class 1259 OID 24712)
+-- TOC entry 219 (class 1259 OID 26345)
 -- Name: positions_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -371,8 +371,8 @@ CREATE SEQUENCE public.positions_id_seq
 ALTER TABLE public.positions_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3456 (class 0 OID 0)
--- Dependencies: 228
+-- TOC entry 3023 (class 0 OID 0)
+-- Dependencies: 219
 -- Name: positions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -380,7 +380,7 @@ ALTER SEQUENCE public.positions_id_seq OWNED BY public.positions.id;
 
 
 --
--- TOC entry 220 (class 1259 OID 24659)
+-- TOC entry 220 (class 1259 OID 26347)
 -- Name: sponsors; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -399,7 +399,7 @@ CREATE TABLE public.sponsors (
 ALTER TABLE public.sponsors OWNER TO postgres;
 
 --
--- TOC entry 219 (class 1259 OID 24658)
+-- TOC entry 221 (class 1259 OID 26350)
 -- Name: sponsors_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -414,8 +414,8 @@ CREATE SEQUENCE public.sponsors_id_seq
 ALTER TABLE public.sponsors_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3457 (class 0 OID 0)
--- Dependencies: 219
+-- TOC entry 3024 (class 0 OID 0)
+-- Dependencies: 221
 -- Name: sponsors_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -423,7 +423,7 @@ ALTER SEQUENCE public.sponsors_id_seq OWNED BY public.sponsors.id;
 
 
 --
--- TOC entry 224 (class 1259 OID 24668)
+-- TOC entry 222 (class 1259 OID 26352)
 -- Name: stadiums; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -440,7 +440,7 @@ CREATE TABLE public.stadiums (
 ALTER TABLE public.stadiums OWNER TO postgres;
 
 --
--- TOC entry 223 (class 1259 OID 24667)
+-- TOC entry 223 (class 1259 OID 26355)
 -- Name: stadiums_id_leagues_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -455,7 +455,7 @@ CREATE SEQUENCE public.stadiums_id_leagues_seq
 ALTER TABLE public.stadiums_id_leagues_seq OWNER TO postgres;
 
 --
--- TOC entry 3458 (class 0 OID 0)
+-- TOC entry 3025 (class 0 OID 0)
 -- Dependencies: 223
 -- Name: stadiums_id_leagues_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -464,7 +464,7 @@ ALTER SEQUENCE public.stadiums_id_leagues_seq OWNED BY public.stadiums.id_league
 
 
 --
--- TOC entry 221 (class 1259 OID 24665)
+-- TOC entry 224 (class 1259 OID 26357)
 -- Name: stadiums_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -479,8 +479,8 @@ CREATE SEQUENCE public.stadiums_id_seq
 ALTER TABLE public.stadiums_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3459 (class 0 OID 0)
--- Dependencies: 221
+-- TOC entry 3026 (class 0 OID 0)
+-- Dependencies: 224
 -- Name: stadiums_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -488,7 +488,7 @@ ALTER SEQUENCE public.stadiums_id_seq OWNED BY public.stadiums.id;
 
 
 --
--- TOC entry 222 (class 1259 OID 24666)
+-- TOC entry 225 (class 1259 OID 26359)
 -- Name: stadiums_id_teams_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -503,8 +503,8 @@ CREATE SEQUENCE public.stadiums_id_teams_seq
 ALTER TABLE public.stadiums_id_teams_seq OWNER TO postgres;
 
 --
--- TOC entry 3460 (class 0 OID 0)
--- Dependencies: 222
+-- TOC entry 3027 (class 0 OID 0)
+-- Dependencies: 225
 -- Name: stadiums_id_teams_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -512,7 +512,7 @@ ALTER SEQUENCE public.stadiums_id_teams_seq OWNED BY public.stadiums.id_teams;
 
 
 --
--- TOC entry 213 (class 1259 OID 24600)
+-- TOC entry 226 (class 1259 OID 26361)
 -- Name: teams; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -530,7 +530,7 @@ CREATE TABLE public.teams (
 ALTER TABLE public.teams OWNER TO postgres;
 
 --
--- TOC entry 214 (class 1259 OID 24608)
+-- TOC entry 227 (class 1259 OID 26364)
 -- Name: teams_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -545,8 +545,8 @@ CREATE SEQUENCE public.teams_id_seq
 ALTER TABLE public.teams_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3461 (class 0 OID 0)
--- Dependencies: 214
+-- TOC entry 3028 (class 0 OID 0)
+-- Dependencies: 227
 -- Name: teams_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -554,7 +554,7 @@ ALTER SEQUENCE public.teams_id_seq OWNED BY public.teams.id;
 
 
 --
--- TOC entry 225 (class 1259 OID 24677)
+-- TOC entry 228 (class 1259 OID 26366)
 -- Name: teams_id_stadiums_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -569,8 +569,8 @@ CREATE SEQUENCE public.teams_id_stadiums_seq
 ALTER TABLE public.teams_id_stadiums_seq OWNER TO postgres;
 
 --
--- TOC entry 3462 (class 0 OID 0)
--- Dependencies: 225
+-- TOC entry 3029 (class 0 OID 0)
+-- Dependencies: 228
 -- Name: teams_id_stadiums_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -578,20 +578,7 @@ ALTER SEQUENCE public.teams_id_stadiums_seq OWNED BY public.teams.id_stadiums;
 
 
 --
--- TOC entry 230 (class 1259 OID 24740)
--- Name: teams_players; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.teams_players (
-    id_teams bigint NOT NULL,
-    id_players bigint NOT NULL
-);
-
-
-ALTER TABLE public.teams_players OWNER TO postgres;
-
---
--- TOC entry 3231 (class 2604 OID 24655)
+-- TOC entry 2809 (class 2604 OID 26371)
 -- Name: banks id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -599,7 +586,7 @@ ALTER TABLE ONLY public.banks ALTER COLUMN id SET DEFAULT nextval('public.banks_
 
 
 --
--- TOC entry 3236 (class 2604 OID 24704)
+-- TOC entry 2810 (class 2604 OID 26372)
 -- Name: cities id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -607,7 +594,7 @@ ALTER TABLE ONLY public.cities ALTER COLUMN id SET DEFAULT nextval('public.citie
 
 
 --
--- TOC entry 3240 (class 2604 OID 24780)
+-- TOC entry 2811 (class 2604 OID 26373)
 -- Name: days id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -615,7 +602,7 @@ ALTER TABLE ONLY public.days ALTER COLUMN id SET DEFAULT nextval('public.days_id
 
 
 --
--- TOC entry 3239 (class 2604 OID 24773)
+-- TOC entry 2812 (class 2604 OID 26374)
 -- Name: draws id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -623,7 +610,7 @@ ALTER TABLE ONLY public.draws ALTER COLUMN id SET DEFAULT nextval('public.draws_
 
 
 --
--- TOC entry 3230 (class 2604 OID 24644)
+-- TOC entry 2813 (class 2604 OID 26375)
 -- Name: juniors id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -631,7 +618,7 @@ ALTER TABLE ONLY public.juniors ALTER COLUMN id SET DEFAULT nextval('public.juni
 
 
 --
--- TOC entry 3226 (class 2604 OID 16543)
+-- TOC entry 2814 (class 2604 OID 26376)
 -- Name: leagues id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -639,7 +626,7 @@ ALTER TABLE ONLY public.leagues ALTER COLUMN id SET DEFAULT nextval('public.leag
 
 
 --
--- TOC entry 3238 (class 2604 OID 24757)
+-- TOC entry 2815 (class 2604 OID 26377)
 -- Name: placements id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -647,7 +634,7 @@ ALTER TABLE ONLY public.placements ALTER COLUMN id SET DEFAULT nextval('public.p
 
 
 --
--- TOC entry 3227 (class 2604 OID 24580)
+-- TOC entry 2816 (class 2604 OID 26378)
 -- Name: players id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -655,7 +642,7 @@ ALTER TABLE ONLY public.players ALTER COLUMN id SET DEFAULT nextval('public.play
 
 
 --
--- TOC entry 3237 (class 2604 OID 24716)
+-- TOC entry 2817 (class 2604 OID 26379)
 -- Name: positions id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -663,7 +650,7 @@ ALTER TABLE ONLY public.positions ALTER COLUMN id SET DEFAULT nextval('public.po
 
 
 --
--- TOC entry 3232 (class 2604 OID 24662)
+-- TOC entry 2818 (class 2604 OID 26380)
 -- Name: sponsors id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -671,7 +658,7 @@ ALTER TABLE ONLY public.sponsors ALTER COLUMN id SET DEFAULT nextval('public.spo
 
 
 --
--- TOC entry 3233 (class 2604 OID 24671)
+-- TOC entry 2819 (class 2604 OID 26381)
 -- Name: stadiums id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -679,7 +666,7 @@ ALTER TABLE ONLY public.stadiums ALTER COLUMN id SET DEFAULT nextval('public.sta
 
 
 --
--- TOC entry 3234 (class 2604 OID 24672)
+-- TOC entry 2820 (class 2604 OID 26382)
 -- Name: stadiums id_teams; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -687,7 +674,7 @@ ALTER TABLE ONLY public.stadiums ALTER COLUMN id_teams SET DEFAULT nextval('publ
 
 
 --
--- TOC entry 3235 (class 2604 OID 24673)
+-- TOC entry 2821 (class 2604 OID 26383)
 -- Name: stadiums id_leagues; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -695,7 +682,7 @@ ALTER TABLE ONLY public.stadiums ALTER COLUMN id_leagues SET DEFAULT nextval('pu
 
 
 --
--- TOC entry 3228 (class 2604 OID 24609)
+-- TOC entry 2822 (class 2604 OID 26384)
 -- Name: teams id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -703,7 +690,7 @@ ALTER TABLE ONLY public.teams ALTER COLUMN id SET DEFAULT nextval('public.teams_
 
 
 --
--- TOC entry 3229 (class 2604 OID 24678)
+-- TOC entry 2823 (class 2604 OID 26385)
 -- Name: teams id_stadiums; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -711,13 +698,13 @@ ALTER TABLE ONLY public.teams ALTER COLUMN id_stadiums SET DEFAULT nextval('publ
 
 
 --
--- TOC entry 3424 (class 0 OID 24652)
--- Dependencies: 218
+-- TOC entry 2983 (class 0 OID 26296)
+-- Dependencies: 202
 -- Data for Name: banks; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.banks (id, title, percent_day, percent_week, percent_month, full_loan_coeff, max_loan_amount) FROM stdin;
-1	ZBER	3	10	55	1.2	45.00
+1	ZVER	3	10	55	1.2	45.00
 2	WTB	2	12	70	1.4	40.00
 3	Inkoff Bank	2	8	34	1.1	10.00
 4	Omega Bank	4	14	66	1.8	85.00
@@ -727,8 +714,8 @@ COPY public.banks (id, title, percent_day, percent_week, percent_month, full_loa
 
 
 --
--- TOC entry 3433 (class 0 OID 24701)
--- Dependencies: 227
+-- TOC entry 2985 (class 0 OID 26301)
+-- Dependencies: 204
 -- Data for Name: cities; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -750,8 +737,8 @@ COPY public.cities (id, name, id_leagues) FROM stdin;
 
 
 --
--- TOC entry 3442 (class 0 OID 24777)
--- Dependencies: 236
+-- TOC entry 2987 (class 0 OID 26306)
+-- Dependencies: 206
 -- Data for Name: days; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -1071,8 +1058,8 @@ COPY public.days (id, day, is_passed, is_present, is_match) FROM stdin;
 
 
 --
--- TOC entry 3440 (class 0 OID 24770)
--- Dependencies: 234
+-- TOC entry 2989 (class 0 OID 26311)
+-- Dependencies: 208
 -- Data for Name: draws; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -1111,8 +1098,8 @@ COPY public.draws (id, draw) FROM stdin;
 
 
 --
--- TOC entry 3422 (class 0 OID 24641)
--- Dependencies: 216
+-- TOC entry 2991 (class 0 OID 26316)
+-- Dependencies: 210
 -- Data for Name: juniors; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -1519,7 +1506,7 @@ COPY public.juniors (id, name) FROM stdin;
 400	IAnchukovskii Nestor
 401	Koshelkov Adam
 402	SHeremetev Mefodii
-403	Artamonov IUrii
+403	Artamonov Yurii
 404	Veselov Maksim
 405	Barsukov Vissarion
 406	Ogurtsov Evgraf
@@ -1771,8 +1758,8 @@ COPY public.juniors (id, name) FROM stdin;
 
 
 --
--- TOC entry 3416 (class 0 OID 16540)
--- Dependencies: 210
+-- TOC entry 2993 (class 0 OID 26321)
+-- Dependencies: 212
 -- Data for Name: leagues; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -1782,8 +1769,8 @@ COPY public.leagues (id, name) FROM stdin;
 
 
 --
--- TOC entry 3438 (class 0 OID 24754)
--- Dependencies: 232
+-- TOC entry 2995 (class 0 OID 26326)
+-- Dependencies: 214
 -- Data for Name: placements; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -1798,459 +1785,459 @@ COPY public.placements (id, description, roles) FROM stdin;
 
 
 --
--- TOC entry 3418 (class 0 OID 24577)
--- Dependencies: 212
+-- TOC entry 2997 (class 0 OID 26334)
+-- Dependencies: 216
 -- Data for Name: players; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.players (id, name, natio, gk_able, def_able, mid_able, forw_able, price, captain_able, number, strategy_place, id_teams, year, id_positions) FROM stdin;
-25	Adgoev Guram	Rus	4	21	31	69	3.2	3	17	-100	7	1995	4
-41	Ablaye Mbengue	Sen	9	20	27	63	3.4	4	17	-100	16	1992	4
-39	Ponce Andres	Ven	8	23	11	75	4.5	6	18	-100	16	1996	4
-46	Ilyin Vladimir	Rus	9	24	14	65	2.4	6	29	-100	16	1992	4
-73	Nishimura Takuma	Jpn	2	23	24	76	6.3	5	19	-100	5	1996	4
-365	Godzyur Yaroslav	Ukr	71	7	9	1	3.6	2	31	-100	10	1985	1
-356	Sugrobov Vladimir	Rus	61	3	6	6	3.1	5	50	-100	11	1996	1
-58	Chalov Fedor	Rus	5	21	28	83	30.4	5	9	-100	5	1998	4
-243	Dolgov Alexandr	Rus	1	23	15	63	3.5	1	47	-100	4	1998	4
-38	Magomedov Lechi	Rus	4	7	12	64	3.6	6	98	-100	16	1999	4
-52	Ravanelli Ferreira	Bra	7	31	10	66	3.1	3	14	-100	16	1997	4
-53	Vizeu Felipe	Bra	9	21	13	71	4.1	4	27	-100	16	1997	4
-61	Akhmetov Ilzat	Rus	5	22	20	79	15.2	9	7	-100	5	1997	4
-335	Sheliya Giorgi	Rus	71	3	4	2	4.1	34	88	-100	11	1988	1
-63	Sigurdsson Arnor	Isl	5	30	28	82	18.7	4	17	-100	5	1999	4
-74	Shkurin Ilya	Bel	2	23	24	76	4.2	5	18	-100	5	1999	4
-380	Baklov Oleg	Rus	68	1	2	2	3.5	1	77	-100	10	1994	1
-303	Larsson Jordan	Swe	8	11	21	77	4.3	12	86	-100	8	1997	4
-117	Ari Ferreyra	Rus	4	30	27	78	6.1	46	9	-100	3	1985	4
-390	Belenov Alexander	Rus	80	5	4	1	5.2	35	31	-100	9	1986	1
-411	Chernov Alexey	Rus	66	4	9	2	3.2	7	1	-100	9	1998	1
-33	Harin Yevgeni	Rus	8	28	67	33	3.1	8	10	-100	16	1995	3
-54	Fernandes Mario	Rus	8	31	90	18	35.5	5	2	-100	5	1990	3
-32	Odise Roshi	Alb	6	31	73	16	3.8	6	21	-100	16	1991	3
-294	Maksimenko Aleksandr	Rus	82	7	7	5	9.4	9	98	-100	8	1998	1
-99	Leschuk Igor	Rus	67	5	7	8	3.0	4	31	-100	6	1996	1
-71	Pomazun Ilya	Rus	73	2	2	7	4.5	9	1	-100	5	1996	1
-21	Nigmatullin Artur	Rus	73	3	6	8	4.0	3	1	-100	7	1991	1
-11	Levashov Mikhail	Rus	69	14	6	2	3.2	3	36	-100	7	1991	1
-17	Shamov Egor	Rus	68	3	14	6	2.6	3	50	-100	7	1994	1
-80	Torop Vladislav	Rus	70	6	8	8	4.1	2	49	-100	5	2003	1
-237	Rudakov Maksim	Rus	65	4	7	4	3.6	5	77	-100	4	1996	1
-229	Pesyakov Sergey	Rus	74	7	8	9	4.0	5	30	-100	4	1988	1
-240	Baburin Egor	Rus	70	8	0	1	4.0	8	1	-100	4	1993	1
-114	Safonov Matvey	Rus	86	8	8	7	12.4	23	39	-100	3	1999	1
-241	Popov Denis	Rus	62	1	0	1	4.1	8	46	-100	4	2002	1
-218	Galadzhan Artem	Rus	8	23	17	71	4.0	1	89	-100	13	1998	4
-207	Fameyeh Joel	Gha	6	22	25	73	4.1	5	20	-100	13	1997	4
-159	Glushenkov Maksim	Rus	6	23	26	71	3.7	2	15	-100	15	1999	4
-162	Golenkov Egor	Rus	3	20	20	68	3.6	9	69	-100	15	1999	4
-160	Molchanov Dmitriy	Rus	6	8	21	68	3.1	2	86	-100	15	2000	4
-161	Fedorov Veniamin	Rus	1	2	8	62	2.8	2	92	-100	15	2003	4
-197	Despotovic Djordje	Srb	3	28	32	74	3.9	3	9	-100	13	1992	4
-209	Kulishev Artem	Rus	8	23	17	70	3.7	9	32	-100	13	1993	4
-215	Sylla Mamadou	Sen	6	20	22	75	4.3	9	14	-100	13	1994	4
-177	Gilerme Marinato	Rus	83	4	9	5	8.6	42	1	-100	2	1985	1
-172	Kochenkov Anton	Rus	70	10	4	6	3.2	11	77	-100	2	1987	1
-424	Kerzhakov Mikhail	Rus	81	7	3	1	6.9	4	41	-100	1	1987	1
-423	Lunev Andrey	Rus	78	7	3	5	4.9	8	99	-100	1	1991	1
-186	Medvedev Nikita	Rus	74	3	2	6	4.5	9	30	-100	2	1994	1
-435	Vasyutin Alexandr	Rus	64	6	6	4	3.4	5	78	-100	1	1995	1
-42	Gigolaev Roland	Rus	4	69	29	23	2.8	2	13	-100	16	1990	2
-31	Wilker Angel	Ven	6	73	28	26	2.9	4	4	-100	16	1993	2
-40	Musalov Magomed	Rus	7	66	17	26	2.7	3	5	-100	16	1994	2
-195	Terehhov Sergei	Rus	8	78	28	22	4.6	5	13	-100	13	1990	2
-127	Fernandes Manuel	Por	7	23	82	16	8.3	67	99	-100	3	1986	3
-288	Kutepov Iliya	Rus	7	83	34	29	11.7	61	29	-100	8	1993	2
-281	Jikia Georgy	Rus	8	83	26	33	9.3	10	14	-100	8	1993	2
-72	Gogoua Cedric	Ivo	2	74	24	23	4.9	5	27	-100	5	1994	2
-266	Starfelt Carl	Swe	6	73	15	20	3.8	12	4	-100	14	1995	2
-140	Chernov Nikita	Rus	4	72	31	32	3.6	1	3	-100	15	1996	2
-259	Pliyev Konstantin	Rus	3	65	34	20	3.4	6	3	-100	14	1996	2
-265	Poyarkov Nikolay	Rus	1	64	24	33	3.3	5	71	-100	14	1999	2
-263	Stepanov Daniil	Rus	1	67	12	25	3.4	6	69	-100	14	2000	2
-168	Ignatiev Vladislav	Rus	4	78	14	32	4.5	28	20	-100	2	1987	2
-163	Chicherin Nikita	Rus	2	67	26	32	3.2	6	44	-100	15	1990	2
-153	Burlak Taras	Rus	5	70	33	20	3.0	9	90	-100	15	1990	2
-204	Shakhov Vitali	Rus	5	68	21	31	3.9	3	31	-100	13	1991	2
-155	Mehdi Zeffane	Alg	4	62	32	21	2.9	4	2	-100	15	1992	2
-208	Afonin Vadim	Uzb	8	71	32	31	4.1	6	29	-100	13	1987	2
-205	Sivakov Mikhail	Blr	9	60	10	34	3.5	4	3	-100	13	1988	2
-309	Mevlja Miha	Slv	1	74	16	27	3.9	6	32	-100	12	1990	2
-171	Kverkelia Solomon	Geo	12	82	14	10	12.7	73	33	-100	2	1992	2
-201	Radakovic Uros	Srb	9	66	29	30	3.4	9	4	-100	13	1994	2
-158	Lystsov Vilaly	Rus	7	75	25	20	4.4	7	5	-100	15	1995	2
-212	Kozlov Savely	Rus	1	75	21	31	4.0	68	66	-100	13	1997	2
-306	Miladinovic Ivan	Srb	7	68	10	31	3.5	6	45	-100	12	1994	2
-312	Kudryashov Fedor	Rus	8	71	33	33	3.4	1	93	-100	12	1987	2
-311	Novoseltsev Ivan	Rus	3	74	11	34	3.6	3	25	-100	12	1991	2
-353	Shlyakov Evgeni	Rus	1	60	12	23	3.2	7	5	-100	11	1991	2
-321	Yurganov Igor	Rus	5	74	26	26	3.7	3	22	-100	12	1993	2
-354	Yurganov Igor	Rus	3	64	16	32	3.1	3	22	-100	11	1993	2
-351	Kaplienko Aleksandr	Ukr	9	69	18	32	3.4	9	21	-100	11	1996	2
-313	Kalugin Nikita	Rus	7	69	10	21	3.4	2	26	-100	12	1998	2
-348	Filin Alexander	Rus	3	67	17	26	3.4	9	15	-100	11	1996	2
-367	Aroyan Varazdat	Arm	5	68	14	21	3.3	2	3	-100	10	1992	2
-346	Takazov Soslan	Rus	1	66	18	22	3.7	5	30	-100	11	1993	2
-378	Wilusz Maciej	Pol	9	69	24	21	3.4	3	5	-100	10	1988	2
-295	Melgarejo Lorenzo	Par	7	80	18	33	10.1	71	25	-100	8	1990	2
-184	Kolomeytsev Aleksandr	Rus	3	27	74	18	6.3	9	18	-100	2	1989	3
-279	Kjartansson Vidar	Isl	1	25	11	63	3.6	5	86	-100	14	1990	4
-185	Kulikov Daniil	Rus	3	27	70	18	3.8	9	69	-100	2	1998	3
-170	Magkeyev Stanislav	Rus	5	25	79	12	6.9	12	37	-100	2	1999	3
-262	Markov Evgeny	Rus	5	23	23	70	3.8	1	20	-100	14	1994	4
-264	Tashaev Alexandr	Rus	6	33	24	72	3.9	3	88	-100	14	1994	4
-267	Mikeltadze Beka	Geo	9	33	23	74	4.0	6	90	-100	14	1997	4
-277	Kipiani Nikolai	Rus	1	29	18	70	3.7	8	77	-100	14	1997	4
-268	Ignatiev Ivan	Rus	1	30	14	65	3.2	2	19	-100	14	1999	4
-274	Bakaev Soltmurad	Rus	9	24	19	71	4.0	2	87	-100	14	1999	4
-260	Kvaratskhelia Khvicha	Geo	5	27	32	74	4.1	3	21	-100	14	2001	4
-322	Karapetian Aleksander	Arm	3	33	25	73	3.5	1	87	-100	12	1987	4
-314	Zabolotnyy Anton	Rus	9	28	23	79	4.1	4	10	-100	12	1991	4
-315	Poloz Dmitri	Rus	5	23	16	72	3.7	1	77	-100	12	1991	4
-48	Nenakhov Maxim	Rus	5	68	30	30	4.3	1	3	-100	16	1998	2
-258	Zuev Alexander	Rus	3	69	34	20	3.9	6	12	-100	14	1996	2
-253	Danchenko Oleg	Ukr	1	68	27	30	3.5	2	33	-100	14	1994	2
-138	Karpov Maxim	Rus	2	77	21	33	4.3	1	50	-100	15	1995	2
-257	Sorokin Egor	Rus	1	71	11	34	3.6	6	2	-100	14	1995	2
-252	Uremovic Filip	Cro	1	77	13	23	4.1	2	5	-100	14	1997	2
-255	Davitashvili Zuriko	Geo	9	61	33	22	3.3	8	11	-100	14	2001	2
-327	Shakuro Pavel	Rus	6	62	22	22	3.5	2	90	-100	12	1997	2
-332	Milyutin Vadim	Rus	1	61	30	29	3.3	7	56	-100	12	2002	2
-336	Adessoye Oyevole	Rus	2	67	23	1	2.8	58	58	-100	11	1982	2
-364	Kulakov Denis	Ukr	7	75	26	33	4.0	72	15	-100	10	1986	2
-342	Gritsaenko Aleksey	Rus	13	70	22	3	4.0	10	27	-100	11	1995	2
-405	Nikitin Alexey	Rus	1	69	25	32	3.4	9	4	-100	9	1992	2
-386	Gerasimov Alexey	Rus	7	70	32	27	3.5	1	93	-100	10	1993	2
-379	Zolotov Nikolay	Blr	5	75	10	30	3.8	4	35	-100	10	1994	2
-385	Kalinin Igor	Ukr	5	70	15	25	3.6	1	95	-100	10	1995	2
-283	Lucas Ayrton	Bra	1	75	27	34	4.4	2	6	-100	8	1997	2
-381	Nasyrov Islamzhan	Rus	5	74	30	21	3.9	4	21	-100	10	1998	2
-408	Krugovoi Danil	Rus	9	64	27	25	3.2	3	2	-100	9	1998	2
-282	Rasskazov Nikolai	Rus	4	69	12	22	4.1	9	92	-100	8	1998	2
-289	Maslov Pavel	Rus	3	68	19	33	3.7	2	39	-100	8	2000	2
-95	Pliev Zaurbek	Kaz	1	72	31	32	4.0	6	3	-100	6	1991	2
-105	Novoseltsev Ivan	Rus	4	71	10	26	4.1	8	25	-100	6	1991	2
-2	Gilermo Alvares	Spa	2	73	41	18	4.1	2	21	-100	7	1993	2
-278	Akbashev Roman	Rus	9	32	61	17	3.3	7	96	-100	14	1991	3
-254	Podberezkin Vyacheslav	Rus	8	26	77	21	4.2	48	7	-100	14	1992	3
-256	Mogilevets Pavel	Rus	5	20	78	20	4.1	3	18	-100	14	1993	3
-271	Jevtic Darko	Swi	1	30	70	11	3.9	6	8	-100	14	1993	3
-251	Konovalov Igor	Rus	1	23	71	13	3.9	2	10	-100	14	1996	3
-270	Abilgard Oliver	Den	7	21	67	11	3.7	7	28	-100	14	1996	3
-273	Makarov Denis	Rus	6	29	62	30	3.4	2	25	-100	14	1998	3
-276	Zakirov Kamil	Rus	1	27	64	19	3.4	4	99	-100	14	1998	3
-272	Makarov Nikita	Rus	3	20	68	30	3.6	2	59	-100	14	2001	3
-308	Noboa Cristian	Ecu	5	25	82	28	5.2	55	16	-100	12	1985	3
-310	Burmistrov Nikita	Rus	7	23	73	13	3.7	4	18	-100	12	1989	3
-304	Tsallagov Ibragim	Rus	1	24	72	27	3.8	1	15	-100	12	1990	3
-376	Pogrebnyak Pavel	Rus	3	29	21	77	3.2	68	88	-100	10	1983	4
-384	Yusupov Artem	Rus	1	25	32	64	3.5	2	79	-100	10	1997	4
-360	Chasovskikh Andrey	Rus	1	30	16	67	3.5	9	48	-100	11	1991	4
-369	Egorychev Andrey	Rus	5	29	12	72	3.6	4	44	-100	10	1993	4
-366	Merkulov Mikhail	Rus	4	72	10	30	3.6	5	27	-100	10	1994	2
-392	Tabidze Dzhemal	Geo	2	75	11	31	3.9	1	55	-100	9	1996	2
-394	Nedelcearu Ionut	Rom	3	73	34	28	3.6	4	27	-100	9	1996	2
-383	Mamin Artem	Rus	1	64	32	25	3.5	2	46	-100	10	1997	2
-399	Jokic Bojan	Slv	2	73	27	20	3.2	65	5	-100	9	1986	2
-57	Magnusson Hordur	Isl	5	82	24	24	23.2	4	23	-100	5	1993	2
-92	Morozov Grigory	Rus	1	70	26	28	4.2	5	2	-100	6	1994	2
-14	Bauer Robert	Ger	6	66	33	8	3.1	2	4	-100	7	1995	2
-81	Efremov Dmitrii	Rus	5	66	14	22	3.4	1	91	-100	5	1995	2
-96	Yevgenyev Roman	Rus	6	68	33	34	3.9	1	24	-100	6	1999	2
-59	Diveyev Igor	Rus	2	72	25	27	10.2	7	78	-100	5	1999	2
-76	Eleev Maksim	Rus	2	70	28	21	3.6	2	53	-100	5	2001	2
-65	Karpov Vadim	Rus	9	72	10	33	5.7	7	62	-100	5	2002	2
-79	Kotin Nikita	Rus	2	68	10	26	3.0	3	13	-100	5	2002	2
-227	Kozlov Alexey	Rus	4	77	28	29	4.3	3	34	-100	4	1986	2
-236	Osinov Mikhail	Rus	1	61	14	26	3.4	1	81	-100	4	2000	2
-246	Livadnov Yevgeni	Rus	4	63	34	25	3.6	7	73	-100	4	2000	2
-234	Vedernikov Danila	Rus	3	68	29	34	3.8	8	4	-100	4	2001	2
-242	Bezrukov Ruslan	Rus	1	61	15	23	3.4	1	91	-100	4	2002	2
-175	Corluka Vedran	Cro	6	83	17	25	12.7	89	14	-100	2	1986	2
-113	Martynovich Alexander	Bel	8	79	16	24	6.3	9	4	-100	3	1987	2
-320	Zaika Kirill	Rus	8	24	65	32	3.3	4	27	-100	12	1992	3
-319	Lagator Dusan	Mon	1	24	74	29	3.7	2	94	-100	12	1994	3
-305	Mostovoy Andrey	Rus	2	22	69	30	3.5	6	17	-100	12	1997	3
-316	Nabiullin Elmir	Rus	9	24	69	32	3.6	2	24	-100	12	1995	3
-350	Chernyshov Oleg	Rus	3	26	67	17	3.3	9	12	-100	11	1986	3
-371	Panyukov Andrey	Rus	4	22	16	75	3.8	2	20	-100	10	1994	4
-387	Magomadov Chingis	Rus	1	33	22	63	3.3	1	80	-100	10	1998	4
-397	Lovro Bizjak	Slv	1	24	26	73	3.6	1	11	-100	9	1996	4
-398	Olivier Thill	Lux	7	30	11	74	3.7	2	10	-100	9	1996	4
-401	Kozlov Andrey	Rus	7	22	17	73	3.5	49	99	-100	9	1989	4
-299	Schurrle Andre	Ger	4	27	23	79	5.6	3	20	-100	8	1990	4
-400	Krotov Vyacheslav	Rus	9	26	14	76	3.7	1	57	-100	9	1993	4
-410	Vombergar Andres	Slv	1	29	27	69	3.4	5	32	-100	9	1994	4
-290	Ponce Ezequiel	Arg	7	24	24	82	10.3	8	19	-100	8	1997	4
-298	Sobolev Aleksandr	Rus	7	34	29	81	14.2	5	77	-100	8	1997	4
-413	Agalarov Gamid	Rus	1	31	25	63	3.3	8	19	-100	9	2000	4
-302	Markitesov Dmitry	Rus	8	34	21	64	3.4	12	74	-100	8	2001	4
-100	Sheidaev Ramil	Aze	9	29	29	65	2.8	2	99	-100	6	1996	4
-19	Sokol Artem	Rus	3	62	11	3	3.1	11	89	-100	7	1997	2
-89	Vladimir Rykov	Rus	8	74	17	21	4.1	67	4	-100	6	1987	2
-85	Shunich Tony	Bos	7	72	29	25	5.1	1	44	-100	6	1988	2
-3	Gragalava Gia	Geo	1	66	12	3	2.8	6	8	-100	7	1989	2
-15	Aleksandr Denisov	Rus	3	72	12	18	2.6	6	71	-100	7	1989	2
-1	Belyaev Maxim	Rus	1	71	23	7	3.9	4	13	-100	7	1991	2
-94	Ordets Ivan	Ukr	2	66	33	28	3.7	8	18	-100	6	1992	2
-425	Smolnikov Igor	Rus	6	77	22	31	4.3	5	19	-100	1	1988	2
-123	Fjoluson Jon	Isl	6	80	15	21	5.7	29	3	-100	3	1989	2
-180	Rybus Maciej	Pol	6	75	22	21	5.4	4	31	-100	2	1989	2
-415	Yaroslav Rakickiy	Ukr	7	79	26	28	6.9	5	44	-100	1	1989	2
-183	Idovu Brayan	Nig	5	72	25	22	4.3	3	3	-100	2	1992	2
-115	Spajic Uros	Srb	5	81	34	30	7.6	1	5	-100	3	1993	2
-182	Zhivoglyadov Dmitry	Rus	1	71	31	29	4.0	5	2	-100	2	1994	2
-414	Douglas Santos	Bra	8	84	34	33	14.3	7	3	-100	1	1994	2
-132	Sorokin Egor	Rus	7	68	28	21	3.6	7	2	-100	3	1995	2
-131	Skopintsev Dmitri	Rus	3	72	30	28	6.1	1	22	-100	3	1997	2
-179	Cerqueira Murilo	Bra	4	81	13	25	9.1	6	27	-100	2	1997	2
-191	Rybchinskiy Dmitri	Rus	6	63	11	24	3.7	8	94	-100	2	1998	2
-187	Mukhin Aleksandr	Rus	4	71	17	30	4.1	1	91	-100	2	2002	2
-419	Ivanovic Branislav	Srb	9	84	26	31	8.8	76	6	-100	1	1984	2
-430	Osorio Yordan	Ven	8	73	14	30	3.9	7	4	-100	1	1994	2
-377	Fidler Artem	Rus	3	23	73	30	3.2	72	57	-100	10	1983	3
-370	Nikolay Dimitrov	Bol	2	25	76	22	3.8	5	17	-100	10	1987	3
-382	Efremov Dmitrii	Rus	6	27	71	21	3.7	6	11	-100	10	1995	3
-333	Imbula Gianelli	Drc	1	31	71	25	4.0	5	95	-100	12	1992	3
-339	Karasev Pavel	Rus	4	45	72	6	3.8	12	25	-100	11	1992	3
-341	Chuperka Valery	Rus	6	16	69	21	3.7	15	92	-100	11	1992	3
-340	Kilin Anton	Rus	13	12	68	32	3.6	6	8	-100	11	1990	3
-4	Lesovoy Daniil	Rus	1	23	28	67	3.1	1	22	-100	7	1998	4
-10	Lomovitski Alexander	Rus	1	2	13	61	3.9	1	27	-100	7	1998	4
-6	Lutsenko Yevgeny	Rus	1	16	34	69	2.2	9	48	-100	7	1987	4
-91	Igboun Sylvester	Nig	7	32	25	77	5.7	3	10	-100	6	1990	4
-12	Kangwa Evans	Zam	1	16	23	71	4.5	1	10	-100	7	1992	4
-97	NJie Clinton	Cam	3	34	23	73	3.5	6	9	-100	6	1993	4
-103	Komlichenko Nikolay	Rus	5	11	22	83	9.2	12	21	-100	6	1995	4
-109	Tyukavin Konstantin	Rus	3	4	43	80	3.2	7	70	-100	6	2002	4
-235	Logashov Arseni	Rus	7	74	33	26	4.2	1	25	-100	4	1991	2
-110	Petrov Sergey	Rus	5	79	23	33	7.6	12	98	-100	3	1991	2
-231	Chernov Evgeny	Rus	3	69	31	34	3.8	5	28	-100	4	1992	2
-224	Osipenko Maxim	Rus	4	73	21	32	4.0	5	55	-100	4	1994	2
-232	Chistyakov Dmitry	Rus	3	71	31	34	4.1	5	78	-100	4	1994	2
-111	Ramirez Cristian	Ecu	5	78	23	33	7.5	1	6	-100	3	1994	2
-245	Kozhemyakin Oleg	Rus	9	69	22	26	3.6	3	86	-100	4	1995	2
-421	Karavaev Vyacheslav	Rus	2	81	10	22	7.2	5	15	-100	1	1995	2
-434	Prokhin Danila	Rus	6	74	10	25	3.9	8	87	-100	1	2001	2
-50	Szymanski Damian	Pol	7	31	66	10	2.4	3	99	-100	16	1995	3
-45	Gashenkov Mikhail	Rus	3	24	64	19	2.7	7	6	-100	16	1992	3
-35	Berisha Bernard	Alb	5	28	70	23	3.6	8	77	-100	16	1991	3
-51	Mitrishev Magomed	Rus	7	27	74	16	3.8	3	7	-100	16	1992	3
-43	Konrad Michalak	Pol	4	27	74	31	4.1	6	9	-100	16	1997	3
-36	Shvets Anton	Rus	2	26	69	12	3.3	5	23	-100	16	1993	3
-49	Sudalaev Lechii	Rus	1	24	62	32	3.8	1	22	-100	16	2000	3
-375	Bavin Yuri	Rus	5	22	71	16	3.5	6	14	-100	10	1994	3
-330	Bakhtiyarov Akmal	Rus	9	21	61	32	3.2	4	21	-100	12	1998	3
-331	Koldunov Nikita	Rus	7	21	72	24	3.7	3	8	-100	12	2000	3
-334	Bokovoy Andrey	Rus	6	28	67	19	3.5	2	58	-100	12	2000	3
-388	Shabolin Artem	Rus	1	26	66	25	3.7	1	69	-100	10	2000	3
-285	Guliev Ayaz	Rus	4	21	77	22	6.1	2	7	-100	8	1996	3
-292	Bakaev Zelimkhan	Rus	1	30	83	13	13.2	34	10	-100	8	1996	3
-389	Fomin Daniil	Rus	7	26	78	28	4.0	8	74	-100	9	1997	3
-248	Ionov Alexey	Rus	4	31	32	81	8.5	71	11	-100	4	1989	4
-122	Stotskiy Dmitry	Rus	7	27	14	70	3.2	5	89	-100	3	1989	4
-119	Wanderson Campos	Bel	1	26	27	83	10.3	1	10	-100	3	1994	4
-233	Shomurodov Eldor	Uzb	7	25	13	79	8.1	6	14	-100	4	1995	4
-125	Ignatiev Ivan	Rus	7	27	14	64	3.0	1	19	-100	3	1999	4
-247	Proshlyakov Danila	Rus	4	31	32	66	3.7	7	13	-100	4	2000	4
-244	Chromov Daniil	Rus	1	3	15	61	3.0	1	95	-100	4	2002	4
-193	Farfan Jefferson	Rus	3	34	43	71	3.5	6	76	-100	2	1984	4
-176	Eder Lopez	Por	4	33	33	85	9.9	6	19	-100	2	1987	4
-188	Smolov Fedor	Rus	4	13	40	74	4.1	1	9	-100	2	1990	4
-189	Georgevich Luka	Mon	8	23	11	72	4.3	4	95	-100	2	1994	4
-297	Artem Rebrov	Rus	71	9	6	5	3.6	9	32	-100	8	1984	1
-56	Akinfeev Igor	Rus	92	4	5	8	56.3	83	35	-100	5	1986	1
-83	Shunin Anton	Rus	73	6	4	5	4.6	1	1	-100	6	1987	1
-128	Kritsyuk Stanislav	Rus	78	1	2	1	5.3	8	1	-100	3	1990	1
-307	Dzhanaev Soslan	Rus	77	5	2	9	3.9	9	35	-100	12	1987	1
-328	Frolov Evgeniy	Rus	62	6	0	8	3.1	3	39	-100	12	1988	1
-324	Zabolotnyi Nikolay	Rus	71	3	1	1	3.8	1	12	-100	12	1990	1
-139	Ryzhikov Sergey	Rus	76	3	2	1	3.1	78	1	-100	15	1980	1
-30	Gorodov Evgeni	Rus	70	1	1	3	3.7	3	16	-100	16	1985	1
-210	Dovbnya Alexandr	Rus	71	6	6	5	4.0	1	56	-100	13	1987	1
-157	Frolov Evgeniy	Rus	69	6	5	4	2.9	2	39	-100	15	1988	1
-164	Ovsyannikov Bogdan	Rus	60	1	1	7	3.0	2	81	-100	15	1999	1
-250	Dupin Yuri	Rus	76	6	8	4	4.1	61	22	-100	14	1988	1
-202	Klimovich Andrey	Blr	70	6	4	8	4.0	3	38	-100	13	1988	1
-221	Rudenko Alexandr	Rus	69	6	7	5	3.9	23	1	-100	13	1993	1
-275	Konovalov Ivan	Rus	71	9	1	8	3.6	2	23	-100	14	1994	1
-44	Gudiev Vitaly	Rus	71	1	3	2	3.4	5	33	-100	16	1995	1
-130	Pantalean Kaio	Bra	1	62	17	26	3.5	8	31	-100	3	1995	2
-402	Golubev Artem	Rus	5	27	62	15	3.3	3	22	-100	9	1999	3
-24	Kovalev Yury	Rus	3	21	72	32	3.7	2	15	-100	7	1993	3
-27	Ismael Silva	Bra	3	4	68	15	3.6	5	11	-100	16	1994	3
-22	Volodko Maxim	Rus	4	27	58	35	3.1	8	12	-100	7	1992	3
-301	Yeschenko Andrey	Rus	8	33	63	12	3.2	56	38	-100	8	1984	3
-28	Ivanov Oleg	Rus	5	14	71	10	3.1	23	19	-100	16	1986	3
-29	Glushakov Denis	Rus	4	35	78	12	4.8	69	88	-100	16	1987	3
-86	Usupov Artur	Rus	1	22	79	13	6.4	5	6	-100	6	1989	3
-144	Gackan Aleksandr	Mdv	1	23	69	27	3.5	5	8	-100	15	1984	3
-220	Malyarov Nikita	Rus	6	23	69	21	4.2	45	77	-100	13	1989	3
-146	Kanunnikov Maxim	Rus	9	29	69	27	3.7	34	99	-100	15	1991	3
-149	Paul Anton	Rom	8	33	70	22	4.1	6	28	-100	15	1991	3
-152	Radu Ginsari	Mdv	1	19	72	23	3.8	1	14	-100	15	1991	3
-142	Kabutov Dmitry	Rus	9	31	73	33	4.6	7	77	-100	15	1992	3
-145	Mijailovic Srdan	Srb	1	31	70	11	2.9	6	20	-100	15	1993	3
-296	Mirzoev Reziuan	Rus	9	21	76	34	5.1	9	9	-100	8	1993	3
-148	Timofeev Artem	Rus	7	31	68	33	3.1	2	40	-100	15	1994	3
-116	Olsson Kristoffer	Swe	3	23	82	12	7.9	1	14	-100	3	1995	3
-143	Zinkovsky Anton	Rus	5	22	74	34	5.8	1	17	-100	15	1996	3
-219	Lipovoy Danil	Rus	4	34	63	17	3.5	3	18	-100	13	1999	3
-167	Barinov Dmitry	Rus	1	24	83	33	14.2	7	6	-100	2	1996	3
-194	Suleymanov Timur	Rus	1	1	23	66	3.0	2	97	-100	2	2000	4
-417	Dzyuba Artem	Rus	8	23	30	83	12.3	67	22	-100	1	1988	4
-428	Erokhin Aleksandr	Rus	4	25	19	80	5.1	8	21	-100	1	1989	4
-420	Azmun Serdar	Irn	1	22	18	86	10.4	9	7	-100	1	1995	4
-422	Driussi Sebastian	Arg	7	32	29	81	7.3	4	11	-100	1	1996	4
-437	Shamkin Daniil	Rus	6	26	18	70	3.2	1	92	-100	1	2002	4
-239	Hadzikadunic Dennis	Swe	5	73	28	21	3.9	5	5	-100	4	1998	2
-404	Alikin Pavel	Rus	1	73	34	29	3.2	43	3	-100	9	1984	2
-18	Khagush Anri	Rus	3	75	21	3	2.3	69	14	-100	7	1986	2
-34	Utsiev Rizvan	Rus	8	74	12	22	4.0	63	40	-100	16	1988	2
-67	Vasin Viktor	Rus	9	78	10	33	3.1	7	5	-100	5	1988	2
-26	Semenov Andrey	Rus	2	65	17	5	3.0	4	15	-100	16	1989	2
-37	Nizic Zoran	Cro	4	70	12	34	2.6	6	20	-100	16	1989	2
-84	Parshivlyuk Sergey	Rus	6	78	17	31	5.1	2	17	-100	6	1989	2
-300	Gaponov Ilya	Rus	7	68	12	21	3.5	5	56	-100	8	1997	2
-141	Anyukov Aleksandr	Rus	8	75	34	21	3.1	89	22	-100	15	1982	2
-147	Kombarov Dmitriy	Rus	1	81	11	31	5.7	68	23	-100	15	1987	2
-280	Denisov Vitali	Uzb	1	76	31	31	5.1	9	29	-100	14	1987	2
-150	Poluyahtov Vladimir	Rus	2	74	13	30	3.3	45	2	-100	15	1989	2
-47	Bogosavac Miroslav	Srb	2	71	16	28	4.2	6	8	-100	16	1996	2
-269	Santos Pablo	Bra	1	65	16	22	3.8	7	27	-100	14	1992	2
-217	Gotlib Eduard	Isr	5	68	34	26	3.7	5	6	-100	13	1992	2
-395	Putsko Alexander	Rus	8	70	24	20	3.5	7	15	-100	9	1993	2
-286	Gigot Samuel	Fra	1	86	22	34	15.7	34	2	-100	8	1993	2
-106	Aziz Tetteh	Gha	4	21	67	23	2.2	6	12	-100	6	1990	3
-88	Rausch Konstantin	Rus	1	29	77	12	5.0	9	34	-100	6	1990	3
-178	Zhemaletdinov Rifat	Rus	4	33	74	33	8.1	6	17	-100	2	1996	3
-154	Terekhov Anton	Rus	8	27	76	16	3.3	5	10	-100	15	1998	3
-166	Safa Hadi	Irq	6	29	76	20	5.0	5	7	-100	15	1998	3
-181	Tugarev Roman	Rus	6	26	72	30	4.1	5	67	-100	2	1998	3
-156	Popovic Denis	Svn	3	30	72	30	3.4	8	12	-100	15	1989	3
-165	Smirnov Danila	Rus	1	24	68	22	3.2	9	52	-100	15	2001	3
-190	Mukhin Maxim	Rus	4	30	70	17	3.8	1	74	-100	2	2001	3
-169	Krychowiak Grzegorz	Pol	1	12	82	36	11.6	4	7	-100	2	1990	3
-196	Miskic Daniel	Cro	7	20	73	11	3.9	13	8	-100	13	1993	3
-198	Alves Ricardo	Por	2	20	73	34	3.7	9	10	-100	13	1993	3
-173	Joao Mario	Por	1	23	79	18	6.8	4	23	-100	2	1993	3
-174	Miranchuk Alexey	Rus	3	25	87	13	31.6	67	59	-100	2	1995	3
-261	Bashkirov Evgeny	Rus	4	21	69	10	3.7	8	6	-100	14	1991	3
-318	Pomerko Alexey	Rus	7	24	66	25	3.8	2	5	-100	12	1990	3
-317	Margasov Timofey	Rus	6	28	68	20	3.5	6	34	-100	12	1992	3
-361	Fedchuk Artem	Rus	9	34	65	28	3.3	1	10	-100	11	1993	3
-362	Cardoso Miguel	Rus	1	28	73	28	3.9	5	7	-100	11	1994	3
-355	Khosonov Hetag	Rus	4	25	61	21	3.0	4	17	-100	11	1998	3
-359	Kabakhidze Vladimir	Rus	9	34	65	28	3.4	1	81	-100	11	1999	3
-200	Malikh Andrey	Rus	9	30	76	29	6.1	56	12	-100	13	1988	3
-203	Zotov Georgi	Rus	8	22	64	29	3.5	4	15	-100	13	1990	3
-213	Cernych Fedor	Lit	2	33	73	18	3.8	5	22	-100	13	1991	3
-199	Ayupov Timur	Rus	8	27	73	11	4.0	1	5	-100	13	1993	3
-206	Rogic Philip	Swe	4	25	72	29	4.2	23	7	-100	13	1993	3
-211	Chukanov Andrey	Rus	4	31	78	33	5.2	1	11	-100	13	1995	3
-372	Emelianov Roman	Rus	9	24	78	26	4.0	71	8	-100	10	1992	3
-337	Tetrashvili Guram	Rus	4	45	71	1	3.6	23	3	-100	11	1988	3
-344	Rybin Alexei	Rus	14	23	70	24	3.8	14	2	-100	11	1988	3
-325	Pesegov Evgeni	Rus	8	33	67	21	3.4	5	19	-100	12	1989	3
-326	Kazaev Yan	Rus	4	21	63	20	3.2	7	55	-100	12	1991	3
-368	Othman El Kabir	Ned	6	31	75	29	3.9	8	58	-100	10	1991	3
-374	Kucharczyk Michal	Pol	1	21	77	12	3.9	1	18	-100	10	1991	3
-216	Kuat Islambek	Kaz	5	34	68	16	3.8	4	23	-100	13	1993	3
-363	Augustyniak Rafal	Pol	4	31	76	20	3.9	2	6	-100	10	1993	3
-373	Boumal Petrus	Cam	9	28	77	12	3.9	4	13	-100	10	1993	3
-214	Ziga Skoflek	Slv	5	31	68	23	3.7	6	17	-100	13	1994	3
-393	Sukhov Aleksander	Rus	7	34	72	16	3.6	8	33	-100	9	1986	3
-7	Kombarov Kirill	Rus	3	31	74	36	3.1	56	9	-100	7	1987	3
-412	Sysuev Dmitri	Rus	4	26	70	32	3.5	6	7	-100	9	1988	3
-5	Tkachev Sergey	Rus	2	24	72	26	2.9	5	11	-100	7	1989	3
-8	Gorbatenko Igor	Rus	2	46	72	29	3.7	5	24	-100	7	1989	3
-409	Terentiev Denis	Rus	9	31	72	14	3.8	9	9	-100	9	1992	3
-391	Carp Catalin	Rus	7	32	79	25	3.9	5	8	-100	9	1993	3
-396	Aliev Azer	Rus	6	31	66	10	3.3	1	77	-100	9	1994	3
-287	Zobnin Roman	Rus	3	20	85	24	13.2	8	47	-100	8	1994	3
-407	Giorgobiani Nikolay	Rus	1	32	69	25	3.4	9	17	-100	9	1997	3
-291	Til Guus	Ned	2	31	87	13	18.3	5	8	-100	8	1997	3
-293	Kral Alex	Cze	1	26	78	22	8.0	9	13	-100	8	1998	3
-403	Emelyanov Danila	Rus	3	30	65	23	3.8	9	23	-100	9	2000	3
-406	Urunov Oston	Rus	3	22	68	18	3.5	8	6	-100	9	2000	3
-284	Bakalyuk Nikita	Rus	9	20	73	34	4.6	7	80	-100	8	2001	3
-107	Sow Samba	Mli	3	25	68	20	3.2	7	27	-100	6	1998	3
-151	Dejan Radonjic	Cro	9	23	29	74	4.2	2	9	-100	15	1990	4
-93	Ramos Joaozinho	Bra	2	28	76	33	4.2	8	22	-100	6	1988	3
-87	Neustadter Roman	Rus	4	25	83	33	8.1	3	15	-100	6	1988	3
-98	Panchenko Kirill	Rus	2	27	71	16	4.1	56	8	-100	6	1989	3
-9	Kostadinov Georgi	Blg	1	31	72	21	4.4	10	70	-100	7	1990	3
-13	Causic Goran	Srb	3	10	73	12	3.2	3	20	-100	7	1992	3
-101	Hillemark Oskar	Swe	3	22	73	14	3.1	7	88	-100	6	1992	3
-20	Kings Kangwa	Zam	1	35	76	13	3.7	2	25	-100	7	1994	3
-90	Maximilian Philipp	Ger	9	26	73	11	6.1	2	5	-100	6	1994	3
-104	Cardoso Miguel	Por	7	25	79	31	7.1	3	7	-100	6	1994	3
-102	Grulyov Vyacheslav	Rus	9	26	73	10	3.5	7	19	-100	6	1999	3
-82	Szymanski Sebastian	Pol	1	23	79	16	4.8	9	11	-100	6	1999	3
-16	Lameck Banda	Zam	5	63	74	21	3.6	13	29	-100	7	2001	3
-108	Zakharyan Arsen	Rus	1	11	84	62	3.2	11	47	-100	6	2003	3
-228	Normann Mathias	Nor	3	24	80	17	7.9	32	17	-100	4	1996	3
-55	Vlasic Nikola	Cro	1	30	86	25	28.9	3	8	-100	5	1997	3
-238	Saplinov Aleksandr	Rus	1	33	60	32	3.4	1	26	-100	4	1997	3
-60	Oblyakov Ivan	Rus	2	21	76	12	14.2	6	98	-100	5	1998	3
-225	Eremenko Roman	Fin	4	29	81	28	8.3	81	7	-100	4	1987	3
-230	Popov Ivelin	Blg	1	32	84	31	10.1	87	8	-100	4	1987	3
-223	Mamaev Pavel	Rus	5	32	83	20	8.9	67	10	-100	4	1988	3
-129	Gazinskiy Yury	Rus	1	22	79	32	6.2	43	8	-100	3	1989	3
-69	Dzagoev Alan	Rus	7	29	80	19	7.1	5	10	-100	5	1990	3
-121	Kambolov Ruslan	Rus	6	29	68	13	3.4	9	77	-100	3	1990	3
-133	Remy Cabella	Fra	2	25	77	28	5.7	5	7	-100	3	1990	3
-70	Schennikov Grigoriy	Rus	2	33	73	19	4.6	9	42	-100	5	1991	3
-222	Bayramyan Khoren	Arm	5	27	76	29	4.4	8	19	-100	4	1992	3
-124	Younes Namli	Den	1	33	75	33	5.6	7	21	-100	3	1993	3
-77	Karaev David	Aze	9	26	71	17	3.5	1	71	-100	5	1995	3
-112	de Vilhena Tonny	Ned	1	32	81	24	8.1	6	52	-100	3	1995	3
-62	Bistrovic Kristijan	Cro	8	30	74	26	5.6	8	25	-100	5	1998	3
-64	Kuchayev Konstantin	Rus	2	27	76	31	5.3	6	20	-100	5	1998	3
-226	Zainutdinov Baktiyor	Kaz	8	26	67	23	3.9	4	18	-100	4	1998	3
-66	Jaka Bijol	Slv	1	30	69	22	3.7	5	29	-100	5	1999	3
-78	Santos Lucas	Bra	2	34	79	31	9.1	9	11	-100	5	1999	3
-118	Suleymanov Magomed	Rus	4	23	85	65	23.1	1	93	-100	3	1999	3
-126	Utkin Daniil	Rus	5	31	71	26	4.1	8	47	-100	3	1999	3
-75	Maradishvili Konstantin	Rus	9	25	71	30	3.9	2	87	-100	5	2000	3
-249	Cherkes Eugeni	Rus	0	21	62	27	3.3	8	51	-100	4	2001	3
-135	Silva Kaio	Bra	4	25	68	17	3.4	8	17	-100	3	1995	3
-192	Miranchuk Anton	Rus	3	34	86	11	28.7	6	11	-100	2	1995	3
-136	Onugkha German	Rus	1	28	68	23	3.5	6	60	-100	3	1996	3
-137	Sergeyev Nikita	Rus	8	10	64	20	3.1	5	63	-100	3	1999	3
-134	Chernikov Alexandr	Rus	7	20	69	15	3.2	1	53	-100	3	2000	3
-426	Zhirkov Yuriy	Rus	9	34	81	16	3.9	65	18	-100	1	1983	3
-429	Shatov Oleg	Rus	9	21	79	10	6.4	2	17	-100	1	1990	3
-418	Magomed Ozdoev	Rus	5	33	87	27	17.3	9	27	-100	1	1992	3
-416	Barrios Wilmar	Kol	8	20	80	23	5.8	9	5	-100	1	1993	3
-432	Kuzyaev Daler	Rus	6	22	81	12	8.3	7	14	-100	1	1993	3
-433	Rigoni Emiliano	Arg	9	21	79	10	6.9	2	10	-100	1	1993	3
-440	Bauyrzhan Islamhan	Kaz	6	23	69	28	3.4	8	9	-100	1	1993	3
-427	Sutormin Alexey	Rus	6	25	74	10	4.2	8	91	-100	1	1994	3
-438	Mammana Emanuel	Arg	1	21	75	27	4.3	2	24	-100	1	1996	3
-431	Filipe Malcom	Bra	7	30	90	29	4.8	3	8	-100	1	1997	3
-436	Musaev Leon	Rus	6	31	72	22	4.1	5	38	-100	1	1999	3
-439	Vorobyov Ilya	Rus	2	31	68	27	3.3	3	84	-100	1	1999	3
-441	Kravtsov Kirill	Rus	8	25	65	13	3.4	9	64	-100	1	2002	3
-68	Nababkin Kirill	Rus	7	29	19	77	3.2	5	14	-100	5	1986	4
-120	Berg Marcus	Swe	1	27	16	84	6.4	76	33	-100	3	1986	4
-23	Berhamov Kantemir	Rus	1	34	39	74	4.2	1	7	-100	7	1988	4
-323	Kokorin Alexander	Rus	1	21	28	80	8.5	39	9	-100	12	1991	4
-329	Obuhov Vladimir	Rus	1	29	26	63	3.4	6	13	-100	12	1992	4
-349	Mamtov Hasan	Rus	9	32	18	66	3.2	9	9	-100	11	1984	4
-352	Ivan Markelov	Rus	9	23	19	66	3.5	8	99	-100	11	1988	4
-347	Appaev Hyzyr	Rus	3	30	10	62	3.3	8	14	-100	11	1990	4
-338	Kostyukov Mikhail	Rus	3	13	21	69	3.5	3	77	-100	11	1991	4
-343	Obuhov Vladimir	Rus	4	5	42	68	3.6	12	13	-100	11	1992	4
-357	Fedchuk Artem	Rus	9	32	28	60	3.0	4	11	-100	11	1994	4
-358	Muhammed Usman	Nig	9	30	19	61	3.3	4	16	-100	11	1994	4
-345	Melkadze Georgy	Rus	4	7	26	76	4.2	2	19	-100	11	1997	4
+1	Adgoev Guram	Rus	4	21	31	69	3.2	3	17	-100	7	1995	4
+28	Nigmatullin Artur	Rus	73	3	6	8	4.0	3	1	-100	7	1991	1
+29	Levashov Mikhail	Rus	69	14	6	2	3.2	3	36	-100	7	1991	1
+30	Shamov Egor	Rus	68	3	14	6	2.6	3	50	-100	7	1994	1
+46	Gilerme Marinato	Rus	83	4	9	5	8.6	42	1	-100	1	1985	1
+47	Kochenkov Anton	Rus	70	10	4	6	3.2	11	77	-100	1	1987	1
+50	Medvedev Nikita	Rus	74	3	2	6	4.5	9	30	-100	1	1994	1
+5	Nishimura Takuma	Jpn	2	23	24	76	6.3	5	19	-100	2	1996	4
+8	Chalov Fedor	Rus	5	21	28	83	30.4	5	9	-100	2	1998	4
+13	Akhmetov Ilzat	Rus	5	22	20	79	15.2	9	7	-100	2	1997	4
+15	Sigurdsson Arnor	Isl	5	30	28	82	18.7	4	17	-100	2	1999	4
+19	Ari Ferreyra	Rus	4	30	27	78	6.1	46	9	-100	5	1985	4
+35	Safonov Matvey	Rus	86	8	8	7	12.4	23	39	-100	5	1999	1
+56	Fernandes Manuel	Por	7	23	82	16	8.3	67	99	-100	5	1986	3
+26	Leschuk Igor	Rus	67	5	7	8	3.0	4	31	-100	3	1996	1
+9	Dolgov Alexandr	Rus	1	23	15	63	3.5	1	47	-100	6	1998	4
+32	Rudakov Maksim	Rus	65	4	7	4	3.6	5	77	-100	6	1996	1
+33	Pesyakov Sergey	Rus	74	7	8	9	4.0	5	30	-100	6	1988	1
+34	Baburin Egor	Rus	70	8	0	1	4.0	8	1	-100	6	1993	1
+36	Popov Denis	Rus	62	1	0	1	4.1	8	46	-100	6	2002	1
+18	Larsson Jordan	Swe	8	11	21	77	4.3	12	86	-100	4	1997	4
+25	Maksimenko Aleksandr	Rus	82	7	7	5	9.4	9	98	-100	4	1999	1
+57	Kutepov Iliya	Rus	7	83	34	29	11.7	61	29	-100	4	1993	2
+58	Jikia Georgy	Rus	8	83	26	33	9.3	10	14	-100	4	1993	2
+20	Belenov Alexander	Rus	80	5	4	1	5.2	35	31	-100	8	1986	1
+21	Chernov Alexey	Rus	66	4	9	2	3.2	7	1	-100	8	1998	1
+6	Godzyur Yaroslav	Ukr	71	7	9	1	3.6	2	31	-100	9	1985	1
+17	Baklov Oleg	Rus	68	1	2	2	3.5	1	77	-100	9	1994	1
+7	Sugrobov Vladimir	Rus	61	3	6	6	3.1	5	50	-100	10	1996	1
+14	Sheliya Giorgi	Rus	71	3	4	2	4.1	34	88	-100	10	1988	1
+37	Galadzhan Artem	Rus	8	23	17	71	4.0	1	89	-100	12	1998	4
+38	Fameyeh Joel	Gha	6	22	25	73	4.1	5	20	-100	12	1997	4
+43	Despotovic Djordje	Srb	3	28	32	74	3.9	3	9	-100	12	1992	4
+44	Kulishev Artem	Rus	8	23	17	70	3.7	9	32	-100	12	1993	4
+45	Sylla Mamadou	Sen	6	20	22	75	4.3	9	14	-100	12	1994	4
+55	Terehhov Sergei	Rus	8	78	28	22	4.6	5	13	-100	12	1990	2
+68	Shakhov Vitali	Rus	5	68	21	31	3.9	3	31	-100	12	1991	2
+60	Starfelt Carl	Swe	6	73	15	20	3.8	12	4	-100	13	1995	2
+62	Pliyev Konstantin	Rus	3	65	34	20	3.4	6	3	-100	13	1996	2
+63	Poyarkov Nikolay	Rus	1	64	24	33	3.3	5	71	-100	13	1999	2
+64	Stepanov Daniil	Rus	1	67	12	25	3.4	6	69	-100	13	2000	2
+39	Glushenkov Maksim	Rus	6	23	26	71	3.7	2	15	-100	14	1999	4
+40	Golenkov Egor	Rus	3	20	20	68	3.6	9	69	-100	14	1999	4
+41	Molchanov Dmitriy	Rus	6	8	21	68	3.1	2	86	-100	14	2000	4
+42	Fedorov Veniamin	Rus	1	2	8	62	2.8	2	92	-100	14	2003	4
+61	Chernov Nikita	Rus	4	72	31	32	3.6	1	3	-100	14	1996	2
+66	Chicherin Nikita	Rus	2	67	26	32	3.2	6	44	-100	14	1990	2
+67	Burlak Taras	Rus	5	70	33	20	3.0	9	90	-100	14	1990	2
+2	Ablaye Mbengue	Sen	9	20	27	63	3.4	4	17	-100	15	1992	4
+3	Ponce Andres	Ven	8	23	11	75	4.5	6	18	-100	15	1996	4
+4	Ilyin Vladimir	Rus	9	24	14	65	2.4	6	29	-100	15	1992	4
+10	Magomedov Lechi	Rus	4	7	12	64	3.6	6	98	-100	15	1999	4
+11	Ravanelli Ferreira	Bra	7	31	10	66	3.1	3	14	-100	15	1997	4
+12	Vizeu Felipe	Bra	9	21	13	71	4.1	4	27	-100	15	1997	4
+22	Harin Yevgeni	Rus	8	28	67	33	3.1	8	10	-100	15	1995	3
+24	Odise Roshi	Alb	6	31	73	16	3.8	6	21	-100	15	1991	3
+127	Gilermo Alvares	Spa	2	73	41	18	4.1	2	21	-100	7	1993	2
+125	Pliev Zaurbek	Kaz	1	72	31	32	4.0	6	3	-100	3	1991	2
+126	Novoseltsev Ivan	Rus	4	71	10	26	4.1	8	25	-100	3	1991	2
+89	Melgarejo Lorenzo	Par	7	80	18	33	10.1	71	25	-100	4	1990	2
+120	Lucas Ayrton	Bra	1	75	27	34	4.4	2	6	-100	4	1997	2
+123	Rasskazov Nikolai	Rus	4	69	12	22	4.1	9	92	-100	4	1998	2
+124	Maslov Pavel	Rus	3	68	19	33	3.7	2	39	-100	4	2000	2
+116	Nikitin Alexey	Rus	1	69	25	32	3.4	9	4	-100	8	1992	2
+122	Krugovoi Danil	Rus	9	64	27	25	3.2	3	2	-100	8	1998	2
+86	Aroyan Varazdat	Arm	5	68	14	21	3.3	2	3	-100	9	1992	2
+88	Wilusz Maciej	Pol	9	69	24	21	3.4	3	5	-100	9	1988	2
+114	Kulakov Denis	Ukr	7	75	26	33	4.0	72	15	-100	9	1986	2
+117	Gerasimov Alexey	Rus	7	70	32	27	3.5	1	93	-100	9	1993	2
+80	Shlyakov Evgeni	Rus	1	60	12	23	3.2	7	5	-100	10	1991	2
+82	Yurganov Igor	Rus	3	64	16	32	3.1	3	22	-100	10	1993	2
+83	Kaplienko Aleksandr	Ukr	9	69	18	32	3.4	9	21	-100	10	1996	2
+85	Filin Alexander	Rus	3	67	17	26	3.4	9	15	-100	10	1996	2
+87	Takazov Soslan	Rus	1	66	18	22	3.7	5	30	-100	10	1993	2
+113	Adessoye Oyevole	Rus	2	67	23	1	2.8	58	58	-100	10	1982	2
+115	Gritsaenko Aleksey	Rus	13	70	22	3	4.0	10	27	-100	10	1995	2
+72	Mevlja Miha	Slv	1	74	16	27	3.9	6	32	-100	11	1990	2
+77	Miladinovic Ivan	Srb	7	68	10	31	3.5	6	45	-100	11	1994	2
+78	Kudryashov Fedor	Rus	8	71	33	33	3.4	1	93	-100	11	1987	2
+79	Novoseltsev Ivan	Rus	3	74	11	34	3.6	3	25	-100	11	1991	2
+81	Yurganov Igor	Rus	5	74	26	26	3.7	3	22	-100	11	1993	2
+84	Kalugin Nikita	Rus	7	69	10	21	3.4	2	26	-100	11	1998	2
+103	Poloz Dmitri	Rus	5	23	16	72	3.7	1	77	-100	11	1991	4
+70	Afonin Vadim	Uzb	8	71	32	31	4.1	6	29	-100	12	1987	2
+71	Sivakov Mikhail	Blr	9	60	10	34	3.5	4	3	-100	12	1988	2
+74	Radakovic Uros	Srb	9	66	29	30	3.4	9	4	-100	12	1994	2
+76	Kozlov Savely	Rus	1	75	21	31	4.0	68	66	-100	12	1997	2
+91	Kjartansson Vidar	Isl	1	25	11	63	3.6	5	86	-100	13	1990	4
+94	Markov Evgeny	Rus	5	23	23	70	3.8	1	20	-100	13	1994	4
+95	Tashaev Alexandr	Rus	6	33	24	72	3.9	3	88	-100	13	1994	4
+96	Mikeltadze Beka	Geo	9	33	23	74	4.0	6	90	-100	13	1997	4
+97	Kipiani Nikolai	Rus	1	29	18	70	3.7	8	77	-100	13	1997	4
+98	Ignatiev Ivan	Rus	1	30	14	65	3.2	2	19	-100	13	1999	4
+99	Bakaev Soltmurad	Rus	9	24	19	71	4.0	2	87	-100	13	1999	4
+100	Kvaratskhelia Khvicha	Geo	5	27	32	74	4.1	3	21	-100	13	2001	4
+105	Zuev Alexander	Rus	3	69	34	20	3.9	6	12	-100	13	1996	2
+106	Danchenko Oleg	Ukr	1	68	27	30	3.5	2	33	-100	13	1994	2
+69	Mehdi Zeffane	Alg	4	62	32	21	2.9	4	2	-100	14	1992	2
+75	Lystsov Vilaly	Rus	7	75	25	20	4.4	7	5	-100	14	1995	2
+107	Karpov Maxim	Rus	2	77	21	33	4.3	1	50	-100	14	1995	2
+104	Nenakhov Maxim	Rus	5	68	30	30	4.3	1	3	-100	15	1998	2
+151	Bauer Robert	Ger	6	66	33	8	3.1	2	4	-100	7	1995	2
+183	Sokol Artem	Rus	3	62	11	3	3.1	11	89	-100	7	1997	2
+186	Gragalava Gia	Geo	1	66	12	3	2.8	6	8	-100	7	1989	2
+187	Aleksandr Denisov	Rus	3	72	12	18	2.6	6	71	-100	7	1989	2
+188	Belyaev Maxim	Rus	1	71	23	7	3.9	4	13	-100	7	1991	2
+163	Corluka Vedran	Cro	6	83	17	25	12.7	89	14	-100	1	1986	2
+192	Rybus Maciej	Pol	6	75	22	21	5.4	4	31	-100	1	1989	2
+194	Idovu Brayan	Nig	5	72	25	22	4.3	3	3	-100	1	1992	2
+196	Zhivoglyadov Dmitry	Rus	1	71	31	29	4.0	5	2	-100	1	1994	2
+200	Cerqueira Murilo	Bra	4	81	13	25	9.1	6	27	-100	1	1997	2
+149	Magnusson Hordur	Isl	5	82	24	24	23.2	4	23	-100	2	1993	2
+152	Efremov Dmitrii	Rus	5	66	14	22	3.4	1	91	-100	2	1995	2
+154	Diveyev Igor	Rus	2	72	25	27	10.2	7	78	-100	2	1999	2
+155	Eleev Maksim	Rus	2	70	28	21	3.6	2	53	-100	2	2001	2
+156	Karpov Vadim	Rus	9	72	10	33	5.7	7	62	-100	2	2002	2
+157	Kotin Nikita	Rus	2	68	10	26	3.0	3	13	-100	2	2002	2
+164	Martynovich Alexander	Bel	8	79	16	24	6.3	9	4	-100	5	1987	2
+191	Fjoluson Jon	Isl	6	80	15	21	5.7	29	3	-100	5	1989	2
+195	Spajic Uros	Srb	5	81	34	30	7.6	1	5	-100	5	1993	2
+198	Sorokin Egor	Rus	7	68	28	21	3.6	7	2	-100	5	1995	2
+199	Skopintsev Dmitri	Rus	3	72	30	28	6.1	1	22	-100	5	1997	2
+150	Morozov Grigory	Rus	1	70	26	28	4.2	5	2	-100	3	1994	2
+153	Yevgenyev Roman	Rus	6	68	33	34	3.9	1	24	-100	3	1999	2
+182	Sheidaev Ramil	Aze	9	29	29	65	2.8	2	99	-100	3	1996	4
+184	Vladimir Rykov	Rus	8	74	17	21	4.1	67	4	-100	3	1987	2
+185	Shunich Tony	Bos	7	72	29	25	5.1	1	44	-100	3	1988	2
+189	Ordets Ivan	Ukr	2	66	33	28	3.7	8	18	-100	3	1992	2
+158	Kozlov Alexey	Rus	4	77	28	29	4.3	3	34	-100	6	1986	2
+159	Osinov Mikhail	Rus	1	61	14	26	3.4	1	81	-100	6	2000	2
+160	Livadnov Yevgeni	Rus	4	63	34	25	3.6	7	73	-100	6	2000	2
+161	Vedernikov Danila	Rus	3	68	29	34	3.8	8	4	-100	6	2001	2
+162	Bezrukov Ruslan	Rus	1	61	15	23	3.4	1	91	-100	6	2002	2
+175	Schurrle Andre	Ger	4	27	23	79	5.6	3	20	-100	4	1990	4
+178	Ponce Ezequiel	Arg	7	24	24	82	10.3	8	19	-100	4	1997	4
+179	Sobolev Aleksandr	Rus	7	34	29	81	14.2	5	77	-100	4	1997	4
+181	Markitesov Dmitry	Rus	8	34	21	64	3.4	12	74	-100	4	2001	4
+145	Tabidze Dzhemal	Geo	2	75	11	31	3.9	1	55	-100	8	1996	2
+146	Nedelcearu Ionut	Rom	3	73	34	28	3.6	4	27	-100	8	1996	2
+148	Jokic Bojan	Slv	2	73	27	20	3.2	65	5	-100	8	1986	2
+172	Lovro Bizjak	Slv	1	24	26	73	3.6	1	11	-100	8	1996	4
+173	Olivier Thill	Lux	7	30	11	74	3.7	2	10	-100	8	1996	4
+174	Kozlov Andrey	Rus	7	22	17	73	3.5	49	99	-100	8	1989	4
+140	Pogrebnyak Pavel	Rus	3	29	21	77	3.2	68	88	-100	9	1983	4
+141	Yusupov Artem	Rus	1	25	32	64	3.5	2	79	-100	9	1997	4
+143	Egorychev Andrey	Rus	5	29	12	72	3.6	4	44	-100	9	1993	4
+144	Merkulov Mikhail	Rus	4	72	10	30	3.6	5	27	-100	9	1994	2
+147	Mamin Artem	Rus	1	64	32	25	3.5	2	46	-100	9	1997	2
+170	Panyukov Andrey	Rus	4	22	16	75	3.8	2	20	-100	9	1994	4
+171	Magomadov Chingis	Rus	1	33	22	63	3.3	1	80	-100	9	1998	4
+142	Chasovskikh Andrey	Rus	1	30	16	67	3.5	9	48	-100	10	1991	4
+169	Chernyshov Oleg	Rus	3	26	67	17	3.3	9	12	-100	10	1986	3
+137	Noboa Cristian	Ecu	5	25	82	28	5.2	55	16	-100	11	1985	3
+138	Burmistrov Nikita	Rus	7	23	73	13	3.7	4	18	-100	11	1989	3
+139	Tsallagov Ibragim	Rus	1	24	72	27	3.8	1	15	-100	11	1990	3
+165	Zaika Kirill	Rus	8	24	65	32	3.3	4	27	-100	11	1992	3
+166	Lagator Dusan	Mon	1	24	74	29	3.7	2	94	-100	11	1994	3
+167	Mostovoy Andrey	Rus	2	22	69	30	3.5	6	17	-100	11	1997	3
+168	Nabiullin Elmir	Rus	9	24	69	32	3.6	2	24	-100	11	1995	3
+212	Lesovoy Daniil	Rus	1	23	28	67	3.1	1	22	-100	7	1998	4
+213	Lomovitski Alexander	Rus	1	2	13	61	3.9	1	27	-100	7	1998	4
+214	Lutsenko Yevgeny	Rus	1	16	34	69	2.2	9	48	-100	7	1987	4
+216	Kangwa Evans	Zam	1	16	23	71	4.5	1	10	-100	7	1992	4
+251	Farfan Jefferson	Rus	3	34	43	71	3.5	6	76	-100	1	1984	4
+252	Eder Lopez	Por	4	33	33	85	9.9	6	19	-100	1	1987	4
+256	Akinfeev Igor	Rus	92	4	5	8	56.3	83	35	-100	2	1986	1
+221	Petrov Sergey	Rus	5	79	23	33	7.6	12	98	-100	5	1991	2
+225	Ramirez Cristian	Ecu	5	78	23	33	7.5	1	6	-100	5	1994	2
+245	Stotskiy Dmitry	Rus	7	27	14	70	3.2	5	89	-100	5	1989	4
+246	Wanderson Campos	Bel	1	26	27	83	10.3	1	10	-100	5	1994	4
+215	Igboun Sylvester	Nig	7	32	25	77	5.7	3	10	-100	3	1990	4
+217	NJie Clinton	Cam	3	34	23	73	3.5	6	9	-100	3	1993	4
+218	Komlichenko Nikolay	Rus	5	11	22	83	9.2	12	21	-100	3	1995	4
+219	Tyukavin Konstantin	Rus	3	4	43	80	3.2	7	70	-100	3	2002	4
+257	Shunin Anton	Rus	73	6	4	5	4.6	1	1	-100	3	1987	1
+220	Logashov Arseni	Rus	7	74	33	26	4.2	1	25	-100	6	1991	2
+222	Chernov Evgeny	Rus	3	69	31	34	3.8	5	28	-100	6	1992	2
+223	Osipenko Maxim	Rus	4	73	21	32	4.0	5	55	-100	6	1994	2
+224	Chistyakov Dmitry	Rus	3	71	31	34	4.1	5	78	-100	6	1994	2
+226	Kozhemyakin Oleg	Rus	9	69	22	26	3.6	3	86	-100	6	1995	2
+244	Ionov Alexey	Rus	4	31	32	81	8.5	71	11	-100	6	1989	4
+250	Chromov Daniil	Rus	1	3	15	61	3.0	1	95	-100	6	2002	4
+241	Guliev Ayaz	Rus	4	21	77	22	6.1	2	7	-100	4	1996	3
+242	Bakaev Zelimkhan	Rus	1	30	83	13	13.2	34	10	-100	4	1996	3
+255	Artem Rebrov	Rus	71	9	6	5	3.6	9	32	-100	4	1984	1
+243	Fomin Daniil	Rus	7	26	78	28	4.0	8	74	-100	8	1997	3
+205	Fidler Artem	Rus	3	23	73	30	3.2	72	57	-100	9	1983	3
+206	Nikolay Dimitrov	Bol	2	25	76	22	3.8	5	17	-100	9	1987	3
+207	Efremov Dmitrii	Rus	6	27	71	21	3.7	6	11	-100	9	1995	3
+236	Bavin Yuri	Rus	5	22	71	16	3.5	6	14	-100	9	1994	3
+240	Shabolin Artem	Rus	1	26	66	25	3.7	1	69	-100	9	2000	3
+209	Karasev Pavel	Rus	4	45	72	6	3.8	12	25	-100	10	1992	3
+210	Chuperka Valery	Rus	6	16	69	21	3.7	15	92	-100	10	1992	3
+211	Kilin Anton	Rus	13	12	68	32	3.6	6	8	-100	10	1990	3
+208	Imbula Gianelli	Drc	1	31	71	25	4.0	5	95	-100	11	1992	3
+237	Bakhtiyarov Akmal	Rus	9	21	61	32	3.2	4	21	-100	11	1998	3
+238	Koldunov Nikita	Rus	7	21	72	24	3.7	3	8	-100	11	2000	3
+239	Bokovoy Andrey	Rus	6	28	67	19	3.5	2	58	-100	11	2000	3
+259	Dzhanaev Soslan	Rus	77	5	2	9	3.9	9	35	-100	11	1987	1
+260	Frolov Evgeniy	Rus	62	6	0	8	3.1	3	39	-100	11	1988	1
+261	Zabolotnyi Nikolay	Rus	71	3	1	1	3.8	1	12	-100	11	1990	1
+264	Dovbnya Alexandr	Rus	71	6	6	5	4.0	1	56	-100	12	1987	1
+268	Klimovich Andrey	Blr	70	6	4	8	4.0	3	38	-100	12	1988	1
+269	Rudenko Alexandr	Rus	69	6	7	5	3.9	23	1	-100	12	1993	1
+267	Dupin Yuri	Rus	76	6	8	4	4.1	61	22	-100	13	1988	1
+270	Konovalov Ivan	Rus	71	9	1	8	3.6	2	23	-100	13	1994	1
+262	Ryzhikov Sergey	Rus	76	3	2	1	3.1	78	1	-100	14	1980	1
+265	Frolov Evgeniy	Rus	69	6	5	4	2.9	2	39	-100	14	1988	1
+266	Ovsyannikov Bogdan	Rus	60	1	1	7	3.0	2	81	-100	14	1999	1
+229	Szymanski Damian	Pol	7	31	66	10	2.4	3	99	-100	15	1995	3
+230	Gashenkov Mikhail	Rus	3	24	64	19	2.7	7	6	-100	15	1992	3
+231	Berisha Bernard	Alb	5	28	70	23	3.6	8	77	-100	15	1991	3
+232	Mitrishev Magomed	Rus	7	27	74	16	3.8	3	7	-100	15	1992	3
+233	Konrad Michalak	Pol	4	27	74	31	4.1	6	9	-100	15	1997	3
+234	Shvets Anton	Rus	2	26	69	12	3.3	5	23	-100	15	1993	3
+235	Sudalaev Lechii	Rus	1	24	62	32	3.8	1	22	-100	15	2000	3
+274	Kovalev Yury	Rus	3	21	72	32	3.7	2	15	-100	7	1993	3
+276	Volodko Maxim	Rus	4	27	58	35	3.1	8	12	-100	7	1992	3
+302	Khagush Anri	Rus	3	75	21	3	2.3	69	14	-100	7	1986	2
+293	Barinov Dmitry	Rus	1	24	83	33	14.2	7	6	-100	1	1996	3
+294	Suleymanov Timur	Rus	1	1	23	66	3.0	2	97	-100	1	2000	4
+320	Zhemaletdinov Rifat	Rus	4	33	74	33	8.1	6	17	-100	1	1996	3
+323	Tugarev Roman	Rus	6	26	72	30	4.1	5	67	-100	1	1998	3
+326	Mukhin Maxim	Rus	4	30	70	17	3.8	1	74	-100	1	2001	3
+304	Vasin Viktor	Rus	9	78	10	33	3.1	7	5	-100	2	1988	2
+290	Olsson Kristoffer	Swe	3	23	82	12	7.9	1	14	-100	5	1995	3
+280	Usupov Artur	Rus	1	22	79	13	6.4	5	6	-100	3	1989	3
+307	Parshivlyuk Sergey	Rus	6	78	17	31	5.1	2	17	-100	3	1989	2
+318	Aziz Tetteh	Gha	4	21	67	23	2.2	6	12	-100	3	1990	3
+319	Rausch Konstantin	Rus	1	29	77	12	5.0	9	34	-100	3	1990	3
+300	Hadzikadunic Dennis	Swe	5	73	28	21	3.9	5	5	-100	6	1998	2
+277	Yeschenko Andrey	Rus	8	33	63	12	3.2	56	38	-100	4	1984	3
+288	Mirzoev Reziuan	Rus	9	21	76	34	5.1	9	9	-100	4	1993	3
+308	Gaponov Ilya	Rus	7	68	12	21	3.5	5	56	-100	4	1997	2
+317	Gigot Samuel	Fra	1	86	22	34	15.7	34	2	-100	4	1993	2
+273	Golubev Artem	Rus	5	27	62	15	3.3	3	22	-100	8	1999	3
+301	Alikin Pavel	Rus	1	73	34	29	3.2	43	3	-100	8	1984	2
+316	Putsko Alexander	Rus	8	70	24	20	3.5	7	15	-100	8	1993	2
+335	Fedchuk Artem	Rus	9	34	65	28	3.3	1	10	-100	10	1993	3
+336	Cardoso Miguel	Rus	1	28	73	28	3.9	5	7	-100	10	1994	3
+337	Khosonov Hetag	Rus	4	25	61	21	3.0	4	17	-100	10	1998	3
+338	Kabakhidze Vladimir	Rus	9	34	65	28	3.4	1	81	-100	10	1999	3
+333	Pomerko Alexey	Rus	7	24	66	25	3.8	2	5	-100	11	1990	3
+334	Margasov Timofey	Rus	6	28	68	20	3.5	6	34	-100	11	1992	3
+282	Malyarov Nikita	Rus	6	23	69	21	4.2	45	77	-100	12	1989	3
+292	Lipovoy Danil	Rus	4	34	63	17	3.5	3	18	-100	12	1999	3
+315	Gotlib Eduard	Isr	5	68	34	26	3.7	5	6	-100	12	1992	2
+328	Miskic Daniel	Cro	7	20	73	11	3.9	13	8	-100	12	1993	3
+329	Alves Ricardo	Por	2	20	73	34	3.7	9	10	-100	12	1993	3
+339	Malikh Andrey	Rus	9	30	76	29	6.1	56	12	-100	12	1988	3
+340	Zotov Georgi	Rus	8	22	64	29	3.5	4	15	-100	12	1990	3
+311	Denisov Vitali	Uzb	1	76	31	31	5.1	9	29	-100	13	1987	2
+314	Santos Pablo	Bra	1	65	16	22	3.8	7	27	-100	13	1992	2
+332	Bashkirov Evgeny	Rus	4	21	69	10	3.7	8	6	-100	13	1991	3
+281	Gackan Aleksandr	Mdv	1	23	69	27	3.5	5	8	-100	14	1984	3
+283	Kanunnikov Maxim	Rus	9	29	69	27	3.7	34	99	-100	14	1991	3
+284	Paul Anton	Rom	8	33	70	22	4.1	6	28	-100	14	1991	3
+285	Radu Ginsari	Mdv	1	19	72	23	3.8	1	14	-100	14	1991	3
+286	Kabutov Dmitry	Rus	9	31	73	33	4.6	7	77	-100	14	1992	3
+287	Mijailovic Srdan	Srb	1	31	70	11	2.9	6	20	-100	14	1993	3
+289	Timofeev Artem	Rus	7	31	68	33	3.1	2	40	-100	14	1994	3
+275	Ismael Silva	Bra	3	4	68	15	3.6	5	11	-100	15	1994	3
+278	Ivanov Oleg	Rus	5	14	71	10	3.1	23	19	-100	15	1986	3
+279	Glushakov Denis	Rus	4	35	78	12	4.8	69	88	-100	15	1987	3
+303	Utsiev Rizvan	Rus	8	74	12	22	4.0	63	40	-100	15	1988	2
+305	Semenov Andrey	Rus	2	65	17	5	3.0	4	15	-100	15	1989	2
+306	Nizic Zoran	Cro	4	70	12	34	2.6	6	20	-100	15	1989	2
+313	Bogosavac Miroslav	Srb	2	71	16	28	4.2	6	8	-100	15	1996	2
+357	Kombarov Kirill	Rus	3	31	74	36	3.1	56	9	-100	7	1987	3
+359	Tkachev Sergey	Rus	2	24	72	26	2.9	5	11	-100	7	1989	3
+360	Gorbatenko Igor	Rus	2	46	72	29	3.7	5	24	-100	7	1989	3
+376	Kostadinov Georgi	Blg	1	31	72	21	4.4	10	70	-100	7	1990	3
+377	Causic Goran	Srb	3	10	73	12	3.2	3	20	-100	7	1992	3
+379	Kings Kangwa	Zam	1	35	76	13	3.7	2	25	-100	7	1994	3
+384	Lameck Banda	Zam	5	63	74	21	3.6	13	29	-100	7	2001	3
+387	Vlasic Nikola	Cro	1	30	86	25	28.9	3	8	-100	2	1997	3
+393	Gazinskiy Yury	Rus	1	22	79	32	6.2	43	8	-100	5	1989	3
+395	Kambolov Ruslan	Rus	6	29	68	13	3.4	9	77	-100	5	1990	3
+396	Remy Cabella	Fra	2	25	77	28	5.7	5	7	-100	5	1990	3
+399	Younes Namli	Den	1	33	75	33	5.6	7	21	-100	5	1993	3
+401	de Vilhena Tonny	Ned	1	32	81	24	8.1	6	52	-100	5	1995	3
+407	Suleymanov Magomed	Rus	4	23	85	65	23.1	1	93	-100	5	1999	3
+408	Utkin Daniil	Rus	5	31	71	26	4.1	8	47	-100	5	1999	3
+371	Sow Samba	Mli	3	25	68	20	3.2	7	27	-100	3	1998	3
+373	Ramos Joaozinho	Bra	2	28	76	33	4.2	8	22	-100	3	1988	3
+374	Neustadter Roman	Rus	4	25	83	33	8.1	3	15	-100	3	1988	3
+375	Panchenko Kirill	Rus	2	27	71	16	4.1	56	8	-100	3	1989	3
+378	Hillemark Oskar	Swe	3	22	73	14	3.1	7	88	-100	3	1992	3
+380	Maximilian Philipp	Ger	9	26	73	11	6.1	2	5	-100	3	1994	3
+381	Cardoso Miguel	Por	7	25	79	31	7.1	3	7	-100	3	1994	3
+382	Grulyov Vyacheslav	Rus	9	26	73	10	3.5	7	19	-100	3	1999	3
+386	Normann Mathias	Nor	3	24	80	17	7.9	32	17	-100	6	1996	3
+388	Saplinov Aleksandr	Rus	1	33	60	32	3.4	1	26	-100	6	1997	3
+390	Eremenko Roman	Fin	4	29	81	28	8.3	81	7	-100	6	1987	3
+391	Popov Ivelin	Blg	1	32	84	31	10.1	87	8	-100	6	1987	3
+392	Mamaev Pavel	Rus	5	32	83	20	8.9	67	10	-100	6	1988	3
+398	Bayramyan Khoren	Arm	5	27	76	29	4.4	8	19	-100	6	1992	3
+404	Zainutdinov Baktiyor	Kaz	8	26	67	23	3.9	4	18	-100	6	1998	3
+364	Zobnin Roman	Rus	3	20	85	24	13.2	8	47	-100	4	1994	3
+366	Til Guus	Ned	2	31	87	13	18.3	5	8	-100	4	1997	3
+367	Kral Alex	Cze	1	26	78	22	8.0	9	13	-100	4	1998	3
+370	Bakalyuk Nikita	Rus	9	20	73	34	4.6	7	80	-100	4	2001	3
+356	Sukhov Aleksander	Rus	7	34	72	16	3.6	8	33	-100	8	1986	3
+358	Sysuev Dmitri	Rus	4	26	70	32	3.5	6	7	-100	8	1988	3
+361	Terentiev Denis	Rus	9	31	72	14	3.8	9	9	-100	8	1992	3
+362	Carp Catalin	Rus	7	32	79	25	3.9	5	8	-100	8	1993	3
+363	Aliev Azer	Rus	6	31	66	10	3.3	1	77	-100	8	1994	3
+365	Giorgobiani Nikolay	Rus	1	32	69	25	3.4	9	17	-100	8	1997	3
+368	Emelyanov Danila	Rus	3	30	65	23	3.8	9	23	-100	8	2000	3
+369	Urunov Oston	Rus	3	22	68	18	3.5	8	6	-100	8	2000	3
+345	Emelianov Roman	Rus	9	24	78	26	4.0	71	8	-100	9	1992	3
+350	Othman El Kabir	Ned	6	31	75	29	3.9	8	58	-100	9	1991	3
+351	Kucharczyk Michal	Pol	1	21	77	12	3.9	1	18	-100	9	1991	3
+353	Augustyniak Rafal	Pol	4	31	76	20	3.9	2	6	-100	9	1993	3
+354	Boumal Petrus	Cam	9	28	77	12	3.9	4	13	-100	9	1993	3
+346	Tetrashvili Guram	Rus	4	45	71	1	3.6	23	3	-100	10	1988	3
+347	Rybin Alexei	Rus	14	23	70	24	3.8	14	2	-100	10	1988	3
+348	Pesegov Evgeni	Rus	8	33	67	21	3.4	5	19	-100	11	1989	3
+349	Kazaev Yan	Rus	4	21	63	20	3.2	7	55	-100	11	1991	3
+341	Cernych Fedor	Lit	2	33	73	18	3.8	5	22	-100	12	1991	3
+342	Ayupov Timur	Rus	8	27	73	11	4.0	1	5	-100	12	1993	3
+343	Rogic Philip	Swe	4	25	72	29	4.2	23	7	-100	12	1993	3
+344	Chukanov Andrey	Rus	4	31	78	33	5.2	1	11	-100	12	1995	3
+352	Kuat Islambek	Kaz	5	34	68	16	3.8	4	23	-100	12	1993	3
+355	Ziga Skoflek	Slv	5	31	68	23	3.7	6	17	-100	12	1994	3
+372	Dejan Radonjic	Cro	9	23	29	74	4.2	2	9	-100	14	1990	4
+431	Berhamov Kantemir	Rus	1	34	39	74	4.2	1	7	-100	7	1988	4
+65	Ignatiev Vladislav	Rus	4	78	14	32	4.5	28	20	-100	1	1987	2
+73	Kverkelia Solomon	Geo	12	82	14	10	12.7	73	33	-100	1	1992	2
+90	Kolomeytsev Aleksandr	Rus	3	27	74	18	6.3	9	18	-100	1	1989	3
+92	Kulikov Daniil	Rus	3	27	70	18	3.8	9	69	-100	1	1998	3
+93	Magkeyev Stanislav	Rus	5	25	79	12	6.9	12	37	-100	1	1999	3
+201	Rybchinskiy Dmitri	Rus	6	63	11	24	3.7	8	94	-100	1	1998	2
+202	Mukhin Aleksandr	Rus	4	71	17	30	4.1	1	91	-100	1	2002	2
+253	Smolov Fedor	Rus	4	13	40	74	4.1	1	9	-100	1	1990	4
+412	Miranchuk Anton	Rus	3	34	86	11	28.7	6	11	-100	1	1995	3
+409	Maradishvili Konstantin	Rus	9	25	71	30	3.9	2	87	-100	2	2000	3
+429	Nababkin Kirill	Rus	7	29	19	77	3.2	5	14	-100	2	1986	4
+411	Silva Kaio	Bra	4	25	68	17	3.4	8	17	-100	5	1995	3
+413	Onugkha German	Rus	1	28	68	23	3.5	6	60	-100	5	1996	3
+414	Sergeyev Nikita	Rus	8	10	64	20	3.1	5	63	-100	5	1999	3
+415	Chernikov Alexandr	Rus	7	20	69	15	3.2	1	53	-100	5	2000	3
+430	Berg Marcus	Swe	1	27	16	84	6.4	76	33	-100	5	1986	4
+410	Cherkes Eugeni	Rus	0	21	62	27	3.3	8	51	-100	6	2001	3
+434	Mamtov Hasan	Rus	9	32	18	66	3.2	9	9	-100	10	1984	4
+435	Ivan Markelov	Rus	9	23	19	66	3.5	8	99	-100	10	1988	4
+436	Appaev Hyzyr	Rus	3	30	10	62	3.3	8	14	-100	10	1990	4
+437	Kostyukov Mikhail	Rus	3	13	21	69	3.5	3	77	-100	10	1991	4
+438	Obuhov Vladimir	Rus	4	5	42	68	3.6	12	13	-100	10	1992	4
+439	Fedchuk Artem	Rus	9	32	28	60	3.0	4	11	-100	10	1994	4
+440	Muhammed Usman	Nig	9	30	19	61	3.3	4	16	-100	10	1994	4
+441	Melkadze Georgy	Rus	4	7	26	76	4.2	2	19	-100	10	1997	4
+432	Kokorin Alexander	Rus	1	21	28	80	8.5	39	9	-100	11	1991	4
+433	Obuhov Vladimir	Rus	1	29	26	63	3.4	6	13	-100	11	1992	4
+48	Kerzhakov Mikhail	Rus	81	7	3	1	6.9	4	41	-100	16	1987	1
+49	Lunev Andrey	Rus	78	7	3	5	4.9	8	99	-100	16	1991	1
+51	Vasyutin Alexandr	Rus	64	6	6	4	3.4	5	78	-100	16	1995	1
+190	Smolnikov Igor	Rus	6	77	22	31	4.3	5	19	-100	16	1988	2
+193	Yaroslav Rakickiy	Ukr	7	79	26	28	6.9	5	44	-100	16	1989	2
+197	Douglas Santos	Bra	8	84	34	33	14.3	7	3	-100	16	1994	2
+203	Ivanovic Branislav	Srb	9	84	26	31	8.8	76	6	-100	16	1984	2
+204	Osorio Yordan	Ven	8	73	14	30	3.9	7	4	-100	16	1994	2
+227	Karavaev Vyacheslav	Rus	2	81	10	22	7.2	5	15	-100	16	1995	2
+254	Georgevich Luka	Mon	8	23	11	72	4.3	4	95	-100	1	1994	4
+327	Krychowiak Grzegorz	Pol	1	12	82	36	11.6	4	7	-100	1	1990	3
+330	Joao Mario	Por	1	23	79	18	6.8	4	23	-100	1	1993	3
+331	Miranchuk Alexey	Rus	3	25	87	13	31.6	67	59	-100	1	1995	3
+16	Shkurin Ilya	Bel	2	23	24	76	4.2	5	18	-100	2	1999	4
+23	Fernandes Mario	Rus	8	31	90	18	35.5	5	2	-100	2	1990	3
+27	Pomazun Ilya	Rus	73	2	2	7	4.5	9	1	-100	2	1996	1
+31	Torop Vladislav	Rus	70	6	8	8	4.1	2	49	-100	2	2003	1
+59	Gogoua Cedric	Ivo	2	74	24	23	4.9	5	27	-100	2	1994	2
+389	Oblyakov Ivan	Rus	2	21	76	12	14.2	6	98	-100	2	1998	3
+394	Dzagoev Alan	Rus	7	29	80	19	7.1	5	10	-100	2	1990	3
+397	Schennikov Grigoriy	Rus	2	33	73	19	4.6	9	42	-100	2	1991	3
+400	Karaev David	Aze	9	26	71	17	3.5	1	71	-100	2	1995	3
+402	Bistrovic Kristijan	Cro	8	30	74	26	5.6	8	25	-100	2	1998	3
+403	Kuchayev Konstantin	Rus	2	27	76	31	5.3	6	20	-100	2	1998	3
+405	Jaka Bijol	Slv	1	30	69	22	3.7	5	29	-100	2	1999	3
+406	Santos Lucas	Bra	2	34	79	31	9.1	9	11	-100	2	1999	3
+248	Ignatiev Ivan	Rus	7	27	14	64	3.0	1	19	-100	5	1999	4
+258	Kritsyuk Stanislav	Rus	78	1	2	1	5.3	8	1	-100	5	1990	1
+272	Pantalean Kaio	Bra	1	62	17	26	3.5	8	31	-100	5	1995	2
+383	Szymanski Sebastian	Pol	1	23	79	16	4.8	9	11	-100	3	1999	3
+385	Zakharyan Arsen	Rus	1	11	84	62	3.2	11	47	-100	3	2003	3
+247	Shomurodov Eldor	Uzb	7	25	13	79	8.1	6	14	-100	6	1995	4
+249	Proshlyakov Danila	Rus	4	31	32	66	3.7	7	13	-100	6	2000	4
+176	Krotov Vyacheslav	Rus	9	26	14	76	3.7	1	57	-100	8	1993	4
+177	Vombergar Andres	Slv	1	29	27	69	3.4	5	32	-100	8	1994	4
+180	Agalarov Gamid	Rus	1	31	25	63	3.3	8	19	-100	8	2000	4
+118	Zolotov Nikolay	Blr	5	75	10	30	3.8	4	35	-100	9	1994	2
+119	Kalinin Igor	Ukr	5	70	15	25	3.6	1	95	-100	9	1995	2
+121	Nasyrov Islamzhan	Rus	5	74	30	21	3.9	4	21	-100	9	1998	2
+101	Karapetian Aleksander	Arm	3	33	25	73	3.5	1	87	-100	11	1987	4
+102	Zabolotnyy Anton	Rus	9	28	23	79	4.1	4	10	-100	11	1991	4
+111	Shakuro Pavel	Rus	6	62	22	22	3.5	2	90	-100	11	1997	2
+112	Milyutin Vadim	Rus	1	61	30	29	3.3	7	56	-100	11	2002	2
+108	Sorokin Egor	Rus	1	71	11	34	3.6	6	2	-100	13	1995	2
+109	Uremovic Filip	Cro	1	77	13	23	4.1	2	5	-100	13	1997	2
+110	Davitashvili Zuriko	Geo	9	61	33	22	3.3	8	11	-100	13	2001	2
+128	Akbashev Roman	Rus	9	32	61	17	3.3	7	96	-100	13	1991	3
+129	Podberezkin Vyacheslav	Rus	8	26	77	21	4.2	48	7	-100	13	1992	3
+130	Mogilevets Pavel	Rus	5	20	78	20	4.1	3	18	-100	13	1993	3
+131	Jevtic Darko	Swi	1	30	70	11	3.9	6	8	-100	13	1993	3
+132	Konovalov Igor	Rus	1	23	71	13	3.9	2	10	-100	13	1996	3
+133	Abilgard Oliver	Den	7	21	67	11	3.7	7	28	-100	13	1996	3
+134	Makarov Denis	Rus	6	29	62	30	3.4	2	25	-100	13	1998	3
+135	Zakirov Kamil	Rus	1	27	64	19	3.4	4	99	-100	13	1998	3
+136	Makarov Nikita	Rus	3	20	68	30	3.6	2	59	-100	13	2001	3
+291	Zinkovsky Anton	Rus	5	22	74	34	5.8	1	17	-100	14	1996	3
+309	Anyukov Aleksandr	Rus	8	75	34	21	3.1	89	22	-100	14	1982	2
+310	Kombarov Dmitriy	Rus	1	81	11	31	5.7	68	23	-100	14	1987	2
+312	Poluyahtov Vladimir	Rus	2	74	13	30	3.3	45	2	-100	14	1989	2
+321	Terekhov Anton	Rus	8	27	76	16	3.3	5	10	-100	14	1998	3
+322	Safa Hadi	Irq	6	29	76	20	5.0	5	7	-100	14	1998	3
+324	Popovic Denis	Svn	3	30	72	30	3.4	8	12	-100	14	1989	3
+325	Smirnov Danila	Rus	1	24	68	22	3.2	9	52	-100	14	2001	3
+52	Gigolaev Roland	Rus	4	69	29	23	2.8	2	13	-100	15	1990	2
+53	Wilker Angel	Ven	6	73	28	26	2.9	4	4	-100	15	1993	2
+54	Musalov Magomed	Rus	7	66	17	26	2.7	3	5	-100	15	1994	2
+263	Gorodov Evgeni	Rus	70	1	1	3	3.7	3	16	-100	15	1985	1
+271	Gudiev Vitaly	Rus	71	1	3	2	3.4	5	33	-100	15	1995	1
+228	Prokhin Danila	Rus	6	74	10	25	3.9	8	87	-100	16	2001	2
+295	Dzyuba Artem	Rus	8	23	30	83	12.3	67	22	-100	16	1988	4
+296	Erokhin Aleksandr	Rus	4	25	19	80	5.1	8	21	-100	16	1989	4
+297	Azmun Serdar	Irn	1	22	18	86	10.4	9	7	-100	16	1995	4
+298	Driussi Sebastian	Arg	7	32	29	81	7.3	4	11	-100	16	1996	4
+299	Shamkin Daniil	Rus	6	26	18	70	3.2	1	92	-100	16	2002	4
+416	Zhirkov Yuriy	Rus	9	34	81	16	3.9	65	18	-100	16	1983	3
+417	Shatov Oleg	Rus	9	21	79	10	6.4	2	17	-100	16	1990	3
+418	Magomed Ozdoev	Rus	5	33	87	27	17.3	9	27	-100	16	1992	3
+419	Barrios Wilmar	Kol	8	20	80	23	5.8	9	5	-100	16	1993	3
+420	Kuzyaev Daler	Rus	6	22	81	12	8.3	7	14	-100	16	1993	3
+421	Rigoni Emiliano	Arg	9	21	79	10	6.9	2	10	-100	16	1993	3
+422	Bauyrzhan Islamhan	Kaz	6	23	69	28	3.4	8	9	-100	16	1993	3
+423	Sutormin Alexey	Rus	6	25	74	10	4.2	8	91	-100	16	1994	3
+424	Mammana Emanuel	Arg	1	21	75	27	4.3	2	24	-100	16	1996	3
+425	Filipe Malcom	Bra	7	30	90	29	4.8	3	8	-100	16	1997	3
+426	Musaev Leon	Rus	6	31	72	22	4.1	5	38	-100	16	1999	3
+427	Vorobyov Ilya	Rus	2	31	68	27	3.3	3	84	-100	16	1999	3
+428	Kravtsov Kirill	Rus	8	25	65	13	3.4	9	64	-100	16	2002	3
 \.
 
 
 --
--- TOC entry 3435 (class 0 OID 24713)
--- Dependencies: 229
+-- TOC entry 2999 (class 0 OID 26342)
+-- Dependencies: 218
 -- Data for Name: positions; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -2263,538 +2250,87 @@ COPY public.positions (id, title, short_title) FROM stdin;
 
 
 --
--- TOC entry 3426 (class 0 OID 24659)
+-- TOC entry 3001 (class 0 OID 26347)
 -- Dependencies: 220
 -- Data for Name: sponsors; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.sponsors (id, name, day_wage, match_wage, goal_bonus_wage, win_wage, deuce_wage, contract_bonus_wage) FROM stdin;
 1	Гол.tv	1.00	2.00	1.10	1.25	0.10	4.00
-13	МорзеФИЛЬМ	2.00	2.00	1.00	3.50	0.00	1.00
-16	МакроСофт	2.10	4.52	2.12	5.62	1.00	0.00
-3	СибирьСтрах	2.50	3.40	1.35	1.90	1.00	2.00
-10	Олигарх Николай Николаевич	0.00	0.00	0.00	1.00	0.00	50.00
-14	БурджХалиф	1.00	0.00	0.00	0.00	0.00	99.00
-6	НасосНефть	1.00	1.00	1.00	2.00	0.00	70.00
-11	ФТБ	0.00	1.00	0.20	8.00	1.00	12.00
+2	МорзеФИЛЬМ	2.00	2.00	1.00	3.50	0.00	1.00
+3	МакроСофт	2.10	4.52	2.12	5.62	1.00	0.00
+4	СибирьСтрах	2.50	3.40	1.35	1.90	1.00	2.00
+5	Олигарх Николай Николаевич	0.00	0.00	0.00	1.00	0.00	50.00
+6	БурджХалиф	1.00	0.00	0.00	0.00	0.00	99.00
+7	НасосНефть	1.00	1.00	1.00	2.00	0.00	70.00
+8	ФТБ	0.00	1.00	0.20	8.00	1.00	12.00
 9	РосРельсы	0.10	1.00	2.45	1.00	1.00	10.00
-2	ГосПром	1.85	2.27	1.45	2.70	1.02	10.00
-5	АэроФронт	0.01	1.45	0.50	1.70	1.12	15.00
-7	Appricot	0.10	1.60	1.20	2.90	1.10	3.00
-4	ТурбоСтиморол	0.00	1.99	2.99	4.99	1.99	1.00
-8	Лук и Ойл	1.11	2.22	3.33	4.44	1.11	1.11
-12	УралАТОМ	0.48	0.14	2.14	1.59	0.18	4.99
-15	ИнькофБанк	1.01	1.01	1.01	4.04	1.01	11.01
+10	ГосПром	1.85	2.27	1.45	2.70	1.02	10.00
+11	АэроФронт	0.01	1.45	0.50	1.70	1.12	15.00
+12	Appricot	0.10	1.60	1.20	2.90	1.10	3.00
+13	ТурбоСтиморол	0.00	1.99	2.99	4.99	1.99	1.00
+14	Лук и Ойл	1.11	2.22	3.33	4.44	1.11	1.11
+15	УралАТОМ	0.48	0.14	2.14	1.59	0.18	4.99
+16	ИнькофБанк	1.01	1.01	1.01	4.04	1.01	11.01
 17	Юндекс	1.85	1.34	2.44	1.11	2.63	7.89
 \.
 
 
 --
--- TOC entry 3430 (class 0 OID 24668)
--- Dependencies: 224
+-- TOC entry 3003 (class 0 OID 26352)
+-- Dependencies: 222
 -- Data for Name: stadiums; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.stadiums (id, id_teams, title, id_leagues, full_capacity, id_cities) FROM stdin;
-2	2	RZD-Arena	1	27320	1
-5	5	VEB-Arena	1	30457	1
-6	6	Stadion imeni Lva Yashina	1	26121	1
-8	8	Otkrytie-Arena	1	40000	1
-3	3	Krasnodar	1	35074	3
-4	4	Rostov-Arena	1	43472	4
 7	7	Arsenal	1	19241	5
-9	9	Neftyanik	1	15132	6
-10	10	Ekateringburg-Arena	1	35000	7
-11	11	Spartak	1	15000	8
-12	12	Fisht	1	44287	9
-13	13	Gazovik	1	7500	10
-14	14	Ak Bars-Arena	1	45379	11
-15	15	Samara-Arena	1	44918	12
-16	16	Akmat-Arena	1	30597	13
-1	1	Gazprom-Arena	1	64468	2
+1	1	RZD-Arena	1	27320	1
+4	4	Otkrytie-Arena	1	40000	1
+3	3	Stadion imeni Lva Yashina	1	26121	1
+10	10	Spartak	1	15000	8
+12	12	Gazovik	1	7500	10
+14	14	Samara-Arena	1	44918	12
+16	16	Gazprom-Arena	1	64468	2
+11	11	Fisht	1	44287	9
+15	15	Akmat-Arena	1	30597	13
+2	2	VEB-Arena	1	30457	1
+13	13	Ak Bars-Arena	1	45379	11
+5	5	Krasnodar	1	35074	3
+8	8	Neftyanik	1	15132	6
+6	6	Rostov-Arena	1	43472	4
+9	9	Ekateringburg-Arena	1	35000	7
 \.
 
 
 --
--- TOC entry 3419 (class 0 OID 24600)
--- Dependencies: 213
+-- TOC entry 3007 (class 0 OID 26361)
+-- Dependencies: 226
 -- Data for Name: teams; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.teams (name, manager, id_leagues, id, id_stadiums, id_cities, team_wealth) FROM stdin;
-Lokomotiv	Marko Nikolic	1	2	2	1	94.00
-CSKA	Viktor Goncharenko	1	5	5	1	65.00
-Dinamo	Kirill Novikov	1	6	6	1	42.00
-Spartak	Domeniko Tedesco	1	8	8	1	120.00
-Krasnodar	Igor Zakharyak	1	3	3	3	83.00
-Rostov	Valery Karpin	1	4	4	4	51.00
 Arsenal	Igor Cherevchenko	1	7	7	5	20.00
-Ufa	Vadim Evseev	1	9	9	6	20.00
-Ural	Dmitry Parfenov	1	10	10	7	22.00
-Tambov	Timur Shipshev	1	11	11	8	20.00
-Sochi	Vladimir Fedotov	1	12	12	9	21.00
-Orenburg	Ilshat Aytkulov	1	13	13	10	20.00
-Rubin	Leonid Slutsky	1	14	14	11	41.00
-Krylia Sovetov	Miodrag Bozhovic	1	15	15	12	23.00
-Ahmat	Igor Shalimov	1	16	16	13	29.00
-Zenit	Sergey Semak	1	1	1	2	188.00
+Lokomotiv	Marko Nikolic	1	1	1	1	94.00
+CSKA	Viktor Goncharenko	1	2	2	1	65.00
+Dinamo	Kirill Novikov	1	3	3	1	42.00
+Spartak	Domeniko Tedesco	1	4	4	1	120.00
+Krasnodar	Igor Zakharyak	1	5	5	3	83.00
+Rostov	Valery Karpin	1	6	6	4	51.00
+Ufa	Vadim Evseev	1	8	8	6	20.00
+Ural	Dmitry Parfenov	1	9	9	7	22.00
+Tambov	Timur Shipshev	1	10	10	8	20.00
+Sochi	Vladimir Fedotov	1	11	11	9	21.00
+Orenburg	Ilshat Aytkulov	1	12	12	10	20.00
+Rubin	Leonid Slutsky	1	13	13	11	41.00
+Krylia Sovetov	Miodrag Bozhovic	1	14	14	12	23.00
+Ahmat	Igor Shalimov	1	15	15	13	29.00
+Zenit	Sergey Semak	1	16	16	2	188.00
 \.
 
 
 --
--- TOC entry 3436 (class 0 OID 24740)
--- Dependencies: 230
--- Data for Name: teams_players; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.teams_players (id_teams, id_players) FROM stdin;
-1	414
-1	415
-1	416
-1	417
-1	418
-1	419
-1	420
-1	421
-1	422
-1	423
-1	424
-1	425
-1	426
-1	427
-1	428
-1	429
-1	430
-1	431
-1	432
-1	433
-1	434
-1	435
-1	436
-1	437
-1	438
-1	439
-1	440
-1	441
-2	167
-2	168
-2	169
-2	170
-2	171
-2	172
-2	173
-2	174
-2	175
-2	176
-2	177
-2	178
-2	179
-2	180
-2	181
-2	182
-2	183
-2	184
-2	185
-2	186
-2	187
-2	188
-2	189
-2	190
-2	191
-2	192
-2	193
-2	194
-3	110
-3	111
-3	112
-3	113
-3	114
-3	115
-3	116
-3	117
-3	118
-3	119
-3	120
-3	121
-3	122
-3	123
-3	124
-3	125
-3	126
-3	127
-3	128
-3	129
-3	130
-3	131
-3	132
-3	133
-3	134
-3	135
-3	136
-3	137
-4	222
-4	223
-4	224
-4	225
-4	226
-4	227
-4	228
-4	229
-4	230
-4	231
-4	232
-4	233
-4	234
-4	235
-4	236
-4	237
-4	238
-4	239
-4	240
-4	241
-4	242
-4	243
-4	244
-4	245
-4	246
-4	247
-4	248
-4	249
-5	54
-5	55
-5	56
-5	57
-5	58
-5	59
-5	60
-5	61
-5	62
-5	63
-5	64
-5	65
-5	66
-5	67
-5	68
-5	69
-5	70
-5	71
-5	72
-5	73
-5	74
-5	75
-5	76
-5	77
-5	78
-5	79
-5	80
-5	81
-6	82
-6	83
-6	84
-6	85
-6	86
-6	87
-6	88
-6	89
-6	90
-6	91
-6	92
-6	93
-6	94
-6	95
-6	96
-6	97
-6	98
-6	99
-6	100
-6	101
-6	102
-6	103
-6	104
-6	105
-6	106
-6	107
-6	108
-6	109
-7	1
-7	2
-7	3
-7	4
-7	5
-7	6
-7	7
-7	8
-7	9
-7	10
-7	11
-7	12
-7	13
-7	14
-7	15
-7	16
-7	17
-7	18
-7	19
-7	20
-7	21
-7	22
-7	23
-7	24
-7	25
-8	281
-8	282
-8	283
-8	284
-8	285
-8	286
-8	287
-8	288
-8	289
-8	290
-8	291
-8	292
-8	293
-8	294
-8	295
-8	296
-8	297
-8	298
-8	299
-8	300
-8	301
-8	302
-8	303
-9	389
-9	390
-9	391
-9	392
-9	393
-9	394
-9	395
-9	396
-9	397
-9	398
-9	399
-9	400
-9	401
-9	402
-9	403
-9	404
-9	405
-9	406
-9	407
-9	408
-9	409
-9	410
-9	411
-9	412
-9	413
-10	363
-10	364
-10	365
-10	366
-10	367
-10	368
-10	369
-10	370
-10	371
-10	372
-10	373
-10	374
-10	375
-10	376
-10	377
-10	378
-10	379
-10	380
-10	381
-10	382
-10	383
-10	384
-10	385
-10	386
-10	387
-10	388
-11	335
-11	336
-11	337
-11	338
-11	339
-11	340
-11	341
-11	342
-11	343
-11	344
-11	345
-11	346
-11	347
-11	348
-11	349
-11	350
-11	351
-11	352
-11	353
-11	354
-11	355
-11	356
-11	357
-11	358
-11	359
-11	360
-11	361
-11	362
-12	304
-12	305
-12	306
-12	307
-12	308
-12	309
-12	310
-12	311
-12	312
-12	313
-12	314
-12	315
-12	316
-12	317
-12	318
-12	319
-12	320
-12	321
-12	322
-12	323
-12	324
-12	325
-12	326
-12	327
-12	328
-12	329
-12	330
-12	331
-12	332
-12	333
-12	334
-13	195
-13	196
-13	197
-13	198
-13	199
-13	200
-13	201
-13	202
-13	203
-13	204
-13	205
-13	206
-13	207
-13	208
-13	209
-13	210
-13	211
-13	212
-13	213
-13	214
-13	215
-13	216
-13	217
-13	218
-13	219
-13	220
-13	221
-14	250
-14	251
-14	252
-14	253
-14	254
-14	255
-14	256
-14	257
-14	258
-14	259
-14	260
-14	261
-14	262
-14	263
-14	264
-14	265
-14	266
-14	267
-14	268
-14	269
-14	270
-14	271
-14	272
-14	273
-14	274
-14	275
-14	276
-14	277
-14	278
-14	279
-14	280
-15	138
-15	139
-15	140
-15	141
-15	142
-15	143
-15	144
-15	145
-15	146
-15	147
-15	148
-15	149
-15	150
-15	151
-15	152
-15	153
-15	154
-15	155
-15	156
-15	157
-15	158
-15	159
-15	160
-15	161
-15	162
-15	163
-15	164
-15	165
-15	166
-16	26
-16	27
-16	28
-16	29
-16	30
-16	31
-16	32
-16	33
-16	34
-16	35
-16	36
-16	37
-16	38
-16	39
-16	40
-16	41
-16	42
-16	43
-16	44
-16	45
-16	46
-16	47
-16	48
-16	49
-16	50
-16	51
-16	52
-16	53
-\.
-
-
---
--- TOC entry 3463 (class 0 OID 0)
--- Dependencies: 217
+-- TOC entry 3030 (class 0 OID 0)
+-- Dependencies: 203
 -- Name: banks_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -2802,8 +2338,8 @@ SELECT pg_catalog.setval('public.banks_id_seq', 6, true);
 
 
 --
--- TOC entry 3464 (class 0 OID 0)
--- Dependencies: 226
+-- TOC entry 3031 (class 0 OID 0)
+-- Dependencies: 205
 -- Name: cities_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -2811,8 +2347,8 @@ SELECT pg_catalog.setval('public.cities_id_seq', 13, true);
 
 
 --
--- TOC entry 3465 (class 0 OID 0)
--- Dependencies: 235
+-- TOC entry 3032 (class 0 OID 0)
+-- Dependencies: 207
 -- Name: days_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -2820,8 +2356,8 @@ SELECT pg_catalog.setval('public.days_id_seq', 311, true);
 
 
 --
--- TOC entry 3466 (class 0 OID 0)
--- Dependencies: 233
+-- TOC entry 3033 (class 0 OID 0)
+-- Dependencies: 209
 -- Name: draws_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -2829,8 +2365,8 @@ SELECT pg_catalog.setval('public.draws_id_seq', 30, true);
 
 
 --
--- TOC entry 3467 (class 0 OID 0)
--- Dependencies: 215
+-- TOC entry 3034 (class 0 OID 0)
+-- Dependencies: 211
 -- Name: juniors_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -2838,8 +2374,8 @@ SELECT pg_catalog.setval('public.juniors_id_seq', 650, true);
 
 
 --
--- TOC entry 3468 (class 0 OID 0)
--- Dependencies: 209
+-- TOC entry 3035 (class 0 OID 0)
+-- Dependencies: 213
 -- Name: leagues_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -2847,8 +2383,8 @@ SELECT pg_catalog.setval('public.leagues_id_seq', 1, true);
 
 
 --
--- TOC entry 3469 (class 0 OID 0)
--- Dependencies: 231
+-- TOC entry 3036 (class 0 OID 0)
+-- Dependencies: 215
 -- Name: placements_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -2856,8 +2392,8 @@ SELECT pg_catalog.setval('public.placements_id_seq', 6, true);
 
 
 --
--- TOC entry 3470 (class 0 OID 0)
--- Dependencies: 211
+-- TOC entry 3037 (class 0 OID 0)
+-- Dependencies: 217
 -- Name: players_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -2865,8 +2401,8 @@ SELECT pg_catalog.setval('public.players_id_seq', 441, true);
 
 
 --
--- TOC entry 3471 (class 0 OID 0)
--- Dependencies: 228
+-- TOC entry 3038 (class 0 OID 0)
+-- Dependencies: 219
 -- Name: positions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -2874,8 +2410,8 @@ SELECT pg_catalog.setval('public.positions_id_seq', 4, true);
 
 
 --
--- TOC entry 3472 (class 0 OID 0)
--- Dependencies: 219
+-- TOC entry 3039 (class 0 OID 0)
+-- Dependencies: 221
 -- Name: sponsors_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -2883,7 +2419,7 @@ SELECT pg_catalog.setval('public.sponsors_id_seq', 17, true);
 
 
 --
--- TOC entry 3473 (class 0 OID 0)
+-- TOC entry 3040 (class 0 OID 0)
 -- Dependencies: 223
 -- Name: stadiums_id_leagues_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -2892,8 +2428,8 @@ SELECT pg_catalog.setval('public.stadiums_id_leagues_seq', 1, false);
 
 
 --
--- TOC entry 3474 (class 0 OID 0)
--- Dependencies: 221
+-- TOC entry 3041 (class 0 OID 0)
+-- Dependencies: 224
 -- Name: stadiums_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -2901,8 +2437,8 @@ SELECT pg_catalog.setval('public.stadiums_id_seq', 16, true);
 
 
 --
--- TOC entry 3475 (class 0 OID 0)
--- Dependencies: 222
+-- TOC entry 3042 (class 0 OID 0)
+-- Dependencies: 225
 -- Name: stadiums_id_teams_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -2910,25 +2446,25 @@ SELECT pg_catalog.setval('public.stadiums_id_teams_seq', 1, false);
 
 
 --
--- TOC entry 3476 (class 0 OID 0)
--- Dependencies: 214
+-- TOC entry 3043 (class 0 OID 0)
+-- Dependencies: 227
 -- Name: teams_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.teams_id_seq', 16, true);
+SELECT pg_catalog.setval('public.teams_id_seq', 17, true);
 
 
 --
--- TOC entry 3477 (class 0 OID 0)
--- Dependencies: 225
+-- TOC entry 3044 (class 0 OID 0)
+-- Dependencies: 228
 -- Name: teams_id_stadiums_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.teams_id_stadiums_seq', 16, true);
+SELECT pg_catalog.setval('public.teams_id_stadiums_seq', 1, false);
 
 
 --
--- TOC entry 3250 (class 2606 OID 24657)
+-- TOC entry 2825 (class 2606 OID 26388)
 -- Name: banks banks_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2937,7 +2473,7 @@ ALTER TABLE ONLY public.banks
 
 
 --
--- TOC entry 3256 (class 2606 OID 24706)
+-- TOC entry 2827 (class 2606 OID 26390)
 -- Name: cities cities_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2946,7 +2482,7 @@ ALTER TABLE ONLY public.cities
 
 
 --
--- TOC entry 3264 (class 2606 OID 24782)
+-- TOC entry 2829 (class 2606 OID 26392)
 -- Name: days days_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2955,7 +2491,7 @@ ALTER TABLE ONLY public.days
 
 
 --
--- TOC entry 3262 (class 2606 OID 24775)
+-- TOC entry 2831 (class 2606 OID 26394)
 -- Name: draws draws_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2964,7 +2500,7 @@ ALTER TABLE ONLY public.draws
 
 
 --
--- TOC entry 3248 (class 2606 OID 24646)
+-- TOC entry 2833 (class 2606 OID 26396)
 -- Name: juniors juniors_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2973,7 +2509,7 @@ ALTER TABLE ONLY public.juniors
 
 
 --
--- TOC entry 3242 (class 2606 OID 16545)
+-- TOC entry 2835 (class 2606 OID 26398)
 -- Name: leagues leagues_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2982,7 +2518,7 @@ ALTER TABLE ONLY public.leagues
 
 
 --
--- TOC entry 3260 (class 2606 OID 24761)
+-- TOC entry 2837 (class 2606 OID 26400)
 -- Name: placements placements_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -2991,7 +2527,7 @@ ALTER TABLE ONLY public.placements
 
 
 --
--- TOC entry 3244 (class 2606 OID 24584)
+-- TOC entry 2839 (class 2606 OID 26402)
 -- Name: players players_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -3000,7 +2536,7 @@ ALTER TABLE ONLY public.players
 
 
 --
--- TOC entry 3258 (class 2606 OID 24718)
+-- TOC entry 2841 (class 2606 OID 26404)
 -- Name: positions positions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -3009,7 +2545,7 @@ ALTER TABLE ONLY public.positions
 
 
 --
--- TOC entry 3252 (class 2606 OID 24664)
+-- TOC entry 2843 (class 2606 OID 26406)
 -- Name: sponsors sponsors_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -3018,7 +2554,7 @@ ALTER TABLE ONLY public.sponsors
 
 
 --
--- TOC entry 3254 (class 2606 OID 24675)
+-- TOC entry 2845 (class 2606 OID 26408)
 -- Name: stadiums stadiums_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -3027,7 +2563,7 @@ ALTER TABLE ONLY public.stadiums
 
 
 --
--- TOC entry 3246 (class 2606 OID 24611)
+-- TOC entry 2847 (class 2606 OID 26410)
 -- Name: teams teams_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -3036,16 +2572,7 @@ ALTER TABLE ONLY public.teams
 
 
 --
--- TOC entry 3272 (class 2606 OID 24707)
--- Name: stadiums fk_cities; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.stadiums
-    ADD CONSTRAINT fk_cities FOREIGN KEY (id_cities) REFERENCES public.cities(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
-
-
---
--- TOC entry 3269 (class 2606 OID 24725)
+-- TOC entry 2854 (class 2606 OID 26416)
 -- Name: teams fk_cities; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -3054,7 +2581,16 @@ ALTER TABLE ONLY public.teams
 
 
 --
--- TOC entry 3267 (class 2606 OID 24618)
+-- TOC entry 2853 (class 2606 OID 26465)
+-- Name: stadiums fk_cities; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.stadiums
+    ADD CONSTRAINT fk_cities FOREIGN KEY (id_cities) REFERENCES public.cities(id);
+
+
+--
+-- TOC entry 2855 (class 2606 OID 26421)
 -- Name: teams fk_leagues; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -3063,7 +2599,7 @@ ALTER TABLE ONLY public.teams
 
 
 --
--- TOC entry 3271 (class 2606 OID 24695)
+-- TOC entry 2851 (class 2606 OID 26426)
 -- Name: stadiums fk_leagues; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -3072,7 +2608,7 @@ ALTER TABLE ONLY public.stadiums
 
 
 --
--- TOC entry 3273 (class 2606 OID 24735)
+-- TOC entry 2848 (class 2606 OID 26431)
 -- Name: cities fk_leagues; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -3081,16 +2617,7 @@ ALTER TABLE ONLY public.cities
 
 
 --
--- TOC entry 3275 (class 2606 OID 24748)
--- Name: teams_players fk_players; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.teams_players
-    ADD CONSTRAINT fk_players FOREIGN KEY (id_players) REFERENCES public.players(id) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
--- TOC entry 3266 (class 2606 OID 24720)
+-- TOC entry 2849 (class 2606 OID 26436)
 -- Name: players fk_positions; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -3099,7 +2626,7 @@ ALTER TABLE ONLY public.players
 
 
 --
--- TOC entry 3268 (class 2606 OID 24685)
+-- TOC entry 2856 (class 2606 OID 26441)
 -- Name: teams fk_stadiums; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -3108,7 +2635,7 @@ ALTER TABLE ONLY public.teams
 
 
 --
--- TOC entry 3265 (class 2606 OID 24627)
+-- TOC entry 2850 (class 2606 OID 26446)
 -- Name: players fk_teams; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -3117,24 +2644,15 @@ ALTER TABLE ONLY public.players
 
 
 --
--- TOC entry 3270 (class 2606 OID 24690)
+-- TOC entry 2852 (class 2606 OID 26460)
 -- Name: stadiums fk_teams; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.stadiums
-    ADD CONSTRAINT fk_teams FOREIGN KEY (id_teams) REFERENCES public.teams(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+    ADD CONSTRAINT fk_teams FOREIGN KEY (id_teams) REFERENCES public.teams(id);
 
 
---
--- TOC entry 3274 (class 2606 OID 24743)
--- Name: teams_players fk_teams; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.teams_players
-    ADD CONSTRAINT fk_teams FOREIGN KEY (id_teams) REFERENCES public.teams(id) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
--- Completed on 2022-05-21 15:43:40
+-- Completed on 2022-06-18 10:19:12
 
 --
 -- PostgreSQL database dump complete

@@ -73,13 +73,13 @@ public class TeamController {
     }
 
     @GetMapping("/team/finance/income")
-    public List<FinanceDto> getAllIncomes() {
+    public List<InformationDto> getAllIncomes() {
         log.info("TeamController.getAllIncomes");
         return teamService.gelAllIncomes();
     }
 
     @GetMapping("/team/finance/expenses")
-    public List<FinanceDto> getAllExpenses() {
+    public List<InformationDto> getAllExpenses() {
         log.info("TeamController.getAllExpenses");
         return teamService.gelAllExpenses();
     }
