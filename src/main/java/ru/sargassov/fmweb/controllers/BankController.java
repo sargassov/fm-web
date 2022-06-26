@@ -24,7 +24,7 @@ public class BankController {
 
     @PostMapping("/banks/finance/get")
     public void takeNewLoan(@RequestBody BankDto loan) {
-        log.info("TeamController.takeNewLoan");
+        log.info("BankController.takeNewLoan");
         bankService.takeNewLoan(loan);
     }
 

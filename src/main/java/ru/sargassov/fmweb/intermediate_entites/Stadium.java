@@ -2,8 +2,13 @@ package ru.sargassov.fmweb.intermediate_entites;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.sargassov.fmweb.constants.StadiumAnalytics;
+import ru.sargassov.fmweb.exceptions.StadiumException;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 @Data
@@ -52,6 +57,42 @@ public class Stadium {
             result = result.add(ticketCosts[i].multiply(ticketValues[i]));
         }
         return result;
+    }
+
+    public int getFullSectorCapacity() {
+        List<Integer> capacities = new ArrayList<>(List.of(
+                vipCapacity,
+                familyCapacity,
+                fanCapacity,
+                simpleCapacity,
+                awayCapacity
+        ));
+
+        int allSectorCapacity = 0;
+        for(Integer i : capacities){
+            allSectorCapacity += i;
+        }
+        return  allSectorCapacity;
+    }
+
+    public BigDecimal getCostByTypeOfSector(String type) {
+        return StadiumAnalytics.getCostByTypeOfSector(this, type);
+    }
+
+    public void setTicketCostByTypeOfSector(String type, BigDecimal typeTicketCost) {
+        if (type.startsWith("Simple")) {
+            simpleTicketCost = typeTicketCost;
+        } else if (type.startsWith("Family")) {
+            familyTicketCost = typeTicketCost;
+        } else if (type.startsWith("Fan")) {
+            fanTicketCost = typeTicketCost;
+        } else if (type.startsWith("VIP")) {
+            vipTicketCost = typeTicketCost;
+        } else if (type.startsWith("Away")) {
+            awayTicketCost = typeTicketCost;
+        } else {
+            throw new StadiumException("Using unavaliable type");
+        }
     }
 
 

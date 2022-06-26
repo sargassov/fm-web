@@ -23,7 +23,7 @@ public class StadiumConverter {
         sDto.setFullCapacity(stadiumEntity.getFullCapacity());
         sDto.setCity(cityConverter.entityToDto(stadiumEntity.getCityEntity()));
         sDto.setTeam(tDto);
-        sDto.setUsualAverageCapacity(10000);
+        sDto.setUsualAverageCapacity((int) (sDto.getFullCapacity() * 0.3));
         sDto.setSimpleCapacity(sDto.getUsualAverageCapacity());
         sDto.setSimpleTicketCost(BigDecimal.valueOf(0.00004));
         sDto.setFamilyTicketCost(BigDecimal.ZERO);

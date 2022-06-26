@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<html ng-app="ticket_cost">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticket Cost</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.11/ngStorage.min.js"></script>
+    <script src="ticket_cost.js"></script>
+    <link rel="stylesheet" href="ticket_cost.css">
+
+</head>
+
+<body>
+<div class="container" ng-controller="ticket_costController">
+    <h4 class="header">{{team.name}} ticket cost</h4>
+    <hr>
+    <p class="date_show">Today is {{today.day}} {{today.month}} {{today.year}}</p>
+    <p></p>
+    <a class="linktext" href="../stadium.html">Back to Stadium Menu</a><br>
+    <table class="table table-hover">
+        <h4 class="status-header">{{team.name}} current status</h4>
+        <p></p>
+        <tr>
+            <td class="cell">Info</td>
+            <td class="cell">Value</td>
+        </tr>
+        <tbody>
+        <tr ng-repeat="i in StadiumCurrentInfo">
+            <td class="cell">{{i.type}}</td>
+            <td class="cell">{{i.value}}</td>
+        </tr>
+        </tbody>
+    </table>
+    <p></p>
+    <h4 class="status-header">Set ticket cost</h4>
+    <table class="table table-hover">
+        <tr>
+            <td class="cell">Info</td>
+            <td class="cell">Value</td>
+            <td class="cell">Less</td>
+            <td class="cell">More</td>
+        </tr>
+        <tbody>
+        <tr ng-repeat="i in TicketCostInformation">
+            <td class="cell">{{i.type}}</td>
+            <td class="cell">{{i.value}}</td>
+            <td><button class="btn btn-primary" ng-click="changeTicketCost(i.type, -5)">Sub</button></td>
+            <td><button class="btn btn-primary" ng-click="changeTicketCost(i.type, 5)">Add</button></td>
+        </tr>
+        </tbody>
+    </table>
+    <p></p>
+</div>
+
+
+
+
+</body>
+
+</html>
