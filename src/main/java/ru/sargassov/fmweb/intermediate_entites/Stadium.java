@@ -95,6 +95,57 @@ public class Stadium {
         }
     }
 
+    public boolean approveExtense(String sectorType, int delta) {
+        if (fullCapacity - getFullSectorCapacity() - delta < 0) {
+            return false;
+        }
+
+        if (fullCapacity - getFullSectorCapacity() - delta > fullCapacity) {
+            return false;
+        }
+
+        int currentSectorSize;
+        if (sectorType.startsWith("Simple")) {
+            currentSectorSize = simpleCapacity + delta;
+        } else if (sectorType.startsWith("Family")) {
+            currentSectorSize = familyCapacity + delta;
+        } else if (sectorType.startsWith("Fan")) {
+            currentSectorSize = fanCapacity + delta;
+        } else if (sectorType.startsWith("VIP")) {
+            currentSectorSize = vipCapacity + delta;
+        } else if (sectorType.startsWith("Away")) {
+            currentSectorSize = awayCapacity + delta;
+        } else {
+            throw new StadiumException("Using unavaliable type");
+        }
+
+        if (currentSectorSize < 0) {
+            return false;
+        }
+
+        if (team.getWealth().compareTo(BigDecimal.ONE) <= 0) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public void makeExtension(String description, int delta) {
+        if (description.startsWith("Simple")) {
+            simpleCapacity += delta;
+        } else if (description.startsWith("Family")) {
+            familyCapacity += delta;
+        } else if (description.startsWith("Fan")) {
+            fanCapacity += delta;
+        } else if (description.startsWith("VIP")) {
+            vipCapacity += delta;
+        } else if (description.startsWith("Away")) {
+            awayCapacity += delta;
+        } else {
+            throw new StadiumException("Using unavaliable type");
+        }
+    }
+
 
     //    List<Integer> tempCapacityArr;
 //    List<Integer> tempCostArr;

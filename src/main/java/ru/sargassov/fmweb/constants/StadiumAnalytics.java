@@ -96,4 +96,25 @@ public class StadiumAnalytics {
             throw new StadiumException("Got unreadable ticket cost parameter!");
         }
     }
+
+    public static List<InformationDto> getSplitSectorsInfo(Team userTeam) {
+        Stadium stadium = userTeam.getStadium();
+        return new ArrayList<>(List.of(
+                new InformationDto(FULL_STADIUM_CAPACITY, stadium.getFullCapacity()),
+                new InformationDto(FULL_SECTOR_CAPACITY, stadium.getFullSectorCapacity()),
+                new InformationDto(FULL_UNDIVIDED_CAPACITY, stadium.getFullCapacity() - stadium.getFullSectorCapacity())
+
+        ));
+    }
+
+    public static List<InformationDto> getSectorsCapacityInfo(Team userTeam) {
+        Stadium stadium = userTeam.getStadium();
+        return new ArrayList<>(List.of(
+                new InformationDto(SIMPLE_CAPACITY, stadium.getSimpleCapacity()),
+                new InformationDto(FAMILY_CAPACITY, stadium.getFamilyCapacity()),
+                new InformationDto(FAN_CAPACITY, stadium.getFanCapacity()),
+                new InformationDto(VIP_CAPACITY, stadium.getVipCapacity()),
+                new InformationDto(AWAY_CAPACITY, stadium.getAwayCapacity())
+        ));
+    }
 }

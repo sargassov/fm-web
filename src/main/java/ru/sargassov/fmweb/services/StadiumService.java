@@ -3,8 +3,6 @@ package ru.sargassov.fmweb.services;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
-import ru.sargassov.fmweb.constants.FinanceAnalytics;
 import ru.sargassov.fmweb.constants.StadiumAnalytics;
 import ru.sargassov.fmweb.dto.InformationDto;
 import ru.sargassov.fmweb.exceptions.StadiumException;
@@ -13,7 +11,6 @@ import ru.sargassov.fmweb.intermediate_entites.Team;
 import ru.sargassov.fmweb.repositories.StadiumRepository;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -56,5 +53,30 @@ public class StadiumService {
 
         typeTicketCost = typeTicketCost.add(decimalDelta);
         stadium.setTicketCostByTypeOfSector(dto.getType(), typeTicketCost);
+    }
+
+    public List<InformationDto> getSplitSectorsInfo() {
+        Team userTeam = userService.getUserTeam();
+        return StadiumAnalytics.getSplitSectorsInfo(userTeam);
+    }
+
+    public List<InformationDto> getSectorsCapacityInfo() {
+        Team userTeam = userService.getUserTeam();
+        return StadiumAnalytics.getSectorsCapacityInfo(userTeam);
+    }
+
+    public void changeSectorCapacity(InformationDto dto) {
+        Team userTeam = userService.getUserTeam();
+        Stadium stadium = userTeam.getStadium();
+        int delta = (int) dto.getValue();
+        String description = dto.getType();
+
+        if (!stadium.approveExtense(description, delta)) {
+            String message = String.format("You can't make extension with %s to %d!",  stadium.getTitle(), delta);
+            log.error(message);
+            throw new StadiumException(String.format(message));
+        }
+        stadium.makeExtension(description, delta);
+        userTeam.setWealth(userTeam.getWealth().subtract(BigDecimal.valueOf(1)));
     }
 }

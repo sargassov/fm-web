@@ -37,4 +37,23 @@ public class StadiumController {
         log.info("StadiumController.changeTicketCost");
         stadiumService.changeTicketCost(dto);
     }
+
+    @GetMapping("/stadium/sectors/info")
+    public List<InformationDto> getSplitSectorsInfo() {
+        log.info("StadiumController.getSplitSectorsInfo");
+        return stadiumService.getSplitSectorsInfo();
+    }
+
+    @GetMapping("/stadium/sectors/info/all")
+    public List<InformationDto> getSectorsCapacityInfo() {
+        log.info("StadiumController.getSectorsCapacityInfo");
+        return stadiumService.getSectorsCapacityInfo();
+    }
+
+    @PutMapping("/stadium/sectors/change")
+    public void changeSectorCapacity(@RequestBody InformationDto dto) {
+        log.info("StadiumController.changeSectorCapacity");
+        stadiumService.changeSectorCapacity(dto);
+    }
+
 }
