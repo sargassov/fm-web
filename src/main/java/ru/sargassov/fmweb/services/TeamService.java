@@ -3,10 +3,12 @@ package ru.sargassov.fmweb.services;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import ru.sargassov.fmweb.api_temporary_classes_group.TeamApi;
 import ru.sargassov.fmweb.comparators.TeamsPlayersComparators;
 import ru.sargassov.fmweb.comparators.TrainingPlayersComparators;
 import ru.sargassov.fmweb.constants.FinanceAnalytics;
+import ru.sargassov.fmweb.constants.StadiumAnalytics;
 import ru.sargassov.fmweb.constants.TextConstant;
 import ru.sargassov.fmweb.converters.BankConverter;
 import ru.sargassov.fmweb.converters.TeamConverter;
@@ -14,14 +16,17 @@ import ru.sargassov.fmweb.dto.*;
 import ru.sargassov.fmweb.dto.player_dtos.IdNamePricePlayerDto;
 import ru.sargassov.fmweb.dto.player_dtos.PlayerOnTrainingDto;
 import ru.sargassov.fmweb.dto.player_dtos.PlayerSoftSkillDto;
-import ru.sargassov.fmweb.exceptions.PlayerNotFoundException;
-import ru.sargassov.fmweb.exceptions.TooExpensiveException;
-import ru.sargassov.fmweb.exceptions.TransferException;
+import ru.sargassov.fmweb.dto.text_responses.InformationDto;
+import ru.sargassov.fmweb.dto.text_responses.StartFinishInformationDto;
+import ru.sargassov.fmweb.dto.text_responses.TextResponse;
+import ru.sargassov.fmweb.exceptions.*;
 import ru.sargassov.fmweb.intermediate_entites.*;
 import ru.sargassov.fmweb.repositories.TeamRepository;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -39,6 +44,8 @@ public class TeamService {
     private final TeamsPlayersComparators teamsPlayersComparators;
     private final TrainingPlayersComparators trainingPlayersComparators;
     private final BankService bankService;
+
+    private final CalendarService calendarService;
 
     public void loadTeams(){
         teamApi.setTeamApiList(findAll());
@@ -362,6 +369,58 @@ public class TeamService {
     }
 
 
+    public List<StartFinishInformationDto> getCurrentmarketsInfo() {
+        Team team = userService.getUserTeam();
+        List<Market> markets = team.getMarkets();
+        List<StartFinishInformationDto> dtos = new ArrayList<>();
+
+        for (Market market : markets) {
+            String startDateString = market.getStartDate().getDayOfMonth() + "." + market.getStartDate().getMonth() + "." + market.getStartDate().getYear();
+            String finishDateString = market.getFinishDate().getDayOfMonth() + "." + market.getFinishDate().getMonth() + "." + market.getFinishDate().getYear();
+            StartFinishInformationDto dto = new StartFinishInformationDto(
+                    market.getMarketTypeInString(),
+                    startDateString,
+                    finishDateString
+            );
+            dtos.add(dto);
+        }
+
+//        if (dtos.size() == 0) {
+//            dtos.add(new StartFinishInformationDto(NONE, NONE, NONE));
+//        }
+        return dtos;
+    }
+
+    public void addNewMarketProgram(InformationDto dto) {
+        Team team = userService.getUserTeam();
+        Market market = Market.getMarketByTitle(dto.getType());
+        Integer multyCoeff = (Integer) dto.getValue();
+        BigDecimal askingCost = market.getMarketType().getOneWeekCost().multiply(BigDecimal.valueOf(multyCoeff));
+
+        if (team.getWealth().compareTo(askingCost) < 0) {
+            throw new MarketException("Your club hasn't emough money");
+        }
+
+        if (team.getMarkets().size() >= 5) {
+            throw new MarketException("Too much marketing programs in your teams!");
+        };
+
+        market.setStartDate(calendarService.getPresentDay().getDate());
+        market.setFinishDate(market.getStartDate().plusWeeks((Integer) dto.getValue()));
+        team.getMarkets().add(market);
+        team.setWealth(team.getWealth().subtract(askingCost));
+        team.substractMarketExpenses(askingCost);
+    }
+
+    public List<MarketDto> loadPotencialMarketPrograms() {
+        Team userTeam = userService.getUserTeam();
+        return StadiumAnalytics.loadPotencialMarketPrograms(userTeam);
+    }
+
+    public void rejectProgram(String title) {
+        Team userTeam = userService.getUserTeam();
+        userTeam.rejectMarketProgram(title);
+    }
 }
 
 

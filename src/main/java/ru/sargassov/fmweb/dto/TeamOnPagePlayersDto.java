@@ -12,4 +12,5 @@ public class TeamOnPagePlayersDto {
     private Integer playerParameter;
     private Integer teamFullSize;
     private Integer sortParameter;
+    private String stadium;
 }

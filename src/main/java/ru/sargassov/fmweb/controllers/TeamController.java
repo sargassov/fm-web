@@ -7,6 +7,9 @@ import ru.sargassov.fmweb.dto.*;
 import ru.sargassov.fmweb.dto.player_dtos.IdNamePricePlayerDto;
 import ru.sargassov.fmweb.dto.player_dtos.PlayerOnTrainingDto;
 import ru.sargassov.fmweb.dto.player_dtos.PlayerSoftSkillDto;
+import ru.sargassov.fmweb.dto.text_responses.InformationDto;
+import ru.sargassov.fmweb.dto.text_responses.StartFinishInformationDto;
+import ru.sargassov.fmweb.dto.text_responses.TextResponse;
 import ru.sargassov.fmweb.services.TeamService;
 
 import java.util.List;
@@ -107,4 +110,30 @@ public class TeamController {
         log.info("TeamController.getStartSponsorMessage");
         return teamService.getStartSponsorMessage();
     }
+
+    @GetMapping("/team/markets/info")
+    public List<StartFinishInformationDto> getCurrentmarketsInfo() {
+        log.info("TeamController.getCurrentmarketsInfo");
+        return teamService.getCurrentmarketsInfo();
+    }
+
+    @PostMapping("/team/market/addNew")
+    public void addNewMarketProgram(@RequestBody InformationDto dto) {
+        log.info("TeamController.addNewMarketProgram");
+        teamService.addNewMarketProgram(dto);
+    }
+
+    @GetMapping("/team/market/programs")
+    public List<MarketDto> loadPotencialMarketPrograms() {
+        log.info("TeamController.loadPotencialMarketPrograms");
+        return teamService.loadPotencialMarketPrograms();
+    }
+
+    @PostMapping("/team/market/reject")
+    public void rejectProgram(@RequestBody String title) {
+        log.info("TeamController.rejectProgram");
+        teamService.rejectProgram(title);
+    }
+
+
 }

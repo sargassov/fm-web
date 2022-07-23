@@ -1,7 +1,10 @@
 package ru.sargassov.fmweb.constants;
 
-import ru.sargassov.fmweb.dto.InformationDto;
+import ru.sargassov.fmweb.dto.MarketDto;
+import ru.sargassov.fmweb.dto.text_responses.InformationDto;
+import ru.sargassov.fmweb.dto.text_responses.StartFinishInformationDto;
 import ru.sargassov.fmweb.exceptions.StadiumException;
+import ru.sargassov.fmweb.intermediate_entites.Market;
 import ru.sargassov.fmweb.intermediate_entites.Stadium;
 import ru.sargassov.fmweb.intermediate_entites.Team;
 
@@ -21,7 +24,7 @@ public class StadiumAnalytics {
     private static final String SIMPLE_TICKET_COST = "Simple Ticket Cost";
     private static final String FAMILY_CAPACITY = "Family Capacity";
     private static final String FAMILY_TICKET_COST = "Family Ticket Cost";
-    private static final String FAN_CAPACITY  = "Fan Capacity ";
+    private static final String FAN_CAPACITY = "Fan Capacity ";
     private static final String FAN_TICKET_COST = "Fan Ticket Cost";
     private static final String AWAY_CAPACITY = "Away Capacity";
     private static final String AWAY_TICKET_COST = "Away Ticket Cost";
@@ -30,7 +33,6 @@ public class StadiumAnalytics {
     private static final String USUAL_AVERAGE_CAPACITY = "Usual Average Capacity";
     private static final String MATCH_TICKET_REVENUE = "Match Ticket Revenue ";
     private static final String TOTAL_STADIUM_EXPENSES = "Total Stadium Expenses";
-
 
 
     public static List<InformationDto> getStadiumInforamtion(Team userTeam) {
@@ -57,7 +59,7 @@ public class StadiumAnalytics {
         ));
     }
 
-    private static String milliomMulty(BigDecimal bigDecimal){
+    private static String milliomMulty(BigDecimal bigDecimal) {
         bigDecimal = bigDecimal.multiply(BigDecimal.valueOf(1_000_000));
         return bigDecimal.setScale(2, RoundingMode.HALF_UP) + " $";
     }
@@ -86,11 +88,11 @@ public class StadiumAnalytics {
     }
 
     public static BigDecimal getCostByTypeOfSector(Stadium stadium, String type) {
-        if(type.equals(SIMPLE_TICKET_COST)) return stadium.getSimpleTicketCost();
-        if(type.equals(FAMILY_TICKET_COST)) return stadium.getFamilyTicketCost();
-        if(type.equals(FAN_TICKET_COST)) return stadium.getFanTicketCost();
-        if(type.equals(VIP_TICKET_COST)) return stadium.getVipTicketCost();
-        if(type.equals(AWAY_TICKET_COST)) return stadium.getAwayTicketCost();
+        if (type.equals(SIMPLE_TICKET_COST)) return stadium.getSimpleTicketCost();
+        if (type.equals(FAMILY_TICKET_COST)) return stadium.getFamilyTicketCost();
+        if (type.equals(FAN_TICKET_COST)) return stadium.getFanTicketCost();
+        if (type.equals(VIP_TICKET_COST)) return stadium.getVipTicketCost();
+        if (type.equals(AWAY_TICKET_COST)) return stadium.getAwayTicketCost();
 
         else {
             throw new StadiumException("Got unreadable ticket cost parameter!");
@@ -117,4 +119,19 @@ public class StadiumAnalytics {
                 new InformationDto(AWAY_CAPACITY, stadium.getAwayCapacity())
         ));
     }
+
+    public static List<MarketDto> loadPotencialMarketPrograms(Team userTeam) {
+        List<Market.MarketType> marketTypes = List.of(Market.MarketType.values());
+        List<MarketDto> response = new ArrayList<>();
+
+        for (Market.MarketType m : marketTypes) {
+            BigDecimal oneWeekCost = m.getOneWeekCost();
+            MarketDto dto = new MarketDto(m.toString(), oneWeekCost, oneWeekCost.multiply(BigDecimal.valueOf(2)),
+                    oneWeekCost.multiply(BigDecimal.valueOf(4)));
+            response.add(dto);
+        }
+        return response;
+    }
 }
+
+

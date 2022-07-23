@@ -2,7 +2,9 @@ package ru.sargassov.fmweb.intermediate_entites;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.sargassov.fmweb.dto.text_responses.TextResponse;
 import ru.sargassov.fmweb.exceptions.BankNotFoundException;
+import ru.sargassov.fmweb.exceptions.MarketException;
 import ru.sargassov.fmweb.exceptions.PlayerNotFoundException;
 import ru.sargassov.fmweb.exceptions.TeamNotFoundException;
 
@@ -11,6 +13,7 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 
 @Data
@@ -28,7 +31,7 @@ public class Team {
     private List<Coach> coaches;
     private List<Player> playerList;
     private List<Bank> loans;
-//    private List<Market> markets;
+    private List<Market> markets;
     private BigDecimal startWealth;
     private BigDecimal transferExpenses;
     private BigDecimal personalExpenses;
@@ -40,6 +43,7 @@ public class Team {
     private int teamPower;
     private boolean changeSponsor;
     public static final int maxValueOfLoans = 5;
+    public static final int maxValueOfMarkets = 5;
     public static final int maxValueOfCoaches = 6;
 
     @Override
@@ -123,6 +127,16 @@ public class Team {
                 .findFirst()
                 .orElseThrow(()
                         -> new BankNotFoundException(String.format("Bank with title = %s not found", title)));
+    }
+
+    public void rejectMarketProgram(String title) {
+        Market currentMarket = markets.stream()
+                .filter(m -> m.getMarketType().toString().equals(title))
+                .findFirst()
+                .orElseThrow(()
+                        -> new MarketException(String.format("Market program with title = %s not found", title)));
+
+        markets.remove(currentMarket);
     }
 
     //    public Team(String info) {

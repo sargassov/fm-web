@@ -20,23 +20,24 @@ public class TeamConverter {
     private final CityConverter cityConverter;
 
     public Team entityToIntermediateEntity(TeamEntity teamEntity){
-        Team tDto = new Team();
-        tDto.setId(teamEntity.getId());
-        tDto.setName(teamEntity.getName());
-        tDto.setHeadCoach(new HeadCoach(teamEntity.getManager()));
-        tDto.setWealth(BigDecimal.valueOf(teamEntity.getWealth()).setScale(2, RoundingMode.HALF_UP));
-        tDto.setLeague(league);
-        tDto.setStadium(stadiumConverter.getIntermediateEntityFromEntity(teamEntity.getStadiumEntity(), tDto));
-        tDto.setCity(cityConverter.entityToDto(teamEntity.getCityEntity()));
+        Team team = new Team();
+        team.setId(teamEntity.getId());
+        team.setName(teamEntity.getName());
+        team.setHeadCoach(new HeadCoach(teamEntity.getManager()));
+        team.setWealth(BigDecimal.valueOf(teamEntity.getWealth()).setScale(2, RoundingMode.HALF_UP));
+        team.setLeague(league);
+        team.setStadium(stadiumConverter.getIntermediateEntityFromEntity(teamEntity.getStadiumEntity(), team));
+        team.setCity(cityConverter.entityToDto(teamEntity.getCityEntity()));
         //------------------------
-        tDto.setStartWealth(tDto.getWealth());
-        tDto.setCoaches(new ArrayList<>());
-        tDto.setLoans(new ArrayList<>());
-        tDto.setStadiumExpenses(BigDecimal.ZERO);
-        tDto.setPersonalExpenses(BigDecimal.ZERO);
-        tDto.setMarketExpenses(BigDecimal.ZERO);
-        tDto.setTransferExpenses(BigDecimal.ZERO);
-        return tDto;
+        team.setStartWealth(team.getWealth());
+        team.setCoaches(new ArrayList<>());
+        team.setLoans(new ArrayList<>());
+        team.setMarkets(new ArrayList<>());
+        team.setStadiumExpenses(BigDecimal.ZERO);
+        team.setPersonalExpenses(BigDecimal.ZERO);
+        team.setMarketExpenses(BigDecimal.ZERO);
+        team.setTransferExpenses(BigDecimal.ZERO);
+        return team;
     }
 
     public TeamOnPagePlayersDto dtoToTeamOnPagePlayersDto(Team team){
@@ -46,6 +47,7 @@ public class TeamConverter {
         tOnPageDto.setTeamFullSize(team.getPlayerList().size());
         tOnPageDto.setPlayerParameter(-1);
         tOnPageDto.setSortParameter(0);
+        tOnPageDto.setStadium(team.getStadium().getTitle());
         return tOnPageDto;
     }
 

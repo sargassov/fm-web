@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.sargassov.fmweb.api_temporary_classes_group.UserApi;
 import ru.sargassov.fmweb.converters.UserConverter;
-import ru.sargassov.fmweb.dto.TextResponse;
+import ru.sargassov.fmweb.dto.text_responses.TextResponse;
 import ru.sargassov.fmweb.dto.UserData;
 import ru.sargassov.fmweb.exceptions.YouthAcademyException;
 import ru.sargassov.fmweb.intermediate_entites.Coach;

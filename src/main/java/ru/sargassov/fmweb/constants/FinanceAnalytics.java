@@ -1,6 +1,6 @@
 package ru.sargassov.fmweb.constants;
 
-import ru.sargassov.fmweb.dto.InformationDto;
+import ru.sargassov.fmweb.dto.text_responses.InformationDto;
 import ru.sargassov.fmweb.intermediate_entites.Sponsor;
 import ru.sargassov.fmweb.intermediate_entites.Team;
 

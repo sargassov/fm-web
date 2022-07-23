@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import ru.sargassov.fmweb.api_temporary_classes_group.JuniorPoolApi;
 import ru.sargassov.fmweb.converters.JuniorConverter;
 import ru.sargassov.fmweb.dto.player_dtos.JuniorDto;
-import ru.sargassov.fmweb.dto.TextResponse;
+import ru.sargassov.fmweb.dto.text_responses.TextResponse;
 import ru.sargassov.fmweb.exceptions.YouthAcademyException;
 import ru.sargassov.fmweb.intermediate_entites.Player;
 import ru.sargassov.fmweb.intermediate_entites.Position;

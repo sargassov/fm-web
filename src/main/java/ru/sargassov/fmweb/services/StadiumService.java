@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.sargassov.fmweb.constants.StadiumAnalytics;
-import ru.sargassov.fmweb.dto.InformationDto;
+import ru.sargassov.fmweb.dto.text_responses.InformationDto;
 import ru.sargassov.fmweb.exceptions.StadiumException;
 import ru.sargassov.fmweb.intermediate_entites.Stadium;
 import ru.sargassov.fmweb.intermediate_entites.Team;

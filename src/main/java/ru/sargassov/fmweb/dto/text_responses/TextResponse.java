@@ -1,4 +1,4 @@
-package ru.sargassov.fmweb.dto;
+package ru.sargassov.fmweb.dto.text_responses;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
