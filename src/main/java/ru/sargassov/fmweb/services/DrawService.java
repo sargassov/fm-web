@@ -6,16 +6,18 @@ import ru.sargassov.fmweb.api_temporary_classes_group.DrawApi;
 import ru.sargassov.fmweb.intermediate_entites.Team;
 import ru.sargassov.fmweb.entities.DrawEntity;
 import ru.sargassov.fmweb.repositories.DrawRepository;
+import ru.sargassov.fmweb.spi.DrawServiceSpi;
+import ru.sargassov.fmweb.spi.TeamServiceSpi;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
-public class DrawService {
+public class DrawService implements DrawServiceSpi {
     private final DrawRepository drawRepository;
     private final DrawApi drawApi;
-    private final TeamService teamService;
+    private final TeamServiceSpi teamService;
 
     @AllArgsConstructor
     public class Basket{
@@ -27,17 +29,17 @@ public class DrawService {
         return drawApi.getSheduleApiList();
     }
 
-    private List<DrawEntity> findAll(){
+    public List<DrawEntity> findAll(){
         return drawRepository.findAll();
     }
 
-    private List<String> drawListMaker(){
+    public List<String> drawListMaker(){
         return findAll().stream()
                 .map(DrawEntity::getTour)
                 .collect(Collectors.toList());
     }
 
-    private List<List<String>> toursProject(){
+    public List<List<String>> toursProject(){
         List<String> projectDraws = drawListMaker();
         List<List<String>> tours = new ArrayList<>(projectDraws.size());
 
@@ -50,7 +52,7 @@ public class DrawService {
         return tours;
     }
 
-    private List<Basket> drawBasket() {
+    public List<Basket> drawBasket() {
         List<Basket> baskets = new ArrayList<>();
         int count = 1;
         List<Team> teams = new ArrayList<>();
@@ -65,7 +67,7 @@ public class DrawService {
         return baskets;
     }
 
-    private String findIf(List<Basket> baskets, int condition){
+    public String findIf(List<Basket> baskets, int condition){
         for(Basket b : baskets){
             if (b.draw == condition)
                 return b.team.getName();

@@ -9,28 +9,37 @@ import ru.sargassov.fmweb.dto.days_dtos.DayDto;
 import ru.sargassov.fmweb.intermediate_entites.days.TourDay;
 import ru.sargassov.fmweb.entities.DayEntity;
 import ru.sargassov.fmweb.repositories.DayRepository;
+import ru.sargassov.fmweb.spi.DayServiceSpi;
+import ru.sargassov.fmweb.spi.DrawServiceSpi;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
-public class DayService {
+public class DayService implements DayServiceSpi {
     private final DayRepository dayRepository;
     private final DayConverter dayConverter;
     private final CalendarApi calendarApi;
-    private final DrawService drawService;
+    private final DrawServiceSpi drawService;
 
-    private List<DayEntity> findAll(){
+    @Transactional
+    @Override
+    public List<DayEntity> findAll(){
         return dayRepository.findAll();
     }
 
-    private List<Day> convertAllToDto(){
+    @Transactional
+    @Override
+    public List<Day> convertAllToDto(){
         return findAll().stream()
                 .map(dayConverter::entityToDto)
                 .collect(Collectors.toList());
     }
 
+    @Transactional
+    @Override
     public void loadCalendar(){
         List<List<String>> shedule = drawService.getDrawsFromApi();
         List<Day> calendar = convertAllToDto();
@@ -46,11 +55,15 @@ public class DayService {
         calendarApi.setCalendarApiList(calendar);
     }
 
+    @Transactional
+    @Override
     public List<Day> getCalendarFromApi(){
         return calendarApi.getCalendarApiList();
     }
 //    //////////////////////////////////////////////////////////////////////
 
+    @Transactional
+    @Override
     public DayDto getActualDateFromApi() {
         return dayConverter.dtoToPresentDayRequest(calendarApi.getPresentDay());
     }

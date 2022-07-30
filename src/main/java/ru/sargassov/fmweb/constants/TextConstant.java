@@ -2,7 +2,7 @@ package ru.sargassov.fmweb.constants;
 
 import ru.sargassov.fmweb.intermediate_entites.Team;
 
-public class TextConstant {
+public final class TextConstant {
 
     public static String getBanksStartMessage(Team userTeam, int banksValue){
         if(banksValue == 0) return userTeam.getName() + " haven't loans yet." +

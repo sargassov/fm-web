@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import ru.sargassov.fmweb.dto.player_dtos.JuniorDto;
 import ru.sargassov.fmweb.dto.text_responses.TextResponse;
-import ru.sargassov.fmweb.services.JuniorService;
+import ru.sargassov.fmweb.spi.JuniorServiceSpi;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @Slf4j
 public class JuniorController {
-    private final JuniorService juniorService;
+    private final JuniorServiceSpi juniorService;
 
     @GetMapping("/junior")
     private TextResponse isUserVisitedYouthAcademyToday(){

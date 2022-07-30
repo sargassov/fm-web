@@ -12,7 +12,9 @@ import ru.sargassov.fmweb.intermediate_entites.Player;
 import ru.sargassov.fmweb.intermediate_entites.Position;
 import ru.sargassov.fmweb.intermediate_entites.Team;
 import ru.sargassov.fmweb.repositories.JuniorRepository;
+import ru.sargassov.fmweb.spi.JuniorServiceSpi;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -20,12 +22,14 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 @Slf4j
-public class JuniorService {
+public class JuniorService implements JuniorServiceSpi {
     private final JuniorRepository juniorRepository;
     private final JuniorConverter juniorConverter;
     private final JuniorPoolApi juniorPoolApi;
     private final UserService userService;
 
+    @Override
+    @Transactional
     public void loadYouthList(){
         log.info("JuniorService.createYouthPool");
         juniorPoolApi.setYouthApiList(juniorRepository.findAll().stream()
@@ -33,10 +37,14 @@ public class JuniorService {
                 .collect(Collectors.toList()));
     }
 
+    @Override
+    @Transactional
     public List<String> getNamesFromJuniorPoolApi(){
         return juniorPoolApi.getYouthApiList();
     }
 
+    @Override
+    @Transactional
     public Player getYoungPlayer(Position position){
         log.info("JuniorService.getYoungPlayer");
         Random random = new Random();
@@ -52,17 +60,23 @@ public class JuniorService {
         return player;
     }
 
+    @Override
+    @Transactional
     public TextResponse isUserVisitedYouthAcademyToday() {
         return userService.isUserVisitedYouthAcademyToday();
     }
 
 
+    @Override
+    @Transactional
     public List<JuniorDto> getRandomFiveYoungPlyers() {
         return juniorPoolApi.getRandomFiveYoungPlyers().stream()
                 .map(juniorConverter::nameToJuniorDto)
                 .collect(Collectors.toList());
     }
 
+    @Override
+    @Transactional
     public TextResponse invokeYoungPlayerInUserTeam(JuniorDto juniorDto) {
         Team team = userService.getUserTeam();
         if(team.getWealth().compareTo(juniorDto.getPrice()) < 0){

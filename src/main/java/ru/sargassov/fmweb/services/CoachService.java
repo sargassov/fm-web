@@ -9,7 +9,9 @@ import ru.sargassov.fmweb.exceptions.CoachException;
 import ru.sargassov.fmweb.intermediate_entites.Coach;
 import ru.sargassov.fmweb.intermediate_entites.Player;
 import ru.sargassov.fmweb.intermediate_entites.Team;
+import ru.sargassov.fmweb.spi.CoachServiceSpi;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -17,10 +19,12 @@ import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
-public class CoachService {
+public class CoachService implements CoachServiceSpi {
     private final UserService userService;
     private final CoachConverter coachConverter;
 
+    @Override
+    @Transactional
     public List<CoachDto> getAllCoachFromUserTeam() {
         Team team = userService.getUserTeam();
         return team.getCoaches().stream()
@@ -28,16 +32,22 @@ public class CoachService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    @Transactional
     public void newCoachPurchaseResponce() {
         Team team = userService.getUserTeam();
         if(team.getCoaches().size() == team.maxValueOfCoaches)
             throw new CoachException("You have 6 coaches from 6. You can't purchase more");
     }
 
+    @Override
+    @Transactional
     public PriceResponce getPriceForNewCoach(CoachDto coachDto) {
         return new PriceResponce(coachDto.guessPriceResponce());
     }
 
+    @Override
+    @Transactional
     public void createNewCoach(CoachDto coachDto) {
         Team team = userService.getUserTeam();
         Coach coach = coachConverter.getIntermediateEntityFromCoachDto(coachDto);
@@ -57,19 +67,25 @@ public class CoachService {
         }
     }
 
-    private List<Player> getBusyPlayers(){
+    @Override
+    @Transactional
+    public List<Player> getBusyPlayers(){
        return userService.getCoachListFromUserTeam().stream()
                 .map(Coach::getPlayerOnTraining)
                 .collect(Collectors.toList());
     }
 
-    private List<Player> getPlayerComparingByNumberAndPositionOfCoach(Coach coach){
+    @Override
+    @Transactional
+    public List<Player> getPlayerComparingByNumberAndPositionOfCoach(Coach coach){
         return userService.getPlayerListFromUserTeam().stream()
                 .filter(p -> p.getPosition().equals(coach.getPosition()))
                 .sorted(Comparator.comparing(Player::getNumber))
                 .collect(Collectors.toList());
     }
 
+    @Override
+    @Transactional
     public void changePlayerOnTrain(CoachDto coachDto) {
         Coach coach = userService.getCoachListFromUserTeam().get(coachDto.getCount());
         List<Player> players = getPlayerComparingByNumberAndPositionOfCoach(coach);
@@ -89,7 +105,9 @@ public class CoachService {
         selectingPlayerOnTrain(players, countPlayerInList, coach);
     }
 
-    private void selectingPlayerOnTrain(List<Player> players, int countPlayerInList, Coach coach) {
+    @Override
+    @Transactional
+    public void selectingPlayerOnTrain(List<Player> players, int countPlayerInList, Coach coach) {
         for(int x = 0; x < players.size(); x++){
             if(getBusyPlayers().contains(players.get(countPlayerInList))){
                 countPlayerInList++;
@@ -102,26 +120,34 @@ public class CoachService {
         guessTrainingAble(coach, coach.getPlayerOnTraining());
     }
 
-    private void guessTrainingAble(Coach coach, Player player) {
+    @Override
+    @Transactional
+    public void guessTrainingAble(Coach coach, Player player) {
         double possibleTrainingAble = 1.0;
         possibleTrainingAble *= coach.getCoachProgram().getProgramCode();
         possibleTrainingAble *= coach.getType().getTypeCode();
         coach.setTrainingAble((int) (possibleTrainingAble * player.getTrainingAble()));
     }
 
+    @Override
+    @Transactional
     public void deleteCoachByCount(Integer count) {
         List<Coach> coaches = userService.getCoachListFromUserTeam();
         coaches.remove(coaches.get(count));
         replaceCounters(coaches);
     }
 
-    private void replaceCounters(List<Coach> coaches) {
+    @Override
+    @Transactional
+    public void replaceCounters(List<Coach> coaches) {
         for (int i = 0; i < coaches.size(); i++) {
             Coach coach = coaches.get(i);
             coach.setCount(i);
         }
     }
 
+    @Override
+    @Transactional
     public void changeTrainingProgram(Integer count, Integer program) {
         Coach coach = userService.getCoachListFromUserTeam().get(count);
         Coach.CoachProgram[] allPrograms = Coach.CoachProgram.values();

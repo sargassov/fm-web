@@ -1,0 +1,25 @@
+body {
+    background-image: url(build_new_sitting_places.jpg);
+    background-size: cover;
+}
+
+.header,
+.small-header {
+    text-align: center;
+    font-family: "Arial Black", fantasy;
+    font-size: 26px;
+    color: snow;
+}
+
+.date_show,
+.potencial_market_header {
+    text-align: center;
+    font-family: "Arial Black", fantasy;
+    color: snow;
+}
+
+.cell,
+.linktext {
+    font-family: "Arial Black", fantasy;
+    color: snow;
+}

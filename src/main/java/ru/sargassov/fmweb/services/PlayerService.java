@@ -13,21 +13,25 @@ import ru.sargassov.fmweb.intermediate_entites.Player;
 import ru.sargassov.fmweb.dto.player_dtos.PlayerSoftSkillDto;
 import ru.sargassov.fmweb.intermediate_entites.Team;
 import ru.sargassov.fmweb.repositories.PlayerRepository;
+import ru.sargassov.fmweb.spi.PlayerServiceSpi;
 import ru.sargassov.fmweb.validators.CreatedPlayersValidator;
 
 import javax.persistence.Id;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 @Slf4j
-public class PlayerService {
+public class PlayerService implements PlayerServiceSpi {
     private final PlayerRepository playerRepository;
     private final PlayerConverter playerConverter;
     private final UserService userService;
     private final CreatedPlayersValidator createdPlayersValidator;
 
+    @Override
+    @Transactional
     @SneakyThrows
     public List<Player> getAllPlayersByTeamId(Long id){
         if(id < 1)
@@ -37,21 +41,29 @@ public class PlayerService {
                 .map(playerConverter::getIntermediateEntityFromEntity).collect(Collectors.toList());
     }
 
+    @Override
+    @Transactional
     public List<PlayerSoftSkillDto> getPlayerSoftSkillDtoFromPlayer(List<Player> playerList) {
         return playerList.stream()
                 .map(playerConverter::getPlayerSoftSkillDtoFromIntermediateEntity)
                 .collect(Collectors.toList());
     }
 
+    @Override
+    @Transactional
     public void resetAllStrategyPlaces(Team userTeam) {
         userTeam.getPlayerList().forEach(p -> p.setStrategyPlace(-100));
     }
 
+    @Override
+    @Transactional
     public PlayerSoftSkillDto getOnePlayerOnPagePlacementsDtoFromPlayer(String name){
         Player p = userService.getPlayerByNameFromUserTeam(name);
         return playerConverter.getPlayerSoftSkillDtoFromIntermediateEntity(p);
     }
 
+    @Override
+    @Transactional
     public PlayerSoftSkillDto getAnotherPlayerByNumber(Integer number, int i) {
         Player p = null;
 
@@ -68,6 +80,8 @@ public class PlayerService {
         return playerConverter.getPlayerSoftSkillDtoFromIntermediateEntity(p);
     }
 
+    @Override
+    @Transactional
     public void createNewPlayer(CreatedPlayerDto createdPlayerDto) {
         createdPlayersValidator.newPlayervValidate(createdPlayerDto);
         Team team = userService.getUserTeam();
@@ -79,6 +93,8 @@ public class PlayerService {
         team.getPlayerList().add(player);
     }
 
+    @Override
+    @Transactional
     public PriceResponce guessNewPlayerCost(CreatedPlayerDto createdPlayerDto) {
         createdPlayersValidator.newPlayervValidate(createdPlayerDto);
 
@@ -88,12 +104,15 @@ public class PlayerService {
                 return cp;
     }
 
+    @Override
+    @Transactional
     public List<PlayerOnTrainingDto> getPlayerOnTrainingDtoFromPlayer(List<Player> players) {
         return players.stream()
                 .map(playerConverter::getPlayerOnTrainingDtoFromPlayer)
                 .collect(Collectors.toList());
     }
-
+    @Override
+    @Transactional
     public IdNamePricePlayerDto getIdNamePricePlayerDtoFromPlayer(Player p) {
         return playerConverter.getIdNamePricePlayerDtoFromPlayer(p);
     }

@@ -7,16 +7,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import ru.sargassov.fmweb.dto.NameOfMonthDto;
 import ru.sargassov.fmweb.dto.days_dtos.EventDto;
-import ru.sargassov.fmweb.services.CalendarService;
+import ru.sargassov.fmweb.spi.CalendarServiceSpi;
 
-import java.security.spec.NamedParameterSpec;
 import java.util.List;
 
 @RestController
 @AllArgsConstructor
 @Slf4j
 public class CalendarController {
-    private final CalendarService calendarService;
+    private final CalendarServiceSpi calendarService;
 
     @GetMapping("/calendar/league_calendar/{parameter}")
     public EventDto getTour(@PathVariable Integer parameter) {

@@ -13,7 +13,11 @@ import ru.sargassov.fmweb.intermediate_entites.Placement;
 import ru.sargassov.fmweb.intermediate_entites.Team;
 import ru.sargassov.fmweb.entities.PlacementEntity;
 import ru.sargassov.fmweb.repositories.PlacementRepository;
+import ru.sargassov.fmweb.spi.PlacementServiceSpi;
+import ru.sargassov.fmweb.spi.PlayerServiceSpi;
+import ru.sargassov.fmweb.spi.TeamServiceSpi;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,19 +25,23 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Data
 @Slf4j
-public class PlacementService {
+public class PlacementService implements PlacementServiceSpi {
     private final PlacementRepository placementRepository;
     private final PlacementApi placementApi;
     private final PlacementConverter placementConverter;
-    private final TeamService teamService;
-    private final PlayerService playerService;
+    private final TeamServiceSpi teamService;
+    private final PlayerServiceSpi playerService;
     private final League league;
     private final UserService userService;
 
+    @Override
+    @Transactional
     public List<PlacementEntity> findAllPlacements(){
         return placementRepository.findAll();
     }
 
+    @Override
+    @Transactional
     public void loadPlacements() {
         log.info("PlacementService.loadPlacements");
         placementApi.setPlacementApiList(findAllPlacements().stream()
@@ -45,27 +53,39 @@ public class PlacementService {
         //установить игроков для каждой расстановки
     }
 
-    private void fillPlacementForAllTeams() {
+    @Override
+    @Transactional
+    public void fillPlacementForAllTeams() {
         teamService.fillPlacementForAllTeams();
     }
 
+    @Override
+    @Transactional
     public void setPlacementsForAllTeams() {
         teamService.getTeamListFromApi().forEach(this::fillPlacement);
     }
 
+    @Override
+    @Transactional
     public void fillPlacement(Team team) {
         int selected = (int) (Math.random() * placementApi.getPlacementApiList().size());
         team.setPlacement(placementApi.getPlacementByNumber(selected));
     }
 
+    @Override
+    @Transactional
     public List<Placement> getPlacementsFromPlacementApi(){
         return placementApi.getPlacementApiList();
     }
 
+    @Override
+    @Transactional
     public PlacementOnPagePlacementsDto getCurrentPlacementInfo() {
         return placementConverter.getPlacementOnPagePlacementsDtoFromTeam(userService.getUserTeam());
     }
 
+    @Override
+    @Transactional
     public void setNewPlacement(PlacementData placementData) {
         Placement placement = placementApi.getPlacementByTitle(placementData.getTitle());
         Team userTeam = userService.getUserTeam();
@@ -74,12 +94,16 @@ public class PlacementService {
         playerService.resetAllStrategyPlaces(userTeam);
     }
 
+    @Override
+    @Transactional
     public void autoFillCurrentPlacement() {
         Team userTeam = userService.getUserTeam();
         teamService.autoFillPlacement(userTeam);
         teamService.powerTeamCounter(userTeam);
     }
 
+    @Override
+    @Transactional
     public void deletePlayerFromCurrentPlacement(Integer number) {
         teamService.deletePlayerFromCurrentPlacement(number);
     }

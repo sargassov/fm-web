@@ -9,37 +9,49 @@ import ru.sargassov.fmweb.exceptions.StadiumException;
 import ru.sargassov.fmweb.intermediate_entites.Stadium;
 import ru.sargassov.fmweb.intermediate_entites.Team;
 import ru.sargassov.fmweb.repositories.StadiumRepository;
+import ru.sargassov.fmweb.spi.StadiumServiceSpi;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.List;
 
 @Service
 @AllArgsConstructor
 @Slf4j
-public class StadiumService {
+public class StadiumService implements StadiumServiceSpi {
     private final StadiumRepository stadiumRepository;
     private final UserService userService;
 
+    @Override
+    @Transactional
     public List<Stadium> getAllStadiums(){
         stadiumRepository.findAll();
         return null;
     }
 
+    @Override
+    @Transactional
     public List<InformationDto> getInfo() {
         Team userTeam = userService.getUserTeam();
         return StadiumAnalytics.getStadiumInforamtion(userTeam);
     }
 
+    @Override
+    @Transactional
     public List<InformationDto> getCurrentStatusInfo() {
         Team userTeam = userService.getUserTeam();
         return StadiumAnalytics.getCurrentStadiumStatus(userTeam);
     }
 
+    @Override
+    @Transactional
     public List<InformationDto> getTicketCostInfo() {
         Team userTeam = userService.getUserTeam();
         return StadiumAnalytics.getTicketCostInfo(userTeam);
     }
 
+    @Override
+    @Transactional
     public void changeTicketCost(InformationDto dto) {
         Stadium stadium = userService.getUserTeam().getStadium();
         BigDecimal typeTicketCost = stadium.getCostByTypeOfSector(dto.getType());
@@ -55,16 +67,22 @@ public class StadiumService {
         stadium.setTicketCostByTypeOfSector(dto.getType(), typeTicketCost);
     }
 
+    @Override
+    @Transactional
     public List<InformationDto> getSplitSectorsInfo() {
         Team userTeam = userService.getUserTeam();
         return StadiumAnalytics.getSplitSectorsInfo(userTeam);
     }
 
+    @Override
+    @Transactional
     public List<InformationDto> getSectorsCapacityInfo() {
         Team userTeam = userService.getUserTeam();
         return StadiumAnalytics.getSectorsCapacityInfo(userTeam);
     }
 
+    @Override
+    @Transactional
     public void changeSectorCapacity(InformationDto dto) {
         Team userTeam = userService.getUserTeam();
         Stadium stadium = userTeam.getStadium();

@@ -3,16 +3,16 @@ package ru.sargassov.fmweb.services;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 import ru.sargassov.fmweb.api_temporary_classes_group.TeamApi;
 import ru.sargassov.fmweb.comparators.TeamsPlayersComparators;
 import ru.sargassov.fmweb.comparators.TrainingPlayersComparators;
 import ru.sargassov.fmweb.constants.FinanceAnalytics;
 import ru.sargassov.fmweb.constants.StadiumAnalytics;
 import ru.sargassov.fmweb.constants.TextConstant;
-import ru.sargassov.fmweb.converters.BankConverter;
 import ru.sargassov.fmweb.converters.TeamConverter;
-import ru.sargassov.fmweb.dto.*;
+import ru.sargassov.fmweb.dto.LoanDto;
+import ru.sargassov.fmweb.dto.MarketDto;
+import ru.sargassov.fmweb.dto.TeamOnPagePlayersDto;
 import ru.sargassov.fmweb.dto.player_dtos.IdNamePricePlayerDto;
 import ru.sargassov.fmweb.dto.player_dtos.PlayerOnTrainingDto;
 import ru.sargassov.fmweb.dto.player_dtos.PlayerSoftSkillDto;
@@ -22,10 +22,11 @@ import ru.sargassov.fmweb.dto.text_responses.TextResponse;
 import ru.sargassov.fmweb.exceptions.*;
 import ru.sargassov.fmweb.intermediate_entites.*;
 import ru.sargassov.fmweb.repositories.TeamRepository;
+import ru.sargassov.fmweb.spi.*;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -34,31 +35,37 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class TeamService {
+public class TeamService implements TeamServiceSpi {
     private final TeamRepository teamRepository;
     private final TeamConverter teamConverter;
-    private final PlayerService playerService;
-    private final JuniorService juniorService;
+    private final PlayerServiceSpi playerService;
+    private final JuniorServiceSpi juniorService;
     private final UserService userService;
     private final TeamApi teamApi;
     private final TeamsPlayersComparators teamsPlayersComparators;
     private final TrainingPlayersComparators trainingPlayersComparators;
-    private final BankService bankService;
+    private final BankServiceSpi bankService;
 
-    private final CalendarService calendarService;
+    private final CalendarServiceSpi calendarService;
 
+    @Transactional
+    @Override
     public void loadTeams(){
         teamApi.setTeamApiList(findAll());
         fillTeams(teamApi.getTeamApiList());
         juniorRecruitment(teamApi.getTeamApiList());
     }
 
+    @Transactional
+    @Override
     public List<Team> findAll(){
         log.info("TeamService.getAllTeams");
         return teamRepository.findAll().stream()
                 .map(teamConverter::entityToIntermediateEntity).collect(Collectors.toList());
     }
 
+    @Transactional
+    @Override
     public void fillTeams(List<Team> teamList) {
         log.info("TeamService.fillTeams");
         teamList.forEach(t -> {
@@ -66,6 +73,8 @@ public class TeamService {
         });
     }
 
+    @Transactional
+    @Override
     public void juniorRecruitment(List<Team> teamList) {
         log.info("TeamService.juniorRecruitment");
         int maxValueOfYoungPlayersForOnePosition = 2;
@@ -79,14 +88,18 @@ public class TeamService {
         }
     }
 
-    private void addJuniorToTeam(Team currentTeam, Position currentPosition){
+    @Transactional
+    @Override
+    public void addJuniorToTeam(Team currentTeam, Position currentPosition){
         Player player = juniorService.getYoungPlayer(currentPosition);
         player.setTeam(currentTeam);
         player.setNumber(randomGuessNum(currentTeam));
         currentTeam.getPlayerList().add(player);
     }
 
-    private int randomGuessNum(Team currentTeam) {
+    @Transactional
+    @Override
+    public int randomGuessNum(Team currentTeam) {
         int num = 99;
         List<Integer> ints = currentTeam.getPlayerList()
                 .stream().map(Player::getNumber)
@@ -101,16 +114,10 @@ public class TeamService {
         return num;
     }
 
+    @Transactional
+    @Override
     public List<Team> getTeamListFromApi() {
         return teamApi.getTeamApiList();
-    }
-
-    public Team getTeamByIdFromApi(Long id){
-        return teamApi.findTeamById(id);
-    }
-
-    public Team getTeamByNameFromApi(String name){
-        return teamApi.findByName(name);
     }
 
     public void fillPlacementForAllTeams() {
@@ -122,6 +129,8 @@ public class TeamService {
                 });
     }
 
+    @Transactional
+    @Override
     public void autoFillPlacement(Team t) {
         log.info("TeamService.autoFillPlacement for " + t.getName());
 
@@ -141,7 +150,10 @@ public class TeamService {
         });
     }
 
-    private Player findBest(List<Player> suitablePlayers) {
+
+    @Transactional
+    @Override
+    public Player findBest(List<Player> suitablePlayers) {
         Player best = suitablePlayers.stream().sorted((o1, o2) ->
                 Integer.compare(o2.getPower(), o1.getPower()))
                 .limit(1)
@@ -152,13 +164,17 @@ public class TeamService {
         return best;
     }
 
-    private List<Player> getSuitablePlayers(List<Player> playerList, Role role) {
+    @Transactional
+    @Override
+    public List<Player> getSuitablePlayers(List<Player> playerList, Role role) {
         return playerList.stream()
                 .filter(p -> p.equalsPosition(role))
                 .collect(Collectors.toList());
     }
 
-    private void captainAppointment(Team team) {
+    @Transactional
+    @Override
+    public void captainAppointment(Team team) {
         Player player = team.getPlayerList().stream().sorted((o1, o2) -> Integer.compare(o2.getCaptainAble(), o1.getCaptainAble()))
                 .limit(1)
                 .findFirst()
@@ -168,6 +184,8 @@ public class TeamService {
         player.setCapitan(true);
     }
 
+    @Transactional
+    @Override
     public void setNewCaptainHandle(String name){
         Player nowCap = null, futureCap;
         try{
@@ -182,6 +200,8 @@ public class TeamService {
         futureCap.setCapitan(true);
     }
 
+    @Transactional
+    @Override
     public void powerTeamCounter(Team team) {
         int power = 0;
 
@@ -198,7 +218,8 @@ public class TeamService {
     }
     ///////////////////////////////////////////////////////////////стартовые методы
 
-
+    @Transactional
+    @Override
     public TeamOnPagePlayersDto getNameOfUserTeam() {
         Team userTeam = userService.getUserTeam();
         int index = teamApi.getTeamApiList().stream()
@@ -211,6 +232,8 @@ public class TeamService {
         return userTeamDto;
     }
 
+    @Transactional
+    @Override
     public List<PlayerSoftSkillDto> getAllPlayersByUserTeam(Integer parameter) {
         log.info("TeamService.getAllPlayersByUserTeam()");
         List<Player> players = userService.getUserTeam().getPlayerList();
@@ -220,7 +243,8 @@ public class TeamService {
         return playerSoftSkillDtos;
     }
 
-
+    @Transactional
+    @Override
     public void deletePlayerFromCurrentPlacement(Integer number) {
         Team team = userService.getUserTeam();
         Player player = userService.getPlayerByNumberFromUserTeam(number);
@@ -229,6 +253,8 @@ public class TeamService {
     }
 //    //////////////////////////////////////////////////////////////////////////////
 
+    @Transactional
+    @Override
     public List<PlayerOnTrainingDto> getAllPlayersOnTrainingByUserTeam(Integer parameter) {
         log.info("TeamService.getAllPlayersOnTrainingByUserTeam()");
         List<Player> players = userService.getUserTeam().getPlayerList();
@@ -238,7 +264,8 @@ public class TeamService {
         return playerOnTrainingDtos;
     }
         //////////////////////////////////////////////////////////////////////////////
-
+    @Transactional
+    @Override
     public TeamOnPagePlayersDto getNameOfOpponentTeam(Integer parameter, Integer delta) {
         List<Team> teams = teamApi.getTeamApiList().stream()
                 .sorted(Comparator.comparing(Team::getName))
@@ -254,7 +281,7 @@ public class TeamService {
         teamDto.setCountParameter(parameter);
         return teamDto;
     }
-
+    @Transactional
     public List<PlayerSoftSkillDto> getTenPlayersFromNextTeam(String name, Integer playerParameter, Integer sortParameter) {
         log.info("TeamService.getTenPlayersFromNextTeam(name)");
         List<Player> players = teamApi.findByName(name).getPlayerList();
@@ -268,7 +295,8 @@ public class TeamService {
                 .limit(10)
                 .collect(Collectors.toList());
     }
-
+    @Transactional
+    @Override
     public void buyNewPlayer(PlayerSoftSkillDto playerSoftSkillDto) {
         Team opponentTeam = teamApi.findByName(playerSoftSkillDto.getClub());
         Team userTeam = userService.getUserTeam();
@@ -292,7 +320,8 @@ public class TeamService {
         captainAppointment(opponentTeam);
 
     }
-
+    @Transactional
+    @Override
     public void sellPlayer(String name) {
         Team userTeam = userService.getUserTeam();
         Player player = userTeam.findPlayerByName(name);
@@ -304,6 +333,8 @@ public class TeamService {
         userTeam.addTransferExpenses(halfPriceOfPlayer);
     }
 
+    @Transactional
+    @Override
     public List<IdNamePricePlayerDto> getSellingList() {
         return userService.getUserTeam().getPlayerList().stream()
                 .map(playerService::getIdNamePricePlayerDtoFromPlayer)
@@ -311,16 +342,22 @@ public class TeamService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
+    @Override
     public List<InformationDto> gelAllIncomes() {
         Team team = userService.getUserTeam();
         return FinanceAnalytics.getIncomes(team);
     }
 
+    @Transactional
+    @Override
     public List<InformationDto> gelAllExpenses() {
         Team team = userService.getUserTeam();
         return FinanceAnalytics.getExpenses(team);
     }
 
+    @Transactional
+    @Override
     public TextResponse getStartFinanceMessage() {
         Team userTeam = userService.getUserTeam();
         int banksValue = userTeam.getLoans().size();
@@ -329,15 +366,15 @@ public class TeamService {
         return text;
     }
 
-
+    @Transactional
+    @Override
     public List<LoanDto> loadCurrentLoans() {
         Team userTeam = userService.getUserTeam();
-        BankConverter bc = bankService.getBankConverter();
-        return userTeam.getLoans().stream()
-                .map(b -> bc.getLoanDtoFromIntermediateEntity(b))
-                .collect(Collectors.toList());
+        return bankService.getLoanDtoFromIntermediateEntity(userTeam);
     }
 
+    @Transactional
+    @Override
     public void remainCurrentLoan(LoanDto loan) {
         Team team = userService.getUserTeam();
 
@@ -360,6 +397,8 @@ public class TeamService {
         bankService.returnBankToApi(bank);
     }
 
+    @Transactional
+    @Override
     public TextResponse getStartSponsorMessage() {
         Team userTeam = userService.getUserTeam();
         TextResponse responce = new TextResponse();
@@ -368,7 +407,8 @@ public class TeamService {
         return responce;
     }
 
-
+    @Transactional
+    @Override
     public List<StartFinishInformationDto> getCurrentmarketsInfo() {
         Team team = userService.getUserTeam();
         List<Market> markets = team.getMarkets();
@@ -384,13 +424,10 @@ public class TeamService {
             );
             dtos.add(dto);
         }
-
-//        if (dtos.size() == 0) {
-//            dtos.add(new StartFinishInformationDto(NONE, NONE, NONE));
-//        }
         return dtos;
     }
-
+    @Transactional
+    @Override
     public void addNewMarketProgram(InformationDto dto) {
         Team team = userService.getUserTeam();
         Market market = Market.getMarketByTitle(dto.getType());
@@ -412,14 +449,37 @@ public class TeamService {
         team.substractMarketExpenses(askingCost);
     }
 
+    @Transactional
+    @Override
     public List<MarketDto> loadPotencialMarketPrograms() {
         Team userTeam = userService.getUserTeam();
         return StadiumAnalytics.loadPotencialMarketPrograms(userTeam);
     }
 
+    @Transactional
+    @Override
     public void rejectProgram(String title) {
         Team userTeam = userService.getUserTeam();
         userTeam.rejectMarketProgram(title);
+    }
+
+    @Transactional
+    @Override
+    public List<InformationDto> getFullCapacityInformation() {
+        Team userTeam = userService.getUserTeam();
+        return StadiumAnalytics.getFullCapacityInformation(userTeam);
+    }
+
+    @Transactional
+    @Override
+    public void expandTheStadium(Integer delta) {
+        Team userTeam = userService.getUserTeam();
+        Stadium stadium = userTeam.getStadium();
+        if (userTeam.getWealth().compareTo(BigDecimal.ONE) < 0) {
+            log.error("Too little money to expand the stadium");
+            throw new StadiumException("Too little money to expand the stadium");
+        }
+        stadium.expand(delta);
     }
 }
 

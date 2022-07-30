@@ -6,7 +6,7 @@ import ru.sargassov.fmweb.dto.BankDto;
 import ru.sargassov.fmweb.dto.LoanDto;
 import ru.sargassov.fmweb.intermediate_entites.Bank;
 import ru.sargassov.fmweb.entities.BankEntity;
-import ru.sargassov.fmweb.services.CalendarService;
+import ru.sargassov.fmweb.spi.CalendarServiceSpi;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -14,7 +14,7 @@ import java.math.RoundingMode;
 @Component
 @AllArgsConstructor
 public class BankConverter {
-    private final CalendarService calendarService;
+    private final CalendarServiceSpi calendarService;
     private final CalendarConverter calendarConverter;
 
     public Bank getIntermediateEntityFromEntity(BankEntity bankEntity){

@@ -2,7 +2,6 @@ package ru.sargassov.fmweb.constants;
 
 import ru.sargassov.fmweb.dto.MarketDto;
 import ru.sargassov.fmweb.dto.text_responses.InformationDto;
-import ru.sargassov.fmweb.dto.text_responses.StartFinishInformationDto;
 import ru.sargassov.fmweb.exceptions.StadiumException;
 import ru.sargassov.fmweb.intermediate_entites.Market;
 import ru.sargassov.fmweb.intermediate_entites.Stadium;
@@ -13,7 +12,7 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StadiumAnalytics {
+public final class StadiumAnalytics {
 
     private static final String TEAM_TITLE = "Team Title";
     private static final String STADIUM_TITLE = "Stadium Title ";
@@ -34,7 +33,7 @@ public class StadiumAnalytics {
     private static final String MATCH_TICKET_REVENUE = "Match Ticket Revenue ";
     private static final String TOTAL_STADIUM_EXPENSES = "Total Stadium Expenses";
 
-
+    private StadiumAnalytics() {}
     public static List<InformationDto> getStadiumInforamtion(Team userTeam) {
 
         Stadium stadium = userTeam.getStadium();
@@ -131,6 +130,13 @@ public class StadiumAnalytics {
             response.add(dto);
         }
         return response;
+    }
+
+    public static List<InformationDto> getFullCapacityInformation(Team userTeam) {
+        Stadium stadium = userTeam.getStadium();
+        return new ArrayList<>(List.of(
+                new InformationDto(FULL_STADIUM_CAPACITY, stadium.getFullCapacity()))
+        );
     }
 }
 

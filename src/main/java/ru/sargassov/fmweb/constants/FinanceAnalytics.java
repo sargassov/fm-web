@@ -7,7 +7,8 @@ import ru.sargassov.fmweb.intermediate_entites.Team;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FinanceAnalytics {
+
+public final class FinanceAnalytics {
     private static final String TOTAL_BUDGET = "Total Budget";
     private static final String ALL_PLAYERS_COST = "All Players Cost";
     private static final String TEAM_SPONSOR = "Team's Sponsor";
@@ -25,6 +26,8 @@ public class FinanceAnalytics {
     private static final String TEAM_PERSONAL_EXPENSES = "Team's Personal expenses";
     private static final String TEAM_STADIUM_RENEWED_EXPENSES = "Team's Stadium renewed expenses";
     private static final String TEAM_MARKET_EXPENSES = "Team's Market expenses";
+
+    private FinanceAnalytics() {}
 
     public static List<InformationDto> getIncomes(Team userTeam){
         Sponsor sponsor = userTeam.getSponsor();

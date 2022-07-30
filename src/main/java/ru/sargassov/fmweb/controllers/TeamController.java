@@ -10,7 +10,7 @@ import ru.sargassov.fmweb.dto.player_dtos.PlayerSoftSkillDto;
 import ru.sargassov.fmweb.dto.text_responses.InformationDto;
 import ru.sargassov.fmweb.dto.text_responses.StartFinishInformationDto;
 import ru.sargassov.fmweb.dto.text_responses.TextResponse;
-import ru.sargassov.fmweb.services.TeamService;
+import ru.sargassov.fmweb.spi.TeamServiceSpi;
 
 import java.util.List;
 
@@ -18,7 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 @Slf4j
 public class TeamController {
-    private final TeamService teamService;
+    private final TeamServiceSpi teamService;
 
     @GetMapping("/team/players/{parameter}")
     public List<PlayerSoftSkillDto> getAllPlayersByUserTeam(@PathVariable int parameter) {
@@ -135,5 +135,16 @@ public class TeamController {
         teamService.rejectProgram(title);
     }
 
+    @GetMapping("/team/stadium/capacity")
+    public List<InformationDto> getFullCapacityInformation() {
+        log.info("TeamController.getFullCapacityInformation");
+        return teamService.getFullCapacityInformation();
+    }
+
+    @PostMapping("/team/stadium/expand")
+    public void expandTheStadium(@RequestBody Integer delta) {
+        log.info("TeamController.expandTheStadium");
+        teamService.expandTheStadium(delta);
+    }
 
 }

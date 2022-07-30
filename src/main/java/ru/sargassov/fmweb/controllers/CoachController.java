@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import ru.sargassov.fmweb.dto.CoachDto;
 import ru.sargassov.fmweb.dto.PriceResponce;
-import ru.sargassov.fmweb.services.CoachService;
+import ru.sargassov.fmweb.spi.CoachServiceSpi;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @Slf4j
 public class CoachController {
-    private final CoachService coachService;
+    private final CoachServiceSpi coachService;
 
     @GetMapping("/coach/all")
     public List<CoachDto> getAllCoachFromUserTeam() {

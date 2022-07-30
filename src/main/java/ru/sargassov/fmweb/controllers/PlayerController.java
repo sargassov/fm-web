@@ -6,13 +6,13 @@ import org.springframework.web.bind.annotation.*;
 import ru.sargassov.fmweb.dto.*;
 import ru.sargassov.fmweb.dto.player_dtos.CreatedPlayerDto;
 import ru.sargassov.fmweb.dto.player_dtos.PlayerSoftSkillDto;
-import ru.sargassov.fmweb.services.PlayerService;
+import ru.sargassov.fmweb.spi.PlayerServiceSpi;
 
 @RestController
 @AllArgsConstructor
 @Slf4j
 public class PlayerController {
-    private final PlayerService playerService;
+    private final PlayerServiceSpi playerService;
 
     @GetMapping("/player/{name}")
     public PlayerSoftSkillDto getOnePlayerForIndividualPlayerPage(@PathVariable String name) {

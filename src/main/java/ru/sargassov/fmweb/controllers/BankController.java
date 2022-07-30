@@ -4,9 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import ru.sargassov.fmweb.dto.BankDto;
-import ru.sargassov.fmweb.dto.days_dtos.EventDto;
-import ru.sargassov.fmweb.intermediate_entites.Bank;
-import ru.sargassov.fmweb.services.BankService;
+import ru.sargassov.fmweb.spi.BankServiceSpi;
 
 import java.util.List;
 
@@ -14,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @Slf4j
 public class BankController {
-    private final BankService bankService;
+    private final BankServiceSpi bankService;
 
     @GetMapping("/banks/loan_request/{parameter}")
     public List<BankDto> getAllPotencialLoans(@PathVariable Integer parameter) {

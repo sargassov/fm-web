@@ -146,6 +146,15 @@ public class Stadium {
         }
     }
 
+    public void expand(Integer delta) {
+        if (fullCapacity + delta < 0) {
+            throw new StadiumException("the number of viewers should not be zero");
+        }
+        fullCapacity = fullCapacity + delta;
+        Team team = this.team;
+        team.setWealth(team.getWealth().subtract(BigDecimal.ONE));
+    }
+
 
     //    List<Integer> tempCapacityArr;
 //    List<Integer> tempCostArr;

@@ -5,13 +5,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import ru.sargassov.fmweb.dto.PlacementData;
 import ru.sargassov.fmweb.dto.PlacementOnPagePlacementsDto;
-import ru.sargassov.fmweb.services.PlacementService;
+import ru.sargassov.fmweb.spi.PlacementServiceSpi;
 
 @RestController
 @AllArgsConstructor
 @Slf4j
 public class PlacementController {
-    private final PlacementService placementService;
+    private final PlacementServiceSpi placementService;
 
     @GetMapping("/placement/current")
     public PlacementOnPagePlacementsDto getCurrentPlacementInfo() {
