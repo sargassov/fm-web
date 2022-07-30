@@ -2,7 +2,7 @@ package ru.sargassov.fmweb.converters;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
-import ru.sargassov.fmweb.dto.*;
+import ru.sargassov.fmweb.dto.team_dtos.TeamOnPagePlayersDto;
 import ru.sargassov.fmweb.entities.TeamEntity;
 import ru.sargassov.fmweb.intermediate_entites.HeadCoach;
 import ru.sargassov.fmweb.intermediate_entites.League;

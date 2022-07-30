@@ -2,7 +2,7 @@ package ru.sargassov.fmweb.spi;
 
 import ru.sargassov.fmweb.dto.LoanDto;
 import ru.sargassov.fmweb.dto.MarketDto;
-import ru.sargassov.fmweb.dto.TeamOnPagePlayersDto;
+import ru.sargassov.fmweb.dto.team_dtos.TeamOnPagePlayersDto;
 import ru.sargassov.fmweb.dto.player_dtos.IdNamePricePlayerDto;
 import ru.sargassov.fmweb.dto.player_dtos.PlayerOnTrainingDto;
 import ru.sargassov.fmweb.dto.player_dtos.PlayerSoftSkillDto;

@@ -1,4 +1,4 @@
-package ru.sargassov.fmweb.dto;
+package ru.sargassov.fmweb.dto.team_dtos;
 
 import lombok.Data;
 

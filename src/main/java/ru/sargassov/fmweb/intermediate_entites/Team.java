@@ -27,11 +27,18 @@ public class Team {
     private Stadium stadium;
     private City city;
     //__________________________
+
+    public static final int maxValueOfLoans = 5;
+    public static final int maxValueOfMarkets = 5;
+    public static final int maxValueOfCoaches = 6;
+    //////////////////////////
+
     private Sponsor sponsor;
     private List<Coach> coaches;
     private List<Player> playerList;
     private List<Bank> loans;
     private List<Market> markets;
+
     private BigDecimal startWealth;
     private BigDecimal transferExpenses;
     private BigDecimal personalExpenses;
@@ -42,9 +49,14 @@ public class Team {
     private int temporaryTicketCost;
     private int teamPower;
     private boolean changeSponsor;
-    public static final int maxValueOfLoans = 5;
-    public static final int maxValueOfMarkets = 5;
-    public static final int maxValueOfCoaches = 6;
+    private int games;
+    private int won;
+    private int drawn;
+    private int lost;
+    private int scored;
+    private int missed;
+    private int points;
+
 
     @Override
     public String toString() {
@@ -137,6 +149,10 @@ public class Team {
                         -> new MarketException(String.format("Market program with title = %s not found", title)));
 
         markets.remove(currentMarket);
+    }
+
+    public int calculateTeamPoints() {
+        return won * 3 + drawn;
     }
 
     //    public Team(String info) {
