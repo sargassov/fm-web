@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<html ng-app="all_players">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Players</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.11/ngStorage.min.js"></script>
+    <script src="all_players.js"></script>
+    <link rel="stylesheet" href="all_players.css">
+
+</head>
+
+<body>
+    <div class="container" ng-controller="all_playersController">
+        <h4 class="header">All players</h4>
+        <hr>
+        <p class="date_show">Today is {{today.day}} {{today.month}} {{today.year}}</p>
+        <p></p>
+        <a class="linktext" href="../league.html">Back to League Menu</a><br>
+        <button ng-click="loadPlayersSort(0)">Name</button>
+        <button ng-click="loadPlayersSort(1)">Club</button>
+        <button ng-click="loadPlayersSort(2)">Natio</button>
+        <button ng-click="loadPlayersSort(3)">Number</button>
+        <button ng-click="loadPlayersSort(4)">Pos</button>
+        <button ng-click="loadPlayersSort(5)">Gk</button>
+        <button ng-click="loadPlayersSort(6)">Def</button>
+        <button ng-click="loadPlayersSort(7)">Mid</button>
+        <button ng-click="loadPlayersSort(8)">Forw</button>
+        <button ng-click="loadPlayersSort(9)">Cap</button>
+        <button ng-click="loadPlayersSort(10)">Inj</button>
+        <button ng-click="loadPlayersSort(11)">Trn</button>
+        <button ng-click="loadPlayersSort(12)">Year</button>
+        <button ng-click="loadPlayersSort(13)">StrPl</button>
+        <button ng-click="loadPlayersSort(14)">Power</button>
+        <button ng-click="loadPlayersSort(15)">Tire</button>
+        <button ng-click="loadPlayersSort(16)">TBT</button>
+        <button ng-click="loadPlayersSort(17)">Price</button>
+        <table class="table table-hover">
+            <tr>
+                <td class="cell">Name</td>
+                <td class="cell">Club</td>
+                <td class="cell">Natio</td>
+                <td class="cell">Number</td>
+                <td class="cell">Pos</td>
+                <td class="cell">Gk</td>
+                <td class="cell">Def</td>
+                <td class="cell">Mid</td>
+                <td class="cell">Forw</td>
+                <td class="cell">Cap</td>
+                <td class="cell">Inj</td>
+                <td class="cell">Trn</td>
+                <td class="cell">Year</td>
+                <td class="cell">StrPl</td>
+                <td class="cell">Power</td>
+                <td class="cell">Tire</td>
+                <td class="cell">TBT</td>
+                <td class="cell">Price</td>
+            </tr>
+            <tbody>
+                <tr ng-repeat="p in Players">
+                    <td class="cell">{{p.name}}</td>
+                    <td class="cell">{{p.club}}</td>
+                    <td class="cell">{{p.natio}}</td>
+                    <td class="cell">{{p.number}}</td>
+                    <td class="cell">{{p.position}}</td>
+                    <td class="cell">{{p.gkAble}}</td>
+                    <td class="cell">{{p.defAble}}</td>
+                    <td class="cell">{{p.midAble}}</td>
+                    <td class="cell">{{p.forwAble}}</td>
+                    <td class="cell">{{p.captainAble}}</td>
+                    <td class="cell">{{p.injury}}</td>
+                    <td class="cell">{{p.trainingAble}}</td>
+                    <td class="cell">{{p.birthYear}}</td>
+                    <td class="cell">{{p.strategyPlace}}</td>
+                    <td class="cell">{{p.power}}</td>
+                    <td class="cell">{{p.tire}}</td>
+                    <td class="cell">{{p.timeBeforeTreat}}</td>
+                    <td class="cell">{{p.price}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <p></p>
+    </div>
+</body>
+
+</html>

@@ -245,6 +245,23 @@ public class TeamService implements TeamServiceSpi {
 
     @Transactional
     @Override
+    public List<PlayerSoftSkillDto> getAllPlayersByAllTeam(Integer parameter) {
+        log.info("TeamService.getAllPlayersByAllTeam()");
+        List<Team> allTeams = teamApi.getTeamApiList();
+        List<PlayerSoftSkillDto> playerSoftSkillDtos = new ArrayList<>();
+
+        for (Team t : allTeams) {
+            List<Player> teamPlayers = t.getPlayerList();
+            playerSoftSkillDtos.addAll(
+                    playerService.getPlayerSoftSkillDtoFromPlayer(teamPlayers)
+            );
+        }
+        playerSoftSkillDtos.sort(teamsPlayersComparators.getComparators().get(parameter));
+        return playerSoftSkillDtos;
+    }
+
+    @Transactional
+    @Override
     public void deletePlayerFromCurrentPlacement(Integer number) {
         Team team = userService.getUserTeam();
         Player player = userService.getPlayerByNumberFromUserTeam(number);

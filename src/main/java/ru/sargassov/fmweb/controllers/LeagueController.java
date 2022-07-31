@@ -3,9 +3,11 @@ package ru.sargassov.fmweb.controllers;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import ru.sargassov.fmweb.dto.LeagueDto;
 import ru.sargassov.fmweb.dto.matrix_dto.CortageDto;
+import ru.sargassov.fmweb.dto.player_dtos.PlayerSoftSkillDto;
 import ru.sargassov.fmweb.dto.team_dtos.TeamResultDto;
 import ru.sargassov.fmweb.spi.LeagueServiceSpi;
 
@@ -34,5 +36,11 @@ public class LeagueController {
     public List<CortageDto> loadResultMatrix() {
         log.info("LeagueController.loadResultMatrix");
         return leagueService.loadResultMatrix();
+    }
+
+    @GetMapping("/league/players/{parameter}")
+    public List<PlayerSoftSkillDto> loadPlayersSort(@PathVariable Integer parameter) {
+        log.info("LeagueController.loadPlayersSort");
+        return leagueService.loadPlayersSort(parameter);
     }
 }

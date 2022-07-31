@@ -1,14 +1,6 @@
 angular.module('players', ['ngStorage']).controller('playersController', function ($scope, $rootScope, $http, $localStorage) {
     const contextPath = 'http://localhost:7777/fm';
 
-    // $scope.loadPlayers = function () {
-    //     $http.get(contextPath + '/team/players')
-    //         .then(function successCallback(response) {
-    //             $scope.Players = response.data;
-    //         }, function errorCallback(response) {
-    //             alert('PLAYERS OF YOUR TEAM NOT FOUND');
-    //         });
-    // };
 
     $scope.loadPlayersSort = function (parameter) {
         $http.get(contextPath + '/team/players/' + parameter)

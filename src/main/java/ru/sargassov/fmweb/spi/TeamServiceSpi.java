@@ -50,6 +50,8 @@ public interface TeamServiceSpi {
 
     List<PlayerSoftSkillDto> getAllPlayersByUserTeam(Integer parameter);
 
+    List<PlayerSoftSkillDto> getAllPlayersByAllTeam(Integer parameter);
+
     void deletePlayerFromCurrentPlacement(Integer number);
 
     List<PlayerOnTrainingDto> getAllPlayersOnTrainingByUserTeam(Integer parameter);
