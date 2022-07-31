@@ -155,6 +155,23 @@ public class Team {
         return won * 3 + drawn;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Team)) {
+            return false;
+        }
+
+        if (o == this) {
+            return true;
+        }
+
+        if (name.equals(((Team) o).getName())) {
+            return true;
+        }
+
+        return false;
+    }
+
     //    public Team(String info) {
 //        //        markets = new ArrayList<>();
 //        coaches = new ArrayList<>();

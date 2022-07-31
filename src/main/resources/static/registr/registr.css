@@ -139,28 +139,3 @@ select[typeof=text]{
     color: rgb(69, 68, 158);
     background-color: rgb(255, 255, 255);
 }
-
-
-/* .newGameText {
-    font-family: Arial, Helvetica, sans-serif;
-    size: 35px;
-    font-size: 35px;
-    text-align: right;
-    color: black;
-}
-
-.loadGameText {
-    font-family: Arial, Helvetica, sans-serif;
-    size: 35px;
-    font-size: 35px;
-    text-align: right;
-    color: black;
-}
-
-.title {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 35px;
-    text-align: center;
-    line-height: 26px;
-    border-radius: 10px;
-} */

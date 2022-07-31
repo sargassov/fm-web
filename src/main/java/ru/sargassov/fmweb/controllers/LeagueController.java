@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.sargassov.fmweb.dto.LeagueDto;
+import ru.sargassov.fmweb.dto.matrix_dto.CortageDto;
 import ru.sargassov.fmweb.dto.team_dtos.TeamResultDto;
 import ru.sargassov.fmweb.spi.LeagueServiceSpi;
 
@@ -27,5 +28,11 @@ public class LeagueController {
     public List<TeamResultDto> loadTeamTable() {
         log.info("LeagueController.loadTeamTable");
         return leagueService.loadTeamTable();
+    }
+
+    @GetMapping("/league/results")
+    public List<CortageDto> loadResultMatrix() {
+        log.info("LeagueController.loadResultMatrix");
+        return leagueService.loadResultMatrix();
     }
 }

@@ -22,6 +22,7 @@ public class GameService implements GameServiceSpi {
     private final DrawServiceSpi drawService;
     private final DayServiceSpi dayService;
     private final UserService userService;
+    private final MatrixCreateServiceSpi matrixService;
     private League league;
 
     @Override
@@ -36,6 +37,7 @@ public class GameService implements GameServiceSpi {
         sponsorService.loadSponsors();
         drawService.loadShedule();
         dayService.loadCalendar();
+        matrixService.createMatrix();
         userService.fillUserApi(userData);
     }
 }

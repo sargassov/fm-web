@@ -3,14 +3,18 @@ package ru.sargassov.fmweb.services;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import ru.sargassov.fmweb.converters.CortageConverter;
 import ru.sargassov.fmweb.converters.LeagueConverter;
 import ru.sargassov.fmweb.dto.LeagueDto;
+import ru.sargassov.fmweb.dto.matrix_dto.CortageDto;
 import ru.sargassov.fmweb.dto.team_dtos.TeamResultDto;
+import ru.sargassov.fmweb.intermediate_entites.Cortage;
 import ru.sargassov.fmweb.intermediate_entites.League;
 import ru.sargassov.fmweb.exceptions.LeagueNotFoundException;
 import ru.sargassov.fmweb.intermediate_entites.Team;
 import ru.sargassov.fmweb.repositories.LeagueRepository;
 import ru.sargassov.fmweb.spi.LeagueServiceSpi;
+import ru.sargassov.fmweb.spi.MatrixServiceSpi;
 import ru.sargassov.fmweb.spi.TeamServiceSpi;
 
 import javax.transaction.Transactional;
@@ -26,6 +30,9 @@ public class LeagueService implements LeagueServiceSpi {
     private final LeagueRepository leagueRepository;
     private final LeagueConverter leagueConverter;
 
+    private final CortageConverter cortageConverter;
+
+    private final MatrixServiceSpi matrixService;
     private final TeamServiceSpi teamService;
     private static final long RussianLeagueNumber = 1;
 
@@ -75,5 +82,14 @@ public class LeagueService implements LeagueServiceSpi {
             );
         }
         return dtoList;
+    }
+
+    @Override
+    public List<CortageDto> loadResultMatrix() {
+        List<Cortage> matrix = matrixService.getActualMatrix();
+        List<CortageDto> dtos = matrix.stream()
+                .map(cortageConverter::getCortageDtoFromCortage)
+                .collect(Collectors.toList());
+        return dtos;
     }
 }
