@@ -1,0 +1,41 @@
+body {
+    background-image: url(index.png);
+    background-size: cover;
+    /*background-position: center;*/
+}
+
+.newGameText {
+    text-align: -moz-center;
+    font-family: "Arial Black", fantasy;
+    font-size: 26px;
+    color: snow;
+}
+
+.right_link{
+    text-align: right;
+}
+
+.loadGameText {
+    font-family: "Arial Black", fantasy;
+    font-size: 26px;
+    text-align: -moz-center;
+    color: snow;
+}
+
+.title {
+    font-family: "Arial Black", fantasy;
+    font-size: 35px;
+    text-align: center;
+    line-height: 26px;
+    border-radius: 10px;
+    color: snow;
+}
+
+.bottom{
+    font-family: "Arial Black", fantasy;
+    font-size: 15px;
+    text-align: center;
+    line-height: 26px;
+    border-radius: 10px;
+    color: snow;
+}

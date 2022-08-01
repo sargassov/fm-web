@@ -1,0 +1,20 @@
+body {
+    background-image: url(change_sponsor.jpg);
+    background-size: cover;
+}
+
+.header {
+    text-align: center;
+    font-family: "Arial Black", fantasy;
+    font-size: 26px;
+    color: snow;
+}
+
+.date_show,
+.cell,
+.linktext,
+.message_header {
+    text-align: center;
+    font-family: "Arial Black", fantasy;
+    color: snow;
+}

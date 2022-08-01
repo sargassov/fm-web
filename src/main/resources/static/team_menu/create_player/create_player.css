@@ -1,0 +1,72 @@
+body {
+    background-image: url(create_player.jpg);
+    box-sizing: border-box;
+    background-size: cover;
+}
+
+.form-control {
+    font-family: Verdana, Geneva, Tahoma, sans-serif
+}
+
+.header {
+    text-align: center;
+    font-family: "Arial Black", fantasy;
+    font-size: 26px;
+    color: snow;
+}
+
+.date_show {
+    text-align: center;
+    font-family: "Arial Black", fantasy;
+    color: snow;
+}
+
+.new_player_form{
+    text-align: center;
+    align-items: center;
+    size: A4;
+}
+
+.low_header{
+    text-align: center;
+    font-family: "Arial Black", fantasy;
+    font-size: 20px;
+    color: snow;
+}
+
+.link_text{
+    text-align: left;
+    font-family: "Arial Black", fantasy;
+    font-size: 18px;
+    color: snow;
+}
+
+.comment{
+    text-align: center;
+    font-family: "Arial Black", fantasy;
+    font-size: 15px;
+    color: snow;
+}
+
+input[type=text],
+input[type=number],
+select[typeof=text]{
+    margin: auto;
+    align-content: center;
+    align-items: center;
+    align-self: center;
+    text-align: center;
+    width:400px;
+    height: 25px;
+}
+
+
+.text_form{
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    font-family: "Arial Black", fantasy;
+    font-size: 15px;
+    color: snow;
+}

@@ -1,0 +1,2315 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 14.2
+-- Dumped by pg_dump version 14.2
+
+-- Started on 2022-05-21 15:43:40
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- TOC entry 218 (class 1259 OID 24652)
+-- Name: banks; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.banks (
+    id bigint NOT NULL,
+    title character varying(64) NOT NULL,
+    percent_day integer NOT NULL,
+    percent_week integer NOT NULL,
+    percent_month integer NOT NULL,
+    full_loan_coeff numeric(5,1),
+    max_loan_amount numeric(10,2)
+);
+
+
+ALTER TABLE public.banks OWNER TO postgres;
+
+--
+-- TOC entry 217 (class 1259 OID 24651)
+-- Name: banks_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.banks_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.banks_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3448 (class 0 OID 0)
+-- Dependencies: 217
+-- Name: banks_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.banks_id_seq OWNED BY public.banks.id;
+
+
+--
+-- TOC entry 227 (class 1259 OID 24701)
+-- Name: cities; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.cities (
+    id bigint NOT NULL,
+    name character varying(32),
+    id_leagues bigint
+);
+
+
+ALTER TABLE public.cities OWNER TO postgres;
+
+--
+-- TOC entry 226 (class 1259 OID 24700)
+-- Name: cities_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.cities_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.cities_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3449 (class 0 OID 0)
+-- Dependencies: 226
+-- Name: cities_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.cities_id_seq OWNED BY public.cities.id;
+
+
+--
+-- TOC entry 236 (class 1259 OID 24777)
+-- Name: days; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.days (
+    id bigint NOT NULL,
+    day date NOT NULL,
+    is_passed boolean NOT NULL,
+    is_present boolean NOT NULL,
+    is_match boolean NOT NULL
+);
+
+
+ALTER TABLE public.days OWNER TO postgres;
+
+--
+-- TOC entry 235 (class 1259 OID 24776)
+-- Name: days_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.days_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.days_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3450 (class 0 OID 0)
+-- Dependencies: 235
+-- Name: days_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.days_id_seq OWNED BY public.days.id;
+
+
+--
+-- TOC entry 234 (class 1259 OID 24770)
+-- Name: draws; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.draws (
+    id bigint NOT NULL,
+    draw character varying(128) NOT NULL
+);
+
+
+ALTER TABLE public.draws OWNER TO postgres;
+
+--
+-- TOC entry 233 (class 1259 OID 24769)
+-- Name: draws_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.draws_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.draws_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3451 (class 0 OID 0)
+-- Dependencies: 233
+-- Name: draws_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.draws_id_seq OWNED BY public.draws.id;
+
+
+--
+-- TOC entry 216 (class 1259 OID 24641)
+-- Name: juniors; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.juniors (
+    id bigint NOT NULL,
+    name character varying(64) NOT NULL
+);
+
+
+ALTER TABLE public.juniors OWNER TO postgres;
+
+--
+-- TOC entry 215 (class 1259 OID 24640)
+-- Name: juniors_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.juniors_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.juniors_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3452 (class 0 OID 0)
+-- Dependencies: 215
+-- Name: juniors_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.juniors_id_seq OWNED BY public.juniors.id;
+
+
+--
+-- TOC entry 210 (class 1259 OID 16540)
+-- Name: leagues; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.leagues (
+    id bigint NOT NULL,
+    name character varying(64)
+);
+
+
+ALTER TABLE public.leagues OWNER TO postgres;
+
+--
+-- TOC entry 209 (class 1259 OID 16539)
+-- Name: leagues_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.leagues_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.leagues_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3453 (class 0 OID 0)
+-- Dependencies: 209
+-- Name: leagues_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.leagues_id_seq OWNED BY public.leagues.id;
+
+
+--
+-- TOC entry 232 (class 1259 OID 24754)
+-- Name: placements; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.placements (
+    id integer NOT NULL,
+    description character varying(16) NOT NULL,
+    roles character varying(16)[] NOT NULL
+);
+
+
+ALTER TABLE public.placements OWNER TO postgres;
+
+--
+-- TOC entry 231 (class 1259 OID 24753)
+-- Name: placements_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.placements_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.placements_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3454 (class 0 OID 0)
+-- Dependencies: 231
+-- Name: placements_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.placements_id_seq OWNED BY public.placements.id;
+
+
+--
+-- TOC entry 212 (class 1259 OID 24577)
+-- Name: players; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.players (
+    id bigint NOT NULL,
+    name character varying(32) NOT NULL,
+    natio character varying(8) NOT NULL,
+    gk_able integer NOT NULL,
+    def_able integer NOT NULL,
+    mid_able integer NOT NULL,
+    forw_able integer NOT NULL,
+    price numeric NOT NULL,
+    captain_able integer NOT NULL,
+    number integer NOT NULL,
+    strategy_place integer,
+    id_teams bigint,
+    year integer,
+    id_positions bigint
+);
+
+
+ALTER TABLE public.players OWNER TO postgres;
+
+--
+-- TOC entry 211 (class 1259 OID 24576)
+-- Name: players_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.players_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.players_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3455 (class 0 OID 0)
+-- Dependencies: 211
+-- Name: players_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.players_id_seq OWNED BY public.players.id;
+
+
+--
+-- TOC entry 229 (class 1259 OID 24713)
+-- Name: positions; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.positions (
+    id bigint NOT NULL,
+    title character varying(16) NOT NULL,
+    short_title character varying(8) NOT NULL
+);
+
+
+ALTER TABLE public.positions OWNER TO postgres;
+
+--
+-- TOC entry 228 (class 1259 OID 24712)
+-- Name: positions_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.positions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.positions_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3456 (class 0 OID 0)
+-- Dependencies: 228
+-- Name: positions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.positions_id_seq OWNED BY public.positions.id;
+
+
+--
+-- TOC entry 220 (class 1259 OID 24659)
+-- Name: sponsors; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.sponsors (
+    id bigint NOT NULL,
+    name character varying(32) NOT NULL,
+    day_wage numeric(10,2),
+    match_wage numeric(10,2),
+    goal_bonus_wage numeric(10,2),
+    win_wage numeric(10,2),
+    deuce_wage numeric(10,2),
+    contract_bonus_wage numeric(10,2)
+);
+
+
+ALTER TABLE public.sponsors OWNER TO postgres;
+
+--
+-- TOC entry 219 (class 1259 OID 24658)
+-- Name: sponsors_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.sponsors_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.sponsors_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3457 (class 0 OID 0)
+-- Dependencies: 219
+-- Name: sponsors_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.sponsors_id_seq OWNED BY public.sponsors.id;
+
+
+--
+-- TOC entry 224 (class 1259 OID 24668)
+-- Name: stadiums; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.stadiums (
+    id bigint NOT NULL,
+    id_teams bigint NOT NULL,
+    title character varying(32) NOT NULL,
+    id_leagues bigint NOT NULL,
+    full_capacity integer NOT NULL,
+    id_cities bigint
+);
+
+
+ALTER TABLE public.stadiums OWNER TO postgres;
+
+--
+-- TOC entry 223 (class 1259 OID 24667)
+-- Name: stadiums_id_leagues_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.stadiums_id_leagues_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.stadiums_id_leagues_seq OWNER TO postgres;
+
+--
+-- TOC entry 3458 (class 0 OID 0)
+-- Dependencies: 223
+-- Name: stadiums_id_leagues_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.stadiums_id_leagues_seq OWNED BY public.stadiums.id_leagues;
+
+
+--
+-- TOC entry 221 (class 1259 OID 24665)
+-- Name: stadiums_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.stadiums_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.stadiums_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3459 (class 0 OID 0)
+-- Dependencies: 221
+-- Name: stadiums_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.stadiums_id_seq OWNED BY public.stadiums.id;
+
+
+--
+-- TOC entry 222 (class 1259 OID 24666)
+-- Name: stadiums_id_teams_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.stadiums_id_teams_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.stadiums_id_teams_seq OWNER TO postgres;
+
+--
+-- TOC entry 3460 (class 0 OID 0)
+-- Dependencies: 222
+-- Name: stadiums_id_teams_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.stadiums_id_teams_seq OWNED BY public.stadiums.id_teams;
+
+
+--
+-- TOC entry 213 (class 1259 OID 24600)
+-- Name: teams; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.teams (
+    name character varying(32) NOT NULL,
+    manager character varying(32) NOT NULL,
+    id_leagues bigint NOT NULL,
+    id bigint NOT NULL,
+    id_stadiums bigint NOT NULL,
+    id_cities bigint,
+    team_wealth numeric(6,2)
+);
+
+
+ALTER TABLE public.teams OWNER TO postgres;
+
+--
+-- TOC entry 214 (class 1259 OID 24608)
+-- Name: teams_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.teams_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.teams_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3461 (class 0 OID 0)
+-- Dependencies: 214
+-- Name: teams_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.teams_id_seq OWNED BY public.teams.id;
+
+
+--
+-- TOC entry 225 (class 1259 OID 24677)
+-- Name: teams_id_stadiums_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.teams_id_stadiums_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.teams_id_stadiums_seq OWNER TO postgres;
+
+--
+-- TOC entry 3462 (class 0 OID 0)
+-- Dependencies: 225
+-- Name: teams_id_stadiums_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.teams_id_stadiums_seq OWNED BY public.teams.id_stadiums;
+
+
+--
+-- TOC entry 230 (class 1259 OID 24740)
+-- Name: teams_players; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.teams_players (
+    id_teams bigint NOT NULL,
+    id_players bigint NOT NULL
+);
+
+
+ALTER TABLE public.teams_players OWNER TO postgres;
+
+--
+-- TOC entry 3231 (class 2604 OID 24655)
+-- Name: banks id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.banks ALTER COLUMN id SET DEFAULT nextval('public.banks_id_seq'::regclass);
+
+
+--
+-- TOC entry 3236 (class 2604 OID 24704)
+-- Name: cities id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.cities ALTER COLUMN id SET DEFAULT nextval('public.cities_id_seq'::regclass);
+
+
+--
+-- TOC entry 3240 (class 2604 OID 24780)
+-- Name: days id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.days ALTER COLUMN id SET DEFAULT nextval('public.days_id_seq'::regclass);
+
+
+--
+-- TOC entry 3239 (class 2604 OID 24773)
+-- Name: draws id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.draws ALTER COLUMN id SET DEFAULT nextval('public.draws_id_seq'::regclass);
+
+
+--
+-- TOC entry 3230 (class 2604 OID 24644)
+-- Name: juniors id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.juniors ALTER COLUMN id SET DEFAULT nextval('public.juniors_id_seq'::regclass);
+
+
+--
+-- TOC entry 3226 (class 2604 OID 16543)
+-- Name: leagues id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.leagues ALTER COLUMN id SET DEFAULT nextval('public.leagues_id_seq'::regclass);
+
+
+--
+-- TOC entry 3238 (class 2604 OID 24757)
+-- Name: placements id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.placements ALTER COLUMN id SET DEFAULT nextval('public.placements_id_seq'::regclass);
+
+
+--
+-- TOC entry 3227 (class 2604 OID 24580)
+-- Name: players id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.players ALTER COLUMN id SET DEFAULT nextval('public.players_id_seq'::regclass);
+
+
+--
+-- TOC entry 3237 (class 2604 OID 24716)
+-- Name: positions id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.positions ALTER COLUMN id SET DEFAULT nextval('public.positions_id_seq'::regclass);
+
+
+--
+-- TOC entry 3232 (class 2604 OID 24662)
+-- Name: sponsors id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.sponsors ALTER COLUMN id SET DEFAULT nextval('public.sponsors_id_seq'::regclass);
+
+
+--
+-- TOC entry 3233 (class 2604 OID 24671)
+-- Name: stadiums id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.stadiums ALTER COLUMN id SET DEFAULT nextval('public.stadiums_id_seq'::regclass);
+
+
+--
+-- TOC entry 3234 (class 2604 OID 24672)
+-- Name: stadiums id_teams; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.stadiums ALTER COLUMN id_teams SET DEFAULT nextval('public.stadiums_id_teams_seq'::regclass);
+
+
+--
+-- TOC entry 3235 (class 2604 OID 24673)
+-- Name: stadiums id_leagues; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.stadiums ALTER COLUMN id_leagues SET DEFAULT nextval('public.stadiums_id_leagues_seq'::regclass);
+
+
+--
+-- TOC entry 3228 (class 2604 OID 24609)
+-- Name: teams id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.teams ALTER COLUMN id SET DEFAULT nextval('public.teams_id_seq'::regclass);
+
+
+--
+-- TOC entry 3229 (class 2604 OID 24678)
+-- Name: teams id_stadiums; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.teams ALTER COLUMN id_stadiums SET DEFAULT nextval('public.teams_id_stadiums_seq'::regclass);
+
+
+--
+-- TOC entry 3424 (class 0 OID 24652)
+-- Dependencies: 218
+-- Data for Name: banks; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+insert into banks (title, percent_day, percent_week, percent_month, full_loan_coeff, max_loan_amount) values
+('ZVER',	3,	10,	55,	1.2,	45.00),
+('WTB',	2,	12,	70,	1.4,	40.00),
+('Inkoff Bank',	2,	8,	34,	1.1,	10.00),
+('Omega Bank',	4,	14,	66,	1.8,	85.00),
+('Air Bank',	1,	7,	34,	3.2,	24.00),
+('TrainsCapitalBank',	3,	25,	105,	1.2,	80.00);
+
+insert into cities (name, id_leagues) values
+('Moscow',	1),
+('Saints-Petersburg',	1),
+('Krasnodar',	1),
+('Rostov-on-Don',	1),
+('Tula',	1),
+('Ufa',	1),
+('Ekaterinburg',	1),
+('Tambov',	1),
+('Sochi',	1),
+('Orenburg',	1),
+('Kazan',	1),
+('Samara',	1),
+('Groznyi',	1);
+
+insert into days (day, is_passed, is_present, is_match) values
+('2019-08-01',	'f',	't',	'f'),
+('2019-08-02',	'f',	'f',	'f'),
+('2019-08-03',	'f',	'f',	't'),
+('2019-08-04',	'f',	'f',	'f'),
+('2019-08-05',	'f',	'f',	'f'),
+('2019-08-06',	'f',	'f',	'f'),
+('2019-08-07',	'f',	'f',	'f'),
+('2019-08-08',	'f',	'f',	'f'),
+('2019-08-09',	'f',	'f',	'f'),
+('2019-08-10',	'f',	'f',	'f'),
+('2019-08-11',	'f',	'f',	'f'),
+('2019-08-12',	'f',	'f',	'f'),
+('2019-08-13',	'f',	'f',	'f'),
+('2019-08-14',	'f',	'f',	'f'),
+('2019-08-15',	'f',	'f',	'f'),
+('2019-08-16',	'f',	'f',	'f'),
+('2019-08-17',	'f',	'f',	't'),
+('2019-08-18',	'f',	'f',	'f'),
+('2019-08-19',	'f',	'f',	'f'),
+('2019-08-20',	'f',	'f',	'f'),
+('2019-08-21',	'f',	'f',	'f'),
+('2019-08-22',	'f',	'f',	'f'),
+('2019-08-23',	'f',	'f',	'f'),
+('2019-08-24',	'f',	'f',	't'),
+('2019-08-25',	'f',	'f',	'f'),
+('2019-08-26',	'f',	'f',	'f'),
+('2019-08-27',	'f',	'f',	'f'),
+('2019-08-28',	'f',	'f',	'f'),
+('2019-08-29',	'f',	'f',	'f'),
+('2019-08-30',	'f',	'f',	'f'),
+('2019-08-31',	'f',	'f',	'f'),
+('2019-09-01',	'f',	'f',	'f'),
+('2019-09-02',	'f',	'f',	'f'),
+('2019-09-03',	'f',	'f',	'f'),
+('2019-09-04',	'f',	'f',	'f'),
+('2019-09-05',	'f',	'f',	'f'),
+('2019-09-06',	'f',	'f',	'f'),
+('2019-09-07',	'f',	'f',	't'),
+('2019-09-08',	'f',	'f',	'f'),
+('2019-09-09',	'f',	'f',	'f'),
+('2019-09-10',	'f',	'f',	'f'),
+('2019-09-11',	'f',	'f',	'f'),
+('2019-09-12',	'f',	'f',	'f'),
+('2019-09-13',	'f',	'f',	'f'),
+('2019-09-14',	'f',	'f',	't'),
+('2019-09-15',	'f',	'f',	'f'),
+('2019-09-16',	'f',	'f',	'f'),
+('2019-09-17',	'f',	'f',	'f'),
+('2019-09-18',	'f',	'f',	'f'),
+('2019-09-19',	'f',	'f',	'f'),
+('2019-09-20',	'f',	'f',	'f'),
+('2019-09-21',	'f',	'f',	'f'),
+('2019-09-22',	'f',	'f',	'f'),
+('2019-09-23',	'f',	'f',	'f'),
+('2019-09-24',	'f',	'f',	'f'),
+('2019-09-25',	'f',	'f',	'f'),
+('2019-09-26',	'f',	'f',	'f'),
+('2019-09-27',	'f',	'f',	'f'),
+('2019-09-28',	'f',	'f',	't'),
+('2019-09-29',	'f',	'f',	'f'),
+('2019-09-30',	'f',	'f',	'f'),
+('2019-10-01',	'f',	'f',	'f'),
+('2019-10-02',	'f',	'f',	'f'),
+('2019-10-03',	'f',	'f',	'f'),
+('2019-10-04',	'f',	'f',	'f'),
+('2019-10-05',	'f',	'f',	't'),
+('2019-10-06',	'f',	'f',	'f'),
+('2019-10-07',	'f',	'f',	'f'),
+('2019-10-08',	'f',	'f',	'f'),
+('2019-10-09',	'f',	'f',	'f'),
+('2019-10-10',	'f',	'f',	'f'),
+('2019-10-11',	'f',	'f',	'f'),
+('2019-10-12',	'f',	'f',	'f'),
+('2019-10-13',	'f',	'f',	'f'),
+('2019-10-14',	'f',	'f',	'f'),
+('2019-10-15',	'f',	'f',	'f'),
+('2019-10-16',	'f',	'f',	'f'),
+('2019-10-17',	'f',	'f',	'f'),
+('2019-10-18',	'f',	'f',	'f'),
+('2019-10-19',	'f',	'f',	't'),
+('2019-10-20',	'f',	'f',	'f'),
+('2019-10-21',	'f',	'f',	'f'),
+('2019-10-22',	'f',	'f',	'f'),
+('2019-10-23',	'f',	'f',	'f'),
+('2019-10-24',	'f',	'f',	'f'),
+('2019-10-25',	'f',	'f',	'f'),
+('2019-10-26',	'f',	'f',	't'),
+('2019-10-27',	'f',	'f',	'f'),
+('2019-10-28',	'f',	'f',	'f'),
+('2019-10-29',	'f',	'f',	'f'),
+('2019-10-30',	'f',	'f',	'f'),
+('2019-10-31',	'f',	'f',	'f'),
+('2019-11-01',	'f',	'f',	'f'),
+('2019-11-02',	'f',	'f',	'f'),
+('2019-11-03',	'f',	'f',	'f'),
+('2019-11-04',	'f',	'f',	'f'),
+('2019-11-05',	'f',	'f',	'f'),
+('2019-11-06',	'f',	'f',	'f'),
+('2019-11-07',	'f',	'f',	'f'),
+('2019-11-08',	'f',	'f',	'f'),
+('2019-11-09',	'f',	'f',	't'),
+('2019-11-10',	'f',	'f',	'f'),
+('2019-11-11',	'f',	'f',	'f'),
+('2019-11-12',	'f',	'f',	'f'),
+('2019-11-13',	'f',	'f',	'f'),
+('2019-11-14',	'f',	'f',	'f'),
+('2019-11-15',	'f',	'f',	'f'),
+('2019-11-16',	'f',	'f',	't'),
+('2019-11-17',	'f',	'f',	'f'),
+('2019-11-18',	'f',	'f',	'f'),
+('2019-11-19',	'f',	'f',	'f'),
+('2019-11-20',	'f',	'f',	'f'),
+('2019-11-21',	'f',	'f',	'f'),
+('2019-11-22',	'f',	'f',	'f'),
+('2019-11-23',	'f',	'f',	'f'),
+('2019-11-24',	'f',	'f',	'f'),
+('2019-11-25',	'f',	'f',	'f'),
+('2019-11-26',	'f',	'f',	'f'),
+('2019-11-27',	'f',	'f',	'f'),
+('2019-11-28',	'f',	'f',	'f'),
+('2019-11-29',	'f',	'f',	'f'),
+('2019-11-30',	'f',	'f',	't'),
+('2019-12-01',	'f',	'f',	'f'),
+('2019-12-02',	'f',	'f',	'f'),
+('2019-12-03',	'f',	'f',	'f'),
+('2019-12-04',	'f',	'f',	'f'),
+('2019-12-05',	'f',	'f',	'f'),
+('2019-12-06',	'f',	'f',	'f'),
+('2019-12-07',	'f',	'f',	't'),
+('2019-12-08',	'f',	'f',	'f'),
+('2019-12-09',	'f',	'f',	'f'),
+('2019-12-10',	'f',	'f',	'f'),
+('2019-12-11',	'f',	'f',	'f'),
+('2019-12-12',	'f',	'f',	'f'),
+('2019-12-13',	'f',	'f',	'f'),
+('2019-12-14',	'f',	'f',	'f'),
+('2019-12-15',	'f',	'f',	'f'),
+('2019-12-16',	'f',	'f',	'f'),
+('2019-12-17',	'f',	'f',	'f'),
+('2019-12-18',	'f',	'f',	'f'),
+('2019-12-19',	'f',	'f',	'f'),
+('2019-12-20',	'f',	'f',	'f'),
+('2019-12-21',	'f',	'f',	't'),
+('2019-12-22',	'f',	'f',	'f'),
+('2019-12-23',	'f',	'f',	'f'),
+('2019-12-24',	'f',	'f',	'f'),
+('2019-12-25',	'f',	'f',	'f'),
+('2019-12-26',	'f',	'f',	'f'),
+('2019-12-27',	'f',	'f',	'f'),
+('2019-12-28',	'f',	'f',	't'),
+('2019-12-29',	'f',	'f',	'f'),
+('2019-12-30',	'f',	'f',	'f'),
+('2019-12-31',	'f',	'f',	'f'),
+('2020-01-01',	'f',	'f',	'f'),
+('2020-01-02',	'f',	'f',	'f'),
+('2020-01-03',	'f',	'f',	'f'),
+('2020-01-04',	'f',	'f',	'f'),
+('2020-01-05',	'f',	'f',	'f'),
+('2020-01-06',	'f',	'f',	'f'),
+('2020-01-07',	'f',	'f',	'f'),
+('2020-01-08',	'f',	'f',	'f'),
+('2020-01-09',	'f',	'f',	'f'),
+('2020-01-10',	'f',	'f',	'f'),
+('2020-01-11',	'f',	'f',	't'),
+('2020-01-12',	'f',	'f',	'f'),
+('2019-01-13',	'f',	'f',	'f'),
+('2019-01-14',	'f',	'f',	'f'),
+('2020-01-15',	'f',	'f',	'f'),
+('2020-01-16',	'f',	'f',	'f'),
+('2020-01-17',	'f',	'f',	'f'),
+('2020-01-18',	'f',	'f',	't'),
+('2020-01-19',	'f',	'f',	'f'),
+('2019-01-20',	'f',	'f',	'f'),
+('2019-01-21',	'f',	'f',	'f'),
+('2020-01-22',	'f',	'f',	'f'),
+('2020-01-23',	'f',	'f',	'f'),
+('2020-01-24',	'f',	'f',	'f'),
+('2020-01-25',	'f',	'f',	'f'),
+('2020-01-26',	'f',	'f',	'f'),
+('2020-01-27',	'f',	'f',	'f'),
+('2020-01-28',	'f',	'f',	'f'),
+('2020-01-29',	'f',	'f',	'f'),
+('2020-01-30',	'f',	'f',	'f'),
+('2020-01-31',	'f',	'f',	'f'),
+('2020-02-01',	'f',	'f',	't'),
+('2020-02-02',	'f',	'f',	'f'),
+('2020-02-03',	'f',	'f',	'f'),
+('2020-02-04',	'f',	'f',	'f'),
+('2020-02-05',	'f',	'f',	'f'),
+('2020-02-06',	'f',	'f',	'f'),
+('2020-02-07',	'f',	'f',	'f'),
+('2020-02-08',	'f',	'f',	't'),
+('2020-02-09',	'f',	'f',	'f'),
+('2020-02-10',	'f',	'f',	'f'),
+('2020-02-11',	'f',	'f',	'f'),
+('2020-02-12',	'f',	'f',	'f'),
+('2020-02-13',	'f',	'f',	'f'),
+('2020-02-14',	'f',	'f',	'f'),
+('2020-02-15',	'f',	'f',	'f'),
+('2020-02-16',	'f',	'f',	'f'),
+('2020-02-17',	'f',	'f',	'f'),
+('2020-02-18',	'f',	'f',	'f'),
+('2020-02-19',	'f',	'f',	'f'),
+('2020-02-20',	'f',	'f',	'f'),
+('2020-02-21',	'f',	'f',	'f'),
+('2020-02-22',	'f',	'f',	't'),
+('2020-02-23',	'f',	'f',	'f'),
+('2020-02-24',	'f',	'f',	'f'),
+('2020-02-25',	'f',	'f',	'f'),
+('2020-02-26',	'f',	'f',	'f'),
+('2020-02-27',	'f',	'f',	'f'),
+('2020-02-28',	'f',	'f',	'f'),
+('2020-02-29',	'f',	'f',	't'),
+('2020-03-01',	'f',	'f',	'f'),
+('2020-03-02',	'f',	'f',	'f'),
+('2020-03-03',	'f',	'f',	'f'),
+('2020-03-04',	'f',	'f',	'f'),
+('2020-03-05',	'f',	'f',	'f'),
+('2020-03-06',	'f',	'f',	'f'),
+('2020-03-07',	'f',	'f',	'f'),
+('2020-03-08',	'f',	'f',	'f'),
+('2020-03-09',	'f',	'f',	'f'),
+('2020-03-10',	'f',	'f',	'f'),
+('2020-03-11',	'f',	'f',	'f'),
+('2020-03-12',	'f',	'f',	'f'),
+('2020-03-13',	'f',	'f',	'f'),
+('2020-03-14',	'f',	'f',	't'),
+('2020-03-15',	'f',	'f',	'f'),
+('2020-03-16',	'f',	'f',	'f'),
+('2020-03-17',	'f',	'f',	'f'),
+('2020-03-18',	'f',	'f',	'f'),
+('2020-03-19',	'f',	'f',	'f'),
+('2020-03-20',	'f',	'f',	'f'),
+('2020-03-21',	'f',	'f',	't'),
+('2020-03-22',	'f',	'f',	'f'),
+('2020-03-23',	'f',	'f',	'f'),
+('2020-03-24',	'f',	'f',	'f'),
+('2020-03-25',	'f',	'f',	'f'),
+('2020-03-26',	'f',	'f',	'f'),
+('2020-03-27',	'f',	'f',	'f'),
+('2020-03-28',	'f',	'f',	'f'),
+('2020-03-29',	'f',	'f',	'f'),
+('2020-03-30',	'f',	'f',	'f'),
+('2020-03-31',	'f',	'f',	'f'),
+('2020-04-01',	'f',	'f',	'f'),
+('2020-04-02',	'f',	'f',	'f'),
+('2020-04-03',	'f',	'f',	'f'),
+('2020-04-04',	'f',	'f',	't'),
+('2020-04-05',	'f',	'f',	'f'),
+('2020-04-06',	'f',	'f',	'f'),
+('2020-04-07',	'f',	'f',	'f'),
+('2020-04-08',	'f',	'f',	'f'),
+('2020-04-09',	'f',	'f',	'f'),
+('2020-04-10',	'f',	'f',	'f'),
+('2020-04-11',	'f',	'f',	't'),
+('2020-04-12',	'f',	'f',	'f'),
+('2020-04-13',	'f',	'f',	'f'),
+('2020-04-14',	'f',	'f',	'f'),
+('2020-04-15',	'f',	'f',	'f'),
+('2020-04-16',	'f',	'f',	'f'),
+('2020-04-17',	'f',	'f',	'f'),
+('2020-04-18',	'f',	'f',	'f'),
+('2020-04-19',	'f',	'f',	'f'),
+('2020-04-20',	'f',	'f',	'f'),
+('2020-04-21',	'f',	'f',	'f'),
+('2020-04-22',	'f',	'f',	'f'),
+('2020-04-23',	'f',	'f',	'f'),
+('2020-04-24',	'f',	'f',	'f'),
+('2020-04-25',	'f',	'f',	't'),
+('2020-04-26',	'f',	'f',	'f'),
+('2020-04-27',	'f',	'f',	'f'),
+('2020-04-28',	'f',	'f',	'f'),
+('2020-04-29',	'f',	'f',	'f'),
+('2020-04-30',	'f',	'f',	'f'),
+('2020-05-01',	'f',	'f',	'f'),
+('2020-05-02',	'f',	'f',	't'),
+('2020-05-03',	'f',	'f',	'f'),
+('2020-05-04',	'f',	'f',	'f'),
+('2020-05-05',	'f',	'f',	'f'),
+('2020-05-06',	'f',	'f',	'f'),
+('2020-05-07',	'f',	'f',	'f'),
+('2020-05-08',	'f',	'f',	'f'),
+('2020-05-09',	'f',	'f',	'f'),
+('2020-05-10',	'f',	'f',	'f'),
+('2020-05-11',	'f',	'f',	'f'),
+('2020-05-12',	'f',	'f',	'f'),
+('2020-05-13',	'f',	'f',	'f'),
+('2020-05-14',	'f',	'f',	'f'),
+('2020-05-15',	'f',	'f',	'f'),
+('2020-05-16',	'f',	'f',	't'),
+('2020-05-17',	'f',	'f',	'f'),
+('2020-05-18',	'f',	'f',	'f'),
+('2020-05-19',	'f',	'f',	'f'),
+('2020-05-20',	'f',	'f',	'f'),
+('2020-05-21',	'f',	'f',	'f'),
+('2020-05-22',	'f',	'f',	'f'),
+('2020-05-23',	'f',	'f',	't'),
+('2020-05-24',	'f',	'f',	'f'),
+('2020-05-25',	'f',	'f',	'f'),
+('2020-05-26',	'f',	'f',	'f'),
+('2020-05-27',	'f',	'f',	'f'),
+('2020-05-28',	'f',	'f',	'f'),
+('2020-05-29',	'f',	'f',	'f'),
+('2020-05-30',	'f',	'f',	'f'),
+('2020-05-31',	'f',	'f',	'f'),
+('2020-06-01',	'f',	'f',	'f'),
+('2020-06-02',	'f',	'f',	'f'),
+('2020-06-03',	'f',	'f',	'f'),
+('2020-06-04',	'f',	'f',	'f'),
+('2020-06-05',	'f',	'f',	'f'),
+('2020-06-06',	'f',	'f',	't');
+
+insert into draws (draw) values
+('1-16/2-15/3-14/4-13/5-12/6-11/7-10/8-9'),
+('1-2/10-8/11-7/12-6/13-5/14-4/15-3/16-9'),
+('2-16/3-1/4-15/5-14/6-13/7-12/8-11/9-10'),
+('1-4/2-3/11-9/12-8/13-7/14-6/15-5/16-10'),
+('3-16/4-2/5-1/6-15/7-14/8-13/9-12/10-11'),
+('1-6/2-5/3-4/12-10/13-9/14-8/15-7/16-11'),
+('4-16/5-3/6-2/7-1/8-15/9-14/10-13/11-12'),
+('1-8/2-7/3-6/4-5/13-11/14-10/15-9/16-12'),
+('5-16/6-4/7-3/8-2/9-1/10-15/11-14/12-13'),
+('1-10/2-9/3-8/4-7/5-6/14-12/15-11/16-13'),
+('6-16/7-5/8-4/9-3/10-2/11-1/12-15/13-14'),
+('1-12/2-11/3-10/4-9/5-8/6-7/15-13/16-14'),
+('7-16/8-6/9-5/10-4/11-3/12-2/13-1/14-15'),
+('1-14/2-13/3-12/4-11/5-10/6-9/7-8/16-15'),
+('8-16/9-7/10-6/11-5/12-4/13-3/14-2/15-1'),
+('16-8/7-9/6-10/5-11/4-12/3-13/2-14/1-15'),
+('14-1/13-2/12-3/11-4/10-5/9-6/8-7/15-16'),
+('16-7/6-8/5-9/4-10/3-11/2-12/1-13/15-14'),
+('12-1/11-1/10-3/9-4/8-5/7-6/13-15/14-15'),
+('16-6/5-7/4-8/3-9/2-10/1-11/15-12/14-13'),
+('10-1/9-2/8-3/7-4/6-5/12-14/11-15/13-16'),
+('16-5/4-6/3-7/2-8/1-9/15-10/14-11/13-12'),
+('8-1/7-2/6-3/5-4/11-13/10-14/9-15/12-16'),
+('16-4/3-5/2-6/1-7/15-8/14-9/13-10/12-11'),
+('6-1/5-2/4-3/10-12/9-13/8-14/7-15/11-16'),
+('16-3/2-4/1-5/15-6/14-7/13-8/12-9/11-10'),
+('4-1/3-2/9-11/8-12/7-13/6-14/5-15/10-16'),
+('16-2/1-3/15-4/14-5/13-6/12-7/11-8/10-9'),
+('2-1/8-10/7-11/6-12/5-13/4-14/3-15/9-16'),
+('16-1/15-2/14-3/13-4/12-5/11-6/10-7/9-8');
+
+insert into juniors (name) values
+('Kuznetsov Matvei'),
+('Gribov Roman'),
+('Blinov Ivan'),
+('Nikolaev Maksim'),
+('Starikov Miron'),
+('Markov Timofei'),
+('Kolosov Ivan'),
+('Stoliarov Ivan'),
+('Kalinin Konstantin'),
+('Shevelev Igor'),
+('Kolosov Mark'),
+('Tikhomirov Artem'),
+('Dorokhov Kirill'),
+('Gromov Daniil'),
+('Gerasimov Platon'),
+('Galkin Aleksandr'),
+('Plotnikov Nikita'),
+('Ivanov Aleksei'),
+('Postnikov Kirill'),
+('Tikhonov Mikhail'),
+('Orlov Fedor'),
+('Dorofeev Ali'),
+('Antonov Gleb'),
+('Smirnov Timur'),
+('Surkov Aleksandr'),
+('Skvortsov Kirill'),
+('Maslov Roman'),
+('Ermakov Ivan'),
+('Mikhailov Maksim'),
+('Merkulov Vasilii'),
+('Surkov Miron'),
+('Evdokimov Maksim'),
+('Nikolskii Konstantin'),
+('Sidorov Mikhail'),
+('Potapov Egor'),
+('Ivanov Egor'),
+('Ulianov Pavel'),
+('Karpov Stepan'),
+('Rybakov Nikita'),
+('SHishkin Daniil'),
+('Kalashnikov Sergei'),
+('Pankratov Vladimir'),
+('Gordeev IAroslav'),
+('Petrov Vladimir'),
+('Kochetov Gleb'),
+('Lapin Mikhail'),
+('Mironov Platon'),
+('Poliakov Adam'),
+('Kovalev Aleksandr'),
+('Golovanov Ilia'),
+('Beliaev Vladimir'),
+('Kulikov IAroslav'),
+('Kochetkov Lev'),
+('Popov Artemii'),
+('Ivanov Ivan'),
+('Tarasov Artemii'),
+('Petrov Timofei'),
+('Kostin Timofei'),
+('Smirnov Nikita'),
+('Matveev Mikhail'),
+('Suvorov Evgenii'),
+('Kulagin Daniel'),
+('Danilov Danila'),
+('Kuznetsov Aleksandr'),
+('Semenov Matvei'),
+('Popov Vasilii'),
+('Orlov Oleg'),
+('Pankratov Ilia'),
+('Postnikov Gleb'),
+('Fedorov Ivan'),
+('Davydov Vladimir'),
+('Dmitriev Yaroslav'),
+('Chistiakov Roman'),
+('Kuznetsov Mikhail'),
+('SHilov Vladimir'),
+('Maksimov Elisei'),
+('Efremov Aleksandr'),
+('Bobrov Maksim'),
+('Krylov IUrii'),
+('Belov Gleb'),
+('Mukhin IUrii'),
+('Kozin Denis'),
+('Nikitin Vladimir'),
+('Fedoseev Ali'),
+('Makarov Mark'),
+('Korolev Mikhail'),
+('Zakharov Sergei'),
+('Vereshchagin Artem'),
+('Alekseev Kirill'),
+('Timofeev Artem'),
+('Sorokin Maksim'),
+('Kolpakov Egor'),
+('Kuznetsov Savelii'),
+('CHernyshev Denis'),
+('Naumov Savva'),
+('Belousov Andrei'),
+('Mironov Maksim'),
+('Kornilov Vladimir'),
+('Belov Mikhail'),
+('Kulagin Aleksei'),
+('Osipov Luka'),
+('Sofronov David'),
+('Borodin Aleksandr'),
+('Kornilov Vladimir'),
+('Mikhailov Nikita'),
+('Savin Petr'),
+('Vysotskii Emil'),
+('Abramov Timofei'),
+('Galkin Egor'),
+('Abramov Aleksandr'),
+('Smirnov Fedor'),
+('Kartashov Stepan'),
+('IAkovlev Nikita'),
+('Fomin Daniil'),
+('Osipov David'),
+('Smirnov Bogdan'),
+('Kuznetsov Viktor'),
+('Nikonov Timofei'),
+('SHevtsov Nikita'),
+('Kulikov Matvei'),
+('Kuznetsov Yaroslav'),
+('Lebedev Platon'),
+('Grachev Vadim'),
+('Frolov Oleg'),
+('Zakharov Vitalii'),
+('Spiridonov Daniil'),
+('Ovsiannikov Aleksandr'),
+('Aleksandrov Timofei'),
+('Medvedev Demid'),
+('Klimov Grigorii'),
+('Bogomolov Artem'),
+('Aksenov Boris'),
+('Gladkov Mikhail'),
+('Savelev Yurii'),
+('Karasev Grigorii'),
+('Zaitsev Fedor'),
+('Losev Maksim'),
+('Ivanov Kirill'),
+('Danilov Artem'),
+('Simonov Roman'),
+('Bykov Dmitrii'),
+('Rusakov Petr'),
+('Arkhipov Filipp'),
+('Lazarev Ilia'),
+('Sveshnikov Pavel'),
+('Osipov Roman'),
+('Efimov Ivan'),
+('Agafonov Petr'),
+('IUdin Maksim'),
+('Pavlov Vsevolod'),
+('Malakhov Ivan'),
+('Zavialov Ivan'),
+('Solovev Artem'),
+('Glukhov Ivan'),
+('Tikhomirov Mark'),
+('Kozhevnikov Daniil'),
+('Zakharov Ivan'),
+('Filimonov Vadim'),
+('Shmelev Fedor'),
+('Fedoseev Daniel'),
+('Ovsiannikov Arsenii'),
+('Okulov Vadim'),
+('Beliaev Denis'),
+('Markov Semen'),
+('Dmitriev IAroslav'),
+('Ivanov Sergei'),
+('Gromov Dmitrii'),
+('Kuznetsov Rodion'),
+('Semenov Aleksandr'),
+('Golubev Maksim'),
+('Popov Aleksandr'),
+('Simonov Matvei'),
+('Vasilev Mikhail'),
+('Filippov Egor'),
+('Nefedov Artem'),
+('Egorov Timofei'),
+('Orlov Ivan'),
+('Sokolov Egor'),
+('Vladimirov Grigorii'),
+('Yakovlev Kirill'),
+('Poliakov Mark'),
+('Davydov Maksim'),
+('Trofimov Aleksei'),
+('Stepanov Daniil'),
+('Mukhin Daniil'),
+('Kalashnikov Andrei'),
+('Ageev Leonid'),
+('Antonov Arsenii'),
+('Titov Ilia'),
+('Aleksandrov Roman'),
+('Solovev IAroslav'),
+('Korotkov Artem'),
+('Drozdov Artem'),
+('Mikhailov Timofei'),
+('Grigorev Nikolai'),
+('Tikhonov Lev'),
+('Malyshev Mikhail'),
+('Zakharov Roman'),
+('Morozov Ivan'),
+('Pavlov Aleksandr'),
+('Kuzubov Vsevolod'),
+('Kortnev IAn'),
+('Gritsevets Polikarp'),
+('Kovalev Ruslan'),
+('Kurochkin Roman'),
+('Ageikin Potap'),
+('Ogarkov Emelian'),
+('Timiriazev Vladislav'),
+('Zharov Samuil'),
+('Venediktov Arkhip'),
+('Yanborisov Vasilii'),
+('Karimov Ernst'),
+('Shpikalov IUlian'),
+('Livshits Stanislav'),
+('Khramov Vatslav'),
+('Farest Kirill'),
+('Pomelnikov Danila'),
+('Sleptsov Eremei'),
+('Riabokon Mir'),
+('IUtilov Sevastian'),
+('Degtin Sidor'),
+('Ivantsov Samson'),
+('Gruzdev Nikifor'),
+('Musin Viacheslav'),
+('Krivorotov Filipp'),
+('Markelov Akim'),
+('Tatarinov Petr'),
+('Ezhikov David'),
+('SHapiro Mikhei'),
+('Gurskii Vikentii'),
+('Kashirin Solomon'),
+('Sagunov Nazar'),
+('Tolboev Gavriil'),
+('Niunka Sokrat'),
+('Kosiak Leondii'),
+('Makhov Vladlen'),
+('Nikishov Denis'),
+('Pedich Pimen'),
+('Tupolev Elizar'),
+('Raskatov Ulian'),
+('Kalashnik Askold'),
+('Kapriianov Mstislav'),
+('KHaritonov Artur'),
+('TSirulnikov Gavrila'),
+('Zvorygin Foka'),
+('Reshetov Maksimilian'),
+('Nikonenko Mechislav'),
+('Eleshev Igor'),
+('Pimenov Gennadii'),
+('Epinger Elisei'),
+('Esaulov Ilarion'),
+('Koniashev Martyn'),
+('Deviatkov Egor'),
+('SHatalov Ippolit'),
+('SHumov Kir'),
+('Koptsev Miroslav'),
+('IArustovskii Viktor'),
+('Pirogov Anatolii'),
+('Beschastnykh Lavrentii'),
+('Kosomov Fadei'),
+('KHoroshilov Onufrii'),
+('Koltyshev Sergei'),
+('Yalchevskii Taras'),
+('Zhabkin Artem'),
+('Yaskin Trofim'),
+('Inshov Prokl'),
+('Iliukhin Porfirii'),
+('Yanzinov Vitalii'),
+('Poroshin Onisim'),
+('Kemoklidze Feofan'),
+('Anasenko Fedot'),
+('Marin Aleksei'),
+('Molodykh Mikhail'),
+('Griaznov Leonid'),
+('Malyshev Gerasim'),
+('Silaev Fedor'),
+('Khromov Efrem'),
+('Smyshliaev Ipatii'),
+('Kumovev Boris'),
+('Belozerov Sviatoslav'),
+('Niukhtilin Agafon'),
+('Syromiatnikov Foma'),
+('Shipulin Anton'),
+('Eksperimentov Tit'),
+('Nuzhnov Veniamin'),
+('Pivovarov Andron'),
+('Ardankin IAroslav'),
+('ZHigunov Antip'),
+('Liagushov Modest'),
+('Drobyshev Lev'),
+('Smeshnoi Konstantin'),
+('Bugaichuk Iosif'),
+('Bulgakov Kuzma'),
+('SHmakov Stepan'),
+('Vlasev Makar'),
+('Pelevin Kasian'),
+('IAshunin Savvelii'),
+('Kolobov Agap'),
+('Frantsev Semen'),
+('Sysoev Efim'),
+('Trusov Ilia'),
+('Erdniev Kondratii'),
+('Pribylnov Andriian'),
+('Diatlov Karp'),
+('Shibalov Artem'),
+('Glushakov Varfolomei'),
+('Myshkin Moisei'),
+('Kirilenko Gleb'),
+('CHechetkin Nikolai'),
+('Perfilev Evstignei'),
+('Trofimov Borislav'),
+('Schastlivtsev Evsei'),
+('Barkov Afanasii'),
+('Tiutchev Innokentii'),
+('Filin Eduard'),
+('Koshliak Pavel'),
+('Kriukov Evlampii'),
+('Moskvitin Nikita'),
+('Grabbe Serafim'),
+('Morotskii Radislav'),
+('Lukianenko Prokofii'),
+('Zadornov Arsenii'),
+('Balin Timofei'),
+('Avodkov Osip'),
+('Bochko Lukian'),
+('Ostroverkh Demian'),
+('Yalovegin Sigizmund'),
+('Yarmolenko Kondrat'),
+('Drugal Avdei'),
+('Lesnichii Zakhar'),
+('Karantirov Venedikt'),
+('Fomenkov Karl'),
+('Taldaev Zinovii'),
+('Domash Vseslav'),
+('IAnkevich Klavdii'),
+('CHegodaev Nikanor'),
+('Valuev Adrian'),
+('IAnkin Filimon'),
+('Votiakov Vladimir'),
+('Dernovoi Ignat'),
+('Ulianin Daniil'),
+('Karachev IAkub'),
+('Kuznetsov Erofei'),
+('Oskin Ivan'),
+('Adoratskii Oleg'),
+('Zonov Vladilen'),
+('CHazov Artemii'),
+('Krasilnikov Valentin'),
+('Bushuev Rostislav'),
+('Pirozhkov Parfen'),
+('Kanaev Lavr'),
+('Mashir Rodion'),
+('Turyshev IAkov'),
+('Popyrin Ignatii'),
+('Gribalev Ostap'),
+('Kobelev Pankratii'),
+('Kutepov Luka'),
+('Ignatev Terentii'),
+('IArykin Grigorii'),
+('Leshchev Bronislav'),
+('Bezrukov Dmitrii'),
+('Reviagin Bogdan'),
+('IUdashkin Iraklii'),
+('Abrosimov Platon'),
+('Zuikov Kapiton'),
+('Staroverov Mark'),
+('Serpionov Aleksandr'),
+('Kryzhov Feliks'),
+('Kapustin Riurik'),
+('Fedulov Ruben'),
+('Lekomtsev Kazimir'),
+('Entin Natan'),
+('Milov Martian'),
+('Podshivalov Ernest'),
+('CHurkin Evdokim'),
+('Savelev Emmanuil'),
+('Elizarov Valerian'),
+('SHmelev Nikon'),
+('IAnushkene Savelii'),
+('ZHabin IUlii'),
+('Korzhukov German'),
+('Bessudnov Tikhon'),
+('Lisov Pakhom'),
+('Meledin KHariton'),
+('Martianov Arkadii'),
+('TSelikovskii Izmail'),
+('Tepliakov Andrei'),
+('Bolshov Feoktist'),
+('IAkoventsev Timur'),
+('Rytov Emil'),
+('Ermishin Radion'),
+('Povetnikov Dementii'),
+('Iziumov Danil'),
+('Malinov Valerii'),
+('Kovshevnikov Prokhor'),
+('Lazarev Semen'),
+('Pyrev Miron'),
+('Kuklev CHeslav'),
+('Maniakin Kim'),
+('IAnchukovskii Nestor'),
+('Koshelkov Adam'),
+('SHeremetev Mefodii'),
+('Artamonov Yurii'),
+('Veselov Maksim'),
+('Barsukov Vissarion'),
+('Ogurtsov Evgraf'),
+('Davydkin Fedosii'),
+('Derevskov Georgii'),
+('Serikov Matvei'),
+('Viranovskii Evgenii'),
+('Papanov Naum'),
+('Antipov Aristarkh'),
+('IArovyi Vadim'),
+('Posokhov Iziaslav'),
+('Travkin Filipp'),
+('Krivov Afanasii'),
+('SHumilov Rodion'),
+('Ponomarev Fedot'),
+('IAnushkevich Vadim'),
+('Nosachev Vatslav'),
+('Apevalov Samson'),
+('Kochubei Rostislav'),
+('Tomsin Sokrat'),
+('SHangin Evgenii'),
+('SHukshin Vladislav'),
+('Alekseev Samuil'),
+('Timashev IUrii'),
+('Boldaev IAroslav'),
+('IAblochkin Parfen'),
+('Podshivalov Ernest'),
+('Engelgardt David'),
+('CHernikov Zinovii'),
+('Bessmertnykh Onisim'),
+('Ozhegov Kondrat'),
+('SHarov Ulian'),
+('Kosarev Modest'),
+('Triboi Taras'),
+('Kurdikov Gavriil'),
+('Poronik Lev'),
+('Erkulaev Valentin'),
+('Alogrin IAkub'),
+('Enotin Timofei'),
+('Merzliakov IUlii'),
+('Sytnikov Denis'),
+('Trapeznikov KHariton'),
+('Gubanov Anton'),
+('Novomeiskii Ruben'),
+('Buzinskii Gerasim'),
+('Grekhov Semen'),
+('Muravev Kim'),
+('SHCHetinin Sviatoslav'),
+('Riasnoi Miroslav'),
+('Siusin Valerian'),
+('Akinfeev CHeslav'),
+('Smotrov Vasilii'),
+('Razumov Vissarion'),
+('Osin Lavrentii'),
+('Latushkin Artur'),
+('Kabinov Karp'),
+('Konak Pankratii'),
+('Bovarin Efim'),
+('Umberg Trofim'),
+('Darbinian Stepan'),
+('Zavrazhnyi Mechislav'),
+('Mishin Natan'),
+('ZHirenkov Pakhom'),
+('Gorbachev Roman'),
+('Rostovtsev Sergei'),
+('Karamzin Feliks'),
+('Nabokov Petr'),
+('Turgenev Gennadii'),
+('Gorbunkov Kirill'),
+('Sukharnikov Kir'),
+('Belomestnov Mir'),
+('Uvakin Martian'),
+('Druganin Vladlen'),
+('Severin German'),
+('Malinovskii Georgii'),
+('Urzhumtsev Foka'),
+('Kakoshin Kapiton'),
+('Kolbin Makar'),
+('Elizarov Nikolai'),
+('Kudiashov Andrei'),
+('Burilichev Aleksei'),
+('Eskov Evstignei'),
+('Zadkov Bogdan'),
+('Osokin Grigorii'),
+('Bugakov Matvei'),
+('Kornienko Riurik'),
+('Agaltsov Onufrii'),
+('Kartashev Antip'),
+('Bezborodov Pimen'),
+('Oprinchuk Ignat'),
+('Usenko Nestor'),
+('Novokhatskii Nikita'),
+('ZHeffre Pavel'),
+('Voloshin Fedor'),
+('Ermolin Mikhei'),
+('Nevskii Viktor'),
+('Sopov Feofan'),
+('Belochkin Emelian'),
+('IUdachev Viacheslav'),
+('Larichev Danil'),
+('Savin Emmanuil'),
+('Tatarintsev Lavr'),
+('CHalyi Evgraf'),
+('Bobrikov Tit'),
+('IAzev Lukian'),
+('Solomintsev Adam'),
+('IArilin Foma'),
+('Mirnov Naum'),
+('Krupnov Konstantin'),
+('Musin Erofei'),
+('Gref Serafim'),
+('Kurnakov IAn'),
+('Mende Iraklii'),
+('Furikov Andriian'),
+('Arefev Savvelii'),
+('Kurbatov Demian'),
+('CHerenchikov Savelii'),
+('Fedorov Evsei'),
+('Nizovskii Artemii'),
+('Rybakov Radislav'),
+('Anokhin Eduard'),
+('Obolenskii Arkadii'),
+('Lazarenko Innokentii'),
+('Spanov Osip'),
+('SHatalov Fadei'),
+('Kurakin Vikentii'),
+('Pozdov Artem'),
+('Lebedkov Porfirii'),
+('Krasnianskii Ilarion'),
+('Kutuzov Maksim'),
+('Kochkorbaev Agafon'),
+('Kovshutin Mark'),
+('Sobolev Akim'),
+('Kramnik Anatolii'),
+('IArykin Ignatii'),
+('SHCHerbakov Mikhail'),
+('Bazhenov Iosif'),
+('IAchevskii Stanislav'),
+('Evdokimov Prokl'),
+('Fanin Avdei'),
+('Koniashev Agap'),
+('Ostroumov Maksimilian'),
+('Nagiev Daniil'),
+('TSaritsyn Vitalii'),
+('Zyrianov Artem'),
+('Emelianov Venedikt'),
+('Nikolnikov Vladilen'),
+('Gorev Mefodii'),
+('CHemeris Askold'),
+('SHagidzianov IUlian'),
+('Krysov Fedosii'),
+('Grafov Vladimir'),
+('KHigir Solomon'),
+('Miaukin Boris'),
+('Valuev Evlampii'),
+('SHvedov Efrem'),
+('ZHeleznov Mstislav'),
+('Suslov Moisei'),
+('SHishlov Radion'),
+('Gaiduk Prokofii'),
+('Sedelnikov Evdokim'),
+('Larin Ostap'),
+('Makarkin Kuzma'),
+('Ivankov Dmitrii'),
+('Tamilo Adrian'),
+('Zaslavskii Ivan'),
+('IAklashkin Sidor'),
+('Zykin IAkov'),
+('Kovalev Izmail'),
+('Katsenelenbogen Ippolit'),
+('Sukhorukov Vsevolod'),
+('Dasaev Gavrila'),
+('Rashet Aleksandr'),
+('Grinevets Ruslan'),
+('IAkovchenko Veniamin'),
+('Andreiushkin Nikanor'),
+('Zemliakov Aristarkh'),
+('Akhmatov Zakhar'),
+('Sungatulin Martyn'),
+('Miliukov Oleg'),
+('Tabernakulov Timur'),
+('Samsonov Danila'),
+('Ekzempliarskii Ipatii'),
+('Golovakha Tikhon'),
+('IAroslavskii Prokhor'),
+('Krylov Karl'),
+('Gusarov Leonid'),
+('Afanasev Andron'),
+('IAkushevich Semen'),
+('IAndiev Egor'),
+('Sarakaev Kazimir'),
+('Dolzhenko Leondii'),
+('KHaritoniuk Eremei'),
+('Oropai Klavdii'),
+('Borisiuk Dementii'),
+('Bakshaev Elizar'),
+('Somkin Polikarp'),
+('Leskov Elisei'),
+('Kuksiuk Terentii'),
+('Vinogradov Vseslav'),
+('Ryzhanov Miron'),
+('Gusliakov Nazar'),
+('Vishniakov Varfolomei'),
+('Diakov Igor'),
+('Koshkin Iziaslav'),
+('Bezrukov Sigizmund'),
+('IUshakov Nikon'),
+('KHalski Platon'),
+('IAgubov Feoktist'),
+('IAgoda Kondratii'),
+('KHalipov Gleb'),
+('Ziulev Nikifor'),
+('IAkhimovich Filimon'),
+('Alekhin Potap'),
+('IArmolnik Arkhip'),
+('Kologreev Ilia'),
+('IAkurin Bronislav'),
+('Kuzmin Ernst'),
+('Kudiaev Arsenii'),
+('Bolotnikov Luka'),
+('Avdonin Emil'),
+('KHutorskoi Kasian'),
+('IAnkevich Sevastian'),
+('Sankov Valerii'),
+('Krivkov Borislav'),
+('Kresanov Prokl'),
+('Kobelev Innokentii'),
+('Novozhilov Anton'),
+('Kuksilov Pimen'),
+('Tolbugin CHeslav'),
+('Bogonostsev Pankratii'),
+('ZHirinovskii Lavrentii'),
+('SHemiakin Emmanuil'),
+('Vikash Andron'),
+('Esaulov Gavriil'),
+('IAnchin Daniil'),
+('IAmshchikov Rodion'),
+('Perezhogin Igor'),
+('Boncha Afanasii'),
+('Alimkin Valerii'),
+('Foroponov Tit'),
+('Eromeev Elizar'),
+('Osminin Emil'),
+('Kuzikin Foma'),
+('Bogatov Feliks'),
+('Susnin Anatolii'),
+('Kitaev Taras');
+
+insert into leagues (name) values
+('Russian Football Premier League');
+
+insert into placements (description, roles) values
+('4 - 4 - 2',	'{Goalkeeper,Defender,Defender,Defender,Defender,Midfielder,Midfielder,Midfielder,Midfielder,Forward,Forward,GS,DS,DS,MS,MS,FS,FS}'),
+('3 - 5 - 2',	'{Goalkeeper,Defender,Defender,Defender,Midfielder,Midfielder,Midfielder,Midfielder,Midfielder,Forward,Forward,GS,DS,DS,MS,MS,FS,FS}'),
+('3 - 4 - 3',	'{Goalkeeper,Defender,Defender,Defender,Midfielder,Midfielder,Midfielder,Midfielder,Forward,Forward,Forward,GS,DS,DS,MS,MS,FS,FS}'),
+('4 - 5 - 1',	'{Goalkeeper,Defender,Defender,Defender,Defender,Midfielder,Midfielder,Midfielder,Midfielder,Midfielder,Forward,GS,DS,DS,MS,MS,FS,FS}'),
+('5 - 4 - 1',	'{Goalkeeper,Defender,Defender,Defender,Defender,Defender,Midfielder,Midfielder,Midfielder,Midfielder,Forward,GS,DS,DS,MS,MS,FS,FS}'),
+('4 - 3 - 3',	'{Goalkeeper,Defender,Defender,Defender,Defender,Midfielder,Midfielder,Midfielder,Forward,Forward,Forward,GS,DS,DS,MS,MS,FS,FS}');
+
+insert into players (name, natio, gk_able, def_able, mid_able, forw_able, price, captain_able, number, strategy_place, id_teams, year, id_positions) values
+('Adgoev Guram',	'Rus',	4,	21,	31,	69,	3.2,	3,	17,	-100,	7,	1995,	4),
+('Ablaye Mbengue',	'Sen',	9,	20,	27,	63,	3.4,	4,	17,	-100,	16,	1992,	4),
+('Ponce Andres',	'Ven',	8,	23,	11,	75,	4.5,	6,	18,	-100,	16,	1996,	4),
+('Ilyin Vladimir',	'Rus',	9,	24,	14,	65,	2.4,	6,	29,	-100,	16,	1992,	4),
+('Nishimura Takuma',	'Jpn',	2,	23,	24,	76,	6.3,	5,	19,	-100,	5,	1996,	4),
+('Godzyur Yaroslav',	'Ukr',	71,	7,	9,	1,	3.6,	2,	31,	-100,	10,	1985,	1),
+('Sugrobov Vladimir',	'Rus',	61,	3,	6,	6,	3.1,	5,	50,	-100,	11,	1996,	1),
+('Chalov Fedor',	'Rus',	5,	21,	28,	83,	30.4,	5,	9,	-100,	5,	1998,	4),
+('Dolgov Alexandr',	'Rus',	1,	23,	15,	63,	3.5,	1,	47,	-100,	4,	1998,	4),
+('Magomedov Lechi',	'Rus',	4,	7,	12,	64,	3.6,	6,	98,	-100,	16, 1999,	4),
+('Ravanelli Ferreira',	'Bra',	7,	31,	10,	66,	3.1,	3,	14,	-100,	16,	1997,	4),
+('Vizeu Felipe',	'Bra',	9,	21,	13,	71,	4.1,	4,	27,	-100,	16,	1997,	4),
+('Akhmetov Ilzat',	'Rus',	5,	22,	20,	79,	15.2,	9,	7,	-100,	5,	1997,	4),
+('Sheliya Giorgi',	'Rus',	71,	3,	4,	2,	4.1,	34,	88,	-100,	11,	1988,	1),
+('Sigurdsson Arnor',	'Isl',	5,	30,	28,	82,	18.7,	4,	17,	-100,	5,	1999,	4),
+('Shkurin Ilya',	'Bel',	2,	23,	24,	76,	4.2,	5,	18,	-100,	5,	1999,	4),
+('Baklov Oleg',	'Rus',	68,	1,	2,	2,	3.5,	1,	77,	-100,	10,	1994,	1),
+('Larsson Jordan',	'Swe',	8,	11,	21,	77,	4.3,	12,	86,	-100,	8,	1997,	4),
+('Ari Ferreyra',	'Rus',	4,	30,	27,	78,	6.1,	46,	9,	-100,	3,	1985,	4),
+('Belenov Alexander',	'Rus',	80,	5,	4,	1,	5.2, 35,	31,	-100,	9,	1986,	1),
+('Chernov Alexey',	'Rus',	66,	4,	9,	2,	3.2,	7,	1,	-100,	9,	1998,	1),
+('Harin Yevgeni',	'Rus',	8,	28,	67,	33,	3.1,	8,	10,	-100,	16,	1995,	3),
+('Fernandes Mario',	'Rus',	8,	31,	90,	18,	35.5,	5,	2,	-100,	5,	1990,	3),
+('Odise Roshi',	'Alb',	6,	31,	73,	16,	3.8,	6,	21,	-100,	16,	1991,	3),
+('Maksimenko Aleksandr',	'Rus',	82,	7,	7,	5,	9.4,	9,	98,	-100,	8,	1999,	1),
+('Leschuk Igor',	'Rus',	67,	5,	7,	8,	3.0,	4,	31,	-100,	6,	1996,	1),
+('Pomazun Ilya',	'Rus',	73,	2,	2,	7,	4.5, 9,	1,	-100,	5,	1996,	1),
+('Nigmatullin Artur',	'Rus',	73,	3,	6,	8,	4.0,	3,	1,	-100,	7,	1991,	1),
+('Levashov Mikhail',	'Rus',	69,	14,	6,	2,	3.2,	3,	36,	-100,	7,	1991,	1),
+('Shamov Egor',	'Rus',	68,	3,	14,	6,	2.6,	3,	50,	-100,	7,	1994,	1),
+('Torop Vladislav',	'Rus',	70,	6,	8,	8,	4.1,	2,	49,	-100,	5,	2003,	1),
+('Rudakov Maksim',	'Rus',	65,	4,	7,	4,	3.6,	5,	77,	-100,	4,	1996,	1),
+('Pesyakov Sergey',	'Rus',	74,	7,	8,	9,	4.0,	5,	30,	-100,	4,	1988,	1),
+('Baburin Egor',	'Rus',	70,	8,	0,	1,	4.0,	8,	1,	-100,	4,	1993,	1),
+('Safonov Matvey',	'Rus',	86,	8,	8,	7,	12.4,	23,	39,	-100,	3,	1999,	1),
+('Popov Denis',	'Rus',	62,	1,	0,	1,	4.1,	8,	46,	-100,	4,	2002,	1),
+('Galadzhan Artem',	'Rus',	8,	23,	17,	71,	4.0,	1,	89,	-100,	13,	1998,	4),
+('Fameyeh Joel',	'Gha',	6,	22,	25,	73,	4.1,	5,	20,	-100,	13,	1997,	4),
+('Glushenkov Maksim',	'Rus',	6,	23,	26,	71,	3.7,	2,	15,	-100,	15,	1999,	4),
+('Golenkov Egor',	'Rus',	3,	20,	20,	68,	3.6,	9,	69,	-100,	15,	1999,	4),
+('Molchanov Dmitriy',	'Rus',	6,	8,	21,	68,	3.1,	2,	86,	-100,	15,	2000,	4),
+('Fedorov Veniamin',	'Rus',	1,	2,	8,	62,	2.8,	2,	92,	-100,	15,	2003,	4),
+('Despotovic Djordje',	'Srb',	3,	28,	32,	74,	3.9,	3,	9,	-100,	13,	1992,	4),
+('Kulishev Artem',	'Rus',	8,	23,	17,	70,	3.7,	9,	32,	-100,	13,	1993,	4),
+('Sylla Mamadou',	'Sen',	6,	20,	22,	75,	4.3,	9,	14,	-100,	13,	1994,	4),
+('Gilerme Marinato',	'Rus',	83,	4,	9,	5,	8.6,	42,	1,	-100,	2,	1985,	1),
+('Kochenkov Anton',	'Rus',	70,	10,	4,	6,	3.2,	11,	77,	-100,	2,	1987,	1),
+('Kerzhakov Mikhail',	'Rus',	81,	7,	3,	1,	6.9,	4,	41,	-100,	1,	1987,	1),
+('Lunev Andrey',	'Rus',	78,	7,	3,	5,	4.9,	8,	99,	-100,	1,	1991,	1),
+('Medvedev Nikita',	'Rus',	74,	3,	2,	6,	4.5,	9,	30,	-100,	2,	1994,	1),
+('Vasyutin Alexandr',	'Rus',	64,	6,	6,	4,	3.4,	5,	78,	-100,	1,	1995,	1),
+('Gigolaev Roland',	'Rus',	4,	69,	29,	23,	2.8,	2,	13,	-100,	16,	1990,	2),
+('Wilker Angel',	'Ven',	6,	73,	28,	26,	2.9,	4,	4,	-100,	16,	1993,	2),
+('Musalov Magomed',	'Rus',	7,	66,	17,	26,	2.7,	3,	5,	-100,	16,	1994,	2),
+('Terehhov Sergei',	'Rus',	8,	78,	28,	22,	4.6,	5,	13,	-100,	13,	1990,	2),
+('Fernandes Manuel',	'Por',	7,	23,	82,	16,	8.3,	67,	99,	-100,	3,	1986,	3),
+('Kutepov Iliya',	'Rus',	7,	83,	34,	29,	11.7,	61,	29,	-100,	8,	1993,	2),
+('Jikia Georgy',	'Rus',	8,	83,	26,	33,	9.3,	10,	14,	-100,	8,	1993,	2),
+('Gogoua Cedric',	'Ivo',	2,	74,	24,	23,	4.9,	5,	27,	-100,	5,	1994,	2),
+('Starfelt Carl',	'Swe',	6,	73,	15,	20,	3.8,	12,	4,	-100,	14,	1995,	2),
+('Chernov Nikita',	'Rus',	4,	72,	31,	32,	3.6,	1,	3,	-100,	15,	1996,	2),
+('Pliyev Konstantin',	'Rus',	3,	65,	34,	20,	3.4,	6,	3,	-100,	14,	1996,	2),
+('Poyarkov Nikolay',	'Rus',	1,	64,	24,	33,	3.3, 5,	71,	-100,	14,	1999,	2),
+('Stepanov Daniil',	'Rus',	1,	67,	12,	25,	3.4,	6,	69,	-100,	14,	2000,	2),
+('Ignatiev Vladislav',	'Rus',	4,	78,	14,	32,	4.5,	28,	20,	-100,	2,	1987,	2),
+('Chicherin Nikita',	'Rus',	2,	67,	26,	32,	3.2,	6,	44,	-100,	15,	1990,	2),
+('Burlak Taras',	'Rus',	5,	70,	33,	20,	3.0,	9,	90,	-100,	15,	1990,	2),
+('Shakhov Vitali',	'Rus',	5,	68,	21,	31,	3.9,	3,	31,	-100,	13,	1991,	2),
+('Mehdi Zeffane',	'Alg',	4,	62,	32,	21,	2.9,	4,	2,	-100,	15,	1992,	2),
+('Afonin Vadim',	'Uzb',	8,	71,	32,	31,	4.1,	6,	29,	-100,	13,	1987,	2),
+('Sivakov Mikhail',	'Blr',	9,	60,	10,	34,	3.5,	4,	3,	-100,	13,	1988,	2),
+('Mevlja Miha',	'Slv',	1,	74,	16,	27,	3.9,	6,	32,	-100,	12,	1990,	2),
+('Kverkelia Solomon',	'Geo',	12,	82,	14,	10,	12.7,	73,	33,	-100,	2,	1992,	2),
+('Radakovic Uros',	'Srb',	9,	66,	29,	30,	3.4,	9,	4,	-100,	13,	1994,	2),
+('Lystsov Vilaly',	'Rus',	7,	75,	25,	20,	4.4,	7,	5,	-100,	15,	1995,	2),
+('Kozlov Savely',	'Rus',	1,	75,	21,	31,	4.0,	68,	66,	-100,	13,	1997,	2),
+('Miladinovic Ivan',	'Srb',	7,	68,	10,	31,	3.5,	6,	45,	-100,	12,	1994,	2),
+('Kudryashov Fedor',	'Rus',	8,	71,	33,	33,	3.4,	1,	93,	-100,	12,	1987,	2),
+('Novoseltsev Ivan',	'Rus',	3,	74,	11,	34,	3.6,	3,	25,	-100,	12,	1991,	2),
+('Shlyakov Evgeni',	'Rus',	1,	60,	12,	23,	3.2,	7,	5,	-100,	11,	1991,	2),
+('Yurganov Igor',	'Rus',	5,	74,	26,	26,	3.7,	3,	22,	-100,	12,	1993,	2),
+('Yurganov Igor',	'Rus',	3,	64,	16,	32,	3.1,	3,	22,	-100,	11,	1993,	2),
+('Kaplienko Aleksandr',	'Ukr',	9,	69,	18,	32,	3.4,	9,	21,	-100,	11,	1996,	2),
+('Kalugin Nikita',	'Rus',	7,	69,	10,	21,	3.4,	2,	26,	-100,	12,	1998,	2),
+('Filin Alexander',	'Rus',	3,	67,	17,	26,	3.4,	9,	15,	-100,	11,	1996,	2),
+('Aroyan Varazdat',	'Arm',	5,	68,	14,	21,	3.3,	2,	3,	-100,	10,	1992,	2),
+('Takazov Soslan',	'Rus',	1,	66,	18,	22,	3.7,	5,	30,	-100,	11,	1993,	2),
+('Wilusz Maciej',	'Pol',	9,	69,	24,	21,	3.4,	3,	5,	-100,	10,	1988,	2),
+('Melgarejo Lorenzo',	'Par',	7,	80,	18,	33,	10.1,	71,	25,	-100,	8,	1990,	2),
+('Kolomeytsev Aleksandr',	'Rus',	3,	27,	74,	18,	6.3,	9,	18,	-100,	2,	1989,	3),
+('Kjartansson Vidar',	'Isl',	1,	25,	11,	63,	3.6,	5,	86,	-100,	14,	1990,	4),
+('Kulikov Daniil',	'Rus',	3,	27,	70,	18,	3.8,	9,	69,	-100,	2,	1998,	3),
+('Magkeyev Stanislav',	'Rus',	5,	25,	79,	12,	6.9,	12,	37,	-100,	2,	1999,	3),
+('Markov Evgeny',	'Rus',	5,	23,	23,	70,	3.8,	1,	20,	-100,	14,	1994,	4),
+('Tashaev Alexandr',	'Rus',	6,	33,	24,	72,	3.9,	3,	88,	-100,	14,	1994,	4),
+('Mikeltadze Beka',	'Geo',	9,	33,	23,	74,	4.0,	6,	90,	-100,	14,	1997,	4),
+('Kipiani Nikolai',	'Rus',	1,	29,	18,	70,	3.7,	8,	77,	-100,	14,	1997,	4),
+('Ignatiev Ivan',	'Rus',	1,	30,	14,	65,	3.2,	2,	19,	-100,	14,	1999,	4),
+('Bakaev Soltmurad',	'Rus',	9,	24,	19,	71,	4.0,	2,	87,	-100,	14,	1999,	4),
+('Kvaratskhelia Khvicha',	'Geo',	5,	27,	32,	74,	4.1,	3,	21,	-100,	14,	2001,	4),
+('Karapetian Aleksander',	'Arm',	3,	33,	25,	73,	3.5, 1,	87,	-100,	12,	1987,	4),
+('Zabolotnyy Anton',	'Rus',	9,	28,	23,	79,	4.1,	4,	10,	-100,	12,	1991,	4),
+('Poloz Dmitri',	'Rus',	5,	23,	16,	72,	3.7,	1,	77,	-100,	12,	1991,	4),
+('Nenakhov Maxim',	'Rus',	5,	68,	30,	30,	4.3,	1,	3,	-100,	16,	1998,	2),
+('Zuev Alexander',	'Rus',	3,	69,	34,	20,	3.9,	6,	12,	-100,	14,	1996,	2),
+('Danchenko Oleg',	'Ukr',	1,	68,	27,	30,	3.5,	2,	33,	-100,	14,	1994,	2),
+('Karpov Maxim',	'Rus',	2,	77,	21,	33,	4.3,	1,	50,	-100,	15,	1995,	2),
+('Sorokin Egor',	'Rus',	1,	71,	11,	34,	3.6,	6,	2,	-100,	14,	1995,	2),
+('Uremovic Filip',	'Cro',	1,	77,	13,	23,	4.1,	2,	5,	-100,	14,	1997,	2),
+('Davitashvili Zuriko',	'Geo',	9,	61,	33,	22,	3.3,	8,	11,	-100,	14,	2001,	2),
+('Shakuro Pavel',	'Rus',	6,	62,	22,	22,	3.5,	2,	90,	-100,	12,	1997,	2),
+('Milyutin Vadim',	'Rus',	1,	61,	30,	29,	3.3,	7,	56,	-100,	12,	2002,	2),
+('Adessoye Oyevole',	'Rus',	2,	67,	23,	1,	2.8,	58,	58,	-100,	11,	1982,	2),
+('Kulakov Denis',	'Ukr',	7,	75,	26,	33,	4.0,	72,	15,	-100,	10,	1986,	2),
+('Gritsaenko Aleksey',	'Rus',	13,	70,	22,	3,	4.0,	10,	27,	-100,	11,	1995,	2),
+('Nikitin Alexey',	'Rus',	1,	69,	25,	32,	3.4,	9,	4,	-100,	9,	1992,	2),
+('Gerasimov Alexey',	'Rus',	7,	70,	32,	27,	3.5,	1,	93,	-100,	10,	1993,	2),
+('Zolotov Nikolay',	'Blr',	5,	75,	10,	30,	3.8,	4,	35,	-100,	10,	1994,	2),
+('Kalinin Igor',	'Ukr',	5,	70,	15,	25,	3.6,	1,	95,	-100,	10,	1995,	2),
+('Lucas Ayrton',	'Bra',	1,	75,	27,	34,	4.4,	2,	6,	-100,	8,	1997,	2),
+('Nasyrov Islamzhan',	'Rus',	5,	74,	30,	21,	3.9,	4,	21,	-100,	10,	1998,	2),
+('Krugovoi Danil',	'Rus',	9,	64,	27,	25,	3.2,	3,	2,	-100,	9,	1998,	2),
+('Rasskazov Nikolai',	'Rus',	4,	69,	12,	22,	4.1,	9,	92,	-100,	8,	1998,	2),
+('Maslov Pavel',	'Rus',	3,	68,	19,	33,	3.7,	2,	39,	-100,	8,	2000,	2),
+('Pliev Zaurbek',	'Kaz',	1,	72,	31,	32,	4.0,	6,	3,	-100,	6,	1991,	2),
+('Novoseltsev Ivan',	'Rus',	4,	71,	10,	26,	4.1,	8,	25,	-100,	6,	1991,	2),
+('Gilermo Alvares',	'Spa',	2,	73,	41,	18,	4.1,	2,	21,	-100,	7,	1993,	2),
+('Akbashev Roman',	'Rus',	9,	32,	61,	17,	3.3,	7,	96,	-100,	14,	1991,	3),
+('Podberezkin Vyacheslav',	'Rus',	8,	26,	77,	21,	4.2,	48,	7,	-100,	14,	1992,	3),
+('Mogilevets Pavel',	'Rus',	5,	20,	78,	20,	4.1,	3,	18,	-100,	14,	1993,	3),
+('Jevtic Darko',	'Swi',	1,	30,	70,	11,	3.9,	6,	8,	-100,	14,	1993,	3),
+('Konovalov Igor',	'Rus',	1,	23,	71,	13,	3.9,	2,	10,	-100,	14,	1996,	3),
+('Abilgard Oliver',	'Den',	7,	21,	67,	11,	3.7,	7,	28,	-100,	14,	1996,	3),
+('Makarov Denis',	'Rus',	6,	29,	62,	30,	3.4,	2,	25,	-100,	14,	1998,	3),
+('Zakirov Kamil',	'Rus',	1,	27,	64,	19,	3.4,	4,	99,	-100,	14,	1998,	3),
+('Makarov Nikita',	'Rus',	3,	20,	68,	30,	3.6,	2,	59,	-100,	14,	2001,	3),
+('Noboa Cristian',	'Ecu',	5,	25,	82,	28,	5.2,	55,	16,	-100,	12,	1985,	3),
+('Burmistrov Nikita', 'Rus',	7,	23,	73,	13,	3.7,	4,	18,	-100,	12,	1989,	3),
+('Tsallagov Ibragim',	'Rus',	1,	24,	72,	27,	3.8,	1,	15,	-100,	12,	1990,	3),
+('Pogrebnyak Pavel',	'Rus',	3,	29,	21,	77,	3.2,	68,	88,	-100,	10,	1983,	4),
+('Yusupov Artem',	'Rus',	1,	25,	32,	64,	3.5,	2,	79,	-100,	10,	1997,	4),
+('Chasovskikh Andrey',	'Rus',	1,	30,	16,	67,	3.5,	9,	48,	-100,	11,	1991,	4),
+('Egorychev Andrey',	'Rus',	5,	29,	12,	72,	3.6,	4,	44,	-100,	10,	1993,	4),
+('Merkulov Mikhail',	'Rus',	4,	72,	10,	30,	3.6,	5,	27,	-100,	10,	1994,	2),
+('Tabidze Dzhemal',	'Geo',	2,	75,	11,	31,	3.9,	1,	55,	-100,	9,	1996,	2),
+('Nedelcearu Ionut',	'Rom',	3,	73,	34,	28,	3.6,	4,	27,	-100,	9,	1996,	2),
+('Mamin Artem',	'Rus',	1,	64,	32,	25,	3.5,	2,	46,	-100,	10,	1997,	2),
+('Jokic Bojan',	'Slv',	2,	73,	27,	20,	3.2,	65,	5,	-100,	9,	1986,	2),
+('Magnusson Hordur',	'Isl',	5,	82,	24,	24,	23.2,	4,	23,	-100,	5,	1993,	2),
+('Morozov Grigory',	'Rus',	1,	70,	26,	28,	4.2,	5,	2,	-100,	6,	1994,	2),
+('Bauer Robert',	'Ger',	6,	66,	33,	8,	3.1,	2,	4,	-100,	7,	1995,	2),
+('Efremov Dmitrii',	'Rus',	5,	66,	14,	22,	3.4,	1,	91,	-100,	5,	1995,	2),
+('Yevgenyev Roman',	'Rus',	6,	68,	33,	34,	3.9,	1,	24,	-100,	6,	1999,	2),
+('Diveyev Igor',	'Rus',	2,	72,	25,	27,	10.2,	7,	78,	-100,	5,	1999,	2),
+('Eleev Maksim',	'Rus',	2,	70,	28,	21,	3.6,	2,	53,	-100,	5,	2001,	2),
+('Karpov Vadim',	'Rus',	9,	72,	10,	33,	5.7,	7,	62,	-100,	5,	2002,	2),
+('Kotin Nikita',	'Rus',	2,	68,	10,	26,	3.0,	3,	13,	-100,	5,	2002,	2),
+('Kozlov Alexey',	'Rus',	4,	77,	28,	29,	4.3,	3,	34,	-100,	4,	1986,	2),
+('Osinov Mikhail',	'Rus',	1,	61,	14,	26,	3.4,	1,	81,	-100,	4,	2000,	2),
+('Livadnov Yevgeni',	'Rus',	4,	63, 34,	25,	3.6,	7,	73,	-100,	4,	2000,	2),
+('Vedernikov Danila',	'Rus',	3,	68,	29,	34,	3.8,	8,	4,	-100,	4,	2001,	2),
+('Bezrukov Ruslan',	'Rus',	1,	61,	15,	23,	3.4,	1,	91,	-100,	4,	2002,	2),
+('Corluka Vedran',	'Cro',	6,	83,	17,	25,	12.7,	89,	14,	-100,	2,	1986,	2),
+('Martynovich Alexander',	'Bel',	8,	79,	16,	24,	6.3,	9,	4,	-100,	3,	1987,	2),
+('Zaika Kirill',	'Rus',	8,	24,	65,	32,	3.3,	4,	27,	-100,	12,	1992,	3),
+('Lagator Dusan',	'Mon',	1,	24,	74,	29,	3.7,	2,	94,	-100,	12,	1994,	3),
+('Mostovoy Andrey',	'Rus',	2,	22,	69,	30,	3.5,	6,	17,	-100,	12,	1997,	3),
+('Nabiullin Elmir',	'Rus',	9,	24,	69,	32,	3.6,	2,	24,	-100,	12,	1995,	3),
+('Chernyshov Oleg',	'Rus',	3,	26,	67,	17,	3.3,	9,	12,	-100,	11,	1986,	3),
+('Panyukov Andrey',	'Rus',	4,	22,	16,	75,	3.8,	2,	20,	-100,	10,	1994,	4),
+('Magomadov Chingis',	'Rus',	1,	33,	22,	63,	3.3,	1,	80,	-100,	10,	1998,	4),
+('Lovro Bizjak',	'Slv',	1,	24,	26,	73,	3.6,	1,	11,	-100,	9,	1996,	4),
+('Olivier Thill',	'Lux',	7,	30,	11,	74,	3.7,	2,	10,	-100,	9,	1996,	4),
+('Kozlov Andrey',	'Rus',	7,	22,	17,	73,	3.5,	49,	99,	-100,	9,	1989,	4),
+('Schurrle Andre',	'Ger',	4,	27,	23,	79,	5.6,	3,	20,	-100,	8,	1990,	4),
+('Krotov Vyacheslav',	'Rus',	9,	26,	14,	76,	3.7,	1,	57,	-100,	9,	1993,	4),
+('Vombergar Andres',	'Slv',	1,	29, 27,	69,	3.4,	5,	32,	-100,	9,	1994,	4),
+('Ponce Ezequiel',	'Arg',	7,	24,	24,	82,	10.3,	8,	19,	-100,	8,	1997,	4),
+('Sobolev Aleksandr',	'Rus',	7,	34,	29,	81,	14.2,	5,	77,	-100,	8,	1997,	4),
+('Agalarov Gamid',	'Rus',	1,	31,	25,	63,	3.3,	8,	19,	-100,	9,	2000,	4),
+('Markitesov Dmitry',	'Rus',	8,	34,	21,	64,	3.4,	12,	74,	-100,	8,	2001,	4),
+('Sheidaev Ramil',	'Aze',	9,	29,	29,	65,	2.8,	2,	99,	-100,	6,	1996,	4),
+('Sokol Artem',	'Rus',	3,	62,	11,	3,	3.1,	11,	89,	-100,	7,	1997,	2),
+('Vladimir Rykov',	'Rus',	8,	74,	17,	21,	4.1,	67,	4,	-100,	6,	1987,	2),
+('Shunich Tony',	'Bos',	7,	72,	29,	25,	5.1,	1,	44,	-100,	6,	1988,	2),
+('Gragalava Gia',	'Geo',	1,	66,	12,	3,	2.8,	6,	8,	-100,	7,	1989,	2),
+('Aleksandr Denisov',	'Rus',	3,	72,	12,	18,	2.6,	6,	71,	-100,	7,	1989,	2),
+('Belyaev Maxim',	'Rus',	1,	71,	23,	7,	3.9,	4,	13,	-100,	7,	1991,	2),
+('Ordets Ivan',	'Ukr',	2,	66,	33,	28,	3.7,	8,	18,	-100,	6,	1992,	2),
+('Smolnikov Igor',	'Rus',	6,	77,	22,	31,	4.3,	5,	19,	-100,	1,	1988,	2),
+('Fjoluson Jon',	'Isl',	6,	80,	15,	21,	5.7,	29,	3,	-100,	3,	1989,	2),
+('Rybus Maciej',	'Pol',	6,	75,	22,	21,	5.4,	4,	31,	-100,	2,	1989,	2),
+('Yaroslav Rakickiy',	'Ukr',	7,	79,	26,	28,	6.9,	5,	44,	-100,	1,	1989,	2),
+('Idovu Brayan',	'Nig',	5,	72,	25,	22,	4.3,	3,	3,	-100,	2,	1992,	2),
+('Spajic Uros',	'Srb',	5,	81,	34,	30,	7.6,	1,	5,	-100,	3,	1993,	2),
+('Zhivoglyadov Dmitry',	'Rus',	1,	71,	31,	29,	4.0, 5,	2,	-100,	2,	1994,	2),
+('Douglas Santos',	'Bra',	8,	84,	34,	33,	14.3,	7,	3,	-100,	1,	1994,	2),
+('Sorokin Egor',	'Rus',	7,	68,	28,	21,	3.6,	7,	2,	-100,	3,	1995,	2),
+('Skopintsev Dmitri',	'Rus',	3,	72,	30,	28,	6.1,	1,	22,	-100,	3,	1997,	2),
+('Cerqueira Murilo',	'Bra',	4,	81,	13,	25,	9.1,	6,	27,	-100,	2,	1997,	2),
+('Rybchinskiy Dmitri',	'Rus',	6,	63,	11,	24,	3.7,	8,	94,	-100,	2,	1998,	2),
+('Mukhin Aleksandr',	'Rus',	4,	71,	17,	30,	4.1,	1,	91,	-100,	2,	2002,	2),
+('Ivanovic Branislav',	'Srb',	9,	84,	26,	31,	8.8,	76,	6,	-100,	1,	1984,	2),
+('Osorio Yordan',	'Ven',	8,	73,	14,	30,	3.9,	7,	4,	-100,	1,	1994,	2),
+('Fidler Artem',	'Rus',	3,	23,	73,	30,	3.2,	72,	57,	-100,	10,	1983,	3),
+('Nikolay Dimitrov',	'Bol',	2,	25,	76,	22,	3.8,	5,	17,	-100,	10,	1987,	3),
+('Efremov Dmitrii',	'Rus',	6,	27,	71,	21,	3.7,	6,	11,	-100,	10,	1995,	3),
+('Imbula Gianelli',	'Drc',	1,	31,	71,	25,	4.0,	5,	95,	-100,	12,	1992,	3),
+('Karasev Pavel',	'Rus',	4,	45,	72,	6,	3.8,	12,	25,	-100,	11,	1992,	3),
+('Chuperka Valery',	'Rus',	6,	16,	69,	21,	3.7,	15,	92,	-100,	11,	1992,	3),
+('Kilin Anton',	'Rus',	13,	12,	68,	32,	3.6,	6,	8,	-100,	11,	1990,	3),
+('Lesovoy Daniil',	'Rus',	1,	23,	28,	67,	3.1,	1,	22,	-100,	7,	1998,	4),
+('Lomovitski Alexander',	'Rus',	1,	2,	13,	61,	3.9,	1,	27,	-100,	7,	1998,	4),
+('Lutsenko Yevgeny',	'Rus',	1,	16,	34,	69,	2.2,	9,	48,	-100,	7,	1987,	4),
+('Igboun Sylvester',	'Nig',	7,	32,	25,	77,	5.7,	3,	10,	-100,	6,	1990,	4),
+('Kangwa Evans',	'Zam',	1,	16,	23,	71,	4.5, 1,	10,	-100,	7,	1992,	4),
+('NJie Clinton',	'Cam',	3,	34,	23,	73,	3.5,	6,	9,	-100,	6,	1993,	4),
+('Komlichenko Nikolay',	'Rus',	5,	11,	22,	83,	9.2,	12,	21,	-100,	6,	1995,	4),
+('Tyukavin Konstantin',	'Rus',	3,	4,	43,	80,	3.2,	7,	70,	-100,	6,	2002,	4),
+('Logashov Arseni',	'Rus',	7,	74,	33,	26,	4.2,	1,	25,	-100,	4,	1991,	2),
+('Petrov Sergey',	'Rus',	5,	79,	23,	33,	7.6,	12,	98,	-100,	3,	1991,	2),
+('Chernov Evgeny',	'Rus',	3,	69,	31,	34,	3.8,	5,	28,	-100,	4,	1992,	2),
+('Osipenko Maxim',	'Rus',	4,	73,	21,	32,	4.0,	5,	55,	-100,	4,	1994,	2),
+('Chistyakov Dmitry',	'Rus',	3,	71,	31,	34,	4.1,	5,	78,	-100,	4,	1994,	2),
+('Ramirez Cristian',	'Ecu',	5,	78,	23,	33,	7.5,	1,	6,	-100,	3,	1994,	2),
+('Kozhemyakin Oleg',	'Rus',	9,	69,	22,	26,	3.6,	3,	86,	-100,	4,	1995,	2),
+('Karavaev Vyacheslav',	'Rus',	2,	81,	10,	22,	7.2,	5,	15,	-100,	1,	1995,	2),
+('Prokhin Danila',	'Rus',	6,	74,	10,	25,	3.9,	8,	87,	-100,	1,	2001,	2),
+('Szymanski Damian',	'Pol',	7,	31,	66,	10,	2.4,	3,	99,	-100,	16,	1995,	3),
+('Gashenkov Mikhail', 'Rus',	3,	24,	64,	19,	2.7,	7,	6,	-100,	16,	1992,	3),
+('Berisha Bernard',	'Alb',	5,	28,	70,	23,	3.6,	8,	77,	-100,	16,	1991,	3),
+('Mitrishev Magomed',	'Rus',	7,	27,	74,	16,	3.8,	3,	7,	-100,	16,	1992,	3),
+('Konrad Michalak',	'Pol',	4,	27,	74,	31,	4.1,	6,	9,	-100,	16,	1997,	3),
+('Shvets Anton',	'Rus',	2,	26, 69,	12,	3.3,	5,	23,	-100,	16,	1993,	3),
+('Sudalaev Lechii',	'Rus',	1,	24,	62,	32,	3.8,	1,	22,	-100,	16,	2000,	3),
+('Bavin Yuri',	'Rus',	5,	22,	71,	16,	3.5,	6,	14,	-100,	10,	1994,	3),
+('Bakhtiyarov Akmal',	'Rus',	9,	21,	61,	32,	3.2,	4,	21,	-100,	12,	1998,	3),
+('Koldunov Nikita',	'Rus',	7,	21,	72,	24,	3.7,	3,	8,	-100,	12,	2000,	3),
+('Bokovoy Andrey',	'Rus',	6,	28,	67,	19,	3.5,	2,	58,	-100,	12,	2000,	3),
+('Shabolin Artem',	'Rus',	1,	26,	66,	25,	3.7,	1,	69,	-100,	10,	2000,	3),
+('Guliev Ayaz',	'Rus',	4,	21,	77,	22,	6.1,	2,	7,	-100,	8,	1996,	3),
+('Bakaev Zelimkhan',	'Rus',	1,	30,	83,	13,	13.2,	34,	10,	-100,	8,	1996,	3),
+('Fomin Daniil',	'Rus',	7,	26, 78,	28,	4.0,	8,	74,	-100,	9,	1997,	3),
+('Ionov Alexey',	'Rus',	4,	31,	32,	81,	8.5,	71,	11,	-100,	4,	1989,	4),
+('Stotskiy Dmitry',	'Rus',	7,	27,	14,	70,	3.2,	5,	89,	-100,	3,	1989,	4),
+('Wanderson Campos',	'Bel',	1,	26,	27,	83,	10.3,	1,	10,	-100,	3,	1994,	4),
+('Shomurodov Eldor',	'Uzb',	7,	25,	13,	79,	8.1,	6,	14,	-100,	4,	1995,	4),
+('Ignatiev Ivan',	'Rus',	7,	27,	14,	64,	3.0,	1,	19,	-100,	3,	1999,	4),
+('Proshlyakov Danila',	'Rus',	4,	31,	32,	66,	3.7,	7,	13,	-100,	4, 2000,	4),
+('Chromov Daniil',	'Rus',	1,	3,	15,	61,	3.0,	1,	95,	-100,	4,	2002,	4),
+('Farfan Jefferson',	'Rus',	3,	34,	43,	71,	3.5, 6,	76,	-100,	2,	1984,	4),
+('Eder Lopez',	'Por',	4,	33,	33,	85,	9.9,	6,	19,	-100,	2,	1987,	4),
+('Smolov Fedor',	'Rus',	4,	13,	40,	74,	4.1,	1,	9,	-100,	2,	1990,	4),
+('Georgevich Luka',	'Mon',	8,	23,	11,	72,	4.3,	4,	95,	-100,	2,	1994,	4),
+('Artem Rebrov',	'Rus',	71,	9,	6,	5,	3.6,	9,	32,	-100,	8,	1984,	1),
+('Akinfeev Igor',	'Rus',	92,	4,	5,	8,	56.3,	83,	35,	-100,	5,	1986,	1),
+('Shunin Anton',	'Rus',	73,	6,	4,	5,	4.6, 1,	1,	-100,	6,	1987,	1),
+('Kritsyuk Stanislav',	'Rus',	78,	1,	2,	1,	5.3,	8,	1,	-100,	3,	1990,	1),
+('Dzhanaev Soslan',	'Rus',	77,	5,	2,	9,	3.9,	9,	35,	-100,	12,	1987,	1),
+('Frolov Evgeniy',	'Rus',	62,	6,	0,	8,	3.1,	3,	39,	-100,	12,	1988,	1),
+('Zabolotnyi Nikolay',	'Rus',	71,	3,	1,	1,	3.8,	1,	12,	-100,	12,	1990,	1),
+('Ryzhikov Sergey',	'Rus',	76,	3,	2,	1,	3.1,	78,	1,	-100,	15,	1980,	1),
+('Gorodov Evgeni',	'Rus',	70,	1,	1,	3,	3.7,	3,	16,	-100,	16,	1985,	1),
+('Dovbnya Alexandr',	'Rus',	71,	6,	6,	5,	4.0,	1,	56,	-100,	13,	1987,	1),
+('Frolov Evgeniy',	'Rus',	69,	6,	5,	4,	2.9,	2,	39,	-100,	15,	1988,	1),
+('Ovsyannikov Bogdan',	'Rus',	60,	1,	1,	7,	3.0,	2,	81,	-100,	15,	1999,	1),
+('Dupin Yuri',	'Rus',	76,	6,	8,	4,	4.1,	61,	22,	-100,	14,	1988,	1),
+('Klimovich Andrey',	'Blr',	70,	6,	4,	8,	4.0,	3,	38,	-100,	13,	1988,	1),
+('Rudenko Alexandr',	'Rus',	69,	6,	7,	5,	3.9,	23,	1,	-100,	13,	1993,	1),
+('Konovalov Ivan',	'Rus',	71,	9,	1,	8,	3.6,	2,	23,	-100,	14,	1994,	1),
+('Gudiev Vitaly',	'Rus',	71,	1,	3,	2,	3.4,	5,	33,	-100,	16,	1995,	1),
+('Pantalean Kaio',	'Bra',	1,	62,	17,	26,	3.5,	8,	31,	-100,	3,	1995,	2),
+('Golubev Artem',	'Rus',	5,	27,	62,	15,	3.3,	3,	22,	-100,	9,	1999,	3),
+('Kovalev Yury',	'Rus',	3,	21,	72,	32,	3.7,	2,	15,	-100,	7,	1993,	3),
+('Ismael Silva',	'Bra',	3,	4,	68,	15,	3.6,	5,	11,	-100,	16,	1994,	3),
+('Volodko Maxim',	'Rus',	4,	27,	58,	35,	3.1,	8,	12,	-100,	7,	1992,	3),
+('Yeschenko Andrey',	'Rus',	8,	33,	63,	12,	3.2,	56,	38,	-100,	8,	1984,	3),
+('Ivanov Oleg',	'Rus',	5,	14,	71,	10,	3.1,	23,	19,	-100,	16,	1986,	3),
+('Glushakov Denis',	'Rus',	4,	35,	78,	12,	4.8,	69,	88,	-100,	16,	1987,	3),
+('Usupov Artur',	'Rus',	1,	22,	79,	13,	6.4,	5,	6,	-100,	6,	1989,	3),
+('Gackan Aleksandr',	'Mdv',	1,	23,	69,	27,	3.5,	5,	8,	-100,	15,	1984,	3),
+('Malyarov Nikita',	'Rus',	6,	23,	69,	21,	4.2,	45,	77,	-100,	13,	1989,	3),
+('Kanunnikov Maxim',	'Rus',	9,	29,	69,	27,	3.7,	34,	99,	-100,	15,	1991,	3),
+('Paul Anton',	'Rom',	8,	33,	70,	22,	4.1,	6,	28,	-100,	15,	1991,	3),
+('Radu Ginsari',	'Mdv',	1,	19,	72,	23,	3.8,	1,	14,	-100,	15,	1991,	3),
+('Kabutov Dmitry',	'Rus',	9,	31,	73,	33,	4.6,	7,	77,	-100,	15,	1992,	3),
+('Mijailovic Srdan',	'Srb',	1,	31,	70,	11,	2.9,	6,	20,	-100,	15,	1993,	3),
+('Mirzoev Reziuan',	'Rus',	9,	21,	76,	34,	5.1,	9,	9,	-100,	8,	1993,	3),
+('Timofeev Artem',	'Rus',	7,	31,	68,	33,	3.1,	2,	40,	-100,	15,	1994,	3),
+('Olsson Kristoffer',	'Swe',	3,	23,	82,	12,	7.9,	1,	14,	-100,	3,	1995,	3),
+('Zinkovsky Anton',	'Rus',	5,	22,	74,	34,	5.8,	1,	17,	-100,	15,	1996,	3),
+('Lipovoy Danil',	'Rus',	4,	34,	63,	17,	3.5,	3,	18,	-100,	13,	1999,	3),
+('Barinov Dmitry',	'Rus',	1,	24,	83,	33,	14.2,	7,	6,	-100,	2,	1996,	3),
+('Suleymanov Timur',	'Rus',	1,	1,	23,	66,	3.0,	2,	97,	-100,	2,	2000,	4),
+('Dzyuba Artem',	'Rus',	8,	23,	30,	83,	12.3,	67,	22,	-100,	1,	1988,	4),
+('Erokhin Aleksandr',	'Rus',	4,	25,	19,	80,	5.1,	8,	21,	-100,	1,	1989,	4),
+('Azmun Serdar',	'Irn',	1,	22,	18,	86,	10.4,	9,	7,	-100,	1,	1995,	4),
+('Driussi Sebastian',	'Arg',	7,	32,	29,	81,	7.3,	4,	11,	-100,	1,	1996,	4),
+('Shamkin Daniil',	'Rus',	6,	26,	18,	70,	3.2,	1,	92,	-100,	1,	2002,	4),
+('Hadzikadunic Dennis',	'Swe',	5,	73,	28,	21,	3.9,	5,	5,	-100,	4,	1998,	2),
+('Alikin Pavel',	'Rus',	1,	73,	34,	29,	3.2,	43,	3,	-100,	9,	1984,	2),
+('Khagush Anri',	'Rus',	3,	75,	21,	3,	2.3,	69,	14,	-100,	7,	1986,	2),
+('Utsiev Rizvan',	'Rus',	8,	74,	12,	22,	4.0,	63,	40,	-100,	16,	1988,	2),
+('Vasin Viktor',	'Rus',	9,	78,	10,	33,	3.1,	7,	5,	-100,	5,	1988,	2),
+('Semenov Andrey',	'Rus',	2,	65,	17,	5,	3.0,	4,	15,	-100,	16,	1989,	2),
+('Nizic Zoran',	'Cro',	4,	70,	12,	34,	2.6,	6,	20,	-100,	16,	1989,	2),
+('Parshivlyuk Sergey',	'Rus',	6,	78,	17,	31,	5.1,	2,	17,	-100,	6,	1989,	2),
+('Gaponov Ilya',	'Rus',	7,	68,	12,	21,	3.5,	5,	56,	-100,	8,	1997,	2),
+('Anyukov Aleksandr',	'Rus',	8,	75,	34,	21,	3.1,	89,	22,	-100,	15,	1982,	2),
+('Kombarov Dmitriy',	'Rus',	1,	81,	11,	31,	5.7,	68,	23,	-100,	15,	1987,	2),
+('Denisov Vitali',	'Uzb',	1,	76,	31,	31,	5.1,	9,	29,	-100,	14,	1987,	2),
+('Poluyahtov Vladimir',	'Rus',	2,	74,	13,	30,	3.3,	45,	2,	-100,	15,	1989,	2),
+('Bogosavac Miroslav',	'Srb',	2,	71,	16,	28,	4.2,	6,	8,	-100,	16,	1996,	2),
+('Santos Pablo',	'Bra',	1,	65,	16,	22,	3.8,	7,	27,	-100,	14,	1992,	2),
+('Gotlib Eduard',	'Isr',	5,	68,	34,	26,	3.7,	5,	6,	-100,	13,	1992,	2),
+('Putsko Alexander',	'Rus',	8,	70,	24,	20,	3.5,	7,	15,	-100,	9,	1993,	2),
+('Gigot Samuel',	'Fra',	1,	86,	22,	34,	15.7,	34,	2,	-100,	8,	1993,	2),
+('Aziz Tetteh',	'Gha',	4,	21,	67,	23,	2.2,	6,	12,	-100,	6,	1990,	3),
+('Rausch Konstantin',	'Rus',	1,	29,	77,	12,	5.0,	9,	34,	-100,	6,	1990,	3),
+('Zhemaletdinov Rifat',	'Rus',	4,	33,	74,	33,	8.1,	6,	17,	-100,	2,	1996,	3),
+('Terekhov Anton',	'Rus',	8,	27,	76,	16,	3.3,	5,	10,	-100,	15,	1998,	3),
+('Safa Hadi',	'Irq',	6,	29,	76,	20,	5.0,	5,	7,	-100,	15,	1998,	3),
+('Tugarev Roman',	'Rus',	6,	26,	72,	30,	4.1,	5,	67,	-100,	2,	1998,	3),
+('Popovic Denis',	'Svn',	3,	30,	72,	30,	3.4,	8,	12,	-100,	15,	1989,	3),
+('Smirnov Danila',	'Rus',	1,	24,	68,	22,	3.2,	9,	52,	-100,	15,	2001,	3),
+('Mukhin Maxim',	'Rus',	4,	30,	70,	17,	3.8,	1,	74,	-100,	2,	2001,	3),
+('Krychowiak Grzegorz',	'Pol',	1,	12,	82,	36,	11.6,	4,	7,	-100,	2,	1990,	3),
+('Miskic Daniel',	'Cro',	7,	20,	73,	11,	3.9,	13,	8,	-100,	13,	1993,	3),
+('Alves Ricardo',	'Por',	2,	20,	73,	34,	3.7,	9,	10,	-100,	13,	1993,	3),
+('Joao Mario',	'Por',	1,	23,	79,	18,	6.8,	4,	23,	-100,	2,	1993,	3),
+('Miranchuk Alexey',	'Rus',	3,	25,	87,	13,	31.6,	67,	59,	-100,	2,	1995,	3),
+('Bashkirov Evgeny',	'Rus',	4,	21,	69,	10,	3.7,	8,	6,	-100,	14,	1991,	3),
+('Pomerko Alexey',	'Rus',	7,	24,	66,	25,	3.8,	2,	5,	-100,	12,	1990,	3),
+('Margasov Timofey',	'Rus',	6,	28,	68,	20,	3.5,	6,	34,	-100,	12,	1992,	3),
+('Fedchuk Artem',	'Rus',	9,	34,	65,	28,	3.3,	1,	10,	-100,	11,	1993,	3),
+('Cardoso Miguel',	'Rus',	1,	28,	73,	28,	3.9,	5,	7,	-100,	11,	1994,	3),
+('Khosonov Hetag',	'Rus',	4,	25,	61,	21,	3.0,	4,	17,	-100,	11,	1998,	3),
+('Kabakhidze Vladimir',	'Rus',	9,	34,	65,	28,	3.4,	1,	81,	-100,	11,	1999,	3),
+('Malikh Andrey',	'Rus',	9,	30,	76,	29,	6.1,	56,	12,	-100,	13,	1988,	3),
+('Zotov Georgi',	'Rus',	8,	22,	64,	29,	3.5,	4,	15,	-100,	13,	1990,	3),
+('Cernych Fedor',	'Lit',	2,	33,	73,	18,	3.8,	5,	22,	-100,	13,	1991,	3),
+('Ayupov Timur',	'Rus',	8,	27,	73,	11,	4.0,	1,	5,	-100,	13,	1993,	3),
+('Rogic Philip',	'Swe',	4,	25,	72,	29,	4.2,	23,	7,	-100,	13,	1993,	3),
+('Chukanov Andrey',	'Rus',	4,	31,	78,	33,	5.2,	1,	11,	-100,	13,	1995,	3),
+('Emelianov Roman',	'Rus',	9,	24,	78,	26,	4.0,	71,	8,	-100,	10,	1992,	3),
+('Tetrashvili Guram',	'Rus',	4,	45,	71,	1,	3.6,	23,	3,	-100,	11,	1988,	3),
+('Rybin Alexei',	'Rus',	14,	23,	70,	24,	3.8,	14,	2,	-100,	11,	1988,	3),
+('Pesegov Evgeni',	'Rus',	8,	33,	67,	21,	3.4,	5,	19,	-100,	12,	1989,	3),
+('Kazaev Yan',	'Rus',	4,	21, 63,	20,	3.2,	7,	55,	-100,	12,	1991,	3),
+('Othman El Kabir',	'Ned',	6,	31,	75,	29,	3.9,	8,	58,	-100,	10,	1991,	3),
+('Kucharczyk Michal',	'Pol',	1,	21,	77,	12,	3.9,	1,	18,	-100,	10,	1991,	3),
+('Kuat Islambek',	'Kaz',	5,	34,	68,	16,	3.8,	4,	23,	-100,	13,	1993,	3),
+('Augustyniak Rafal',	'Pol',	4,	31,	76,	20,	3.9,	2,	6,	-100,	10,	1993,	3),
+('Boumal Petrus',	'Cam',	9,	28,	77,	12,	3.9,	4,	13,	-100,	10,	1993,	3),
+('Ziga Skoflek',	'Slv',	5,	31,	68,	23,	3.7,	6,	17,	-100,	13,	1994,	3),
+('Sukhov Aleksander',	'Rus',	7,	34,	72,	16,	3.6,	8,	33,	-100,	9,	1986,	3),
+('Kombarov Kirill',	'Rus',	3,	31,	74,	36,	3.1,	56,	9,	-100,	7,	1987,	3),
+('Sysuev Dmitri',	'Rus',	4,	26,	70,	32,	3.5,	6,	7,	-100,	9,	1988,	3),
+('Tkachev Sergey',	'Rus',	2,	24,	72,	26,	2.9,	5,	11,	-100,	7,	1989,	3),
+('Gorbatenko Igor',	'Rus',	2,	46,	72,	29,	3.7,	5,	24,	-100,	7,	1989,	3),
+('Terentiev Denis',	'Rus',	9,	31,	72,	14,	3.8,	9,	9,	-100,	9,	1992,	3),
+('Carp Catalin',	'Rus',	7,	32,	79,	25,	3.9,	5,	8,	-100,	9,	1993,	3),
+('Aliev Azer',	'Rus',	6,	31,	66,	10,	3.3,	1,	77,	-100,	9,	1994,	3),
+('Zobnin Roman',	'Rus',	3,	20,	85,	24,	13.2,	8,	47,	-100,	8,	1994,	3),
+('Giorgobiani Nikolay',	'Rus',	1,	32,	69,	25,	3.4,	9,	17,	-100,	9,	1997,	3),
+('Til Guus',	'Ned',	2,	31,	87,	13,	18.3,	5,	8,	-100,	8,	1997,	3),
+('Kral Alex',	'Cze',	1,	26,	78,	22,	8.0,	9,	13,	-100,	8,	1998,	3),
+('Emelyanov Danila',	'Rus',	3,	30,	65,	23,	3.8,	9,	23,	-100,	9,	2000,	3),
+('Urunov Oston',	'Rus',	3,	22,	68,	18,	3.5,	8,	6,	-100,	9,	2000,	3),
+('Bakalyuk Nikita',	'Rus',	9,	20,	73,	34,	4.6,	7,	80,	-100,	8,	2001,	3),
+('Sow Samba',	'Mli',	3,	25,	68,	20,	3.2,	7,	27,	-100,	6,	1998,	3),
+('Dejan Radonjic',	'Cro',	9,	23,	29,	74,	4.2,	2,	9,	-100,	15,	1990,	4),
+('Ramos Joaozinho',	'Bra',	2,	28,	76,	33,	4.2,	8,	22,	-100,	6,	1988,	3),
+('Neustadter Roman',	'Rus',	4,	25,	83,	33,	8.1,	3,	15,	-100,	6,	1988,	3),
+('Panchenko Kirill',	'Rus',	2,	27,	71,	16,	4.1,	56,	8,	-100,	6,	1989,	3),
+('Kostadinov Georgi', 'Blg',	1,	31,	72,	21,	4.4,	10,	70,	-100,	7,	1990,	3),
+('Causic Goran',	'Srb',	3,	10,	73,	12,	3.2,	3,	20,	-100,	7,	1992,	3),
+('Hillemark Oskar',	'Swe',	3,	22,	73,	14,	3.1,	7,	88,	-100,	6,	1992,	3),
+('Kings Kangwa',	'Zam',	1,	35,	76,	13,	3.7,	2,	25,	-100,	7,	1994,	3),
+('Maximilian Philipp',	'Ger',	9,	26,	73,	11,	6.1,	2,	5,	-100,	6,	1994,	3),
+('Cardoso Miguel',	'Por',	7,	25,	79,	31,	7.1, 3,	7,	-100,	6,	1994,	3),
+('Grulyov Vyacheslav',	'Rus',	9,	26,	73,	10,	3.5,	7,	19,	-100,	6,	1999,	3),
+('Szymanski Sebastian',	'Pol',	1,	23,	79,	16,	4.8,	9,	11,	-100,	6,	1999,	3),
+('Lameck Banda',	'Zam',	5,	63,	74,	21,	3.6,	13,	29,	-100,	7,	2001,	3),
+('Zakharyan Arsen',	'Rus',	1,	11,	84,	62,	3.2,	11,	47,	-100,	6,	2003,	3),
+('Normann Mathias',	'Nor',	3,	24,	80,	17,	7.9,	32,	17,	-100,	4,	1996,	3),
+('Vlasic Nikola',	'Cro',	1,	30,	86,	25,	28.9,	3,	8,	-100,	5,	1997,	3),
+('Saplinov Aleksandr',	'Rus',	1,	33,	60,	32,	3.4,	1,	26,	-100,	4,	1997,	3),
+('Oblyakov Ivan',	'Rus',	2,	21,	76,	12,	14.2,	6,	98,	-100,	5,	1998,	3),
+('Eremenko Roman',	'Fin',	4,	29,	81,	28, 8.3,	81,	7,	-100,	4,	1987,	3),
+('Popov Ivelin',	'Blg',	1,	32,	84,	31,	10.1,	87,	8,	-100,	4,	1987,	3),
+('Mamaev Pavel',	'Rus',	5,	32,	83,	20,	8.9,	67,	10,	-100,	4,	1988,	3),
+('Gazinskiy Yury',	'Rus',	1,	22,	79,	32,	6.2,	43,	8,	-100,	3,	1989,	3),
+('Dzagoev Alan',	'Rus',	7,	29,	80,	19,	7.1,	5,	10,	-100,	5,	1990,	3),
+('Kambolov Ruslan',	'Rus',	6,	29,	68,	13,	3.4,	9,	77,	-100,	3,	1990,	3),
+('Remy Cabella',	'Fra',	2,	25,	77,	28,	5.7,	5,	7,	-100,	3,	1990,	3),
+('Schennikov Grigoriy',	'Rus',	2,	33,	73,	19,	4.6,	9,	42,	-100,	5,	1991,	3),
+('Bayramyan Khoren',	'Arm',	5,	27,	76,	29,	4.4,	8,	19,	-100,	4,	1992,	3),
+('Younes Namli',	'Den',	1,	33,	75,	33,	5.6,	7,	21,	-100,	3,	1993,	3),
+('Karaev David',	'Aze',	9,	26,	71,	17,	3.5,	1,	71,	-100,	5,	1995,	3),
+('de Vilhena Tonny',	'Ned',	1,	32,	81,	24,	8.1,	6,	52,	-100,	3,	1995,	3),
+('Bistrovic Kristijan',	'Cro',	8,	30,	74,	26,	5.6,	8,	25,	-100,	5,	1998,	3),
+('Kuchayev Konstantin',	'Rus',	2,	27,	76,	31,	5.3,	6,	20,	-100,	5,	1998,	3),
+('Zainutdinov Baktiyor',	'Kaz',	8,	26,	67,	23,	3.9, 4,	18,	-100,	4,	1998,	3),
+('Jaka Bijol',	'Slv',	1,	30,	69,	22,	3.7,	5,	29,	-100,	5,	1999,	3),
+('Santos Lucas',	'Bra',	2,	34,	79,	31,	9.1,	9,	11,	-100,	5,	1999,	3),
+('Suleymanov Magomed',	'Rus',	4,	23,	85,	65,	23.1,	1,	93,	-100,	3,	1999,	3),
+('Utkin Daniil',	'Rus',	5,	31,	71,	26,	4.1,	8,	47,	-100,	3,	1999,	3),
+('Maradishvili Konstantin',	'Rus',	9,	25,	71,	30,	3.9,	2,	87,	-100,	5,	2000,	3),
+('Cherkes Eugeni',	'Rus',	0,	21,	62,	27,	3.3,	8,	51,	-100,	4,	2001,	3),
+('Silva Kaio',	'Bra',	4,	25,	68,	17,	3.4,	8,	17,	-100,	3,	1995,	3),
+('Miranchuk Anton',	'Rus',	3,	34,	86,	11,	28.7,	6,	11,	-100,	2,	1995,	3),
+('Onugkha German',	'Rus',	1,	28,	68,	23,	3.5,	6,	60,	-100,	3,	1996,	3),
+('Sergeyev Nikita',	'Rus',	8,	10,	64,	20,	3.1,	5,	63,	-100,	3,	1999,	3),
+('Chernikov Alexandr',	'Rus',	7,	20,	69,	15,	3.2,	1,	53,	-100,	3,	2000,	3),
+('Zhirkov Yuriy',	'Rus',	9,	34,	81,	16,	3.9,	65,	18,	-100,	1,	1983,	3),
+('Shatov Oleg',	'Rus',	9,	21,	79,	10,	6.4,	2,	17,	-100,	1,	1990,	3),
+('Magomed Ozdoev',	'Rus',	5,	33,	87,	27,	17.3,	9,	27,	-100,	1,	1992,	3),
+('Barrios Wilmar',	'Kol',	8,	20,	80,	23,	5.8,	9,	5,	-100,	1,	1993,	3),
+('Kuzyaev Daler',	'Rus',	6,	22,	81,	12,	8.3,	7,	14,	-100,	1,	1993,	3),
+('Rigoni Emiliano',	'Arg',	9,	21,	79,	10,	6.9,	2,	10,	-100,	1,	1993,	3),
+('Bauyrzhan Islamhan',	'Kaz',	6,	23,	69,	28,	3.4,	8,	9,	-100,	1,	1993,	3),
+('Sutormin Alexey',	'Rus',	6,	25,	74,	10,	4.2,	8,	91,	-100,	1,	1994,	3),
+('Mammana Emanuel',	'Arg',	1,	21,	75,	27,	4.3,	2,	24,	-100,	1,	1996,	3),
+('Filipe Malcom',	'Bra',	7,	30,	90,	29,	4.8,	3,	8,	-100,	1,	1997,	3),
+('Musaev Leon',	'Rus',	6,	31,	72,	22,	4.1,	5,	38,	-100,	1,	1999,	3),
+('Vorobyov Ilya',	'Rus',	2,	31,	68,	27,	3.3,	3,	84,	-100,	1,	1999,	3),
+('Kravtsov Kirill',	'Rus',	8,	25,	65,	13,	3.4,	9,	64,	-100,	1,	2002,	3),
+('Nababkin Kirill',	'Rus',	7,	29,	19,	77,	3.2,	5,	14,	-100,	5,	1986,	4),
+('Berg Marcus',	'Swe',	1,	27,	16,	84,	6.4,	76,	33,	-100,	3,	1986,	4),
+('Berhamov Kantemir',	'Rus',	1,	34,	39,	74,	4.2,	1,	7,	-100,	7,	1988,	4),
+('Kokorin Alexander',	'Rus',	1,	21,	28,	80,	8.5,	39,	9,	-100,	12,	1991,	4),
+('Obuhov Vladimir',	'Rus',	1,	29,	26,	63,	3.4,	6,	13,	-100,	12,	1992,	4),
+('Mamtov Hasan',	'Rus',	9,	32,	18,	66,	3.2,	9,	9,	-100,	11,	1984,	4),
+('Ivan Markelov',	'Rus',	9,	23,	19,	66,	3.5,	8,	99,	-100,	11,	1988,	4),
+('Appaev Hyzyr',	'Rus',	3,	30,	10,	62,	3.3,	8,	14,	-100,	11,	1990,	4),
+('Kostyukov Mikhail',	'Rus',	3,	13,	21,	69,	3.5,	3,	77,	-100,	11,	1991,	4),
+('Obuhov Vladimir',	'Rus',	4,	5,	42,	68,	3.6,	12,	13,	-100,	11,	1992,	4),
+('Fedchuk Artem',	'Rus',	9,	32,	28,	60,	3.0,	4,	11,	-100,	11,	1994,	4),
+('Muhammed Usman',	'Nig',	9,	30,	19,	61,	3.3,	4,	16,	-100,	11,	1994,	4),
+('Melkadze Georgy',	'Rus',	4,	7,	26,	76,	4.2,	2,	19,	-100,	11,	1997,	4);
+
+insert into positions (title, short_title) values
+('Goalkeeper',	'Gk'),
+('Defender',	'Def'),
+('Midfielder',	'Mid'),
+('Forward',	'Forw');
+
+insert into sponsors (name, day_wage, match_wage, goal_bonus_wage, win_wage, deuce_wage, contract_bonus_wage) values
+('Гол.tv',	1.00,	2.00,	1.10,	1.25,	0.10,	4.00),
+('МорзеФИЛЬМ',	2.00,	2.00,	1.00,	3.50,	0.00,	1.00),
+('МакроСофт',	2.10,	4.52,	2.12,	5.62,	1.00,	0.00),
+('СибирьСтрах',	2.50,	3.40,	1.35,	1.90,	1.00,	2.00),
+('Олигарх Николай Николаевич',	0.00,	0.00,	0.00,	1.00,	0.00,	50.00),
+('БурджХалиф',	1.00,	0.00,	0.00,	0.00,	0.00,	99.00),
+('НасосНефть',	1.00,	1.00,	1.00,	2.00,	0.00,	70.00),
+('ФТБ',	0.00,	1.00,	0.20,	8.00,	1.00,	12.00),
+('РосРельсы',	0.10,	1.00,	2.45,	1.00,	1.00,	10.00),
+('ГосПром',	1.85,	2.27,	1.45,	2.70,	1.02,	10.00),
+('АэроФронт',	0.01,	1.45,	0.50,	1.70,	1.12,	15.00),
+('Appricot',	0.10,	1.60,	1.20,	2.90,	1.10,	3.00),
+('ТурбоСтиморол',	0.00,	1.99,	2.99,	4.99,	1.99,	1.00),
+('Лук и Ойл',	1.11,	2.22,	3.33,	4.44,	1.11,	1.11),
+('УралАТОМ',	0.48,	0.14,	2.14,	1.59,	0.18,	4.99),
+('ИнькофБанк',	1.01,	1.01,	1.01,	4.04,	1.01,	11.01),
+('Юндекс',	1.85,	1.34,	2.44,	1.11,	2.63,	7.89);
+
+insert into stadiums (id_teams, title, id_leagues, full_capacity, id_cities) values
+(2,	'RZD-Arena',	1,	27320,	1),
+(5,	'VEB-Arena',	1,	30457,	1),
+(6,	'Stadion imeni Lva Yashina',	1,	26121,	1),
+(8,	'Otkrytie-Arena',	1,	40000,	1),
+(3,	'Krasnodar',	1,	35074,	3),
+(4,	'Rostov-Arena',	1,	43472,	4),
+(7,	'Arsenal',	1,	19241,	5),
+(9,	'Neftyanik',	1,	15132,	6),
+(10,	'Ekateringburg-Arena',	1,	35000,	7),
+(11,	'Spartak',	1,	15000,	8),
+(12,	'Fisht',	1,	44287,	9),
+(13,	'Gazovik',	1,	7500,	10),
+(14,	'Ak Bars-Arena',	1,	45379,	11),
+(15,	'Samara-Arena',	1,	44918,	12),
+(16,	'Akmat-Arena',	1,	30597,	13),
+(1,	'Gazprom-Arena',	1,	64468,	2);
+
+insert into teams (name, manager, id_leagues, id_stadiums, id_cities, team_wealth) values
+('Lokomotiv',	'Marko Nikolic',	1,		2,	1,	94.00),
+('CSKA',	'Viktor Goncharenko',	1,		5,	1,	65.00),
+('Dinamo',	'Kirill Novikov',	1,		6,	1,	42.00),
+('Spartak',	'Domeniko Tedesco',	1,		8,	1,	120.00),
+('Krasnodar',	'Igor Zakharyak',	1,		3,	3,	83.00),
+('Rostov',	'Valery Karpin',	1,		4,	4,	51.00),
+('Arsenal',	'Igor Cherevchenko',	1,		7,	5,	20.00),
+('Ufa',	'Vadim Evseev',	1,		9,	6,	20.00),
+('Ural',	'Dmitry Parfenov',	1,		10,	7,	22.00),
+('Tambov',	'Timur Shipshev',	1,		11,	8,	20.00),
+('Sochi',	'Vladimir Fedotov',	1,		12,	9,	21.00),
+('Orenburg',	'Ilshat Aytkulov',	1,		13,	10, 20.00),
+('Rubin',	'Leonid Slutsky',	1,		14,	11,	41.00),
+('Krylia Sovetov',	'Miodrag Bozhovic',	1,		15,	12,	23.00),
+('Ahmat',	'Igor Shalimov',	1,		16,	13,	29.00),
+('Zenit',	'Sergey Semak',	1,		1,	2,	188.00);
+
+ALTER TABLE banks
+    ADD CONSTRAINT banks_pkey PRIMARY KEY (id);
+
+ALTER TABLE cities
+    ADD CONSTRAINT cities_pkey PRIMARY KEY (id);
+
+ALTER TABLE days
+    ADD CONSTRAINT days_pkey PRIMARY KEY (id);
+
+ALTER TABLE ONLY draws
+    ADD CONSTRAINT draws_pkey PRIMARY KEY (id);
+
+ALTER TABLE juniors
+    ADD CONSTRAINT juniors_pkey PRIMARY KEY (id);
+
+ALTER TABLE ONLY leagues
+    ADD CONSTRAINT leagues_pkey PRIMARY KEY (id);
+
+ALTER TABLE ONLY placements
+    ADD CONSTRAINT placements_pkey PRIMARY KEY (id);
+
+ALTER TABLE players
+    ADD CONSTRAINT players_pkey PRIMARY KEY (id);
+
+ALTER TABLE positions
+    ADD CONSTRAINT positions_pkey PRIMARY KEY (id);
+
+ALTER TABLE sponsors
+    ADD CONSTRAINT sponsors_pkey PRIMARY KEY (id);
+
+ALTER TABLE stadiums
+    ADD CONSTRAINT stadiums_pkey PRIMARY KEY (id);
+
+ALTER TABLE teams
+    ADD CONSTRAINT teams_pkey PRIMARY KEY (id);
+
+ALTER TABLE stadiums
+    ADD CONSTRAINT fk_cities FOREIGN KEY (id_cities) REFERENCES cities(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+ALTER TABLE teams
+    ADD CONSTRAINT fk_cities FOREIGN KEY (id_cities) REFERENCES cities(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+ALTER TABLE ONLY teams
+    ADD CONSTRAINT fk_leagues FOREIGN KEY (id_leagues) REFERENCES leagues(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+ALTER TABLE stadiums
+    ADD CONSTRAINT fk_leagues FOREIGN KEY (id_leagues) REFERENCES leagues(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+ALTER TABLE ONLY cities
+    ADD CONSTRAINT fk_leagues FOREIGN KEY (id_leagues) REFERENCES leagues(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+ALTER TABLE players
+    ADD CONSTRAINT fk_positions FOREIGN KEY (id_positions) REFERENCES positions(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+ALTER TABLE teams
+    ADD CONSTRAINT fk_stadiums FOREIGN KEY (id_stadiums) REFERENCES stadiums(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+ALTER TABLE players
+    ADD CONSTRAINT fk_teams FOREIGN KEY (id_teams) REFERENCES teams(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+ALTER TABLE ONLY stadiums
+    ADD CONSTRAINT fk_teams FOREIGN KEY (id_teams) REFERENCES teams(id) ON UPDATE RESTRICT ON DELETE RESTRICT;

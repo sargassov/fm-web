@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<html ng-app="buying">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buying Players</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.11/ngStorage.min.js"></script>
+    <script src="buying.js"></script>
+    <link rel="stylesheet" href="buying.css">
+
+</head>
+
+<body>
+<div class="container" ng-controller="buyingController">
+    <h4 class="header">Buying players for {{team.name}} from {{opponentTeam.name}}</h4>
+    <hr>
+    <p class="date_show">Today is {{today.day}} {{today.month}} {{today.year}}</p>
+    <p></p>
+    <a class="linktext" href="../transfers.html">Back to Transfers Menu</a><br>
+    <h3 class="oppenent_team_name">{{opponentTeam.name}} have {{opponentTeam.wealth}} mln. $</h3>
+    <button ng-click="loadOpponentNextPlayersSort(opponentTeam.name, -1, 0, 1)">Name</button>
+    <button ng-click="loadOpponentNextPlayersSort(opponentTeam.name, -1, 1, 1)">Club</button>
+    <button ng-click="loadOpponentNextPlayersSort(opponentTeam.name, -1, 2, 1)">Natio</button>
+    <button ng-click="loadOpponentNextPlayersSort(opponentTeam.name, -1, 4, 1)">Pos</button>
+    <button ng-click="loadOpponentNextPlayersSort(opponentTeam.name, -1, 5, 1)">Gk</button>
+    <button ng-click="loadOpponentNextPlayersSort(opponentTeam.name, -1, 6, 1)">Def</button>
+    <button ng-click="loadOpponentNextPlayersSort(opponentTeam.name, -1, 7, 1)">Mid</button>
+    <button ng-click="loadOpponentNextPlayersSort(opponentTeam.name, -1, 8, 1)">Forw</button>
+    <button ng-click="loadOpponentNextPlayersSort(opponentTeam.name, -1, 14, 1)">Power</button>
+    <button ng-click="loadOpponentNextPlayersSort(opponentTeam.name, -1, 17, 1)">Price</button>
+
+    <table id="scrolltable" class="table table-sm">
+        <tr>
+            <td class="cell">Name</td>
+            <td class="cell">Club</td>
+            <td class="cell">Natio</td>
+            <td class="cell">Pos</td>
+            <td class="cell">Gk</td>
+            <td class="cell">Def</td>
+            <td class="cell">Mid</td>
+            <td class="cell">Forw</td>
+            <td class="cell">Power</td>
+            <td class="cell">Price</td>
+        </tr>
+        <tbody>
+        <tr ng-repeat="o in opponentPlayers">
+            <td class="cell">{{o.name}}</td>
+            <td class="cell">{{o.club}}</td>
+            <td class="cell">{{o.natio}}</td>
+            <td class="cell">{{o.position}}</td>
+            <td class="cell">{{o.gkAble}}</td>
+            <td class="cell">{{o.defAble}}</td>
+            <td class="cell">{{o.midAble}}</td>
+            <td class="cell">{{o.forwAble}}</td>
+            <td class="cell">{{o.power}}</td>
+            <td class="cell">{{o.price}}</td>
+            <td><button class="btn btn-warning" ng-click="buyPlayer(o)">Buy</button></td>
+        </tr>
+        </tbody>
+    </table>
+    <td><button class="btn btn-warning" ng-click="loadOpponentNextPlayersSort(opponentTeam.name, opponentTeam.playerParameter, opponentTeam.sortParameter, -1)">Previous Player</button></td>
+    <td><button class="btn btn-warning" ng-click="loadOpponentNextPlayersSort(opponentTeam.name, opponentTeam.playerParameter, opponentTeam.sortParameter, 1)">Next Player</button></td>
+    <td><button class="btn btn-warning" ng-click="getNextOppenentTeamName(opponentTeam.countParameter, -1)">Previous Team</button></td>
+    <td><button class="btn btn-warning" ng-click="getNextOppenentTeamName(opponentTeam.countParameter, 1)">Next Team</button></td>
+    <p></p>
+    <p></p>
+    <h3 class="your_team_name">{{team.name}} have {{team.wealth}} mln. $</h3>
+    <button ng-click="loadUserTeamNextPlayersSort(team.name, -1, 0, 1)">Name</button>
+    <button ng-click="loadUserTeamNextPlayersSort(team.name, -1, 1, 1)">Club</button>
+    <button ng-click="loadUserTeamNextPlayersSort(team.name, -1, 2, 1)">Natio</button>
+    <button ng-click="loadUserTeamNextPlayersSort(team.name, -1, 4, 1)">Pos</button>
+    <button ng-click="loadUserTeamNextPlayersSort(team.name, -1, 5, 1)">Gk</button>
+    <button ng-click="loadUserTeamNextPlayersSort(team.name, -1, 6, 1)">Def</button>
+    <button ng-click="loadUserTeamNextPlayersSort(team.name, -1, 7, 1)">Mid</button>
+    <button ng-click="loadUserTeamNextPlayersSort(team.name, -1, 8, 1)">Forw</button>
+    <button ng-click="loadUserTeamNextPlayersSort(team.name, -1, 14, 1)">Power</button>
+    <button ng-click="loadUserTeamNextPlayersSort(team.name, -1, 17, 1)">Price</button>
+    <table class="table table-striped">
+        <tr>
+            <td class="cell">Name</td>
+            <td class="cell">Club</td>
+            <td class="cell">Natio</td>
+            <td class="cell">Pos</td>
+            <td class="cell">Gk</td>
+            <td class="cell">Def</td>
+            <td class="cell">Mid</td>
+            <td class="cell">Forw</td>
+            <td class="cell">Power</td>
+            <td class="cell">Price</td>
+        </tr>
+        <tbody>
+        <tr ng-repeat="p in Players">
+            <td class="cell">{{p.name}}</td>
+            <td class="cell">{{p.club}}</td>
+            <td class="cell">{{p.natio}}</td>
+            <td class="cell">{{p.position}}</td>
+            <td class="cell">{{p.gkAble}}</td>
+            <td class="cell">{{p.defAble}}</td>
+            <td class="cell">{{p.midAble}}</td>
+            <td class="cell">{{p.forwAble}}</td>
+            <td class="cell">{{p.power}}</td>
+            <td class="cell">{{p.price}}</td>
+        </tr>
+        </tbody>
+    </table>
+    <td><button class="btn btn-warning" ng-click="loadUserTeamNextPlayersSort(team.name, team.playerParameter, team.sortParameter, -1)">Previous Player</button></td>
+    <td><button class="btn btn-warning" ng-click="loadUserTeamNextPlayersSort(team.name, team.playerParameter, team.sortParameter, 1)">Next Player</button></td>
+
+</div>
+
+
+
+
+</body>
+
+</html>

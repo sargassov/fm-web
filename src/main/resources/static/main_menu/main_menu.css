@@ -1,0 +1,181 @@
+body {
+    background-image: url(main_menu.jpg);
+    background-size: cover;
+}
+
+.main_link {
+    font-family: "Arial Black", fantasy;
+    font-size: 26px;
+    text-align: -moz-center;
+    color: snow;
+}
+
+.header {
+    text-align: center;
+    font-family: "Arial Black", fantasy;
+    font-size: 26px;
+    text-align: -moz-center;
+    color: snow;
+}
+
+.tryright {
+    text-align: right;
+}
+
+.date_show {
+    text-align: center;
+    font-family: "Arial Black", fantasy;
+    color: snow;
+}
+
+
+
+
+
+/* .form-control {
+    font-family: Verdana, Geneva, Tahoma, sans-serif
+}
+
+.container,
+.form-control,
+.registr_form {
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.ahmat,
+.arsenal,
+.cska,
+.dinamo,
+.krasnodar,
+.krylia,
+.loko,
+.orenburg,
+.rostov,
+.sochi,
+.spartak,
+.tambov,
+.ufa,
+.ural,
+.zenit,
+.rubin {
+    text-align: center;
+    size: 10px;
+}
+
+.header,
+.comment {
+    text-align: center;
+    color: white;
+}
+
+.form-control {
+    text-align: center;
+    width: 600px;
+
+}
+
+.ahmat {
+    color: rgb(1, 29, 1);
+    background-color: rgb(0, 201, 27);
+}
+
+.arsenal {
+    color: rgb(255, 61, 61);
+    background-color: rgb(255, 251, 0);
+}
+
+.cska {
+    color: rgb(172, 0, 0);
+    background-color: rgb(38, 0, 255);
+}
+
+.dinamo {
+    color: rgb(4, 0, 255);
+    background-color: rgb(255, 255, 255);
+}
+
+.krasnodar {
+    color: rgb(0, 255, 0);
+    background-color: rgb(7, 26, 9);
+}
+
+.krylia {
+    color: rgb(255, 255, 255);
+    background-color: rgb(71, 63, 141);
+}
+
+.loko {
+    color: rgb(0, 80, 0);
+    background-color: rgb(201, 47, 0);
+}
+
+.orenburg {
+    color: rgb(156, 156, 156);
+    background-color: rgb(0, 127, 201);
+}
+
+.rostov {
+    color: rgb(28, 2, 255);
+    background-color: rgb(251, 255, 0);
+}
+
+.rubin {
+    color: rgb(1, 134, 79);
+    background-color: rgb(255, 0, 0);
+}
+
+.sochi {
+    color: rgb(250, 255, 250);
+    background-color: rgb(69, 69, 70);
+}
+
+.spartak {
+    color: rgb(253, 253, 253);
+    background-color: rgb(255, 0, 0);
+}
+
+.tambov {
+    color: rgb(51, 29, 177);
+    background-color: rgb(255, 255, 255);
+}
+
+.ufa {
+    color: rgb(255, 123, 0);
+    background-color: rgb(218, 5, 5);
+}
+
+.ural {
+    color: rgb(255, 137, 2);
+    background-color: rgb(36, 43, 37);
+}
+
+.zenit {
+    color: rgb(69, 68, 158);
+    background-color: rgb(255, 255, 255);
+}
+ */
+
+/* .newGameText {
+    font-family: Arial, Helvetica, sans-serif;
+    size: 35px;
+    font-size: 35px;
+    text-align: right;
+    color: black;
+}
+
+.loadGameText {
+    font-family: Arial, Helvetica, sans-serif;
+    size: 35px;
+    font-size: 35px;
+    text-align: right;
+    color: black;
+}
+
+.title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 35px;
+    text-align: center;
+    line-height: 26px;
+    border-radius: 10px;
+} */

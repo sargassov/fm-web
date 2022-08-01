@@ -1,0 +1,28 @@
+body {
+    background-image: url(player_window.jpg);
+    background-size: cover;
+}
+
+.header {
+    text-align: center;
+    font-family: "Arial Black", fantasy;
+    font-size: 26px;
+    color: snow;
+}
+
+.prev_text {
+    text-align: left;
+    font-family: "Arial Black", fantasy;
+    color: black;
+}
+
+.info_text {
+    font-family: "Arial Black", fantasy;
+    color: snow;
+}
+
+.date_show {
+    text-align: center;
+    font-family: "Arial Black", fantasy;
+    color: snow;
+}
