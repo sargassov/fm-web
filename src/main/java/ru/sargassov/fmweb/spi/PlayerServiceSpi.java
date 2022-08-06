@@ -29,4 +29,6 @@ public interface PlayerServiceSpi {
     List<PlayerOnTrainingDto> getPlayerOnTrainingDtoFromPlayer(List<Player> players);
 
     IdNamePricePlayerDto getIdNamePricePlayerDtoFromPlayer(Player p);
+
+    void guessPrice(Player player);
 }

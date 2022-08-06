@@ -3,8 +3,6 @@ package ru.sargassov.fmweb.intermediate_entites;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import ru.sargassov.fmweb.converters.PlayerPriceSetter;
 
 import java.math.BigDecimal;
 import java.util.Random;

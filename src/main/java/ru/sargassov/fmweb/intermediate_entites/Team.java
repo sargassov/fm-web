@@ -10,6 +10,7 @@ import ru.sargassov.fmweb.exceptions.TeamNotFoundException;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -170,6 +171,14 @@ public class Team {
         }
 
         return false;
+    }
+
+    public boolean isPlayerExists(String name) {
+        Optional<Player> opt = playerList.stream()
+                .filter(p -> p.getName().equals(name))
+                .findFirst();
+
+        return opt.isPresent();
     }
 
     //    public Team(String info) {

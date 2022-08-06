@@ -11,6 +11,7 @@ import ru.sargassov.fmweb.intermediate_entites.Coach;
 import ru.sargassov.fmweb.intermediate_entites.Player;
 import ru.sargassov.fmweb.entities.PlayerEntity;
 import ru.sargassov.fmweb.exceptions.TeamNotFoundException;
+import ru.sargassov.fmweb.services.PlayerPriceSetter;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -139,8 +140,10 @@ public class PlayerConverter {
         return BigDecimal.valueOf(playerPriceSetter.createPrice(p)).setScale(2, RoundingMode.HALF_UP);
     }
 
-    private void guessPrice(Player p){
-        p.setPrice(BigDecimal.valueOf(playerPriceSetter.createPrice(p)).setScale(2, RoundingMode.HALF_UP));
+    public void guessPrice(Player p){
+        p.setPrice(BigDecimal.valueOf(
+                playerPriceSetter.createPrice(p))
+                .setScale(2, RoundingMode.HALF_UP));
     }
 
 

@@ -116,4 +116,9 @@ public class PlayerService implements PlayerServiceSpi {
     public IdNamePricePlayerDto getIdNamePricePlayerDtoFromPlayer(Player p) {
         return playerConverter.getIdNamePricePlayerDtoFromPlayer(p);
     }
+
+    @Override
+    public void guessPrice(Player p) {
+        playerConverter.guessPrice(p);
+    }
 }

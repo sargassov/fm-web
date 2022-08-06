@@ -1,7 +1,6 @@
 package ru.sargassov.fmweb.dto.player_dtos;
 
 import lombok.Data;
-import ru.sargassov.fmweb.converters.PlayerPriceSetter;
 
 import java.math.BigDecimal;
 

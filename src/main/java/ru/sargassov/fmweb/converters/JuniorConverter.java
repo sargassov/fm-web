@@ -7,7 +7,7 @@ import ru.sargassov.fmweb.dto.player_dtos.JuniorDto;
 import ru.sargassov.fmweb.intermediate_entites.Player;
 import ru.sargassov.fmweb.intermediate_entites.Position;
 import ru.sargassov.fmweb.entities.JuniorEntity;
-import ru.sargassov.fmweb.intermediate_entites.Team;
+import ru.sargassov.fmweb.services.PlayerPriceSetter;
 import ru.sargassov.fmweb.services.UserService;
 
 import java.math.BigDecimal;

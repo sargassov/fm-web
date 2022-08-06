@@ -1,0 +1,64 @@
+body {
+    background-image: url(cheat_code.jpg);
+    background-size: cover;
+}
+
+.header,
+.answer_span {
+    text-align: center;
+    font-family: "Arial Black", fantasy;
+    font-size: 26px;
+    color: snow;
+}
+
+.form-control {
+    font-family: Verdana, Geneva, Tahoma, sans-serif
+}
+
+.header_small{
+    text-align: center;
+    font-family: "Arial Black", fantasy;
+    font-size: 22px;
+    color: snow;
+}
+
+.date_show {
+    text-align: center;
+    font-family: "Arial Black", fantasy;
+    color: snow;
+}
+
+.cell,
+.linktext {
+    font-family: "Arial Black", fantasy;
+    color: snow;
+}
+
+.links {
+    margin: auto;
+    align-items: center;
+    align-self: center;
+    align-content: center;
+    text-align: center;
+    font-size: 26px;
+    font-family: "Arial Black", fantasy;
+    color: snow;
+}
+
+button {
+    margin: auto;
+    align-items: center;
+    align-self: center;
+    align-content: center;
+    text-align: center;
+}
+
+.form-control,
+.text_form{
+    margin: auto;
+    align-items: center;
+    align-self: center;
+    align-content: center;
+    text-align: center;
+    width: 400px;
+}

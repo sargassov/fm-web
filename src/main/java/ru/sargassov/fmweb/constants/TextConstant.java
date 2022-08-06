@@ -4,6 +4,11 @@ import ru.sargassov.fmweb.intermediate_entites.Team;
 
 public final class TextConstant {
 
+    public static final String WRONG_CHEAT_CODE = "Wrong cheat code!";
+    public static final String MESSI_LEONEL = "Messi Leonel";
+    public static final String ARGENTINA = "Arg";
+    public static final String YOUR_CLUB_HAD_ALREADY = "Your club had already ";
+
     public static String getBanksStartMessage(Team userTeam, int banksValue){
         if(banksValue == 0) return userTeam.getName() + " haven't loans yet." +
                 " You can take any Loan.";

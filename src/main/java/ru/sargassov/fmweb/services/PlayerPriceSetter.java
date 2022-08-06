@@ -1,4 +1,4 @@
-package ru.sargassov.fmweb.converters;
+package ru.sargassov.fmweb.services;
 
 import org.springframework.stereotype.Component;
 import ru.sargassov.fmweb.intermediate_entites.Player;
