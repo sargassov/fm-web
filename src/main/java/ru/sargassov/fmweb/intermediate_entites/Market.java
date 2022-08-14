@@ -38,15 +38,17 @@ public class Market {
 
     @Getter
     public enum MarketType {
-        RADIO(BigDecimal.valueOf(1)),
-        TV(BigDecimal.valueOf(3.5)),
-        INTERNET(BigDecimal.valueOf(2.2)),
-        NEWSPAPER(BigDecimal.valueOf(0.5));
+        RADIO(BigDecimal.valueOf(1), 1.3),
+        TV(BigDecimal.valueOf(3.5), 1.45),
+        INTERNET(BigDecimal.valueOf(2.2), 1.25),
+        NEWSPAPER(BigDecimal.valueOf(0.5), 1.1);
 
-        BigDecimal oneWeekCost;
+        final BigDecimal oneWeekCost;
+        final double capacityCoeff;
 
-        MarketType (BigDecimal oneWeekCost) {
+        MarketType (BigDecimal oneWeekCost, double capacityCoeff) {
             this.oneWeekCost = oneWeekCost;
+            this.capacityCoeff = capacityCoeff;
         }
 
         public BigDecimal getOneWeekCost() {

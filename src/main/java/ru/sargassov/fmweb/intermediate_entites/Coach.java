@@ -27,10 +27,6 @@ public class Coach {
         CoachProgram(double programCode){
             this.programCode = programCode;
         }
-
-        public double getProgramCode() {
-            return programCode;
-        }
     }
 
     public enum CoachType {
@@ -47,6 +43,10 @@ public class Coach {
         public double getTypeCode() {
             return typeCode;
         }
+    }
+
+    public double getTrainingCoeff() {
+        return this.coachProgram.programCode * this.type.getTypeCode();
     }
 
 }

@@ -1,4 +1,4 @@
-angular.module('new_day', ['ngStorage']).controller('new_dayController', function ($scope, $rootScope, $http, $localStorage) {
+angular.module('changes', ['ngStorage']).controller('changesController', function ($scope, $rootScope, $http, $localStorage) {
     const contextPath = 'http://localhost:7777/fm';
 
     $scope.getActualDate = function () {
@@ -10,15 +10,16 @@ angular.module('new_day', ['ngStorage']).controller('new_dayController', functio
             });
     };
 
-    $scope.createNewDay = function () {
-        $http.post(contextPath + '/new_day')
+    $scope.loadChanges = function () {
+        $http.get(contextPath + '/new_day/changes')
             .then(function successCallback(response) {
-                $scope.getActualDate();
+                $scope.information = response.data;
             }, function errorCallback(response) {
-                alert('CANT GO INTO THE FUTURE UNTIL ALL THE THINGS ARE DONE!');
+                alert('CANT LOAD CHANGES');
             });
     };
 
 
     $scope.getActualDate();
+    $scope.loadChanges();
 });

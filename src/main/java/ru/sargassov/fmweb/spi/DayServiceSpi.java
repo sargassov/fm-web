@@ -17,4 +17,10 @@ public interface DayServiceSpi {
     List<Day> getCalendarFromApi();
 
     DayDto getActualDateFromApi();
+
+    boolean isMatchday();
+
+    String addDate();
+
+    Day getActualDay();
 }

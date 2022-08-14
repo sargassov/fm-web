@@ -3,13 +3,19 @@ package ru.sargassov.fmweb.intermediate_entites;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.sargassov.fmweb.services.PlayerPriceSetter;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Random;
 
 @Data
 @NoArgsConstructor
 public class Player {
+
+    private final static int LEVEL_UP_TRAINING_BALANCE = 100;
+    private final static int MAX_POWER = 99;
+    private static final PlayerPriceSetter playerPriceSetter = new PlayerPriceSetter();
 
     private long id;
     private String name;
@@ -40,10 +46,19 @@ public class Player {
     public final static Integer youngPlayerBirthYear = 2004;
 
     public void guessPower(){
-        if(position.equals(Position.GOALKEEPER)) power = gkAble;
-        else if(position.equals(Position.DEFENDER)) power = defAble;
-        else if(position.equals(Position.MIDFIELDER)) power = midAble;
-        else power = forwAble;
+        switch (position) {
+            case GOALKEEPER:
+                power = gkAble;
+                break;
+            case DEFENDER:
+                power = defAble;
+                break;
+            case MIDFIELDER:
+                power = midAble;
+                break;
+            default:
+                power = forwAble;
+        }
     }
 
     public boolean equalsPosition(Role role){
@@ -100,6 +115,64 @@ public class Player {
                 this.number = number;
             }
         }while (flag);
+    }
+
+    public void levelUpCheckAuto() {
+        if(trainingBalance >= LEVEL_UP_TRAINING_BALANCE) {
+            switch (position) {
+                case GOALKEEPER:
+                    gkAble += 1;
+                    break;
+                case DEFENDER:
+                    defAble += 1;
+                    break;
+                case MIDFIELDER:
+                    midAble += 1;
+                    break;
+                default:
+                    forwAble += 1;
+            }
+            trainingBalance -= 100;
+        }
+    }
+
+    public void levelUpCheckManual(Coach coach) {
+        while (trainingBalance >= LEVEL_UP_TRAINING_BALANCE) {
+            Position coachPosition = coach.getPosition();
+            trainingBalance -= 100;
+
+            if (power < MAX_POWER) {
+                switch (coachPosition) {
+                    case GOALKEEPER:
+                        gkAble += 1;
+                        break;
+                    case DEFENDER:
+                        defAble += 1;
+                        break;
+                    case MIDFIELDER:
+                        midAble += 1;
+                        break;
+                    default:
+                        forwAble +=1;
+                }
+
+                power += 1;
+                price = BigDecimal.valueOf(
+                                playerPriceSetter.createPrice(this))
+                        .setScale(2, RoundingMode.HALF_UP);
+            }
+
+        }
+    }
+
+    public void guessTrainingTire(Coach.CoachProgram program) {
+        if (program.equals(Coach.CoachProgram.STANDART)) {
+            tire += 22;
+        } else if (program.equals(Coach.CoachProgram.INTENSIVE)) {
+            tire += 44;
+        } else {
+            tire += 66;
+        }
     }
 
     //    private static PlayerPriceSetter priceSetter;

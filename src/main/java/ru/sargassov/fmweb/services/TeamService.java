@@ -21,6 +21,7 @@ import ru.sargassov.fmweb.dto.text_responses.StartFinishInformationDto;
 import ru.sargassov.fmweb.dto.text_responses.TextResponse;
 import ru.sargassov.fmweb.exceptions.*;
 import ru.sargassov.fmweb.intermediate_entites.*;
+import ru.sargassov.fmweb.intermediate_entites.days.Day;
 import ru.sargassov.fmweb.repositories.TeamRepository;
 import ru.sargassov.fmweb.spi.*;
 
@@ -45,7 +46,7 @@ public class TeamService implements TeamServiceSpi {
     private final TeamsPlayersComparators teamsPlayersComparators;
     private final TrainingPlayersComparators trainingPlayersComparators;
     private final BankServiceSpi bankService;
-
+    private final DayServiceSpi dayService;
     private final CalendarServiceSpi calendarService;
 
     @Transactional
@@ -121,7 +122,7 @@ public class TeamService implements TeamServiceSpi {
     }
 
     public void fillPlacementForAllTeams() {
-        getTeamListFromApi().stream()
+        getTeamListFromApi()
                 .forEach(t -> {
                     autoFillPlacement(t);
                     captainAppointment(t);
@@ -401,15 +402,7 @@ public class TeamService implements TeamServiceSpi {
 
         Bank bank = team.getBankInLoansListByTitle(loan.getTitle());
         team.setWealth(team.getWealth().subtract(loan.getRemainsToPay()));
-        bank.setDateOfLoan(null);
-        bank.setRemainsDate(null);
-        bank.setPayPerDay(null);
-        bank.setPayPerWeek(null);
-        bank.setPayPerMonth(null);
-        bank.setFullLoanAmountValue(0.0);
-        bank.setTookMoney(null);
-        bank.setRemainMoney(null);
-        bank.setAlreadyPaid(null);
+        bank.remainLoan();
         team.getLoans().remove(bank);
         bankService.returnBankToApi(bank);
     }
@@ -497,6 +490,44 @@ public class TeamService implements TeamServiceSpi {
             throw new StadiumException("Too little money to expand the stadium");
         }
         stadium.expand(delta);
+    }
+
+    @Override
+    public List<String> setTrainingEffects() {
+        List<String> noteOfChanges = new ArrayList<>();
+        List<Team> teams = teamApi.getTeamApiList();
+        Team userTeam = userService.getUserTeam();
+        for (Team t : teams) {
+            if (!t.equals(userTeam)) {
+                noteOfChanges.addAll(t.setRandomTrainingEffects());
+            }
+        }
+        return userTeam.userTeamTrainingEffects(noteOfChanges);
+    }
+
+    @Override
+    public List<String> setFinanceUpdates() {
+        Team userTeam = userService.getUserTeam();
+        Day day = dayService.getActualDay();
+        return userTeam.setFinanceUpdates(day);
+    }
+
+    @Override
+    public List<String> setMarketingChanges() {
+        Team userTeam = userService.getUserTeam();
+        return userTeam.setMarketingChanges(dayService.getActualDay());
+    }
+
+    @Override
+    public void setPlayerRecovery() {
+        List<Team> teams = teamApi.getTeamApiList();
+        for (Team t : teams) {
+            for (Player p : t.getPlayerList()) {
+                if (p.getTire() > 0) {
+                    p.setTire(p.getTire() - 5);
+                }
+            }
+        }
     }
 }
 

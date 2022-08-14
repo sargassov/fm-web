@@ -17,6 +17,16 @@ angular.module('visual_calendar', ['ngStorage']).controller('visual_calendarCont
             });
     };
 
+    $scope.getParameter = function () {
+        $http.get(contextPath + '/calendar/month/parameter')
+            .then(function successCallback(response) {
+                $scope.parameter = response.data.parameter;
+                $scope.loadMonth($scope.parameter);
+            }, function errorCallback(response) {
+                alert('CANT LOAD MONTH PARAMETER');
+            });
+    };
+
     $scope.getActualDate = function () {
         $http.get(contextPath + '/dates')
             .then(function successCallback(response) {
@@ -47,6 +57,6 @@ angular.module('visual_calendar', ['ngStorage']).controller('visual_calendarCont
 
 
     $scope.getActualDate();
-    $scope.loadMonth(0);
+    $scope.getParameter();
     $scope.getUserTeamName();
 });

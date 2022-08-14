@@ -3,11 +3,15 @@ package ru.sargassov.fmweb.intermediate_entites;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.sargassov.fmweb.dto.BankDto;
+import ru.sargassov.fmweb.dto.FinalPayment;
 import ru.sargassov.fmweb.intermediate_entites.days.Day;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -30,6 +34,7 @@ public class Bank {
     private BigDecimal tookMoney;
     private BigDecimal remainMoney;
     private BigDecimal alreadyPaid;
+    private boolean active = true;
 
     public static TypeOfReturn guessTypeOfReturn(String typeOfReturn) {
         if(typeOfReturn.equals("PER_DAY")) return TypeOfReturn.PER_DAY;
@@ -53,6 +58,58 @@ public class Bank {
         }
 
         return remainsDay;
+    }
+
+    public List<String> paymentPeriod(TypeOfReturn type, Team team, FinalPayment finalPayment) {
+        List<String> notesOfChanges = new ArrayList<>();
+        BigDecimal payType;
+
+        switch (type) {
+            case PER_DAY:
+                payType = payPerDay;
+                break;
+            case PER_WEEK:
+                payType = payPerWeek;
+                break;
+            default:
+                payType = payPerMonth;
+        }
+
+        if(remainMoney.compareTo(payType) < 0){
+            finalPayment.setFinal(true);
+            lastPayment(team);
+            notesOfChanges.add(payType + " Euro was paid to the Bank " + title + ". It is " + type);
+            notesOfChanges.add(title + " is closed!");
+            return notesOfChanges;
+        }
+
+        BigDecimal wealth = team.getWealth();
+        wealth = wealth.add(payType);
+        alreadyPaid = alreadyPaid.add(payType);
+        remainMoney = remainMoney.subtract(payType);
+        notesOfChanges.add(payType + " Euro was paid to the Bank " + title + ". It is " + type);
+        return notesOfChanges;
+    }
+
+    private void lastPayment(Team team) {
+        BigDecimal wealth = team.getWealth();
+        wealth = wealth.subtract(remainMoney);
+        remainMoney = BigDecimal.ZERO;
+        team.getLoans().remove(this);
+        remainLoan();
+    }
+
+    public void remainLoan() {
+        dateOfLoan = null;
+        remainsDate = null;
+        payPerDay = null;
+        payPerWeek = null;
+        payPerMonth = null;
+        fullLoanAmountValue = 0.0;
+        tookMoney = null;
+        remainMoney = null;
+        alreadyPaid = null;
+        active = true;
     }
 
     public enum TypeOfReturn {PER_DAY, PER_WEEK, PER_MONTH};

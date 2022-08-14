@@ -21,6 +21,9 @@ import java.util.stream.Collectors;
 @Component
 @AllArgsConstructor
 public class CalendarConverter {
+
+    private static final String PASSED = "Passed";
+    private static final String EMPTY = "";
     private final UserService userService;
 
     public EventDto getEventDtoFromTourDayEntity(TourDay t){
@@ -30,7 +33,11 @@ public class CalendarConverter {
         eventDto.setMatches(t.getMatches().stream()
                 .map(this::getMatchDtoFromEntity)
                 .collect(Collectors.toList()));
-        eventDto.setPassed(t.getMatches().get(0).isMatchPassed());
+
+        String passed = t.getMatches().get(0).isMatchPassed()
+                ? PASSED
+                : EMPTY;
+        eventDto.setPassed(passed);
         return eventDto;
     }
 
@@ -66,6 +73,12 @@ public class CalendarConverter {
         eventDto.setDate(dateFormer(day.getDate()));
         eventDto.setType(typeFormer(day));
         eventDto.setEvent(eventFormer(day));
+
+        String passed = day.isPassed()
+                ? PASSED
+                : EMPTY;
+        eventDto.setPassed(passed);
+
         return eventDto;
     }
 

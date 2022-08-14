@@ -2,23 +2,24 @@ package ru.sargassov.fmweb.intermediate_entites;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.sargassov.fmweb.dto.text_responses.TextResponse;
+import lombok.extern.slf4j.Slf4j;
+import ru.sargassov.fmweb.dto.FinalPayment;
 import ru.sargassov.fmweb.exceptions.BankNotFoundException;
 import ru.sargassov.fmweb.exceptions.MarketException;
 import ru.sargassov.fmweb.exceptions.PlayerNotFoundException;
-import ru.sargassov.fmweb.exceptions.TeamNotFoundException;
+import ru.sargassov.fmweb.intermediate_entites.days.Day;
 
 import java.math.BigDecimal;
+import java.time.DayOfWeek;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.function.Predicate;
-import java.util.stream.Stream;
 
 
 @Data
 @NoArgsConstructor
+@Slf4j
 public class Team {
     private long id;
     private String name;
@@ -180,6 +181,118 @@ public class Team {
 
         return opt.isPresent();
     }
+
+    public List<String> setRandomTrainingEffects() {
+        List<String> noteOfChanges = new ArrayList<>();
+        noteOfChanges.add("Training effcts of " + name);
+        int size = playerList.size();
+
+        for(int x = 0; x < 5; x++){
+            Player p = playerList.get((int) (Math.random() * size));
+            int balance = p.getTrainingBalance();
+            int trainingAble = p.getTrainingAble();
+            int trainingEffect = trainingAble * (int) (Math.random() * 5);
+
+            p.setTire(p.getTire() + 15);
+            p.setTrainingBalance(balance + trainingEffect);
+            noteOfChanges.add(p.getName() + " from " + name + " increase his training balance +" + p.getTrainingAble());
+            p.levelUpCheckAuto();
+        }
+        return noteOfChanges;
+    }
+
+    public List<String> userTeamTrainingEffects(List<String> noteOfChanges) {
+        noteOfChanges.add("Your team training effects:");
+
+        for (Coach coach : coaches) {
+            if (coach.getPlayerOnTraining() != null) {
+                Player player = coach.getPlayerOnTraining();
+                Coach.CoachProgram program = coach.getCoachProgram();
+                int playerTrainingBalance = player.getTrainingBalance();
+                int playerTriningAble = player.getTrainingAble();
+                int coachTrainingAble = coach.getTrainingAble();
+                player.setTrainingBalance(playerTrainingBalance + coachTrainingAble);
+                noteOfChanges.add(player.getName() + " in your club increase his training balance +" + (playerTriningAble * coach.getTrainingCoeff()));
+                player.levelUpCheckManual(coach);
+                player.guessTrainingTire(program);
+
+                if (player.getTire() > 50) {
+                    coach.setPlayerOnTraining(null);
+                }
+            }
+        }
+        return noteOfChanges;
+    }
+
+    public List<String> setFinanceUpdates(Day day) {
+        List<String> notesOfChanges = new ArrayList<>();
+        wealth = wealth.add(sponsor.getDayWage());
+        notesOfChanges.add("Sponsor " + sponsor.getName() + " gave your team " + sponsor.getDayWage() + " Euro. It is day wage.");
+
+        if(day.isMatch()){
+            wealth = wealth.add(sponsor.getMatchWage());
+            notesOfChanges.add("Sponsor " + sponsor.getName() + " gave your team " + sponsor.getMatchWage() + " Euro. It is match wage.");
+        }
+
+        return expensesUpdate(notesOfChanges, day);
+    }
+
+    private List<String> expensesUpdate(List<String> notesOfChanges, Day day) {
+        for (int x = 0; x < loans.size(); x++) {
+            DayOfWeek dayOfWeek = day.getDate().getDayOfWeek();
+            DayOfWeek loanDayOfWeek = loans.get(x).getDateOfLoan().getDate().getDayOfWeek();
+            int dayOfMonth = day.getDate().getDayOfMonth();
+            int loanDayOfMonth = loans.get(x).getDateOfLoan().getDate().getDayOfMonth();
+            FinalPayment finalPayment = new FinalPayment(false);
+
+            if (loans.get(x).getTypeOfReturn().equals(Bank.TypeOfReturn.PER_DAY)) {
+                notesOfChanges.addAll(
+                        loans.get(x).paymentPeriod(Bank.TypeOfReturn.PER_DAY, this, finalPayment)
+                );
+            }
+
+            else if (loans.get(x).getTypeOfReturn().equals(Bank.TypeOfReturn.PER_WEEK)
+                    && dayOfWeek.equals(loanDayOfWeek)) {
+
+                notesOfChanges.addAll(
+                        loans.get(x).paymentPeriod(Bank.TypeOfReturn.PER_WEEK, this, finalPayment)
+                );
+            }
+
+            else if(loans.get(x).getTypeOfReturn().equals(Bank.TypeOfReturn.PER_MONTH)
+                    && dayOfMonth == loanDayOfMonth) {
+
+                notesOfChanges.addAll(
+                        loans.get(x).paymentPeriod(Bank.TypeOfReturn.PER_MONTH, this, finalPayment)
+                );
+            }
+
+            if (finalPayment.isFinal()) {
+                x--;
+            }
+        }
+        return notesOfChanges;
+    }
+
+    public List<String> setMarketingChanges(Day day) {
+        List<String> notesOfChanges = new ArrayList<>();
+        for (int x = 0; x < markets.size(); x++) {
+            int capacity = stadium.getUsualAverageCapacity();
+            Market.MarketType marketType = markets.get(x).getMarketType();
+            int newFansValue = (int) (capacity + capacity / 100 * marketType.capacityCoeff);
+
+            stadium.setUsualAverageCapacity(newFansValue);
+            stadium.setSimpleCapacity(newFansValue);
+            notesOfChanges.add("New Stadium capacity is " + stadium.getUsualAverageCapacity());
+            if(markets.get(x).getFinishDate().equals(day.getDate())){
+                markets.remove(markets.get(x));
+                log.info("Market program is finished");
+                x--;
+            }
+        }
+        return notesOfChanges;
+    }
+
 
     //    public Team(String info) {
 //        //        markets = new ArrayList<>();

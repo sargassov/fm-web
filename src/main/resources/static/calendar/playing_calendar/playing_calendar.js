@@ -30,8 +30,18 @@ angular.module('playing_calendar', ['ngStorage']).controller('playing_calendarCo
             });
     };
 
+    $scope.getParameter = function () {
+        $http.get(contextPath + '/calendar/league_calendar/parameter')
+            .then(function successCallback(response) {
+                $scope.parameter = response.data.parameter;
+                $scope.loadTour($scope.parameter);
+            }, function errorCallback() {
+                alert('CANT LOAD TOUR PARAMETER');
+            });
+    };
+
 
     $scope.getActualDate();
-    $scope.loadTour(1);
+    $scope.getParameter();
     $scope.getLeagueName();
 });

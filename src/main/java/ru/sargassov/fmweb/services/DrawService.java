@@ -25,10 +25,6 @@ public class DrawService implements DrawServiceSpi {
         private Team team;
     }
 
-    public List<List<String>> getDrawsFromApi() {
-        return drawApi.getSheduleApiList();
-    }
-
     public List<DrawEntity> findAll(){
         return drawRepository.findAll();
     }

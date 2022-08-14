@@ -7,4 +7,6 @@ public final class Constant {
         AUGUST, SEPTEMBER, OCTOBER, NOVEMBER, DECEMBER, JANUARY,
         FEBRUARY, MARCH, APRIL, MAY, JUNE
     }
+
+    public static int MAX_TIRE_FOR_TRAIN = 50;
 }

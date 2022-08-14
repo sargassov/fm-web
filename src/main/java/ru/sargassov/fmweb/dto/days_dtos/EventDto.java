@@ -9,7 +9,7 @@ public class EventDto {
     private String date;
     private Integer tour;
     private List<MatchDto> matches;
-    private Boolean passed;
+    private String passed;
     private String type;
     private String event;
 }

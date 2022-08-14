@@ -1,5 +1,6 @@
 package ru.sargassov.fmweb.spi;
 
+import ru.sargassov.fmweb.dto.IntegerDto;
 import ru.sargassov.fmweb.dto.NameOfMonthDto;
 import ru.sargassov.fmweb.dto.days_dtos.EventDto;
 import ru.sargassov.fmweb.intermediate_entites.Team;
@@ -19,4 +20,8 @@ public interface CalendarServiceSpi {
     Day getPresentDay();
 
     Match findCurrentMatch(Team team, Team team1);
+
+    IntegerDto getMonthParameter();
+
+    IntegerDto getTourParameter();
 }

@@ -91,4 +91,11 @@ public interface TeamServiceSpi {
 
     List<InformationDto> gelAllIncomes();
 
+    List<String> setTrainingEffects();
+
+    List<String> setFinanceUpdates();
+
+    List<String> setMarketingChanges();
+
+    void setPlayerRecovery();
 }

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import ru.sargassov.fmweb.api_temporary_classes_group.CalendarApi;
 import ru.sargassov.fmweb.constants.Constant;
 import ru.sargassov.fmweb.converters.CalendarConverter;
+import ru.sargassov.fmweb.dto.IntegerDto;
 import ru.sargassov.fmweb.dto.NameOfMonthDto;
 import ru.sargassov.fmweb.dto.days_dtos.EventDto;
 import ru.sargassov.fmweb.exceptions.MatchException;
@@ -75,5 +76,19 @@ public class CalendarService implements CalendarServiceSpi {
         }
         log.error("Match between " + homeTeam + " and " + awayTeam + " not found!");
         throw new MatchException("Match between " + homeTeam + " and " + awayTeam + " not found!");
+    }
+
+    @Override
+    public IntegerDto getMonthParameter() {
+        IntegerDto iDto = new IntegerDto();
+        iDto.setParameter(calendarApi.getMonthParameter());
+        return iDto;
+    }
+
+    @Override
+    public IntegerDto getTourParameter() {
+        IntegerDto iDto = new IntegerDto();
+        iDto.setParameter(calendarApi.getTourParameter());
+        return iDto;
     }
 }

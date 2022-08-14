@@ -4,9 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
 import ru.sargassov.fmweb.exceptions.BankNotFoundException;
-import ru.sargassov.fmweb.exceptions.PresentDayNotFoundException;
 import ru.sargassov.fmweb.intermediate_entites.Bank;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -27,12 +27,13 @@ public class BankApi {
                         new BankNotFoundException("Bank " + title + " not found!"));
     }
 
-    public void remove(String title) {
+    public void inactive(String title) {
        Bank bank = getBankByTitleFromApiList(title);
-       bankApiList.remove(bank);
+       bank.setActive(false);
     }
 
-    public void returnBankToApi(Bank bank) {
-        bankApiList.add(bank);
+    public void active(Bank bank) {
+        Bank b = getBankByTitleFromApiList(bank.getTitle());
+        b.setActive(true);
     }
 }

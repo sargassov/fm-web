@@ -78,8 +78,8 @@ public class UserService implements UserServiceSpi {
 
     @Override
     @Transactional
-    public void visit() {
-        userApi.setVisitToYouthAcademyToday(true);
+    public void visit(boolean visit) {
+        userApi.setVisitToYouthAcademyToday(visit);
     }
 
     @Override

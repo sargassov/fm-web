@@ -27,9 +27,10 @@ public interface UserServiceSpi {
 
     Player getCaptainOfUserTeam();
 
-    void visit();
+    void visit(boolean visit);
 
     List<Player> getPlayerListFromUserTeam();
 
     List<Coach> getCoachListFromUserTeam();
+
 }

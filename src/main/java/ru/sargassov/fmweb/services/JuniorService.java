@@ -95,7 +95,7 @@ public class JuniorService implements JuniorServiceSpi {
         team.setWealth(team.getWealth().subtract(p.getPrice()));
         team.getPlayerList().add(p);
         juniorPoolApi.deleteFromApiList(juniorDto.getName());
-        userService.visit();
+        userService.visit(true);
         return new TextResponse("Player " + p.getName() + " was invoked in Your team");
     }
 }

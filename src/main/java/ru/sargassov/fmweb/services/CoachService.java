@@ -17,6 +17,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static ru.sargassov.fmweb.constants.Constant.MAX_TIRE_FOR_TRAIN;
+
 @Service
 @AllArgsConstructor
 public class CoachService implements CoachServiceSpi {
@@ -109,9 +111,14 @@ public class CoachService implements CoachServiceSpi {
     @Transactional
     public void selectingPlayerOnTrain(List<Player> players, int countPlayerInList, Coach coach) {
         for(int x = 0; x < players.size(); x++){
-            if(getBusyPlayers().contains(players.get(countPlayerInList))){
+            Player countPlayer = players.get(countPlayerInList);
+            List<Player> busyPLayers = getBusyPlayers();
+            if(busyPLayers.contains(countPlayer)
+                    || players.get(countPlayerInList).getTire() > MAX_TIRE_FOR_TRAIN){
                 countPlayerInList++;
-                if(countPlayerInList == players.size()) countPlayerInList = 0;
+                if(countPlayerInList == players.size()) {
+                    countPlayerInList = 0;
+                }
                 continue;
             }
             break;
@@ -124,8 +131,7 @@ public class CoachService implements CoachServiceSpi {
     @Transactional
     public void guessTrainingAble(Coach coach, Player player) {
         double possibleTrainingAble = 1.0;
-        possibleTrainingAble *= coach.getCoachProgram().getProgramCode();
-        possibleTrainingAble *= coach.getType().getTypeCode();
+        possibleTrainingAble *= coach.getTrainingCoeff();
         coach.setTrainingAble((int) (possibleTrainingAble * player.getTrainingAble()));
     }
 

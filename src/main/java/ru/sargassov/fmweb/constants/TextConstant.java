@@ -1,6 +1,10 @@
 package ru.sargassov.fmweb.constants;
 
+import ru.sargassov.fmweb.dto.text_responses.TextResponse;
 import ru.sargassov.fmweb.intermediate_entites.Team;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public final class TextConstant {
 
@@ -8,6 +12,7 @@ public final class TextConstant {
     public static final String MESSI_LEONEL = "Messi Leonel";
     public static final String ARGENTINA = "Arg";
     public static final String YOUR_CLUB_HAD_ALREADY = "Your club had already ";
+    public static final String MATCH_DONT_PLAYED = "Your club don't played match today";
 
     public static String getBanksStartMessage(Team userTeam, int banksValue){
         if(banksValue == 0) return userTeam.getName() + " haven't loans yet." +
@@ -25,5 +30,13 @@ public final class TextConstant {
         } else {
             return "You can choose a new sponsor from the list.";
         }
+    }
+
+    public static List<TextResponse> dropStringsIntoTextResponses(List<String> strings) {
+        List<TextResponse> responses = new ArrayList<>();
+        for (String s : strings) {
+            responses.add(new TextResponse(s));
+        }
+        return responses;
     }
 }

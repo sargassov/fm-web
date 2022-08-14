@@ -44,6 +44,7 @@ public class BankService implements BankServiceSpi {
         List<Bank> banks = bankApi.getBankApiList();
         return banks.stream()
                 .filter(b -> b.getMaxLoanAmount().compareTo(BigDecimal.valueOf(parameter)) > 0)
+                .filter(Bank::isActive)
                 .map(b -> bankConverter.getBankDtoFromIntermediateEntity(b, parameter))
                 .collect(Collectors.toList());
     }
@@ -55,7 +56,7 @@ public class BankService implements BankServiceSpi {
         Team team = userService.getUserTeam();
         Bank bank = bankApi.getBankByTitleFromApiList(loan.getTitle());
         bankConverter.getFullLoanInformation(bank, loan);
-        bankApi.remove(bank.getTitle());
+        bankApi.inactive(bank.getTitle());
         team.getLoans().add(bank);
         team.setWealth(team.getWealth().add(bank.getTookMoney()));
     }
@@ -63,7 +64,7 @@ public class BankService implements BankServiceSpi {
     @Transactional
     @Override
     public void returnBankToApi(Bank bank) {
-        bankApi.returnBankToApi(bank);
+        bankApi.active(bank);
     }
 
     @Override

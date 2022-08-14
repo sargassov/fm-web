@@ -7,8 +7,6 @@ import java.util.List;
 
 public interface DrawServiceSpi {
 
-    List<List<String>> getDrawsFromApi();
-
     List<DrawEntity> findAll();
 
     List<String> drawListMaker();
