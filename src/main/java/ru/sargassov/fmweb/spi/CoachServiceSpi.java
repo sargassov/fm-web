@@ -2,8 +2,8 @@ package ru.sargassov.fmweb.spi;
 
 import ru.sargassov.fmweb.dto.CoachDto;
 import ru.sargassov.fmweb.dto.PriceResponce;
-import ru.sargassov.fmweb.intermediate_entites.Coach;
-import ru.sargassov.fmweb.intermediate_entites.Player;
+import ru.sargassov.fmweb.intermediate_entities.Coach;
+import ru.sargassov.fmweb.intermediate_entities.Player;
 
 import java.util.List;
 

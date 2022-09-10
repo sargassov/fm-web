@@ -5,14 +5,15 @@ import ru.sargassov.fmweb.dto.player_dtos.CreatedPlayerDto;
 import ru.sargassov.fmweb.dto.player_dtos.IdNamePricePlayerDto;
 import ru.sargassov.fmweb.dto.player_dtos.PlayerOnTrainingDto;
 import ru.sargassov.fmweb.dto.player_dtos.PlayerSoftSkillDto;
-import ru.sargassov.fmweb.intermediate_entites.Player;
-import ru.sargassov.fmweb.intermediate_entites.Team;
+import ru.sargassov.fmweb.intermediate_entities.Player;
+import ru.sargassov.fmweb.intermediate_entities.Team;
+import ru.sargassov.fmweb.intermediate_entities.User;
 
 import java.util.List;
 
 public interface PlayerServiceSpi {
 
-    List<Player> getAllPlayersByTeamId(Long id);
+    List<Player> findAllByTeamEntityId(Long id, User user);
 
     List<PlayerSoftSkillDto> getPlayerSoftSkillDtoFromPlayer(List<Player> playerList);
 

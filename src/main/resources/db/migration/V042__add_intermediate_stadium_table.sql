@@ -1,0 +1,20 @@
+CREATE TABLE IF NOT EXISTS stadium (
+                                       id bigserial PRIMARY KEY NOT NULL,
+                                       id_user BIGINT NOT NULL,
+                                       title VARCHAR(64) NOT NULL,
+                                       id_team BIGINT NOT NULL,
+                                       id_league BIGINT NOT NULL,
+                                       id_city BIGINT NOT NULL,
+                                       full_capacity INTEGER NOT NULL,
+                                       vip_capacity INTEGER NOT NULL,
+                                       family_capacity INTEGER NOT NULL,
+                                       fan_capacity INTEGER NOT NULL,
+                                       simple_capacity INTEGER NOT NULL,
+                                       away_capacity INTEGER NOT NULL,
+                                       usual_average_capacity INTEGER NOT NULL,
+                                       vip_ticket_cost NUMERIC(6, 2) NOT NULL,
+                                       family_ticket_cost NUMERIC(6, 2) NOT NULL,
+                                       fan_ticket_cost NUMERIC(6, 2) NOT NULL,
+                                       simple_ticket_cost NUMERIC(6, 2) NOT NULL,
+                                       away_ticket_cost NUMERIC(6, 2) NOT NULL
+);

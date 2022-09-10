@@ -3,9 +3,9 @@ package ru.sargassov.fmweb.constants;
 import ru.sargassov.fmweb.dto.MarketDto;
 import ru.sargassov.fmweb.dto.text_responses.InformationDto;
 import ru.sargassov.fmweb.exceptions.StadiumException;
-import ru.sargassov.fmweb.intermediate_entites.Market;
-import ru.sargassov.fmweb.intermediate_entites.Stadium;
-import ru.sargassov.fmweb.intermediate_entites.Team;
+import ru.sargassov.fmweb.intermediate_entities.Market;
+import ru.sargassov.fmweb.intermediate_entities.Stadium;
+import ru.sargassov.fmweb.intermediate_entities.Team;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

@@ -4,9 +4,11 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.sargassov.fmweb.dto.team_dtos.TeamOnPagePlayersDto;
 import ru.sargassov.fmweb.entities.TeamEntity;
-import ru.sargassov.fmweb.intermediate_entites.HeadCoach;
-import ru.sargassov.fmweb.intermediate_entites.League;
-import ru.sargassov.fmweb.intermediate_entites.Team;
+import ru.sargassov.fmweb.intermediate_entities.HeadCoach;
+import ru.sargassov.fmweb.intermediate_entities.Team;
+import ru.sargassov.fmweb.intermediate_entities.User;
+import ru.sargassov.fmweb.intermediate_spi.HeadCoachIntermediateServiceSpi;
+import ru.sargassov.fmweb.intermediate_spi.LeagueIntermediateServiceSpi;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -15,20 +17,29 @@ import java.util.ArrayList;
 @Component
 @AllArgsConstructor
 public class TeamConverter {
-    private final League league;
+
+    private final LeagueIntermediateServiceSpi leagueIntermediateService;
     private final StadiumConverter stadiumConverter;
+
+    private final HeadCoachIntermediateServiceSpi headCoachIntermediateService;
     private final CityConverter cityConverter;
 
-    public Team entityToIntermediateEntity(TeamEntity teamEntity){
+    public Team getIntermediateEntityFromEntity(TeamEntity teamEntity, User user){
         Team team = new Team();
-        team.setId(teamEntity.getId());
+        var headCoach = attractHeadCoach(teamEntity.getManager(), user);
+        var league = leagueIntermediateService.getLeague(user);
+        var entityStadium = teamEntity.getStadiumEntity();
+        var stadium = stadiumConverter.getIntermediateEntityFromEntity(entityStadium, team, user, league);
+        var city = stadium.getCity();
+
+        team.setUser(user);
+        team.setTeamEntityId(teamEntity.getId());
         team.setName(teamEntity.getName());
-        team.setHeadCoach(new HeadCoach(teamEntity.getManager()));
-        team.setWealth(BigDecimal.valueOf(teamEntity.getWealth()).setScale(2, RoundingMode.HALF_UP));
+        team.setHeadCoach(headCoach);
         team.setLeague(league);
-        team.setStadium(stadiumConverter.getIntermediateEntityFromEntity(teamEntity.getStadiumEntity(), team));
-        team.setCity(cityConverter.entityToDto(teamEntity.getCityEntity()));
-        //------------------------
+        team.setWealth(BigDecimal.valueOf(teamEntity.getWealth()).setScale(2, RoundingMode.HALF_UP));
+        team.setStadium(stadium);
+        team.setCity(city);
         team.setStartWealth(team.getWealth());
         team.setCoaches(new ArrayList<>());
         team.setLoans(new ArrayList<>());
@@ -38,6 +49,13 @@ public class TeamConverter {
         team.setMarketExpenses(BigDecimal.ZERO);
         team.setTransferExpenses(BigDecimal.ZERO);
         return team;
+    }
+
+    private HeadCoach attractHeadCoach(String manager, User user) {
+        var headCoach = new HeadCoach();
+        headCoach.setName(manager);
+        headCoach.setUser(user);
+        return headCoachIntermediateService.save(headCoach);
     }
 
     public TeamOnPagePlayersDto dtoToTeamOnPagePlayersDto(Team team){

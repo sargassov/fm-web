@@ -8,17 +8,22 @@ import ru.sargassov.fmweb.api_temporary_classes_group.PlacementApi;
 import ru.sargassov.fmweb.converters.PlacementConverter;
 import ru.sargassov.fmweb.dto.PlacementData;
 import ru.sargassov.fmweb.dto.PlacementOnPagePlacementsDto;
-import ru.sargassov.fmweb.intermediate_entites.League;
-import ru.sargassov.fmweb.intermediate_entites.Placement;
-import ru.sargassov.fmweb.intermediate_entites.Team;
+import ru.sargassov.fmweb.intermediate_entities.League;
+import ru.sargassov.fmweb.intermediate_entities.Placement;
+import ru.sargassov.fmweb.intermediate_entities.Team;
 import ru.sargassov.fmweb.entities.PlacementEntity;
-import ru.sargassov.fmweb.repositories.PlacementRepository;
+import ru.sargassov.fmweb.entity_repositories.PlacementRepository;
+import ru.sargassov.fmweb.intermediate_entities.User;
+import ru.sargassov.fmweb.intermediate_spi.PlacementIntermediateServiceSpi;
+import ru.sargassov.fmweb.intermediate_spi.PlayerIntermediateServiceSpi;
+import ru.sargassov.fmweb.intermediate_spi.TeamIntermediateServiceSpi;
 import ru.sargassov.fmweb.spi.PlacementServiceSpi;
 import ru.sargassov.fmweb.spi.PlayerServiceSpi;
 import ru.sargassov.fmweb.spi.TeamServiceSpi;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,49 +32,58 @@ import java.util.stream.Collectors;
 @Slf4j
 public class PlacementService implements PlacementServiceSpi {
     private final PlacementRepository placementRepository;
-    private final PlacementApi placementApi;
+    private final PlacementIntermediateServiceSpi placementIntermediateService;
+    private final PlayerIntermediateServiceSpi playerIntermediateService;
     private final PlacementConverter placementConverter;
-    private final TeamServiceSpi teamService;
+    private final TeamIntermediateServiceSpi teamIntermediateService;
     private final PlayerServiceSpi playerService;
     private final League league;
     private final UserService userService;
 
     @Override
-    @Transactional
     public List<PlacementEntity> findAllPlacements(){
         return placementRepository.findAll();
     }
 
+    public Integer allPlacemntsQuantity(){
+        return placementRepository.findAllPlacementsQuantity();
+    }
+
     @Override
     @Transactional
-    public void loadPlacements() {
+    public void loadPlacements(User user) {
         log.info("PlacementService.loadPlacements");
-        placementApi.setPlacementApiList(findAllPlacements().stream()
-        .map(placementConverter::entityToDto)
-        .collect(Collectors.toList()));
+        setPlacementsForAllTeams(user);
+        fillPlacementForAllTeams(user);
+    }
 
-        setPlacementsForAllTeams();
-        fillPlacementForAllTeams();
-        //установить игроков для каждой расстановки
+    @Override
+    public void fillPlacementForAllTeams(User user) {
+        teamIntermediateService.fillPlacementForAllTeams(user);
     }
 
     @Override
     @Transactional
-    public void fillPlacementForAllTeams() {
-        teamService.fillPlacementForAllTeams();
+    public void setPlacementsForAllTeams(User user) {
+        teamIntermediateService.findAll().forEach(team -> fillPlacement(team, user));
     }
 
     @Override
-    @Transactional
-    public void setPlacementsForAllTeams() {
-        teamService.getTeamListFromApi().forEach(this::fillPlacement);
+    public void fillPlacement(Team team, User user) {
+        long selected = (int) (Math.random() * allPlacemntsQuantity());
+        var optionalCurrentPlacementEntity = placementRepository.findById(selected);
+        var savedPlacement = getIntermediateEntityAndSave(optionalCurrentPlacementEntity, team, user);
+        team.setPlacement(savedPlacement);
+        teamIntermediateService.save(team);
     }
 
-    @Override
-    @Transactional
-    public void fillPlacement(Team team) {
-        int selected = (int) (Math.random() * placementApi.getPlacementApiList().size());
-        team.setPlacement(placementApi.getPlacementByNumber(selected));
+    private Placement getIntermediateEntityAndSave(Optional<PlacementEntity> optionalCurrentPlacementEntity, Team team, User user) {
+        if (optionalCurrentPlacementEntity.isPresent()) {
+            var placementEntity = optionalCurrentPlacementEntity.get();
+            var placement = placementConverter.getIntermediateEntityFromEntity(placementEntity, team, user);
+            return placementIntermediateService.save(placement);
+        }
+        throw new IllegalStateException("No match with ccurrent placement");
     }
 
     @Override

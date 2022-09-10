@@ -20,17 +20,23 @@ import ru.sargassov.fmweb.dto.text_responses.InformationDto;
 import ru.sargassov.fmweb.dto.text_responses.StartFinishInformationDto;
 import ru.sargassov.fmweb.dto.text_responses.TextResponse;
 import ru.sargassov.fmweb.exceptions.*;
-import ru.sargassov.fmweb.intermediate_entites.*;
-import ru.sargassov.fmweb.intermediate_entites.days.Day;
-import ru.sargassov.fmweb.repositories.TeamRepository;
+import ru.sargassov.fmweb.intermediate_entities.*;
+import ru.sargassov.fmweb.intermediate_entities.Day;
+import ru.sargassov.fmweb.entity_repositories.TeamRepository;
+import ru.sargassov.fmweb.intermediate_spi.JuniorIntermediateServiceSpi;
+import ru.sargassov.fmweb.intermediate_spi.PlayerIntermediateServiceSpi;
+import ru.sargassov.fmweb.intermediate_spi.PositionIntermediateServiceSpi;
+import ru.sargassov.fmweb.intermediate_spi.TeamIntermediateServiceSpi;
 import ru.sargassov.fmweb.spi.*;
 
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 @Service
@@ -38,11 +44,13 @@ import java.util.stream.Collectors;
 @Slf4j
 public class TeamService implements TeamServiceSpi {
     private final TeamRepository teamRepository;
+    private final TeamIntermediateServiceSpi teamIntermediateService;
+    private final PositionIntermediateServiceSpi positionIntermediateService;
+    private final JuniorIntermediateServiceSpi juniorIntermediateServiceSpi;
     private final TeamConverter teamConverter;
     private final PlayerServiceSpi playerService;
-    private final JuniorServiceSpi juniorService;
+    private final PlayerIntermediateServiceSpi playerIntermediateService;
     private final UserService userService;
-    private final TeamApi teamApi;
     private final TeamsPlayersComparators teamsPlayersComparators;
     private final TrainingPlayersComparators trainingPlayersComparators;
     private final BankServiceSpi bankService;
@@ -51,39 +59,40 @@ public class TeamService implements TeamServiceSpi {
 
     @Transactional
     @Override
-    public void loadTeams(){
-        teamApi.setTeamApiList(findAll());
-        fillTeams(teamApi.getTeamApiList());
-        juniorRecruitment(teamApi.getTeamApiList());
+    public void loadTeams(User user){
+        var newTeamsWithoutId = findAll(user);
+        var teams = teamIntermediateService.save(newTeamsWithoutId);
+        fillTeams(teams, user);
+        juniorRecruitment(user);
     }
 
-    @Transactional
     @Override
-    public List<Team> findAll(){
-        log.info("TeamService.getAllTeams");
+    public List<Team> findAll(User user){
+        log.info("TeamService.findAll");
         return teamRepository.findAll().stream()
-                .map(teamConverter::entityToIntermediateEntity).collect(Collectors.toList());
+                .map(t -> teamConverter.getIntermediateEntityFromEntity(t, user)).collect(Collectors.toList());
     }
 
-    @Transactional
     @Override
-    public void fillTeams(List<Team> teamList) {
+    public void fillTeams(List<Team> teamList, User user) {
         log.info("TeamService.fillTeams");
         teamList.forEach(t -> {
-            t.setPlayerList(playerService.getAllPlayersByTeamId(t.getId()));
+            var playerList = playerService.findAllByTeamEntityId(t.getTeamEntityId(), user);
+            t.setPlayerList(playerList);
         });
     }
 
-    @Transactional
     @Override
-    public void juniorRecruitment(List<Team> teamList) {
+    public void juniorRecruitment(User user) {
         log.info("TeamService.juniorRecruitment");
         int maxValueOfYoungPlayersForOnePosition = 2;
+        var teams = teamIntermediateService.findAll();
+        var positions = positionIntermediateService.findAll();
 
-        for(Team currentTeam : teamList){
-            for(Position currentPosition : Position.values()){
+        for(Team currentTeam : teams){
+            for(Position currentPosition : positions){
                 for (int i = 0; i < maxValueOfYoungPlayersForOnePosition; i++) {
-                    addJuniorToTeam(currentTeam, currentPosition);
+                    addJuniorToTeam(currentTeam, currentPosition, user);
                 }
             }
         }
@@ -91,11 +100,13 @@ public class TeamService implements TeamServiceSpi {
 
     @Transactional
     @Override
-    public void addJuniorToTeam(Team currentTeam, Position currentPosition){
-        Player player = juniorService.getYoungPlayer(currentPosition);
+    public void addJuniorToTeam(Team currentTeam, Position currentPosition, User user){
+        var player = juniorIntermediateServiceSpi.getYoungPlayerForPosition(currentPosition, user);
+
         player.setTeam(currentTeam);
         player.setNumber(randomGuessNum(currentTeam));
         currentTeam.getPlayerList().add(player);
+        playerIntermediateService.save(player);
     }
 
     @Transactional
@@ -121,70 +132,6 @@ public class TeamService implements TeamServiceSpi {
         return teamApi.getTeamApiList();
     }
 
-    public void fillPlacementForAllTeams() {
-        getTeamListFromApi()
-                .forEach(t -> {
-                    autoFillPlacement(t);
-                    captainAppointment(t);
-                    powerTeamCounter(t);
-                });
-    }
-
-    @Transactional
-    @Override
-    public void autoFillPlacement(Team t) {
-        log.info("TeamService.autoFillPlacement for " + t.getName());
-
-        List<Player> playerList = t.getPlayerList().stream()
-                .filter(p -> !p.isInjury())
-                .collect(Collectors.toList()); // только здоровые игроки
-
-        t.getPlacement().getRoles().forEach(role -> {
-            log.info(t.getName() + " " + role.getTitle());
-            List<Player> suitablePlayers = getSuitablePlayers(playerList, role).stream()
-                    .filter(p -> p.getStrategyPlace() == -100)
-                    .collect(Collectors.toList()); // подходящие игроки на конкретную позицию
-
-            Player selected = (findBest(suitablePlayers));
-            selected.setFirstEighteen(true);
-            selected.setStrategyPlace(role.getPosNumber());
-        });
-    }
-
-
-    @Transactional
-    @Override
-    public Player findBest(List<Player> suitablePlayers) {
-        Player best = suitablePlayers.stream().sorted((o1, o2) ->
-                Integer.compare(o2.getPower(), o1.getPower()))
-                .limit(1)
-                .findFirst()
-                .orElseThrow(() ->
-                        new PlayerNotFoundException("Player in method TeamService.findBest() not found"));
-        log.info(best.getName());
-        return best;
-    }
-
-    @Transactional
-    @Override
-    public List<Player> getSuitablePlayers(List<Player> playerList, Role role) {
-        return playerList.stream()
-                .filter(p -> p.equalsPosition(role))
-                .collect(Collectors.toList());
-    }
-
-    @Transactional
-    @Override
-    public void captainAppointment(Team team) {
-        Player player = team.getPlayerList().stream().sorted((o1, o2) -> Integer.compare(o2.getCaptainAble(), o1.getCaptainAble()))
-                .limit(1)
-                .findFirst()
-                .orElseThrow(() ->
-                        new PlayerNotFoundException("Player in method TeamService.captainAppointment() not found"));
-
-        player.setCapitan(true);
-    }
-
     @Transactional
     @Override
     public void setNewCaptainHandle(String name){
@@ -199,23 +146,6 @@ public class TeamService implements TeamServiceSpi {
 
         nowCap.setCapitan(false);
         futureCap.setCapitan(true);
-    }
-
-    @Transactional
-    @Override
-    public void powerTeamCounter(Team team) {
-        int power = 0;
-
-        List<Player> playerList = team.getPlayerList().stream()
-                .filter(p -> p.getStrategyPlace() > -1 && p.getStrategyPlace() < 11)
-                .collect(Collectors.toList());
-
-        for(Player p: playerList){
-            power += p.getPower();
-            if(p.isCapitan())
-                power += p.getCaptainAble();
-        }
-        team.setTeamPower(power / 11);
     }
     ///////////////////////////////////////////////////////////////стартовые методы
 
@@ -425,8 +355,13 @@ public class TeamService implements TeamServiceSpi {
         List<StartFinishInformationDto> dtos = new ArrayList<>();
 
         for (Market market : markets) {
-            String startDateString = market.getStartDate().getDayOfMonth() + "." + market.getStartDate().getMonth() + "." + market.getStartDate().getYear();
-            String finishDateString = market.getFinishDate().getDayOfMonth() + "." + market.getFinishDate().getMonth() + "." + market.getFinishDate().getYear();
+            Day startDay = market.getStartDate();
+            Day finishDay = market.getFinishDate();
+            LocalDate startDate = startDay.getDate();
+            LocalDate finishDate = finishDay.getDate();
+
+            String startDateString = startDate.getDayOfMonth() + "." + startDate.getMonth() + "." + startDate.getYear();
+            String finishDateString = finishDate.getDayOfMonth() + "." + finishDate.getMonth() + "." + finishDate.getYear();
             StartFinishInformationDto dto = new StartFinishInformationDto(
                     market.getMarketTypeInString(),
                     startDateString,
@@ -452,8 +387,10 @@ public class TeamService implements TeamServiceSpi {
             throw new MarketException("Too much marketing programs in your teams!");
         };
 
-        market.setStartDate(calendarService.getPresentDay().getDate());
-        market.setFinishDate(market.getStartDate().plusWeeks((Integer) dto.getValue()));
+        Day startDay = market.getStartDate();
+        startDay.setDate(calendarService.getPresentDay().getDate());
+        Day finishDay = market.getFinishDate();
+        finishDay.setDate(startDay.getDate().plusWeeks((Integer) dto.getValue()));
         team.getMarkets().add(market);
         team.setWealth(team.getWealth().subtract(askingCost));
         team.substractMarketExpenses(askingCost);

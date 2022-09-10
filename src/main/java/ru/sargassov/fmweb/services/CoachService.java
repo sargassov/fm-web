@@ -6,9 +6,9 @@ import ru.sargassov.fmweb.converters.CoachConverter;
 import ru.sargassov.fmweb.dto.CoachDto;
 import ru.sargassov.fmweb.dto.PriceResponce;
 import ru.sargassov.fmweb.exceptions.CoachException;
-import ru.sargassov.fmweb.intermediate_entites.Coach;
-import ru.sargassov.fmweb.intermediate_entites.Player;
-import ru.sargassov.fmweb.intermediate_entites.Team;
+import ru.sargassov.fmweb.intermediate_entities.Coach;
+import ru.sargassov.fmweb.intermediate_entities.Player;
+import ru.sargassov.fmweb.intermediate_entities.Team;
 import ru.sargassov.fmweb.spi.CoachServiceSpi;
 
 import javax.transaction.Transactional;

@@ -2,10 +2,13 @@ package ru.sargassov.fmweb.services;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.sargassov.fmweb.api_temporary_classes_group.DrawApi;
-import ru.sargassov.fmweb.intermediate_entites.Team;
+import ru.sargassov.fmweb.converters.DrawConverter;
+import ru.sargassov.fmweb.intermediate_entities.Team;
 import ru.sargassov.fmweb.entities.DrawEntity;
-import ru.sargassov.fmweb.repositories.DrawRepository;
+import ru.sargassov.fmweb.entity_repositories.DrawRepository;
+import ru.sargassov.fmweb.intermediate_entities.User;
+import ru.sargassov.fmweb.intermediate_spi.DrawIntermediateServiceSpi;
+import ru.sargassov.fmweb.intermediate_spi.TeamIntermediateServiceSpi;
 import ru.sargassov.fmweb.spi.DrawServiceSpi;
 import ru.sargassov.fmweb.spi.TeamServiceSpi;
 
@@ -16,8 +19,9 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class DrawService implements DrawServiceSpi {
     private final DrawRepository drawRepository;
-    private final DrawApi drawApi;
-    private final TeamServiceSpi teamService;
+    private final DrawConverter drawConverter;
+    private final TeamIntermediateServiceSpi teamIntermediateService;
+    private final DrawIntermediateServiceSpi drawIntermediateService;
 
     @AllArgsConstructor
     public class Basket{
@@ -36,28 +40,28 @@ public class DrawService implements DrawServiceSpi {
     }
 
     public List<List<String>> toursProject(){
-        List<String> projectDraws = drawListMaker();
+        var projectDraws = drawListMaker();
         List<List<String>> tours = new ArrayList<>(projectDraws.size());
 
-        for(String projectDraw : projectDraws){
-            String[] splitProjectDraw = projectDraw.split("/");
+        for(var projectDraw : projectDraws){
+            var splitProjectDraw = List.of(projectDraw.split("/"));
             tours.add(new ArrayList<>());
-            tours.get(tours.size() - 1).addAll(new ArrayList<>(List.of(splitProjectDraw)));
+            tours.get(tours.size() - 1).addAll(splitProjectDraw);
         }
 
         return tours;
     }
 
     public List<Basket> drawBasket() {
-        List<Basket> baskets = new ArrayList<>();
+        var baskets = new ArrayList<Basket>();
         int count = 1;
-        List<Team> teams = new ArrayList<>();
-        teams.addAll(teamService.getTeamListFromApi());
-        Random random = new Random();
+        var teams = new ArrayList<>(teamIntermediateService.findAll());
+        var random = new Random();
 
         while (teams.size() > 0){
             int randInt = random.nextInt(teams.size());
-            baskets.add(new Basket(count++, teams.remove(randInt)));
+            var basket = new Basket(count++, teams.remove(randInt));
+            baskets.add(basket);
         }
 
         return baskets;
@@ -71,20 +75,23 @@ public class DrawService implements DrawServiceSpi {
         throw new RuntimeException("DrawService.findIf was get wrong condition " + condition);
     }
 
-    public void loadShedule(){
-        List<List<String>> projectOfShedule = toursProject();
-        List<Basket> baskets = drawBasket();
+    public void loadShedule(User user){
+        var projectOfShedule = toursProject();
+        var baskets = drawBasket();
         String deliver = "-";
 
-        for (List<String> tour : projectOfShedule) {
+        int tourCount = 1;
+        for (var tour : projectOfShedule) {
             for (int match = 0; match < tour.size(); match++) {
-                String[] splitTeamNumbers = tour.get(match).split(deliver);
+                var currentMatch = tour.get(match);
+                String[] splitTeamNumbers = currentMatch.split(deliver);
                 splitTeamNumbers[0] = findIf(baskets, Integer.parseInt(splitTeamNumbers[0]));
                 splitTeamNumbers[1] = findIf(baskets, Integer.parseInt(splitTeamNumbers[1]));
                 tour.set(match, splitTeamNumbers[0] + deliver + splitTeamNumbers[1]);
+                var draw = drawConverter.getIntermediateEntityFromString(currentMatch, user, tourCount);
+                drawIntermediateService.save(draw);
             }
+            tourCount++;
         }
-
-        drawApi.setSheduleApiList(projectOfShedule);
     }
 }

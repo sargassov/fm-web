@@ -4,13 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ru.sargassov.fmweb.api_temporary_classes_group.BankApi;
 import ru.sargassov.fmweb.converters.BankConverter;
 import ru.sargassov.fmweb.dto.BankDto;
 import ru.sargassov.fmweb.dto.LoanDto;
-import ru.sargassov.fmweb.intermediate_entites.Bank;
-import ru.sargassov.fmweb.intermediate_entites.Team;
-import ru.sargassov.fmweb.repositories.BankRepository;
+import ru.sargassov.fmweb.intermediate_entities.Bank;
+import ru.sargassov.fmweb.intermediate_entities.Team;
+import ru.sargassov.fmweb.entity_repositories.BankRepository;
+import ru.sargassov.fmweb.intermediate_entities.User;
+import ru.sargassov.fmweb.intermediate_spi.BankIntermediateServiceSpi;
 import ru.sargassov.fmweb.spi.BankServiceSpi;
 import ru.sargassov.fmweb.validators.LoanValidator;
 
@@ -26,16 +27,20 @@ import java.util.stream.Collectors;
 public class BankService implements BankServiceSpi {
     private final BankRepository bankRepository;
     private final BankConverter bankConverter;
-    private final BankApi bankApi;
+    private final BankIntermediateServiceSpi bankIntermediateService;
     private final UserService userService;
     private final LoanValidator loanValidator;
 
     @Transactional
     @Override
-    public void loadBanks(){
-        log.info("BanksService.getAllBanks");
-        bankApi.setBankApiList(bankRepository.findAll().stream()
-                .map(bankConverter::getIntermediateEntityFromEntity).collect(Collectors.toList()));
+    public void loadBanks(User user){
+        log.info("BanksService.loadBanks");
+        var bankEntites = bankRepository.findAll();
+        var banks = bankEntites
+                .stream()
+                .map(be -> bankConverter.getIntermediateEntityFromEntity(be, user))
+                .collect(Collectors.toList());
+        bankIntermediateService.save(banks);
     }
 
     @Transactional

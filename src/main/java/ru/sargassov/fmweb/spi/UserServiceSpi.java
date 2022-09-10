@@ -1,19 +1,18 @@
 package ru.sargassov.fmweb.spi;
 
-import org.springframework.stereotype.Component;
 import ru.sargassov.fmweb.dto.UserData;
 import ru.sargassov.fmweb.dto.text_responses.TextResponse;
-import ru.sargassov.fmweb.exceptions.YouthAcademyException;
-import ru.sargassov.fmweb.intermediate_entites.Coach;
-import ru.sargassov.fmweb.intermediate_entites.Player;
-import ru.sargassov.fmweb.intermediate_entites.Team;
+import ru.sargassov.fmweb.intermediate_entities.Coach;
+import ru.sargassov.fmweb.intermediate_entities.Player;
+import ru.sargassov.fmweb.intermediate_entities.Team;
+import ru.sargassov.fmweb.intermediate_entities.User;
 
 import java.util.List;
 
 
 public interface UserServiceSpi {
 
-    void fillUserApi(UserData userData);
+    User constructNewUser(UserData userData);
 
     boolean isVisited();
 

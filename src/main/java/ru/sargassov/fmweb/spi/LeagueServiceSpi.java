@@ -4,13 +4,13 @@ import ru.sargassov.fmweb.dto.LeagueDto;
 import ru.sargassov.fmweb.dto.matrix_dto.CortageDto;
 import ru.sargassov.fmweb.dto.player_dtos.PlayerSoftSkillDto;
 import ru.sargassov.fmweb.dto.team_dtos.TeamResultDto;
-import ru.sargassov.fmweb.intermediate_entites.League;
+import ru.sargassov.fmweb.intermediate_entities.User;
 
 import java.util.List;
 
 public interface LeagueServiceSpi {
 
-   League getRussianLeague();
+   void getRussianLeague(User user);
 
    LeagueDto getLeagueName();
 

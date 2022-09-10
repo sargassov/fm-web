@@ -4,8 +4,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.sargassov.fmweb.dto.BankDto;
 import ru.sargassov.fmweb.dto.LoanDto;
-import ru.sargassov.fmweb.intermediate_entites.Bank;
+import ru.sargassov.fmweb.intermediate_entities.Bank;
 import ru.sargassov.fmweb.entities.BankEntity;
+import ru.sargassov.fmweb.intermediate_entities.User;
 import ru.sargassov.fmweb.spi.CalendarServiceSpi;
 
 import java.math.BigDecimal;
@@ -17,16 +18,15 @@ public class BankConverter {
     private final CalendarServiceSpi calendarService;
     private final CalendarConverter calendarConverter;
 
-    public Bank getIntermediateEntityFromEntity(BankEntity bankEntity){
-        Bank bDto = new Bank();
-        bDto.setId(bankEntity.getId());
-        bDto.setTitle(bankEntity.getTitle());
-        bDto.setPercentDay(bankEntity.getPercentDay());
-        bDto.setPercentMonth(bankEntity.getPercentMonth());
-        bDto.setPercentWeek(bankEntity.getPercentWeek());
-        bDto.setFullLoanCoeff(bankEntity.getFullLoanCoeff());
-        bDto.setMaxLoanAmount(BigDecimal.valueOf(bankEntity.getMaxLoanAmount()));
-        return bDto;
+    public Bank getIntermediateEntityFromEntity(BankEntity bankEntity, User user){
+        Bank bank = new Bank();
+        bank.setTitle(bankEntity.getTitle());
+        bank.setPercentDay(bankEntity.getPercentDay());
+        bank.setPercentMonth(bankEntity.getPercentMonth());
+        bank.setPercentWeek(bankEntity.getPercentWeek());
+        bank.setFullLoanCoeff(bankEntity.getFullLoanCoeff());
+        bank.setMaxLoanAmount(BigDecimal.valueOf(bankEntity.getMaxLoanAmount()));
+        return bank;
     }
 
     public BankDto getBankDtoFromIntermediateEntity(Bank b, int parameter) {

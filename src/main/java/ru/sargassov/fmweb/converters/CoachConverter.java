@@ -2,7 +2,7 @@ package ru.sargassov.fmweb.converters;
 
 import org.springframework.stereotype.Component;
 import ru.sargassov.fmweb.dto.CoachDto;
-import ru.sargassov.fmweb.intermediate_entites.Coach;
+import ru.sargassov.fmweb.intermediate_entities.Coach;
 
 @Component
 public class CoachConverter {

@@ -4,8 +4,8 @@ import lombok.Data;
 import org.springframework.stereotype.Component;
 import ru.sargassov.fmweb.dto.player_dtos.CreatedPlayerDto;
 import ru.sargassov.fmweb.exceptions.ValidationException;
-import ru.sargassov.fmweb.intermediate_entites.Player;
-import ru.sargassov.fmweb.intermediate_entites.Team;
+import ru.sargassov.fmweb.intermediate_entities.Player;
+import ru.sargassov.fmweb.intermediate_entities.Team;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -2,7 +2,8 @@ package ru.sargassov.fmweb.spi;
 
 import ru.sargassov.fmweb.dto.days_dtos.DayDto;
 import ru.sargassov.fmweb.entities.DayEntity;
-import ru.sargassov.fmweb.intermediate_entites.days.Day;
+import ru.sargassov.fmweb.intermediate_entities.Day;
+import ru.sargassov.fmweb.intermediate_entities.User;
 
 import java.util.List;
 
@@ -10,9 +11,9 @@ public interface DayServiceSpi {
 
     List<DayEntity> findAll();
 
-    List<Day> convertAllToDto();
+    List<Day> getDayIntermediateEntities(User user);
 
-    void loadCalendar();
+    void loadCalendar(User user);
 
     List<Day> getCalendarFromApi();
 

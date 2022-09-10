@@ -2,8 +2,8 @@ package ru.sargassov.fmweb.converters;
 
 import org.springframework.stereotype.Component;
 import ru.sargassov.fmweb.dto.matrix_dto.CortageDto;
-import ru.sargassov.fmweb.intermediate_entites.Cortage;
-import ru.sargassov.fmweb.intermediate_entites.days.Match;
+import ru.sargassov.fmweb.intermediate_entities.Cortage;
+import ru.sargassov.fmweb.intermediate_entities.Match;
 
 import java.util.List;
 

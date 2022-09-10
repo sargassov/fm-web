@@ -1,8 +1,8 @@
 package ru.sargassov.fmweb.dto;
 
 import lombok.Data;
-import ru.sargassov.fmweb.intermediate_entites.Coach;
-import ru.sargassov.fmweb.intermediate_entites.Position;
+import ru.sargassov.fmweb.intermediate_entities.Coach;
+import ru.sargassov.fmweb.intermediate_entities.Position;
 
 import java.math.BigDecimal;
 

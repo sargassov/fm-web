@@ -3,8 +3,9 @@ package ru.sargassov.fmweb.spi;
 import ru.sargassov.fmweb.dto.PlacementData;
 import ru.sargassov.fmweb.dto.PlacementOnPagePlacementsDto;
 import ru.sargassov.fmweb.entities.PlacementEntity;
-import ru.sargassov.fmweb.intermediate_entites.Placement;
-import ru.sargassov.fmweb.intermediate_entites.Team;
+import ru.sargassov.fmweb.intermediate_entities.Placement;
+import ru.sargassov.fmweb.intermediate_entities.Team;
+import ru.sargassov.fmweb.intermediate_entities.User;
 
 import java.util.List;
 
@@ -12,13 +13,13 @@ public interface PlacementServiceSpi {
 
     List<PlacementEntity> findAllPlacements();
 
-    void loadPlacements();
+    void loadPlacements(User user);
 
-    void fillPlacementForAllTeams();
+    void fillPlacementForAllTeams(User user);
 
-    void setPlacementsForAllTeams();
+    void setPlacementsForAllTeams(User user);
 
-    void fillPlacement(Team team);
+    void fillPlacement(Team team, User user);
 
     List<Placement> getPlacementsFromPlacementApi();
 

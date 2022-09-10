@@ -1,6 +1,7 @@
 package ru.sargassov.fmweb.spi;
 
 import ru.sargassov.fmweb.entities.DrawEntity;
+import ru.sargassov.fmweb.intermediate_entities.User;
 import ru.sargassov.fmweb.services.DrawService;
 
 import java.util.List;
@@ -17,5 +18,5 @@ public interface DrawServiceSpi {
 
     String findIf(List<DrawService.Basket> baskets, int condition);
 
-    void loadShedule();
+    void loadShedule(User user);
 }

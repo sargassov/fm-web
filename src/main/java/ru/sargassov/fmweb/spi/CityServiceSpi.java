@@ -1,7 +1,6 @@
 package ru.sargassov.fmweb.spi;
 
-import ru.sargassov.fmweb.intermediate_entites.City;
-import ru.sargassov.fmweb.repositories.CityRepository;
+import ru.sargassov.fmweb.intermediate_entities.City;
 
 import java.util.List;
 

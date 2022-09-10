@@ -3,9 +3,14 @@ package ru.sargassov.fmweb.services;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.sargassov.fmweb.api_temporary_classes_group.MatrixApi;
-import ru.sargassov.fmweb.intermediate_entites.Cortage;
-import ru.sargassov.fmweb.intermediate_entites.Team;
-import ru.sargassov.fmweb.intermediate_entites.days.Match;
+import ru.sargassov.fmweb.intermediate_entities.Cortage;
+import ru.sargassov.fmweb.intermediate_entities.Team;
+import ru.sargassov.fmweb.intermediate_entities.Match;
+import ru.sargassov.fmweb.intermediate_entities.User;
+import ru.sargassov.fmweb.intermediate_spi.CortageIntermediateServiceSpi;
+import ru.sargassov.fmweb.intermediate_spi.DayIntermediateServiceSpi;
+import ru.sargassov.fmweb.intermediate_spi.MatchIntermediateServiceSpi;
+import ru.sargassov.fmweb.intermediate_spi.TeamIntermediateServiceSpi;
 import ru.sargassov.fmweb.spi.CalendarServiceSpi;
 import ru.sargassov.fmweb.spi.MatrixCreateServiceSpi;
 import ru.sargassov.fmweb.spi.TeamServiceSpi;
@@ -20,33 +25,38 @@ public class MatrixService implements MatrixCreateServiceSpi {
 
     private TeamServiceSpi teamService;
     private CalendarServiceSpi calendarService;
-    private MatrixApi matrixApi;
+    private CortageIntermediateServiceSpi cortageIntermediateService;
+    private TeamIntermediateServiceSpi teamIntermediateService;
+    private MatchIntermediateServiceSpi matchIntermediateService;
 
     @Override
-    public void createMatrix() {
-        List<Cortage> cortages = matrixApi.constructMatrix();
-        List<Team> teamList = teamService.findAll().stream()
-                .sorted(Comparator.comparing(Team::getName))
-                .collect(Collectors.toList());
+    public void createMatrix(User user) {
 
-        for (int x = 0; x < teamList.size(); x++) {
-            Cortage cortage = new Cortage();
-            List<Match> matches = cortage.getMatchList();
-            cortage.setTeam(teamList.get(x));
-            for (int y = 0; y < teamList.size(); y++) {
+        var cortages = cortageIntermediateService.constructMatrix();
+        var teamsSortedByName = teamIntermediateService.findAllSortedByName();
+
+        for (int x = 0; x < teamsSortedByName.size(); x++) {
+            var cortage = new Cortage();
+            var matches = cortage.getMatchList();
+            cortage.setTeam(teamsSortedByName.get(x));
+            for (int y = 0; y < teamsSortedByName.size(); y++) {
                 if (x == y) {
-                    matches.add(new Match(true));
+                    var impossibleMatch = new Match();
+                    matchIntermediateService.save(impossibleMatch);
+                    matches.add(impossibleMatch);
                     continue;
                 }
-                Match match = calendarService.findCurrentMatch(teamList.get(x), teamList.get(y));
+                var match = matchIntermediateService.findCurrentMatch(
+                        teamsSortedByName.get(x), teamsSortedByName.get(y));
                 matches.add(match);
             }
-            cortages.add(cortage);
+            cortage.setUser(user);
+            cortageIntermediateService.save(cortage);
         }
     }
 
     @Override
     public List<Cortage> getActualMatrix() {
-        return matrixApi.getMatrix();
+        return null;
     }
 }

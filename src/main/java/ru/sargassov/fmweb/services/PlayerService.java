@@ -9,14 +9,15 @@ import ru.sargassov.fmweb.dto.player_dtos.CreatedPlayerDto;
 import ru.sargassov.fmweb.dto.PriceResponce;
 import ru.sargassov.fmweb.dto.player_dtos.IdNamePricePlayerDto;
 import ru.sargassov.fmweb.dto.player_dtos.PlayerOnTrainingDto;
-import ru.sargassov.fmweb.intermediate_entites.Player;
+import ru.sargassov.fmweb.intermediate_entities.Player;
 import ru.sargassov.fmweb.dto.player_dtos.PlayerSoftSkillDto;
-import ru.sargassov.fmweb.intermediate_entites.Team;
-import ru.sargassov.fmweb.repositories.PlayerRepository;
+import ru.sargassov.fmweb.intermediate_entities.Team;
+import ru.sargassov.fmweb.entity_repositories.PlayerRepository;
+import ru.sargassov.fmweb.intermediate_entities.User;
+import ru.sargassov.fmweb.intermediate_spi.PlayerIntermediateServiceSpi;
 import ru.sargassov.fmweb.spi.PlayerServiceSpi;
 import ru.sargassov.fmweb.validators.CreatedPlayersValidator;
 
-import javax.persistence.Id;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,19 +27,21 @@ import java.util.stream.Collectors;
 @Slf4j
 public class PlayerService implements PlayerServiceSpi {
     private final PlayerRepository playerRepository;
+    private final PlayerIntermediateServiceSpi playerIntermediateService;
     private final PlayerConverter playerConverter;
     private final UserService userService;
     private final CreatedPlayersValidator createdPlayersValidator;
 
     @Override
-    @Transactional
     @SneakyThrows
-    public List<Player> getAllPlayersByTeamId(Long id){
+    public List<Player> findAllByTeamEntityId(Long id, User user){
         if(id < 1)
-            throw new Exception();
+            throw new IllegalStateException("Wrong state of team entity id");
 
-        return playerRepository.findAllByTeamId(id).stream()
-                .map(playerConverter::getIntermediateEntityFromEntity).collect(Collectors.toList());
+        var newPlayersWithoutIds =  playerRepository.findAllByTeamId(id).stream()
+                .map(pe -> playerConverter.getIntermediateEntityFromEntity(pe, user))
+                .collect(Collectors.toList());
+        return playerIntermediateService.save(newPlayersWithoutIds);
     }
 
     @Override

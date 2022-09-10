@@ -6,9 +6,12 @@ import org.springframework.stereotype.Service;
 import ru.sargassov.fmweb.api_temporary_classes_group.SponsorApi;
 import ru.sargassov.fmweb.converters.SponsorConverter;
 import ru.sargassov.fmweb.dto.SponsorDto;
-import ru.sargassov.fmweb.intermediate_entites.Sponsor;
-import ru.sargassov.fmweb.intermediate_entites.Team;
-import ru.sargassov.fmweb.repositories.SponsorRepository;
+import ru.sargassov.fmweb.intermediate_entities.Sponsor;
+import ru.sargassov.fmweb.intermediate_entities.Team;
+import ru.sargassov.fmweb.entity_repositories.SponsorRepository;
+import ru.sargassov.fmweb.intermediate_entities.User;
+import ru.sargassov.fmweb.intermediate_spi.SponsorIntermediateServiceSpi;
+import ru.sargassov.fmweb.intermediate_spi.TeamIntermediateServiceSpi;
 import ru.sargassov.fmweb.spi.SponsorServiceSpi;
 import ru.sargassov.fmweb.spi.TeamServiceSpi;
 
@@ -22,7 +25,8 @@ import java.util.stream.Collectors;
 public class SponsorService implements SponsorServiceSpi {
     private final SponsorRepository sponsorRepository;
     private final SponsorConverter sponsorConverter;
-    private final TeamServiceSpi teamService;
+    private final TeamIntermediateServiceSpi teamIntermediateService;
+    private final SponsorIntermediateServiceSpi sponsorIntermediateService;
     private final UserService userService;
     private final SponsorApi sponsorApi;
 
@@ -34,10 +38,12 @@ public class SponsorService implements SponsorServiceSpi {
 
     @Override
     @Transactional
-    public void loadSponsors(){
+    public void loadSponsors(User user){
         log.info("SponsorService.loadSponsors");
-        sponsorApi.setSponsorApiList(sponsorRepository.findAll().stream()
-                .map(sponsorConverter::getIntermediateEntityFromEntity).collect(Collectors.toList()));
+        var sponsorEntities = sponsorRepository.findAll();
+        var sponsors = sponsorEntities.stream()
+                .map(s -> sponsorConverter.getIntermediateEntityFromEntity(s, user))
+                .collect(Collectors.toList());
 
         getRandomSponsorForAllTeams();
     }
@@ -45,18 +51,18 @@ public class SponsorService implements SponsorServiceSpi {
     @Override
     @Transactional
     public void getRandomSponsorForAllTeams() {
-        teamService.getTeamListFromApi().forEach(this::fillSponsor);
+        teamIntermediateService.findAll().forEach(this::fillSponsor);
     }
 
     @Override
-    @Transactional
     public void fillSponsor(Team t) {
-        int size = sponsorApi.getSponsorApiList().size();
-        int random = (int) (Math.random() * size) + 1;
-        Sponsor sponsor = sponsorApi.getSponsorFromApiById(random);
+        int sponsorsQuantity = sponsorIntermediateService.getSponsorsQuantity();
+        long random = (long) (Math.random() * sponsorsQuantity) + 1;
+        var sponsor = sponsorIntermediateService.findById(random);
 
         t.setSponsor(sponsor);
         sponsor.signContractWithClub(t);
+        sponsorIntermediateService.save(sponsor);
     }
 
 

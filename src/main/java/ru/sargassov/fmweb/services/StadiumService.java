@@ -6,9 +6,9 @@ import org.springframework.stereotype.Service;
 import ru.sargassov.fmweb.constants.StadiumAnalytics;
 import ru.sargassov.fmweb.dto.text_responses.InformationDto;
 import ru.sargassov.fmweb.exceptions.StadiumException;
-import ru.sargassov.fmweb.intermediate_entites.Stadium;
-import ru.sargassov.fmweb.intermediate_entites.Team;
-import ru.sargassov.fmweb.repositories.StadiumRepository;
+import ru.sargassov.fmweb.intermediate_entities.Stadium;
+import ru.sargassov.fmweb.intermediate_entities.Team;
+import ru.sargassov.fmweb.entity_repositories.StadiumRepository;
 import ru.sargassov.fmweb.spi.StadiumServiceSpi;
 
 import javax.transaction.Transactional;

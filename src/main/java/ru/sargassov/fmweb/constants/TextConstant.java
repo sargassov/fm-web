@@ -1,7 +1,7 @@
 package ru.sargassov.fmweb.constants;
 
 import ru.sargassov.fmweb.dto.text_responses.TextResponse;
-import ru.sargassov.fmweb.intermediate_entites.Team;
+import ru.sargassov.fmweb.intermediate_entities.Team;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +13,7 @@ public final class TextConstant {
     public static final String ARGENTINA = "Arg";
     public static final String YOUR_CLUB_HAD_ALREADY = "Your club had already ";
     public static final String MATCH_DONT_PLAYED = "Your club don't played match today";
+    public static final String DASH_DELIVER = "-";
 
     public static String getBanksStartMessage(Team userTeam, int banksValue){
         if(banksValue == 0) return userTeam.getName() + " haven't loans yet." +

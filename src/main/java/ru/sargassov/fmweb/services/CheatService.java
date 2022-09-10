@@ -9,9 +9,10 @@ import ru.sargassov.fmweb.cheats.Cheat;
 import ru.sargassov.fmweb.constants.TextConstant;
 import ru.sargassov.fmweb.dto.text_responses.TextResponse;
 import ru.sargassov.fmweb.exceptions.CheatException;
-import ru.sargassov.fmweb.intermediate_entites.Player;
-import ru.sargassov.fmweb.intermediate_entites.Position;
-import ru.sargassov.fmweb.intermediate_entites.Team;
+import ru.sargassov.fmweb.intermediate_entities.Player;
+import ru.sargassov.fmweb.intermediate_entities.Position;
+import ru.sargassov.fmweb.intermediate_entities.Team;
+import ru.sargassov.fmweb.intermediate_entities.User;
 import ru.sargassov.fmweb.spi.CheatServiceSpi;
 import ru.sargassov.fmweb.spi.PlayerServiceSpi;
 import ru.sargassov.fmweb.spi.UserServiceSpi;
@@ -45,7 +46,7 @@ public class CheatService implements CheatServiceSpi {
 
     @SneakyThrows
     @Override
-    public void constructCheats() {
+    public void constructCheats(User user) {
         List<Path> files = Files.walk(
                 Paths.get(CHEATS_ADDRESS))
                 .filter(Files::isRegularFile)

@@ -7,10 +7,10 @@ import ru.sargassov.fmweb.api_temporary_classes_group.TeamApi;
 import ru.sargassov.fmweb.api_temporary_classes_group.UserApi;
 import ru.sargassov.fmweb.dto.player_dtos.*;
 import ru.sargassov.fmweb.exceptions.CoachException;
-import ru.sargassov.fmweb.intermediate_entites.Coach;
-import ru.sargassov.fmweb.intermediate_entites.Player;
+import ru.sargassov.fmweb.intermediate_entities.*;
 import ru.sargassov.fmweb.entities.PlayerEntity;
 import ru.sargassov.fmweb.exceptions.TeamNotFoundException;
+import ru.sargassov.fmweb.intermediate_spi.TeamIntermediateServiceSpi;
 import ru.sargassov.fmweb.services.PlayerPriceSetter;
 
 import java.math.BigDecimal;
@@ -25,34 +25,37 @@ import java.util.stream.Collectors;
 public class PlayerConverter {
     private final PositionConverter positionConverter;
     private final PlayerPriceSetter playerPriceSetter;
-    private final TeamApi teamApi;
-    private final UserApi userApi;
+    private final JuniorConverter juniorConverter;
+    private final TeamIntermediateServiceSpi teamIntermediateService;
 
 
-    public Player getIntermediateEntityFromEntity(PlayerEntity playerEntity){
-
-        Player pDto = new Player();
-        pDto.setId(playerEntity.getId());
-        pDto.setName(playerEntity.getName());
-        pDto.setNatio(playerEntity.getNatio());
-        pDto.setGkAble(playerEntity.getGkAble());
-        pDto.setDefAble(playerEntity.getDefAble());
-        pDto.setMidAble(playerEntity.getMidAble());
-        pDto.setForwAble(playerEntity.getForwAble());
-        pDto.setCaptainAble(playerEntity.getCaptainAble());
-        pDto.setNumber(playerEntity.getNumber());
-        pDto.setStrategyPlace(playerEntity.getStrategyPlace());
-        pDto.setBirthYear(playerEntity.getBirthYear());
-        pDto.guessTrainigAble();
-        pDto.setPosition(positionConverter.entityToEnum(playerEntity.getPositionEntity().getTitle()));
-        pDto.guessPower();
-        pDto.setTeam(teamApi.getTeamApiList()
+    public Player getIntermediateEntityFromEntity(PlayerEntity playerEntity, User user){
+        Player player = new Player();
+        var position = positionConverter.getIntermediateEntityFromEnum(playerEntity.getPositionEntity());
+        var playerEntityTeamEntityId = playerEntity.getTeamEntity().getId();
+        var team = teamIntermediateService.findAll()
                 .stream()
-                .filter(t -> t.getId() == playerEntity.getTeamEntity().getId())
+                .filter(t -> t.getTeamEntityId() == playerEntityTeamEntityId)
                 .findFirst().orElseThrow(() ->
-                        new TeamNotFoundException(String.format("Team with id = '%s' not found", playerEntity.getTeamEntity().getId()))));
-        guessPrice(pDto);
-        return pDto;
+                        new TeamNotFoundException(String.format("Team with id = '%s' not found", playerEntityTeamEntityId)));
+
+        player.setUser(user);
+        player.setName(playerEntity.getName());
+        player.setNatio(playerEntity.getNatio());
+        player.setGkAble(playerEntity.getGkAble());
+        player.setDefAble(playerEntity.getDefAble());
+        player.setMidAble(playerEntity.getMidAble());
+        player.setForwAble(playerEntity.getForwAble());
+        player.setCaptainAble(playerEntity.getCaptainAble());
+        player.setNumber(playerEntity.getNumber());
+        player.setStrategyPlace(playerEntity.getStrategyPlace());
+        player.setBirthYear(playerEntity.getBirthYear());
+        player.guessTrainigAble();
+        player.setPosition(position);
+        player.guessPower();
+        player.setTeam(team);
+        guessPrice(player);
+        return player;
     }
 
     public PlayerSoftSkillDto getPlayerSoftSkillDtoFromIntermediateEntity(Player player) {
@@ -185,5 +188,14 @@ public class PlayerConverter {
         complectSkillsOfPlayerDto(pDto, p);
         pDto.setPrice(p.getPrice().divide(BigDecimal.valueOf(2), RoundingMode.HALF_UP));
         return pDto;
+    }
+
+    public Player getIntermadiateEntityFromJunior(Junior junior, Position currentPosition, User user) {
+        var player = new Player();
+        player.setName(junior.getName());
+        player.setPosition(currentPosition);
+        player.setUser(user);
+
+        return juniorConverter.setSkillForYoungPlayerIntermediateEntity(player);
     }
 }

@@ -1,0 +1,21 @@
+CREATE TABLE IF NOT EXISTS bank (
+                                    id bigserial PRIMARY KEY NOT NULL,
+                                    id_user BIGINT NOT NULL,
+                                    id_team BIGINT,
+                                    percent_day INTEGER NOT NULL,
+                                    percent_week INTEGER NOT NULL,
+                                    percent_month INTEGER NOT NULL,
+                                    fill_loan_coeff NUMERIC(4, 1) NOT NULL,
+                                    max_loan_amount NUMERIC(6, 2) NOT NULL,
+                                    id_day_of_loan BIGINT,
+                                    id_remains_day BIGINT,
+                                    type_of_return VARCHAR(64),
+                                    pay_per_day NUMERIC(5, 2),
+                                    pay_per_week NUMERIC(5, 2),
+                                    pay_per_month NUMERIC(5, 2),
+                                    full_loan_amount_value NUMERIC(7, 2),
+                                    took_money NUMERIC(7, 2),
+                                    remain_money NUMERIC(7, 2),
+                                    already_paid NUMERIC(7, 2),
+                                    active BOOLEAN
+);

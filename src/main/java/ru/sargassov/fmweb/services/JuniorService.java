@@ -8,10 +8,12 @@ import ru.sargassov.fmweb.converters.JuniorConverter;
 import ru.sargassov.fmweb.dto.player_dtos.JuniorDto;
 import ru.sargassov.fmweb.dto.text_responses.TextResponse;
 import ru.sargassov.fmweb.exceptions.YouthAcademyException;
-import ru.sargassov.fmweb.intermediate_entites.Player;
-import ru.sargassov.fmweb.intermediate_entites.Position;
-import ru.sargassov.fmweb.intermediate_entites.Team;
-import ru.sargassov.fmweb.repositories.JuniorRepository;
+import ru.sargassov.fmweb.intermediate_entities.Player;
+import ru.sargassov.fmweb.intermediate_entities.Position;
+import ru.sargassov.fmweb.intermediate_entities.Team;
+import ru.sargassov.fmweb.entity_repositories.JuniorRepository;
+import ru.sargassov.fmweb.intermediate_entities.User;
+import ru.sargassov.fmweb.intermediate_spi.JuniorIntermediateServiceSpi;
 import ru.sargassov.fmweb.spi.JuniorServiceSpi;
 
 import javax.transaction.Transactional;
@@ -25,16 +27,19 @@ import java.util.stream.Collectors;
 public class JuniorService implements JuniorServiceSpi {
     private final JuniorRepository juniorRepository;
     private final JuniorConverter juniorConverter;
-    private final JuniorPoolApi juniorPoolApi;
+    private final JuniorIntermediateServiceSpi juniorIntermediateService;
     private final UserService userService;
 
     @Override
     @Transactional
-    public void loadYouthList(){
-        log.info("JuniorService.createYouthPool");
-        juniorPoolApi.setYouthApiList(juniorRepository.findAll().stream()
-                .map(juniorConverter::entityToString)
-                .collect(Collectors.toList()));
+    public void loadYouthList(User user){
+        log.info("JuniorService.loadYouthList");
+        var juniorPlayerNames = juniorRepository.findAll();
+        var juniorPlayers = juniorPlayerNames
+                .stream()
+                .map(jp -> juniorConverter.getIntermediateEntityFromEntity(jp, user))
+                .collect(Collectors.toList());
+        juniorIntermediateService.save(juniorPlayers);
     }
 
     @Override
@@ -54,7 +59,7 @@ public class JuniorService implements JuniorServiceSpi {
         String name = juniorPoolApi.getYouthPlayerName(selected);
         player.setName(name);
         player.setPosition(position);
-        juniorConverter.nameToIntermediateEntity(player);
+        juniorConverter.setSkillForYoungPlayerIntermediateEntity(player);
 
 
         return player;

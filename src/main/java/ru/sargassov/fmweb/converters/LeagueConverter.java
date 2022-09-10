@@ -3,17 +3,18 @@ package ru.sargassov.fmweb.converters;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.sargassov.fmweb.dto.LeagueDto;
-import ru.sargassov.fmweb.intermediate_entites.League;
+import ru.sargassov.fmweb.intermediate_entities.League;
 import ru.sargassov.fmweb.entities.LeagueEntity;
+import ru.sargassov.fmweb.intermediate_entities.User;
 
 @Component
 @AllArgsConstructor
 public class LeagueConverter {
-    private final League league;
 
-    public League getIntermediateEntityFromEntity(LeagueEntity leagueEntity){
-        league.setId(leagueEntity.getId());
+    public League getIntermediateEntityFromEntity(LeagueEntity leagueEntity, User user){
+        var league = new League();
         league.setName(leagueEntity.getName());
+        league.setUser(user);
         return league;
     }
 

@@ -1,8 +1,8 @@
 package ru.sargassov.fmweb.constants;
 
 import ru.sargassov.fmweb.dto.text_responses.InformationDto;
-import ru.sargassov.fmweb.intermediate_entites.Sponsor;
-import ru.sargassov.fmweb.intermediate_entites.Team;
+import ru.sargassov.fmweb.intermediate_entities.Sponsor;
+import ru.sargassov.fmweb.intermediate_entities.Team;
 
 import java.util.ArrayList;
 import java.util.List;

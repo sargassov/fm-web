@@ -10,10 +10,10 @@ import ru.sargassov.fmweb.dto.IntegerDto;
 import ru.sargassov.fmweb.dto.NameOfMonthDto;
 import ru.sargassov.fmweb.dto.days_dtos.EventDto;
 import ru.sargassov.fmweb.exceptions.MatchException;
-import ru.sargassov.fmweb.intermediate_entites.Team;
-import ru.sargassov.fmweb.intermediate_entites.days.Day;
-import ru.sargassov.fmweb.intermediate_entites.days.Match;
-import ru.sargassov.fmweb.intermediate_entites.days.TourDay;
+import ru.sargassov.fmweb.intermediate_entities.Team;
+import ru.sargassov.fmweb.intermediate_entities.Day;
+import ru.sargassov.fmweb.intermediate_entities.Match;
+import ru.sargassov.fmweb.intermediate_entities.days.TourDay;
 import ru.sargassov.fmweb.spi.CalendarServiceSpi;
 
 import javax.transaction.Transactional;

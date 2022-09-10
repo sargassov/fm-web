@@ -4,9 +4,12 @@ import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import ru.sargassov.fmweb.dto.player_dtos.JuniorDto;
-import ru.sargassov.fmweb.intermediate_entites.Player;
-import ru.sargassov.fmweb.intermediate_entites.Position;
+import ru.sargassov.fmweb.intermediate_entities.Junior;
+import ru.sargassov.fmweb.intermediate_entities.Player;
+import ru.sargassov.fmweb.intermediate_entities.Position;
 import ru.sargassov.fmweb.entities.JuniorEntity;
+import ru.sargassov.fmweb.intermediate_entities.User;
+import ru.sargassov.fmweb.intermediate_spi.PositionIntermediateServiceSpi;
 import ru.sargassov.fmweb.services.PlayerPriceSetter;
 import ru.sargassov.fmweb.services.UserService;
 
@@ -18,12 +21,16 @@ import java.util.Random;
 @AllArgsConstructor
 public class JuniorConverter {
     private final PlayerPriceSetter playerPriceSetter;
+    private final PositionIntermediateServiceSpi positionIntermediateService;
     private final PlayerConverter playerConverter;
     private final Random random = getRandom();
     private final UserService userService;
 
-    public String entityToString(JuniorEntity juniorEntity){
-        return juniorEntity.getName();
+    public Junior getIntermediateEntityFromEntity(JuniorEntity juniorEntity, User user){
+        var junuior = new Junior();
+        junuior.setName(juniorEntity.getName());
+        junuior.setUser(user);
+        return junuior;
     }
 
 
@@ -32,46 +39,58 @@ public class JuniorConverter {
         return new Random();
     }
 
-    public void nameToIntermediateEntity(Player player) {
-        int captainValue = 10;
-        int strategyPlaceStarting = -100;
-        int youngPlayerBirthYear = 2004;
-        int trainingAbleValue = 35;
-        String natio = "Rus";
+    public Player setSkillForYoungPlayerIntermediateEntity(Player player) {
+        var captainValue = 10;
+        var strategyPlaceStarting = -100;
 
-        player.setNatio(natio);
+        player.selectYoungPlayerNatio();
         setPositionCraft(player);
 
         player.setCaptainAble(random.nextInt(captainValue));
         player.setStrategyPlace(strategyPlaceStarting);
-        player.setBirthYear(youngPlayerBirthYear);
-        player.setTrainingAble(trainingAbleValue);
+        player.selectYoungPlayerBirthYear();
+        player.selectYoungPlayerTrainingAble();
         player.setPrice(BigDecimal.valueOf(playerPriceSetter.createPrice(player)).setScale(2, RoundingMode.HALF_UP));
+        return player;
     }
 
-    private void setPositionCraft(Player pDto) {
-        int gkValue = 10, otherValue = 20;
+    private void setPositionCraft(Player player) {
+        var gkValue = 10;
+        var otherValue = 20;
 
-        pDto.setGkAble(random.nextInt(gkValue));
-        pDto.setDefAble(random.nextInt(otherValue));
-        pDto.setMidAble(random.nextInt(otherValue));
-        pDto.setForwAble(random.nextInt(otherValue));
+        player.setGkAble(random.nextInt(gkValue));
+        player.setDefAble(random.nextInt(otherValue));
+        player.setMidAble(random.nextInt(otherValue));
+        player.setForwAble(random.nextInt(otherValue));
 
-        setHardSkill(pDto);
+        setHardSkill(player);
     }
 
 
-    private void setHardSkill(Player pDto){
-        int averageCraftValue = 10;
-        int bottomCraftValue = 60;
-        int craftValue = random.nextInt(averageCraftValue) + bottomCraftValue;
+    private void setHardSkill(Player player){
+        var averageCraftValue = 10;
+        var bottomCraftValue = 60;
+        var craftValue = random.nextInt(averageCraftValue) + bottomCraftValue;
+        var position = player.getPosition().getTitle();
 
-        if(pDto.getPosition().equals(Position.GOALKEEPER))pDto.setGkAble(craftValue);
-        else if(pDto.getPosition().equals(Position.DEFENDER))pDto.setDefAble(craftValue);
-        else if(pDto.getPosition().equals(Position.MIDFIELDER)) pDto.setMidAble(craftValue);
-        else pDto.setForwAble(craftValue);
+        switch (position) {
+            case "Goalkeeper":
+                player.setGkAble(craftValue);
+                break;
+            case "Defender":
+                player.setDefAble(craftValue);
+                break;
+            case "Midfielder":
+                player.setMidAble(craftValue);
+                break;
+            case "Forward":
+                player.setForwAble(craftValue);
+                break;
+            default:
+                throw new IllegalStateException("Wrong position title");
 
-        pDto.guessPower();
+        }
+        player.guessPower();
     }
 
     public JuniorDto nameToJuniorDto(String name){

@@ -6,11 +6,9 @@ import org.springframework.stereotype.Component;
 import ru.sargassov.fmweb.constants.Constant;
 import ru.sargassov.fmweb.dto.PlacementOnPagePlacementsDto;
 import ru.sargassov.fmweb.dto.player_dtos.PlayerOnPagePlacementsDto;
-import ru.sargassov.fmweb.intermediate_entites.Placement;
-import ru.sargassov.fmweb.intermediate_entites.Player;
-import ru.sargassov.fmweb.intermediate_entites.Role;
+import ru.sargassov.fmweb.intermediate_entities.*;
 import ru.sargassov.fmweb.entities.PlacementEntity;
-import ru.sargassov.fmweb.intermediate_entites.Team;
+import ru.sargassov.fmweb.intermediate_spi.RoleIntermediateServiceSpi;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -20,25 +18,37 @@ import java.util.stream.Collectors;
 @Slf4j
 public class PlacementConverter {
     private PlayerConverter playerConverter;
+    private RoleIntermediateServiceSpi roleIntermediateService;
 
-    public Placement entityToDto(PlacementEntity placementEntity){
-        Placement pDto = new Placement();
-        pDto.setId(placementEntity.getId());
-        pDto.setName(placementEntity.getName());
-        pDto.setRoles(roleUnpacker(placementEntity.getRoles()));
-        return pDto;
+    public Placement getIntermediateEntityFromEntity(PlacementEntity placementEntity, Team team, User user){
+        var placement = new Placement();
+        placement.setName(placementEntity.getName());
+        placement.setRoles(roleUnpacker(placementEntity.getRoles(), user, team));
+        placement.setUser(user);
+        placement.setTeam(team);
+        return placement;
     }
 
-    private List<Role> roleUnpacker(String roles) {
-        String splitter = ",";
-        String[] rolesSplit = roles.split(splitter);
-        List<Role> dtoRoles = new ArrayList<>();
+    private List<Role> roleUnpacker(String roles, User user, Team team) {
+        var splitter = ",";
+        var rolesSplit = roles.split(splitter);
+        var listRoles = new ArrayList<Role>();
 
         for(int x = 0; x < rolesSplit.length; x++){
             rolesSplit[x] = purePlacementName(rolesSplit[x]);
-            dtoRoles.add(new Role(rolesSplit[x], x));
+            var role = getRoleIntermediateEntityFromString(rolesSplit[x], x, user, team);
+            listRoles.add(role);
         }
-        return dtoRoles;
+        return listRoles;
+    }
+
+    private Role getRoleIntermediateEntityFromString(String roleName, int count, User user, Team team) {
+        var role = new Role();
+        role.setTitle(roleName);
+        role.setPosNumber(count);
+        role.setUser(user);
+        role.setTeam(team);
+        return roleIntermediateService.save(role);
     }
 
     private String purePlacementName(String s) {

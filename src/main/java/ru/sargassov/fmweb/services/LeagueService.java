@@ -9,12 +9,12 @@ import ru.sargassov.fmweb.dto.LeagueDto;
 import ru.sargassov.fmweb.dto.matrix_dto.CortageDto;
 import ru.sargassov.fmweb.dto.player_dtos.PlayerSoftSkillDto;
 import ru.sargassov.fmweb.dto.team_dtos.TeamResultDto;
-import ru.sargassov.fmweb.intermediate_entites.Cortage;
-import ru.sargassov.fmweb.intermediate_entites.League;
+import ru.sargassov.fmweb.intermediate_entities.Cortage;
 import ru.sargassov.fmweb.exceptions.LeagueNotFoundException;
-import ru.sargassov.fmweb.intermediate_entites.Player;
-import ru.sargassov.fmweb.intermediate_entites.Team;
-import ru.sargassov.fmweb.repositories.LeagueRepository;
+import ru.sargassov.fmweb.intermediate_entities.Team;
+import ru.sargassov.fmweb.entity_repositories.LeagueRepository;
+import ru.sargassov.fmweb.intermediate_entities.User;
+import ru.sargassov.fmweb.intermediate_spi.LeagueIntermediateServiceSpi;
 import ru.sargassov.fmweb.spi.LeagueServiceSpi;
 import ru.sargassov.fmweb.spi.MatrixServiceSpi;
 import ru.sargassov.fmweb.spi.TeamServiceSpi;
@@ -30,6 +30,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class LeagueService implements LeagueServiceSpi {
     private final LeagueRepository leagueRepository;
+    private final LeagueIntermediateServiceSpi leagueIntermediateService;
     private final LeagueConverter leagueConverter;
     private final CortageConverter cortageConverter;
     private final MatrixServiceSpi matrixService;
@@ -38,10 +39,12 @@ public class LeagueService implements LeagueServiceSpi {
 
     @Override
     @Transactional
-    public League getRussianLeague(){
+    public void getRussianLeague(User user){
         log.info("LeagueService.getRussianLeague");
-        return leagueConverter.getIntermediateEntityFromEntity(leagueRepository.findById(RussianLeagueNumber)
-                .orElseThrow(() -> new LeagueNotFoundException(String.format("League '%s' not found", "RussianLeagueNumber"))));
+        var leagueEntity = leagueRepository.findById(RussianLeagueNumber)
+                .orElseThrow(() -> new LeagueNotFoundException(String.format("League '%s' not found", "RussianLeagueNumber")));
+        var newLeague = leagueConverter.getIntermediateEntityFromEntity(leagueEntity, user);
+        leagueIntermediateService.save(newLeague);
     }
 
     @Override

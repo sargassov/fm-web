@@ -2,17 +2,16 @@ package ru.sargassov.fmweb.converters;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
-import ru.sargassov.fmweb.constants.Constant;
 import ru.sargassov.fmweb.dto.NameOfMonthDto;
 import ru.sargassov.fmweb.dto.days_dtos.MatchDto;
 import ru.sargassov.fmweb.dto.days_dtos.EventDto;
 import ru.sargassov.fmweb.exceptions.CalendarException;
-import ru.sargassov.fmweb.intermediate_entites.Goal;
-import ru.sargassov.fmweb.intermediate_entites.Team;
-import ru.sargassov.fmweb.intermediate_entites.days.Day;
-import ru.sargassov.fmweb.intermediate_entites.days.Match;
-import ru.sargassov.fmweb.intermediate_entites.days.TourDay;
-import ru.sargassov.fmweb.intermediate_entites.days.TrainDay;
+import ru.sargassov.fmweb.intermediate_entities.Goal;
+import ru.sargassov.fmweb.intermediate_entities.Team;
+import ru.sargassov.fmweb.intermediate_entities.Day;
+import ru.sargassov.fmweb.intermediate_entities.Match;
+import ru.sargassov.fmweb.intermediate_entities.days.TourDay;
+import ru.sargassov.fmweb.intermediate_entities.days.TrainDay;
 import ru.sargassov.fmweb.services.UserService;
 
 import java.time.LocalDate;

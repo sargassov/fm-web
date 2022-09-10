@@ -9,30 +9,25 @@ import ru.sargassov.fmweb.dto.player_dtos.PlayerSoftSkillDto;
 import ru.sargassov.fmweb.dto.text_responses.InformationDto;
 import ru.sargassov.fmweb.dto.text_responses.StartFinishInformationDto;
 import ru.sargassov.fmweb.dto.text_responses.TextResponse;
-import ru.sargassov.fmweb.intermediate_entites.Player;
-import ru.sargassov.fmweb.intermediate_entites.Position;
-import ru.sargassov.fmweb.intermediate_entites.Role;
-import ru.sargassov.fmweb.intermediate_entites.Team;
+import ru.sargassov.fmweb.intermediate_entities.*;
 
 import java.util.List;
 
 public interface TeamServiceSpi {
 
-    void loadTeams();
+    void loadTeams(User user);
 
-    List<Team> findAll();
+    List<Team> findAll(User user);
 
-    void fillTeams(List<Team> teamList);
+    void fillTeams(List<Team> teamList, User user);
 
-    void juniorRecruitment(List<Team> teamList);
+    void juniorRecruitment(User user);
 
-    void addJuniorToTeam(Team currentTeam, Position currentPosition);
+    void addJuniorToTeam(Team currentTeam, Position currentPosition, User user);
 
     int randomGuessNum(Team currentTeam);
 
     List<Team> getTeamListFromApi();
-
-    void fillPlacementForAllTeams();
 
     void autoFillPlacement(Team t);
 

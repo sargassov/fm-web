@@ -3,7 +3,6 @@ package ru.sargassov.fmweb.services;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ru.sargassov.fmweb.intermediate_entites.League;
 import ru.sargassov.fmweb.dto.UserData;
 import ru.sargassov.fmweb.spi.*;
 
@@ -24,22 +23,22 @@ public class GameService implements GameServiceSpi {
     private final UserService userService;
     private final MatrixCreateServiceSpi matrixService;
     private final CheatServiceSpi cheatService;
-    private League league;
 
     @Override
     @Transactional
     public void createNewGame(UserData userData) {
         log.info("GameService.createNewGame");
-        league = leagueService.getRussianLeague();
-        bankService.loadBanks();
-        juniorService.loadYouthList();
-        teamService.loadTeams();
-        placementService.loadPlacements();
-        sponsorService.loadSponsors();
-        drawService.loadShedule();
-        dayService.loadCalendar();
-        matrixService.createMatrix();
-        userService.fillUserApi(userData);
-        cheatService.constructCheats();
+        var user = userService.constructNewUser(userData);
+        leagueService.getRussianLeague(user);
+        bankService.loadBanks(user);
+        juniorService.loadYouthList(user);
+        teamService.loadTeams(user);
+        placementService.loadPlacements(user);
+        sponsorService.loadSponsors(user);
+        drawService.loadShedule(user);
+        dayService.loadCalendar(user);
+        matrixService.createMatrix(user);
+        userService.setUserTeam(user);
+        cheatService.constructCheats(user);
     }
 }

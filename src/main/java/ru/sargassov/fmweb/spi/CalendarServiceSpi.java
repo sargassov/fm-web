@@ -3,9 +3,9 @@ package ru.sargassov.fmweb.spi;
 import ru.sargassov.fmweb.dto.IntegerDto;
 import ru.sargassov.fmweb.dto.NameOfMonthDto;
 import ru.sargassov.fmweb.dto.days_dtos.EventDto;
-import ru.sargassov.fmweb.intermediate_entites.Team;
-import ru.sargassov.fmweb.intermediate_entites.days.Day;
-import ru.sargassov.fmweb.intermediate_entites.days.Match;
+import ru.sargassov.fmweb.intermediate_entities.Team;
+import ru.sargassov.fmweb.intermediate_entities.Day;
+import ru.sargassov.fmweb.intermediate_entities.Match;
 
 import java.util.List;
 

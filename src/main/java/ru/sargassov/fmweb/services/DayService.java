@@ -1,26 +1,25 @@
 package ru.sargassov.fmweb.services;
 
-import ch.qos.logback.classic.turbo.MatchingFilter;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.sargassov.fmweb.api_temporary_classes_group.CalendarApi;
 import ru.sargassov.fmweb.api_temporary_classes_group.DrawApi;
 import ru.sargassov.fmweb.converters.DayConverter;
-import ru.sargassov.fmweb.intermediate_entites.Team;
-import ru.sargassov.fmweb.intermediate_entites.days.Day;
+import ru.sargassov.fmweb.converters.MatchConverter;
+import ru.sargassov.fmweb.intermediate_entities.*;
 import ru.sargassov.fmweb.dto.days_dtos.DayDto;
-import ru.sargassov.fmweb.intermediate_entites.days.Match;
-import ru.sargassov.fmweb.intermediate_entites.days.TourDay;
+import ru.sargassov.fmweb.intermediate_entities.days.TourDay;
 import ru.sargassov.fmweb.entities.DayEntity;
-import ru.sargassov.fmweb.repositories.DayRepository;
+import ru.sargassov.fmweb.entity_repositories.DayRepository;
+import ru.sargassov.fmweb.intermediate_spi.DayIntermediateServiceSpi;
+import ru.sargassov.fmweb.intermediate_spi.DrawIntermediateServiceSpi;
+import ru.sargassov.fmweb.intermediate_spi.MatchIntermediateServiceSpi;
 import ru.sargassov.fmweb.spi.DayServiceSpi;
-import ru.sargassov.fmweb.spi.DrawServiceSpi;
 import ru.sargassov.fmweb.spi.UserServiceSpi;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,8 +28,10 @@ import java.util.stream.Collectors;
 public class DayService implements DayServiceSpi {
     private final DayRepository dayRepository;
     private final DayConverter dayConverter;
-    private final CalendarApi calendarApi;
-    private final DrawApi drawApi;
+    private final MatchConverter matchConverter;
+    private final DrawIntermediateServiceSpi drawIntermediateService;
+    private final DayIntermediateServiceSpi dayIntermediateService; //TODO написать DayIntermediateService
+    private final MatchIntermediateServiceSpi matchIntermediateService;
 
     private final UserServiceSpi userService;
 
@@ -40,29 +41,45 @@ public class DayService implements DayServiceSpi {
         return dayRepository.findAll();
     }
 
-    @Transactional
+
     @Override
-    public List<Day> convertAllToDto(){
+    public List<Day> getDayIntermediateEntities(User user){
         return findAll().stream()
-                .map(dayConverter::entityToDto)
+                .map(de -> dayConverter.getIntermediateEntityFromEntity(de, user))
                 .collect(Collectors.toList());
     }
 
     @Transactional
     @Override
-    public void loadCalendar(){
-        List<List<String>> shedule = drawApi.getSheduleApiList();
-        List<Day> calendar = convertAllToDto();
-        int countSheduleTours = 0;
+    public void loadCalendar(User user){
+        var drawList = drawIntermediateService.findAll();
+        var calendar = getDayIntermediateEntities(user);
+
+        int countSheduleTours = 1;
 
         for(Day d : calendar){
-            if(d instanceof TourDay){
-                ((TourDay) d).setMatches(
-                        dayConverter.descriptionOfTourToMatches(shedule.get(countSheduleTours++)));
-                ((TourDay) d).setCountOfTour(countSheduleTours);
+            if(d.isMatch()){
+                var currentTourDraws = getCurrentTourDraws(drawList, countSheduleTours);
+                var notSavedCurrentTourMatches = getNotSavedCurrentTourMatches(currentTourDraws, d, user);
+                var matches = matchIntermediateService.save(notSavedCurrentTourMatches);
+                d.setMatches(matches);
+                d.setCountOfTour(countSheduleTours++);
             }
+            dayIntermediateService.save(d);
         }
-        calendarApi.setCalendarApiList(calendar);
+    }
+
+    private List<Match> getNotSavedCurrentTourMatches(List<Draw> currentTourDraws, Day day, User user) {
+        var matchList = new ArrayList<Match>();
+        for (var draw : currentTourDraws) {
+            var match = matchConverter.getIntermediateEntityFromDraw(draw, day, user);
+        }
+    }
+
+    private List<Draw> getCurrentTourDraws(List<Draw> drawList, int countSheduleTours) {
+        return drawList.stream()
+                .filter(d ->d.getTourNumber() == countSheduleTours)
+                .collect(Collectors.toList());
     }
 
     @Transactional

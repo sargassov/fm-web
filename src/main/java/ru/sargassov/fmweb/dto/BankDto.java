@@ -1,7 +1,6 @@
 package ru.sargassov.fmweb.dto;
 
 import lombok.Data;
-import ru.sargassov.fmweb.intermediate_entites.Bank;
 
 import java.math.BigDecimal;
 

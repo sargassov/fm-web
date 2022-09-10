@@ -5,8 +5,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import ru.sargassov.fmweb.api_temporary_classes_group.TeamApi;
 import ru.sargassov.fmweb.dto.days_dtos.DayDto;
-import ru.sargassov.fmweb.intermediate_entites.days.*;
+import ru.sargassov.fmweb.intermediate_entities.Day;
+import ru.sargassov.fmweb.intermediate_entities.Match;
 import ru.sargassov.fmweb.entities.DayEntity;
+import ru.sargassov.fmweb.intermediate_entities.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,19 +17,12 @@ import java.util.List;
 @AllArgsConstructor
 @Slf4j
 public class DayConverter {
-    private final TeamApi teamApi;
 
-    public Day entityToDto(DayEntity dayEntity){
-        Day day;
+    public Day getIntermediateEntityFromEntity(DayEntity dayEntity, User user){
+        var day = new Day();
 
-        if (dayEntity.isMatch()) {
-            day = new TourDay();
-            day.setMatch(true);
-        }
-        else day = new TrainDay();
-
+        day.setUser(user);
         day.setDate(dayEntity.getDate());
-        day.setId(dayEntity.getId());
         day.setPassed(dayEntity.isPassed());
         day.setMatch(dayEntity.isMatch());
         day.setPresent(dayEntity.isPresent());
