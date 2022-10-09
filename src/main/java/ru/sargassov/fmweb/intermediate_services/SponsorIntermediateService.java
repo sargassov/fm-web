@@ -5,10 +5,12 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.sargassov.fmweb.intermediate_entities.Sponsor;
+import ru.sargassov.fmweb.intermediate_entities.User;
 import ru.sargassov.fmweb.intermediate_repositories.SponsorIntermediateRepository;
 import ru.sargassov.fmweb.intermediate_spi.SponsorIntermediateServiceSpi;
 
 import javax.persistence.EntityExistsException;
+import java.util.List;
 
 @Service
 @Data
@@ -22,8 +24,8 @@ public class SponsorIntermediateService implements SponsorIntermediateServiceSpi
     }
 
     @Override
-    public int getSponsorsQuantity() {
-        return repository.getSponsorsQuantity();
+    public int getSponsorsQuantity(User user) {
+        return repository.getSponsorsQuantity(user);
     }
 
     @Override
@@ -34,5 +36,20 @@ public class SponsorIntermediateService implements SponsorIntermediateServiceSpi
         }
 
         throw new EntityExistsException("Sponsor with id #" + id + " not exists");
+    }
+
+    @Override
+    public List<Sponsor> save(List<Sponsor> sponsors) {
+        return repository.saveAll(sponsors);
+    }
+
+    @Override
+    public List<Sponsor> findAllByUser(User user) {
+        return repository.findByUser(user);
+    }
+
+    @Override
+    public Sponsor findBySponsorEntityIdAndUser(long sponsorEntityId, User user) {
+        return repository.findBySponsorEntityIdAndUser(sponsorEntityId, user);
     }
 }

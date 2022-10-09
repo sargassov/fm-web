@@ -10,7 +10,6 @@ angular.module('placement', ['ngStorage']).controller('placementController', fun
             });
     };
 
-
     $scope.getActualDate = function () {
         $http.get(contextPath + '/dates')
             .then(function successCallback(response) {
@@ -38,21 +37,30 @@ angular.module('placement', ['ngStorage']).controller('placementController', fun
             });
     };
 
-    $scope.deleteInPlacement = function (number) {
-        $http.delete(contextPath + '/placement/delete/' + number)
-            .then(function successCallback(response) {
+    $scope.deleteInPlacement = function (name) {
+        $http.delete(contextPath + '/placement/delete/' + name)
+            .then(function successCallback() {
                 $scope.loadCurrentPlacement();
             }, function errorCallback(response) {
-                alert('DELETING OF ' + number + ' NOT CORRECTING');
+                alert('DELETING OF ' + name + ' NOT CORRECTING');
             });
     };
 
     $scope.autoselect = function () {
         $http.get(contextPath + '/placement/current/autoselect')
-            .then(function successCallback(response) {
+            .then(function successCallback() {
                 $scope.loadCurrentPlacement();
             }, function errorCallback(response) {
                 alert('TEAM NAME NOT FOUND');
+            });
+    };
+
+    $scope.changePlayerInPlacement = function (name) {
+        $http.post(contextPath + '/placement/change_player/' + name)
+            .then(function successCallback() {
+                $scope.loadCurrentPlacement();
+            }, function errorCallback(response) {
+                alert('CANT CHANGE PLACEMENT');
             });
     };
 

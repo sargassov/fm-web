@@ -1,4 +1,4 @@
-INSERT INTO IF NOT EXISTS placements
+INSERT INTO placements
 
     (description,    roles                             ) VALUES
     ('4 - 4 - 2',	'{Goalkeeper,Defender,Defender,Defender,Defender,Midfielder,Midfielder,Midfielder,Midfielder,Forward,Forward,GS,DS,DS,MS,MS,FS,FS}'),

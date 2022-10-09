@@ -12,9 +12,9 @@ public interface LeagueServiceSpi {
 
    void getRussianLeague(User user);
 
-   LeagueDto getLeagueName();
-
-    List<TeamResultDto> loadTeamTable();
+//   LeagueDto getLeagueName();
+//
+//    List<TeamResultDto> loadTeamTable();
 
     List<CortageDto> loadResultMatrix();
 

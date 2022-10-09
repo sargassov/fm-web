@@ -1,4 +1,4 @@
-INSERT INTO IF NOT EXISTS sponsors (
+INSERT INTO sponsors (
 
     name,                          day_wage, match_wage, goal_bonus_wage, win_wage, deuce_wage, contract_bonus_wage) VALUES
     ('Гол.tv',	                   1.00,	 2.00,	     1.10,	          1.25,	    0.10,	    4.00),

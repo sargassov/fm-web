@@ -18,9 +18,9 @@ public class LeagueConverter {
         return league;
     }
 
-    public LeagueDto getLeagueDtoFromIntermediateEntity() {
-        LeagueDto leagueDto = new LeagueDto();
-        leagueDto.setName(league.getName());
-        return leagueDto;
-    }
+//    public LeagueDto getLeagueDtoFromIntermediateEntity() {
+//        LeagueDto leagueDto = new LeagueDto();
+//        leagueDto.setName(league.getName());
+//        return leagueDto;
+//    }
 }

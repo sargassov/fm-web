@@ -1,15 +1,12 @@
 package ru.sargassov.fmweb.services;
 
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.sargassov.fmweb.intermediate_entities.Player;
 import ru.sargassov.fmweb.intermediate_entities.Position;
-import ru.sargassov.fmweb.intermediate_repositories.PositionIntermediateRepository;
+import ru.sargassov.fmweb.intermediate_entities.User;
 import ru.sargassov.fmweb.intermediate_spi.PositionIntermediateServiceSpi;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -35,15 +32,10 @@ public class PlayerPriceSetter {
     private static List<Position> positions;
     private List<Integer> ables;
 
-    public PlayerPriceSetter() {
-        positions = positionIntermediateService.findAll();
-    }
-
-    public double createPrice(Player player){
-
+    public double createPrice(Player player, User user){
         TechPrice techPrice = new TechPrice(zeroPrice);
 
-        init(player);
+        init(player, user);
         priceDetermination(techPrice);
         captainValue(player, techPrice);
         yearBirthValue(player, techPrice);
@@ -81,7 +73,8 @@ public class PlayerPriceSetter {
         }
     }
 
-    private void init(Player player){
+    private void init(Player player, User user){
+        positions = positionIntermediateService.findAllByUser(user);
         ables = Arrays.asList(player.getGkAble(),
                 player.getDefAble(),
                 player.getMidAble(),

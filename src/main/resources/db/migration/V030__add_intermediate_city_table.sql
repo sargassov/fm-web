@@ -3,4 +3,5 @@ CREATE TABLE IF NOT EXISTS city (
                                     id_user BIGINT NOT NULL,
                                     name VARCHAR(255) NOT NULL,
                                     id_league BIGINT NOT NULL,
+                                    id_city_entity BIGINT NOT NULL
 );

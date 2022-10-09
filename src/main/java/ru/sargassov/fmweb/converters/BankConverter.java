@@ -20,6 +20,7 @@ public class BankConverter {
 
     public Bank getIntermediateEntityFromEntity(BankEntity bankEntity, User user){
         Bank bank = new Bank();
+        bank.setUser(user);
         bank.setTitle(bankEntity.getTitle());
         bank.setPercentDay(bankEntity.getPercentDay());
         bank.setPercentMonth(bankEntity.getPercentMonth());
@@ -59,7 +60,7 @@ public class BankConverter {
         bank.setAlreadyPaid(BigDecimal.ZERO);
         bank.setRemainMoney(loan.getFullLoanCoeff());
         bank.setTookMoney(loan.getTookMoney());
-        bank.setDateOfLoan(calendarService.getPresentDay());
+//        bank.setDateOfLoan(calendarService.getPresentDay());
         bank.setRemainsDate(Bank.guessRemainsDate(bank.getDateOfLoan(), loan));
     }
 

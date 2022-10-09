@@ -3,6 +3,6 @@ CREATE TABLE IF NOT EXISTS role (
                                         id_user BIGINT NOT NULL,
                                         title VARCHAR(64) NOT NULL,
                                         id_team BIGINT NOT NULL,
-                                        id_player BIGINT NOT NULL,
+                                        id_player BIGINT,
                                         pos_number INTEGER NOT NULL
 );

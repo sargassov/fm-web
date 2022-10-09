@@ -26,56 +26,56 @@ public class NewDayService implements NewDayServiceSpi {
     private final UserServiceSpi userService;
     private final TeamServiceSpi teamService;
 
-    @Override
-    @Transactional
-    public void createNewDay() {
+//    @Override
+//    @Transactional
+//    public void createNewDay() {
 //        if (dayService.isMatchday()) { TODO Добавить эту функцию
 //            log.error(MATCH_DONT_PLAYED);
 //            throw new NewDayException(MATCH_DONT_PLAYED);
 //        }
 
-        List<String> notesOfChanges = new ArrayList<>();
-        notesOfChanges.add(addDate());
-        notesOfChanges.add(openYouthAcademy());
-        notesOfChanges.addAll(setTrainingEffects());
-        notesOfChanges.addAll(setFinanceUpdates());
-        notesOfChanges.addAll(setMarketingChanges());
-        setPlayerRecovery();
+//        List<String> notesOfChanges = new ArrayList<>();
+//        notesOfChanges.add(addDate());
+//        notesOfChanges.add(openYouthAcademy());
+//        notesOfChanges.addAll(setTrainingEffects());
+//        notesOfChanges.addAll(setFinanceUpdates());
+//        notesOfChanges.addAll(setMarketingChanges());
+//        setPlayerRecovery();
+//
+//        Day currentDay = dayService.getActualDay();
+//        currentDay.setNoteOfChanges(notesOfChanges);
+//    }
 
-        Day currentDay = dayService.getActualDay();
-        currentDay.setNoteOfChanges(notesOfChanges);
-    }
+//    private void setPlayerRecovery() {
+//        teamService.setPlayerRecovery();
+//    }
+//
+//    @Override
+//    public List<TextResponse> loadChanges() {
+//        Day actualDay = dayService.getActualDay();
+//        List<String> notesOfChanges = actualDay.getNoteOfChanges();
+//        return new ArrayList<>(TextConstant.dropStringsIntoTextResponses(notesOfChanges));
+//    }
+//
+//    private List<String> setMarketingChanges() {
+//        return teamService.setMarketingChanges();
+//    }
+//
+//    private List<String> setFinanceUpdates() {
+//        return teamService.setFinanceUpdates();
+//    }
+//
+//    private List<String> setTrainingEffects() {
+//        List<String> noteOfChanges = teamService.setTrainingEffects();
+//        return noteOfChanges;
+//    }
 
-    private void setPlayerRecovery() {
-        teamService.setPlayerRecovery();
-    }
+//    private String openYouthAcademy() {
+//        userService.visit(false);
+//        return "Now you can invoke players from youth academy";
+//    }
 
-    @Override
-    public List<TextResponse> loadChanges() {
-        Day actualDay = dayService.getActualDay();
-        List<String> notesOfChanges = actualDay.getNoteOfChanges();
-        return new ArrayList<>(TextConstant.dropStringsIntoTextResponses(notesOfChanges));
-    }
-
-    private List<String> setMarketingChanges() {
-        return teamService.setMarketingChanges();
-    }
-
-    private List<String> setFinanceUpdates() {
-        return teamService.setFinanceUpdates();
-    }
-
-    private List<String> setTrainingEffects() {
-        List<String> noteOfChanges = teamService.setTrainingEffects();
-        return noteOfChanges;
-    }
-
-    private String openYouthAcademy() {
-        userService.visit(false);
-        return "Now you can invoke players from youth academy";
-    }
-
-    private String addDate() {
-        return dayService.addDate();
-    }
+//    private String addDate() {
+//        return dayService.addDate();
+//    }
 }

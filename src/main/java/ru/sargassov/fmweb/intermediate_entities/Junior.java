@@ -14,7 +14,6 @@ import javax.persistence.Table;
 @Table(name = "junior")
 @Getter
 @Setter
-@NoArgsConstructor
 @RequiredArgsConstructor
 public class Junior extends BaseUserEntity {
 

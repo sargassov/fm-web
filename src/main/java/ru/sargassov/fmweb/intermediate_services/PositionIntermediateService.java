@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.sargassov.fmweb.intermediate_entities.Position;
+import ru.sargassov.fmweb.intermediate_entities.User;
 import ru.sargassov.fmweb.intermediate_repositories.PositionIntermediateRepository;
 import ru.sargassov.fmweb.intermediate_spi.PositionIntermediateServiceSpi;
 
@@ -29,7 +30,17 @@ public class PositionIntermediateService implements PositionIntermediateServiceS
     }
 
     @Override
-    public List<Position> findAll() {
-        return repository.findAll();
+    public List<Position> findAllByUser(User user) {
+        return repository.findAllByUser(user);
+    }
+
+    @Override
+    public List<Position> save(List<Position> positions) {
+        return repository.saveAll(positions);
+    }
+
+    @Override
+    public Position findByPositionEntityIdAndUser(Long positionEntityId, User user) {
+        return repository.findByPositionEntityIdAndUser(positionEntityId, user);
     }
 }

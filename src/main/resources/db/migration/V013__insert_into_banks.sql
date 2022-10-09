@@ -1,4 +1,4 @@
-insert into IF NOT EXISTS banks (
+insert into banks (
 
 
     title,                   percent_day, percent_week,  percent_month, full_loan_coeff, max_loan_amount) values
@@ -9,3 +9,5 @@ insert into IF NOT EXISTS banks (
     ('Omega Bank',	        4,	          14,	        66,	           1.8,	            85.00),
     ('Air Bank',	        1,	          7,	        34,	           3.2,	            24.00),
     ('TrainsCapitalBank',	3,	          25,	        105,	       1.2,	            80.00);
+
+INSERT INTO leagues (name) VALUES ('Российская Футбольная Премьер Лига');

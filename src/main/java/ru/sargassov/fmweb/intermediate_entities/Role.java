@@ -9,7 +9,6 @@ import javax.persistence.*;
 @Table(name = "role")
 @Getter
 @Setter
-@NoArgsConstructor
 @RequiredArgsConstructor
 public class Role extends BaseUserEntity {
 

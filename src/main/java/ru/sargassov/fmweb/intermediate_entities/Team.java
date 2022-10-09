@@ -23,7 +23,6 @@ import java.util.stream.Collectors;
 @Table(name = "team")
 @Getter
 @Setter
-@NoArgsConstructor
 @RequiredArgsConstructor
 public class Team extends BaseUserEntity {
 
@@ -84,6 +83,10 @@ public class Team extends BaseUserEntity {
     @JoinColumn(name = "id_placement")
     private Placement placement;
 
+    @ManyToOne
+    @JoinColumn(name = "id_user")
+    private User user;
+
     @Column(name = "regular_capacity")
     private int regularCapacity;
 
@@ -117,7 +120,8 @@ public class Team extends BaseUserEntity {
     @Column(name = "points")
     private int points;
 
-    private long teamEntityId;
+    @Column(name = "id_team_entity")
+    private Long teamEntityId;
 
     //__________________________
 
@@ -251,47 +255,47 @@ public class Team extends BaseUserEntity {
         return opt.isPresent();
     }
 
-    public List<String> setRandomTrainingEffects() {
-        List<String> noteOfChanges = new ArrayList<>();
-        noteOfChanges.add("Training effcts of " + name);
-        int size = playerList.size();
+//    public List<String> setRandomTrainingEffects() {
+//        List<String> noteOfChanges = new ArrayList<>();
+//        noteOfChanges.add("Training effcts of " + name);
+//        int size = playerList.size();
+//
+//        for(int x = 0; x < 5; x++){
+//            Player p = playerList.get((int) (Math.random() * size));
+//            int balance = p.getTrainingBalance();
+//            int trainingAble = p.getTrainingAble();
+//            int trainingEffect = trainingAble * (int) (Math.random() * 5);
+//
+//            p.setTire(p.getTire() + 15);
+//            p.setTrainingBalance(balance + trainingEffect);
+//            noteOfChanges.add(p.getName() + " from " + name + " increase his training balance +" + p.getTrainingAble());
+//            p.levelUpCheckAuto();
+//        }
+//        return noteOfChanges;
+//    }
 
-        for(int x = 0; x < 5; x++){
-            Player p = playerList.get((int) (Math.random() * size));
-            int balance = p.getTrainingBalance();
-            int trainingAble = p.getTrainingAble();
-            int trainingEffect = trainingAble * (int) (Math.random() * 5);
-
-            p.setTire(p.getTire() + 15);
-            p.setTrainingBalance(balance + trainingEffect);
-            noteOfChanges.add(p.getName() + " from " + name + " increase his training balance +" + p.getTrainingAble());
-            p.levelUpCheckAuto();
-        }
-        return noteOfChanges;
-    }
-
-    public List<String> userTeamTrainingEffects(List<String> noteOfChanges) {
-        noteOfChanges.add("Your team training effects:");
-
-        for (Coach coach : coaches) {
-            if (coach.getPlayerOnTraining() != null) {
-                Player player = coach.getPlayerOnTraining();
-                Coach.CoachProgram program = coach.getCoachProgram();
-                int playerTrainingBalance = player.getTrainingBalance();
-                int playerTriningAble = player.getTrainingAble();
-                int coachTrainingAble = coach.getTrainingAble();
-                player.setTrainingBalance(playerTrainingBalance + coachTrainingAble);
-                noteOfChanges.add(player.getName() + " in your club increase his training balance +" + (playerTriningAble * coach.getTrainingCoeff()));
-                player.levelUpCheckManual(coach);
-                player.guessTrainingTire(program);
-
-                if (player.getTire() > 50) {
-                    coach.setPlayerOnTraining(null);
-                }
-            }
-        }
-        return noteOfChanges;
-    }
+//    public List<String> userTeamTrainingEffects(List<String> noteOfChanges) {
+//        noteOfChanges.add("Your team training effects:");
+//
+//        for (Coach coach : coaches) {
+//            if (coach.getPlayerOnTraining() != null) {
+//                Player player = coach.getPlayerOnTraining();
+//                Coach.CoachProgram program = coach.getCoachProgram();
+//                int playerTrainingBalance = player.getTrainingBalance();
+//                int playerTriningAble = player.getTrainingAble();
+//                int coachTrainingAble = coach.getTrainingAble();
+//                player.setTrainingBalance(playerTrainingBalance + coachTrainingAble);
+//                noteOfChanges.add(player.getName() + " in your club increase his training balance +" + (playerTriningAble * coach.getTrainingCoeff()));
+//                player.levelUpCheckManual(coach);
+//                player.guessTrainingTire(program);
+//
+//                if (player.getTire() > 50) {
+//                    coach.setPlayerOnTraining(null);
+//                }
+//            }
+//        }
+//        return noteOfChanges;
+//    }
 
     public List<String> setFinanceUpdates(Day day) {
         List<String> notesOfChanges = new ArrayList<>();
@@ -389,9 +393,41 @@ public class Team extends BaseUserEntity {
     }
 
     public void assignUser(User user) {
-        var userName = user.getName();
-        headCoach = new HeadCoach();
         headCoach.setUser(user);
+    }
+
+    public void offerSponsorContract(Sponsor sponsor) {
+        this.sponsor = sponsor;
+        var contractBonusWage = sponsor.getContractBonusWage();
+        wealth = wealth.add(contractBonusWage);
+    }
+
+    public void resetTeamPower() {
+        teamPower = 0;
+    }
+
+    public void resetAllStrategyPlaces() {
+        for(var p : playerList) {
+            p.setStrategyPlace(-100);
+        }
+    }
+
+    public List<Player> findPlayersByPosition(Position position) {
+        var positionTitle = position.getTitle();
+        return playerList.stream()
+                .filter(p -> p.getPosition().getTitle().equals(positionTitle))
+                .collect(Collectors.toList());
+    }
+
+    public Player findPlayerByNumber(Integer anotherPlayerPositionNumber) {
+        var optPlayer = playerList.stream()
+                .filter(p -> p.getNumber().equals(anotherPlayerPositionNumber))
+                .findFirst();
+
+        if (optPlayer.isPresent()) {
+            return optPlayer.get();
+        }
+        throw new PlayerNotFoundException("Players with number #" + anotherPlayerPositionNumber + " not found");
     }
 
 
@@ -419,7 +455,7 @@ public class Team extends BaseUserEntity {
 //        Random random = new Random();
 //        sponsor = league.getSponsorList().get(random.nextInt(16));
 //        wealth += sponsor.getContractBonusWage();
-////        regularCapacity = capacityStad / 4;
+//        regularCapacity = capacityStad / 4;
 //        System.out.println(name + " " + sponsor.getName());
 //    }
 //
@@ -454,12 +490,7 @@ public class Team extends BaseUserEntity {
 ////
 ////    }
 ////
-////    public void offerSponsorContract(Sponsor sponsor) {
-////        this.sponsor = sponsor;
-////        wealth += sponsor.getContractBonusWage();
-////        System.out.println("\n" + Corrector.getS(30) + "Contract with " + sponsor.getName() + " was offered!\n" +
-////                Corrector.getS(30) + sponsor.getContractBonusWage() + " came into team budget!");
-////    }
+
 ////
 ////    public int teamCounter(){
 ////        for (int i = 0; i < rfpl.teams.length; i++) {

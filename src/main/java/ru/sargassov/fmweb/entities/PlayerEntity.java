@@ -57,5 +57,9 @@ public class PlayerEntity {
     @ManyToOne
     @JoinColumn(name = "id_teams")
     private TeamEntity teamEntity;
+
+    @ManyToOne
+    @JoinColumn(name = "id_leagues")
+    private LeagueEntity leagueEntity;
 }
 

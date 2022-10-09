@@ -12,7 +12,6 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@RequiredArgsConstructor
 public class Cortage extends BaseUserEntity {
 
     @OneToOne
@@ -20,7 +19,6 @@ public class Cortage extends BaseUserEntity {
     private Team team;
 
     @OneToMany(mappedBy = "cortage", cascade = CascadeType.ALL)
-    @JoinColumn(name = "match_list")
     private List<Match> matchList;
 
     public List<Match> getMatchList() {

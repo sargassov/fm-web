@@ -13,7 +13,6 @@ import ru.sargassov.fmweb.spi.CoachServiceSpi;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,7 +27,8 @@ public class CoachService implements CoachServiceSpi {
     @Override
     @Transactional
     public List<CoachDto> getAllCoachFromUserTeam() {
-        Team team = userService.getUserTeam();
+//        Team team = userService.getUserTeam();
+        Team team = null;
         return team.getCoaches().stream()
                 .map(coachConverter::getCoachDtoFromIntermediateEntity)
                 .collect(Collectors.toList());
@@ -37,7 +37,8 @@ public class CoachService implements CoachServiceSpi {
     @Override
     @Transactional
     public void newCoachPurchaseResponce() {
-        Team team = userService.getUserTeam();
+//        Team team = userService.getUserTeam();
+        Team team = null;
         if(team.getCoaches().size() == team.maxValueOfCoaches)
             throw new CoachException("You have 6 coaches from 6. You can't purchase more");
     }
@@ -51,7 +52,8 @@ public class CoachService implements CoachServiceSpi {
     @Override
     @Transactional
     public void createNewCoach(CoachDto coachDto) {
-        Team team = userService.getUserTeam();
+//        Team team = userService.getUserTeam();
+        Team team = null;
         Coach coach = coachConverter.getIntermediateEntityFromCoachDto(coachDto);
 
         newCoachPurchaseResponce();
@@ -72,26 +74,29 @@ public class CoachService implements CoachServiceSpi {
     @Override
     @Transactional
     public List<Player> getBusyPlayers(){
-       return userService.getCoachListFromUserTeam().stream()
-                .map(Coach::getPlayerOnTraining)
-                .collect(Collectors.toList());
+        return  null;
+//       return userService.getCoachListFromUserTeam().stream()
+//                .map(Coach::getPlayerOnTraining)
+//                .collect(Collectors.toList());
     }
 
     @Override
     @Transactional
     public List<Player> getPlayerComparingByNumberAndPositionOfCoach(Coach coach){
-        return userService.getPlayerListFromUserTeam().stream()
-                .filter(p -> p.getPosition().equals(coach.getPosition()))
-                .sorted(Comparator.comparing(Player::getNumber))
-                .collect(Collectors.toList());
+        return null;
+//        return userService.getPlayerListFromUserTeam().stream()
+//                .filter(p -> p.getPosition().equals(coach.getPosition()))
+//                .sorted(Comparator.comparing(Player::getNumber))
+//                .collect(Collectors.toList());
     }
 
     @Override
     @Transactional
     public void changePlayerOnTrain(CoachDto coachDto) {
-        Coach coach = userService.getCoachListFromUserTeam().get(coachDto.getCount());
+//        Coach coach = userService.getCoachListFromUserTeam().get(coachDto.getCount());
+        Coach coach = null;
         List<Player> players = getPlayerComparingByNumberAndPositionOfCoach(coach);
-        Player p;
+        Player p = null;
 
         coach.setCoachProgram(Coach.CoachProgram.STANDART);
         coach.setTrainingAble(0);
@@ -102,7 +107,7 @@ public class CoachService implements CoachServiceSpi {
             return;
         }
 
-        p = userService.getPlayerByNameFromUserTeam(coachDto.getPlayerOnTraining());
+//        p = userService.getPlayerByNameFromUserTeam(coachDto.getPlayerOnTraining());
         int countPlayerInList = players.indexOf(p);
         selectingPlayerOnTrain(players, countPlayerInList, coach);
     }
@@ -138,9 +143,9 @@ public class CoachService implements CoachServiceSpi {
     @Override
     @Transactional
     public void deleteCoachByCount(Integer count) {
-        List<Coach> coaches = userService.getCoachListFromUserTeam();
-        coaches.remove(coaches.get(count));
-        replaceCounters(coaches);
+//        List<Coach> coaches = userService.getCoachListFromUserTeam();
+//        coaches.remove(coaches.get(count));
+//        replaceCounters(coaches);
     }
 
     @Override
@@ -155,11 +160,11 @@ public class CoachService implements CoachServiceSpi {
     @Override
     @Transactional
     public void changeTrainingProgram(Integer count, Integer program) {
-        Coach coach = userService.getCoachListFromUserTeam().get(count);
-        Coach.CoachProgram[] allPrograms = Coach.CoachProgram.values();
-        coach.setCoachProgram(allPrograms[program]);
-
-        Player player = coach.getPlayerOnTraining();
-        guessTrainingAble(coach, player);
+//        Coach coach = userService.getCoachListFromUserTeam().get(count);
+//        Coach.CoachProgram[] allPrograms = Coach.CoachProgram.values();
+//        coach.setCoachProgram(allPrograms[program]);
+//
+//        Player player = coach.getPlayerOnTraining();
+//        guessTrainingAble(coach, player);
     }
 }

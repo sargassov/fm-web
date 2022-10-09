@@ -16,7 +16,6 @@ import javax.persistence.OneToOne;
 @Slf4j
 public class UserConverter {
 
-
     public User parseUserData(UserData userData){
         var user = new User();
         user.setName(userData.getLastname() + " " + userData.getName());
@@ -26,19 +25,4 @@ public class UserConverter {
 //        userApi.setVisitToYouthAcademyToday(false);
         return user;
     }
-
-
-
-    @Column(name = "name")
-    private String name;
-
-    @Column(name = "password")
-    private String password;
-
-    @Column(name = "about")
-    private String about;
-
-    @OneToOne
-    @JoinColumn(name = "id_team")
-    private Team userTeam;
 }

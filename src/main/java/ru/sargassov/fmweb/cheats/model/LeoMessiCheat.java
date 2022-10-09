@@ -1,11 +1,12 @@
 package ru.sargassov.fmweb.cheats.model;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import ru.sargassov.fmweb.cheats.Cheat;
 
-
-
-@Data
+@Getter
+@Setter
 public class LeoMessiCheat extends Cheat {
 
     private final String code = "givemeleomessiinmyteam";
@@ -13,6 +14,6 @@ public class LeoMessiCheat extends Cheat {
 
     @Override
     public void activate() {
-        service.leoMessiCheatActivate();
+//        service.leoMessiCheatActivate();
     }
 }

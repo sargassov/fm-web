@@ -10,13 +10,15 @@ import java.math.BigDecimal;
 @Table(name = "sponsor")
 @Getter
 @Setter
-@NoArgsConstructor
 @RequiredArgsConstructor
 public class Sponsor extends BaseUserEntity {
 
 
     @Column(name = "name")
     private String name;
+
+    @Column(name = "id_sponsor_entity")
+    private Long sponsorEntityId;
 
     @Column(name = "day_wage")
     private BigDecimal dayWage;

@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import ru.sargassov.fmweb.constants.BaseUserEntity;
 import ru.sargassov.fmweb.constants.IntermediateEntity;
 
 import javax.persistence.*;
@@ -12,12 +13,16 @@ import javax.persistence.*;
 @Table(name = "position")
 @Getter
 @Setter
-@NoArgsConstructor
-@RequiredArgsConstructor
-public class Position extends IntermediateEntity {
+public class Position extends BaseUserEntity {
 
     @Column(name = "title")
     private String title;
 
-    private long positionEntityId;
+    @Column(name = "id_position_Entity")
+    private Long positionEntityId;
+
+    @Override
+    public String toString() {
+        return title;
+    }
 }

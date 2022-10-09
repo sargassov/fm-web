@@ -16,7 +16,6 @@ import java.util.List;
 @Table(name = "bank")
 @Getter
 @Setter
-@NoArgsConstructor
 @RequiredArgsConstructor
 public class Bank extends BaseUserEntity {
 

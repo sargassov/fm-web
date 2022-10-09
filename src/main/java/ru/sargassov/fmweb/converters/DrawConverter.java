@@ -10,11 +10,11 @@ import ru.sargassov.fmweb.intermediate_entities.User;
 @AllArgsConstructor
 @Slf4j
 public class DrawConverter {
-    public Draw getIntermediateEntityFromString(String match, User user, int toutCount) {
+    public Draw getIntermediateEntityFromString(String match, User user, int tourCount) {
         var draw = new Draw();
         draw.setUser(user);
         draw.setMatch(match);
-        draw.setTourNumber(toutCount);
+        draw.setTourNumber(tourCount);
         return draw;
     }
 }

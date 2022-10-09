@@ -11,7 +11,6 @@ import java.util.List;
 @Table(name = "match")
 @Getter
 @Setter
-@NoArgsConstructor
 @RequiredArgsConstructor
 public class Match extends BaseUserEntity {
 
@@ -38,8 +37,14 @@ public class Match extends BaseUserEntity {
     @Column(name = "impossible_match")
     private boolean impossibleMatch;
 
+    @Column(name = "count_of_tour")
+    private Integer countOfTour;
+
     @OneToMany(mappedBy = "match")
-    private List<Goal> goals;
+    private List<Goal> homeTeamGoals;
+
+    @OneToMany(mappedBy = "match")
+    private List<Goal> awayTeamGoals;
 
     @Column(name = "home_score")
     private int homeScore;
@@ -60,7 +65,8 @@ public class Match extends BaseUserEntity {
                 "home=" + home +
                 ", away=" + away +
                 ", stadium=" + stadium +
-                ", scorePlayers=" + goals +
+                ", homeScorePlayers=" + homeTeamGoals +
+                ", awayScorePlayers=" + awayTeamGoals +
                 ", homeScore=" + homeScore +
                 ", awayScore=" + awayScore +
                 ", matchPassed=" + matchPassed +

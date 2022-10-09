@@ -6,11 +6,12 @@ CREATE TABLE IF NOT EXISTS players (
                                 def_able INTEGER NOT NULL,
                                 mid_able INTEGER NOT NULL,
                                 forw_able INTEGER NOT NULL,
-                                price INTEGER NOT NULL,
+                                price INTEGER,
                                 captain_able INTEGER NOT NULL,
                                 number INTEGER NOT NULL,
                                 strategy_place INTEGER,
                                 id_teams BIGINT,
                                 year INTEGER NOT NULL,
-                                id_positions BIGINT
+                                id_positions BIGINT,
+                                id_leagues BIGINT
 );

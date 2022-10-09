@@ -3,7 +3,6 @@ package ru.sargassov.fmweb.converters;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import ru.sargassov.fmweb.api_temporary_classes_group.TeamApi;
 import ru.sargassov.fmweb.dto.days_dtos.DayDto;
 import ru.sargassov.fmweb.intermediate_entities.Day;
 import ru.sargassov.fmweb.intermediate_entities.Match;
@@ -20,7 +19,6 @@ public class DayConverter {
 
     public Day getIntermediateEntityFromEntity(DayEntity dayEntity, User user){
         var day = new Day();
-
         day.setUser(user);
         day.setDate(dayEntity.getDate());
         day.setPassed(dayEntity.isPassed());
@@ -30,23 +28,23 @@ public class DayConverter {
         return day;
     }
 
-    public List<Match> descriptionOfTourToMatches(List<String> descriptionOfTour) {
-        List<Match> matches = new ArrayList<>();
-        String deliver = "-";
-
-        for(String s : descriptionOfTour){
-            String[] homeGuest = s.split(deliver);
-
-            Match m = new Match();
-            m.setHome(teamApi.findByName(homeGuest[0]));
-            m.setAway(teamApi.findByName(homeGuest[1]));
-            m.setStadium(m.getHome().getStadium());
-            m.setScorePlayers(new ArrayList<>());
-            matches.add(m);
-        }
-
-        return matches;
-    }
+//    public List<Match> descriptionOfTourToMatches(List<String> descriptionOfTour) {
+//        List<Match> matches = new ArrayList<>();
+//        String deliver = "-";
+//
+//        for(String s : descriptionOfTour){
+//            String[] homeGuest = s.split(deliver);
+//
+//            Match m = new Match();
+//            m.setHome(teamApi.findByName(homeGuest[0]));
+//            m.setAway(teamApi.findByName(homeGuest[1]));
+//            m.setStadium(m.getHome().getStadium());
+//            m.setScorePlayers(new ArrayList<>());
+//            matches.add(m);
+//        }
+//
+//        return matches;
+//    }
 
     public DayDto dtoToPresentDayRequest(Day presentDay) {
         DayDto dayDto = new DayDto();

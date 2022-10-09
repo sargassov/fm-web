@@ -3,13 +3,11 @@ package ru.sargassov.fmweb.converters;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import ru.sargassov.fmweb.api_temporary_classes_group.TeamApi;
-import ru.sargassov.fmweb.api_temporary_classes_group.UserApi;
 import ru.sargassov.fmweb.dto.player_dtos.*;
 import ru.sargassov.fmweb.exceptions.CoachException;
 import ru.sargassov.fmweb.intermediate_entities.*;
 import ru.sargassov.fmweb.entities.PlayerEntity;
-import ru.sargassov.fmweb.exceptions.TeamNotFoundException;
+import ru.sargassov.fmweb.intermediate_spi.PositionIntermediateServiceSpi;
 import ru.sargassov.fmweb.intermediate_spi.TeamIntermediateServiceSpi;
 import ru.sargassov.fmweb.services.PlayerPriceSetter;
 
@@ -17,27 +15,23 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Component
 @AllArgsConstructor
 @Slf4j
 public class PlayerConverter {
-    private final PositionConverter positionConverter;
+    private final PositionIntermediateServiceSpi positionIntermediateService;
     private final PlayerPriceSetter playerPriceSetter;
     private final JuniorConverter juniorConverter;
     private final TeamIntermediateServiceSpi teamIntermediateService;
 
 
-    public Player getIntermediateEntityFromEntity(PlayerEntity playerEntity, User user){
+    public Player getIntermediateEntityFromEntity(PlayerEntity playerEntity, User user, League league){
         Player player = new Player();
-        var position = positionConverter.getIntermediateEntityFromEnum(playerEntity.getPositionEntity());
-        var playerEntityTeamEntityId = playerEntity.getTeamEntity().getId();
-        var team = teamIntermediateService.findAll()
-                .stream()
-                .filter(t -> t.getTeamEntityId() == playerEntityTeamEntityId)
-                .findFirst().orElseThrow(() ->
-                        new TeamNotFoundException(String.format("Team with id = '%s' not found", playerEntityTeamEntityId)));
+        var positionEntityId = playerEntity.getPositionEntity().getId();
+        var teamEntityId = playerEntity.getTeamEntity().getId();
+        var position = positionIntermediateService.findByPositionEntityIdAndUser(positionEntityId, user);
+        var team = teamIntermediateService.findByTeamEntityIdAndUser(teamEntityId, user);
 
         player.setUser(user);
         player.setName(playerEntity.getName());
@@ -54,11 +48,15 @@ public class PlayerConverter {
         player.setPosition(position);
         player.guessPower();
         player.setTeam(team);
-        guessPrice(player);
+        player.setLeague(league);
+        guessPrice(player, user);
+        player.setTimeBeforeTreat(0);
+        player.setTrainingBalance(0);
+        player.setTire(0);
         return player;
     }
 
-    public PlayerSoftSkillDto getPlayerSoftSkillDtoFromIntermediateEntity(Player player) {
+    public static PlayerSoftSkillDto getPlayerSoftSkillDtoFromIntermediateEntity(Player player) {
         PlayerSoftSkillDto pOnPageDto = new PlayerSoftSkillDto();
         complectSkillsOfPlayerDto(pOnPageDto, player);
         complectSkillsOfPlayerHardSkillDto(pOnPageDto, player);
@@ -77,12 +75,12 @@ public class PlayerConverter {
     }
 
 
-    public void complectSkillsOfPlayerDto(PlayerDto pDto, Player p){
+    public static void complectSkillsOfPlayerDto(PlayerDto pDto, Player p){
         pDto.setId(p.getId());
         pDto.setName(p.getName());
     }
 
-    public void complectSkillsOfPlayerHardSkillDto(PlayerHardSkillDto pDto, Player p){
+    public static void complectSkillsOfPlayerHardSkillDto(PlayerHardSkillDto pDto, Player p){
         pDto.setGkAble(p.getGkAble());
         pDto.setDefAble(p.getDefAble());
         pDto.setMidAble(p.getMidAble());
@@ -93,12 +91,12 @@ public class PlayerConverter {
         pDto.setBirthYear(p.getBirthYear());
     }
 
-    private void complectSkillCreatedPlayerDto(CreatedPlayerDto pDto, Player p){
+    private static void complectSkillCreatedPlayerDto(CreatedPlayerDto pDto, Player p){
         pDto.setTrainingAble(p.getTrainingAble());
         pDto.setNumber(p.getNumber());
     }
 
-    private String booleanToString(boolean capitan) {
+    private static String booleanToString(boolean capitan) {
         if(capitan) return "Captain";
         return "";
     }
@@ -113,66 +111,66 @@ public class PlayerConverter {
         return pOnPagePlDto;
     }
 
-    private void setSkillsOfIntermediateEntity(Player p, PlayerHardSkillDto playerHardSkillDto){
+    private void setSkillsOfIntermediateEntity(Player p, PlayerHardSkillDto playerHardSkillDto, User user){
         p.setGkAble(playerHardSkillDto.getGkAble());
         p.setDefAble(playerHardSkillDto.getDefAble());
         p.setMidAble(playerHardSkillDto.getMidAble());
         p.setForwAble(playerHardSkillDto.getForwAble());
         p.setCaptainAble(playerHardSkillDto.getCaptainAble());
         p.setBirthYear(playerHardSkillDto.getBirthYear());
-        p.guessPosition(playerHardSkillDto.getPosition());
-        guessPrice(p);
+//        p.guessPosition(playerHardSkillDto.getPosition());
+        guessPrice(p, user);
     }
 
-    public Player getIntermediateEntityFromCreatedDto(CreatedPlayerDto createdPlayerDto) {
+//    public Player getIntermediateEntityFromCreatedDto(CreatedPlayerDto createdPlayerDto) {
+//        Player p = new Player();
+//        p.setName(createdPlayerDto.getName());
+//        p.setNatio(createdPlayerDto.getNatio());
+//        setSkillsOfIntermediateEntity(p, createdPlayerDto);
+//        p.setStrategyPlace(-100);
+//        p.guessPower();
+//        p.setTeam(userApi.getTeam());
+//        p.guessNumber(createdPlayerDto.getNumber());
+//        p.guessTrainigAble();
+//        return p;
+//    }
+
+    public BigDecimal getPriceOfIntermediateEntityFromCreatedDto(PlayerHardSkillDto playerHardSkillDto, User user) {
         Player p = new Player();
-        p.setName(createdPlayerDto.getName());
-        p.setNatio(createdPlayerDto.getNatio());
-        setSkillsOfIntermediateEntity(p, createdPlayerDto);
-        p.setStrategyPlace(-100);
-        p.guessPower();
-        p.setTeam(userApi.getTeam());
-        p.guessNumber(createdPlayerDto.getNumber());
-        p.guessTrainigAble();
-        return p;
+        setSkillsOfIntermediateEntity(p, playerHardSkillDto, user);
+        return BigDecimal.valueOf(playerPriceSetter.createPrice(p, user)).setScale(2, RoundingMode.HALF_UP);
     }
 
-    public BigDecimal getPriceOfIntermediateEntityFromCreatedDto(PlayerHardSkillDto playerHardSkillDto) {
-        Player p = new Player();
-        setSkillsOfIntermediateEntity(p, playerHardSkillDto);
-        return BigDecimal.valueOf(playerPriceSetter.createPrice(p)).setScale(2, RoundingMode.HALF_UP);
-    }
-
-    public void guessPrice(Player p){
+    public void guessPrice(Player p, User user){
         p.setPrice(BigDecimal.valueOf(
-                playerPriceSetter.createPrice(p))
+                playerPriceSetter.createPrice(p, user))
                 .setScale(2, RoundingMode.HALF_UP));
     }
 
 
-    public PlayerOnTrainingDto getPlayerOnTrainingDtoFromPlayer(Player p) {
-        List<Coach> coaches = userApi.getTeam().getCoaches();
-        List<Player> coachPlayers = coaches.stream()
-                .map(Coach::getPlayerOnTraining)
-                .collect(Collectors.toList());
-
-        PlayerOnTrainingDto pDto = new PlayerOnTrainingDto();
-        complectSkillsOfPlayerDto(pDto, p);
-        pDto.setTrainingBalance(p.getTrainingBalance());
-        pDto.setPosition(p.getPosition().toString());
-        pDto.setTire(p.getTire());
-
-        if(coachPlayers.contains(p)){
-            Coach coach = getCoachForCurrentPlayer(coaches, p);
-            pDto.setOnTraining(coach.getType().toString() + "/" + coach.getCoachProgram().toString());
-            pDto.setTrainingAble(coach.getTrainingAble());
-            return pDto;
-        }
-
-        pDto.setOnTraining("");
-        pDto.setTrainingAble(p.getTrainingAble());
-        return pDto;
-    }
+//    public PlayerOnTrainingDto getPlayerOnTrainingDtoFromPlayer(Player p) {
+//        List<Coach> coaches = userApi.getTeam().getCoaches();
+//        List<Player> coachPlayers = coaches.stream()
+//                .map(Coach::getPlayerOnTraining)
+//                .collect(Collectors.toList());
+//
+//        PlayerOnTrainingDto pDto = new PlayerOnTrainingDto();
+//        complectSkillsOfPlayerDto(pDto, p);
+//        pDto.setTrainingBalance(p.getTrainingBalance());
+//        pDto.setPosition(p.getPosition().toString());
+//        pDto.setTire(p.getTire());
+//
+//        if(coachPlayers.contains(p)){
+//            Coach coach = getCoachForCurrentPlayer(coaches, p);
+//            pDto.setOnTraining(coach.getType().toString() + "/" + coach.getCoachProgram().toString());
+//            pDto.setTrainingAble(coach.getTrainingAble());
+//            return pDto;
+//        }
+//
+//        pDto.setOnTraining("");
+//        pDto.setTrainingAble(p.getTrainingAble());
+//        return pDto;
+//    }
 
     private Coach getCoachForCurrentPlayer(List<Coach> coaches, Player p) {
         Optional<Coach> coachOpt = coaches.stream().filter(c -> c.getPlayerOnTraining() == p).findFirst();
@@ -195,7 +193,9 @@ public class PlayerConverter {
         player.setName(junior.getName());
         player.setPosition(currentPosition);
         player.setUser(user);
-
-        return juniorConverter.setSkillForYoungPlayerIntermediateEntity(player);
+        player.setTire(0);
+        player.setTrainingBalance(0);
+        player.setTimeBeforeTreat(0);
+        return juniorConverter.setSkillForYoungPlayerIntermediateEntity(player, user);
     }
 }

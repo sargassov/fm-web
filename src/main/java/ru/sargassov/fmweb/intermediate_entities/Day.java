@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Type;
 import ru.sargassov.fmweb.constants.BaseUserEntity;
 import ru.sargassov.fmweb.exceptions.CalendarException;
@@ -13,11 +14,12 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import static ru.sargassov.fmweb.constants.Constant.DEFAULT_BATCH_SIZE;
+
 @Entity
 @Table(name = "day")
 @Getter
 @Setter
-@NoArgsConstructor
 @RequiredArgsConstructor
 public class Day extends BaseUserEntity {
 
@@ -40,7 +42,7 @@ public class Day extends BaseUserEntity {
     private List<Match> matches;
 
     @Type(type = "string-array")
-    @Column(name = "changes", columnDefinition = "text[]")
+    @Column(name = "changes")
     private String[] noteOfChanges;
 
 
@@ -51,10 +53,14 @@ public class Day extends BaseUserEntity {
                 .orElseThrow(()
                         -> new CalendarException("Match of " + userTeam.getName() + " not found!"));
     }
-    public List<String> getNoteOfChanges() {
-        if (noteOfChanges == null) {
-            return new ArrayList<>();
+
+    public void setNoteOfChanges(String[] noteOfChanges) {
+        if (this.noteOfChanges == null) {
+            this.noteOfChanges = noteOfChanges;
+        } else {
+            var newArray = new String[this.noteOfChanges.length + noteOfChanges.length];
+            System.arraycopy(this.noteOfChanges, 0, newArray, 0, this.noteOfChanges.length);
+            System.arraycopy(noteOfChanges, 0, newArray, this.noteOfChanges.length, noteOfChanges.length);
         }
-        return List.of(noteOfChanges);
     }
 }

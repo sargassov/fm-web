@@ -27,12 +27,12 @@ public class CoachDto {
         return response += " mln. $. ";
     }
 
-    public Position guessPosition(){
-        if(position.equals("GOALKEEPER")) return Position.GOALKEEPER;
-        else if(position.equals("DEFENDER")) return Position.DEFENDER;
-        else if(position.equals("MIDFIELDER")) return Position.MIDFIELDER;
-        else return Position.FORWARD;
-    }
+//    public Position guessPosition(){
+//        if(position.equals("GOALKEEPER")) return Position.GOALKEEPER;
+//        else if(position.equals("DEFENDER")) return Position.DEFENDER;
+//        else if(position.equals("MIDFIELDER")) return Position.MIDFIELDER;
+//        else return Position.FORWARD;
+//    }
 
     public Coach.CoachType guessType() {
         if(type.equals("LOCAL")) return Coach.CoachType.LOCAL;

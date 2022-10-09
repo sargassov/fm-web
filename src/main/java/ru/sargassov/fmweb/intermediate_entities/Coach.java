@@ -10,7 +10,6 @@ import java.math.BigDecimal;
 @Table(name = "coach")
 @Getter
 @Setter
-@NoArgsConstructor
 @RequiredArgsConstructor
 public class Coach extends BaseUserEntity {
 

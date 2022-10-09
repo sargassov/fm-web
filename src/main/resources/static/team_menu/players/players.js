@@ -6,7 +6,7 @@ angular.module('players', ['ngStorage']).controller('playersController', functio
         $http.get(contextPath + '/team/players/' + parameter)
             .then(function successCallback(response) {
                 $scope.Players = response.data;
-            }, function errorCallback(response) {
+            }, function errorCallback() {
                 alert('PLAYERS OF YOUR TEAM NOT FOUND');
             });
     };
@@ -15,7 +15,7 @@ angular.module('players', ['ngStorage']).controller('playersController', functio
         $http.get(contextPath + '/dates')
             .then(function successCallback(response) {
                 $scope.today = response.data;
-            }, function errorCallback(response) {
+            }, function errorCallback() {
                 alert('PRESENT DAY NOT FOUND');
             });
     };
@@ -24,7 +24,7 @@ angular.module('players', ['ngStorage']).controller('playersController', functio
         $http.get(contextPath + '/team/name')
             .then(function successCallback(response) {
                 $scope.team = response.data;
-            }, function errorCallback(response) {
+            }, function errorCallback() {
                 alert('TEAM NAME NOT FOUND');
             });
     };
@@ -34,7 +34,7 @@ angular.module('players', ['ngStorage']).controller('playersController', functio
             .then(function successCallback(response) {
                 $localStorage.rootPlayer = response.data;
                 window.location.href = '../player_window/player_window.html';
-            }, function errorCallback(response) {
+            }, function errorCallback() {
                 alert('PLAYERS WITH NAME ' + name + ' NOT FOUND');
             });
     };

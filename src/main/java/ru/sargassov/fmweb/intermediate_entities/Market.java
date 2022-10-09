@@ -12,7 +12,6 @@ import java.util.List;
 @Table(name = "market")
 @Getter
 @Setter
-@NoArgsConstructor
 @RequiredArgsConstructor
 public class Market extends BaseUserEntity {
 
@@ -23,10 +22,12 @@ public class Market extends BaseUserEntity {
     @Enumerated(EnumType.STRING)
     private MarketType marketType;
 
-    @Column(name = "id_start_day")
+    @ManyToOne
+    @JoinColumn(name = "id_start_day")
     private Day startDate;
 
-    @Column(name = "id_finish_day")
+    @ManyToOne
+    @JoinColumn(name = "id_finish_day")
     private Day finishDate;
 
     public static Market getMarketByTitle(String type) {

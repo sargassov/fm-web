@@ -17,12 +17,14 @@ public class SponsorController {
     @GetMapping("/sponsor/all")
     public List<SponsorDto> gelAllSponsors() {
         log.info("SponsorController.gelAllSponsors()");
-        return sponsorService.gelAllSponsors();
+//        return sponsorService.gelAllSponsors();
+        return null;
     }
 
     @PostMapping("/sponspor/change")
     public void changeSponsor(@RequestBody SponsorDto sponsorDto) {
         log.info("SponsorController.changeSponsor");
-        sponsorService.changeSponsor(sponsorDto);
+//        sponsorService.changeSponsor(sponsorDto);
+
     }
 }

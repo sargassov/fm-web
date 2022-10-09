@@ -1,10 +1,13 @@
 package ru.sargassov.fmweb.dto.player_dtos;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 
-@Data
+@Getter
+@Setter
 public class JuniorDto extends PlayerHardSkillDto{
     private Integer power;
     private BigDecimal price;

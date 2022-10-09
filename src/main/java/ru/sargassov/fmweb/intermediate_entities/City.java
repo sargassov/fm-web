@@ -4,6 +4,7 @@ import lombok.*;
 import ru.sargassov.fmweb.constants.BaseUserEntity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -11,7 +12,6 @@ import java.util.List;
 @Table(name = "city")
 @Getter
 @Setter
-@NoArgsConstructor
 @RequiredArgsConstructor
 public class City extends BaseUserEntity {
 
@@ -23,6 +23,15 @@ public class City extends BaseUserEntity {
     private League league;
 
     @OneToMany(mappedBy = "city", cascade = CascadeType.ALL)
-    @JoinColumn(name = "teams")
     private List<Team> teams;
+
+    @Column(name = "id_city_entity")
+    private Long cityEntityId;
+
+    public List<Team> getTeams() {
+        if (teams == null) {
+            teams = new ArrayList<>();
+        }
+        return teams;
+    }
 }

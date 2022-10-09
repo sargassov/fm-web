@@ -2,7 +2,7 @@ angular.module('player_window', ['ngStorage']).controller('player_windowControll
     const contextPath = 'http://localhost:7777/fm';
 
 
-    $scope.loadRootPlayer = function (parameter) {
+    $scope.loadRootPlayer = function () {
         $scope.player = $localStorage.rootPlayer;
     };
 

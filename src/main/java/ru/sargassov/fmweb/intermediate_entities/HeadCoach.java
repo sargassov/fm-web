@@ -9,8 +9,8 @@ import javax.persistence.*;
 @Table(name = "head_coach")
 @Getter
 @Setter
-@NoArgsConstructor
 @RequiredArgsConstructor
+@AllArgsConstructor
 public class HeadCoach extends BaseUserEntity {
 
     @Column(name = "name")

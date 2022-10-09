@@ -1,10 +1,13 @@
 package ru.sargassov.fmweb.dto.player_dtos;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 
-@Data
+@Getter
+@Setter
 public class PlayerSoftSkillDto extends CreatedPlayerDto {
     private String club;
     private boolean isInjury;

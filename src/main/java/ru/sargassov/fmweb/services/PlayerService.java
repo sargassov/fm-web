@@ -8,7 +8,7 @@ import ru.sargassov.fmweb.converters.PlayerConverter;
 import ru.sargassov.fmweb.dto.player_dtos.CreatedPlayerDto;
 import ru.sargassov.fmweb.dto.PriceResponce;
 import ru.sargassov.fmweb.dto.player_dtos.IdNamePricePlayerDto;
-import ru.sargassov.fmweb.dto.player_dtos.PlayerOnTrainingDto;
+import ru.sargassov.fmweb.intermediate_entities.League;
 import ru.sargassov.fmweb.intermediate_entities.Player;
 import ru.sargassov.fmweb.dto.player_dtos.PlayerSoftSkillDto;
 import ru.sargassov.fmweb.intermediate_entities.Team;
@@ -29,27 +29,18 @@ public class PlayerService implements PlayerServiceSpi {
     private final PlayerRepository playerRepository;
     private final PlayerIntermediateServiceSpi playerIntermediateService;
     private final PlayerConverter playerConverter;
-    private final UserService userService;
     private final CreatedPlayersValidator createdPlayersValidator;
 
     @Override
     @SneakyThrows
-    public List<Player> findAllByTeamEntityId(Long id, User user){
+    public List<Player> findAllByTeamEntityId(Long id, User user, League league){
         if(id < 1)
             throw new IllegalStateException("Wrong state of team entity id");
 
-        var newPlayersWithoutIds =  playerRepository.findAllByTeamId(id).stream()
-                .map(pe -> playerConverter.getIntermediateEntityFromEntity(pe, user))
+        var notSavedPlayers =  playerRepository.findAllByTeamId(id).stream()
+                .map(pe -> playerConverter.getIntermediateEntityFromEntity(pe, user, league))
                 .collect(Collectors.toList());
-        return playerIntermediateService.save(newPlayersWithoutIds);
-    }
-
-    @Override
-    @Transactional
-    public List<PlayerSoftSkillDto> getPlayerSoftSkillDtoFromPlayer(List<Player> playerList) {
-        return playerList.stream()
-                .map(playerConverter::getPlayerSoftSkillDtoFromIntermediateEntity)
-                .collect(Collectors.toList());
+        return playerIntermediateService.save(notSavedPlayers);
     }
 
     @Override
@@ -58,62 +49,62 @@ public class PlayerService implements PlayerServiceSpi {
         userTeam.getPlayerList().forEach(p -> p.setStrategyPlace(-100));
     }
 
-    @Override
-    @Transactional
-    public PlayerSoftSkillDto getOnePlayerOnPagePlacementsDtoFromPlayer(String name){
-        Player p = userService.getPlayerByNameFromUserTeam(name);
-        return playerConverter.getPlayerSoftSkillDtoFromIntermediateEntity(p);
-    }
+//    @Override
+//    @Transactional
+//    public PlayerSoftSkillDto getOnePlayerOnPagePlacementsDtoFromPlayer(String name){
+//        Player p = userService.getPlayerByNameFromUserTeam(name);
+//        return playerConverter.getPlayerSoftSkillDtoFromIntermediateEntity(p);
+//    }
+
+//    @Override
+//    @Transactional
+//    public PlayerSoftSkillDto getAnotherPlayerByNumber(Integer number, int i) {
+//        Player p = null;
+//
+//        do {
+//            try {
+//                p = userService.getPlayerByNumberFromUserTeam(number += i);
+//            } catch (RuntimeException r){
+//                log.error("Player with number = " + number + " not found");
+//                if (number > 99 && i > 0) number = 0;
+//                if (number < 1 && i < 0) number = 100;
+//            }
+//        } while(p == null);
+//
+//        return playerConverter.getPlayerSoftSkillDtoFromIntermediateEntity(p);
+//    }
+
+//    @Override
+//    @Transactional
+//    public void createNewPlayer(CreatedPlayerDto createdPlayerDto) {
+//        createdPlayersValidator.newPlayervValidate(createdPlayerDto);
+//        Team team = userService.getUserTeam();
+//
+//        Player player = playerConverter.getIntermediateEntityFromCreatedDto(createdPlayerDto);
+//        createdPlayersValidator.teamEnoughCreditsValidate(player, team);
+//        team.setWealth(team.getWealth().subtract(player.getPrice()));
+//        team.substractTransferExpenses(player.getPrice());
+//        team.getPlayerList().add(player);
+//    }
 
     @Override
     @Transactional
-    public PlayerSoftSkillDto getAnotherPlayerByNumber(Integer number, int i) {
-        Player p = null;
-
-        do {
-            try {
-                p = userService.getPlayerByNumberFromUserTeam(number += i);
-            } catch (RuntimeException r){
-                log.error("Player with number = " + number + " not found");
-                if (number > 99 && i > 0) number = 0;
-                if (number < 1 && i < 0) number = 100;
-            }
-        } while(p == null);
-
-        return playerConverter.getPlayerSoftSkillDtoFromIntermediateEntity(p);
-    }
-
-    @Override
-    @Transactional
-    public void createNewPlayer(CreatedPlayerDto createdPlayerDto) {
-        createdPlayersValidator.newPlayervValidate(createdPlayerDto);
-        Team team = userService.getUserTeam();
-
-        Player player = playerConverter.getIntermediateEntityFromCreatedDto(createdPlayerDto);
-        createdPlayersValidator.teamEnoughCreditsValidate(player, team);
-        team.setWealth(team.getWealth().subtract(player.getPrice()));
-        team.substractTransferExpenses(player.getPrice());
-        team.getPlayerList().add(player);
-    }
-
-    @Override
-    @Transactional
-    public PriceResponce guessNewPlayerCost(CreatedPlayerDto createdPlayerDto) {
+    public PriceResponce guessNewPlayerCost(CreatedPlayerDto createdPlayerDto, User user) {
         createdPlayersValidator.newPlayervValidate(createdPlayerDto);
 
         PriceResponce cp = new PriceResponce();
                 cp.setPrice("The price of the " + createdPlayerDto.getName() + " is " +
-                playerConverter.getPriceOfIntermediateEntityFromCreatedDto(createdPlayerDto) + " mln $,");
+                playerConverter.getPriceOfIntermediateEntityFromCreatedDto(createdPlayerDto, user) + " mln $,");
                 return cp;
     }
 
-    @Override
-    @Transactional
-    public List<PlayerOnTrainingDto> getPlayerOnTrainingDtoFromPlayer(List<Player> players) {
-        return players.stream()
-                .map(playerConverter::getPlayerOnTrainingDtoFromPlayer)
-                .collect(Collectors.toList());
-    }
+//    @Override
+//    @Transactional
+//    public List<PlayerOnTrainingDto> getPlayerOnTrainingDtoFromPlayer(List<Player> players) {
+//        return players.stream()
+//                .map(playerConverter::getPlayerOnTrainingDtoFromPlayer)
+//                .collect(Collectors.toList());
+//    }
     @Override
     @Transactional
     public IdNamePricePlayerDto getIdNamePricePlayerDtoFromPlayer(Player p) {
@@ -121,7 +112,7 @@ public class PlayerService implements PlayerServiceSpi {
     }
 
     @Override
-    public void guessPrice(Player p) {
-        playerConverter.guessPrice(p);
+    public void guessPrice(Player p, User user) {
+        playerConverter.guessPrice(p, user);
     }
 }

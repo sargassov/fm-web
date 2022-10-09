@@ -1,4 +1,4 @@
-insert into IF NOT EXISTS cities (
+insert into cities (
 
       name,               id_leagues) values
     ('Moscow',	          1),

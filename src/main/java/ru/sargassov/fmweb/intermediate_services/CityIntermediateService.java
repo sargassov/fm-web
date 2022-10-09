@@ -4,12 +4,17 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import ru.sargassov.fmweb.entities.CityEntity;
 import ru.sargassov.fmweb.intermediate_entities.City;
+import ru.sargassov.fmweb.intermediate_entities.Stadium;
 import ru.sargassov.fmweb.intermediate_entities.Team;
+import ru.sargassov.fmweb.intermediate_entities.User;
 import ru.sargassov.fmweb.intermediate_repositories.CityIntermediateRepository;
 import ru.sargassov.fmweb.intermediate_spi.CityIntermediateServiceSpi;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Data
@@ -17,26 +22,28 @@ import java.util.ArrayList;
 @Slf4j
 public class CityIntermediateService implements CityIntermediateServiceSpi {
     private CityIntermediateRepository repository;
+
     @Override
-    public City findExistsOrSave(City city, Team team) {
-        var cityName = city.getName();
-        var existsCity = repository.findByName(cityName);
-        if (existsCity.isPresent()) {
-            var presentCity = existsCity.get();
-            if (presentCity.getTeams() != null) {
-                var teamList = presentCity.getTeams();
-                teamList.add(team);
-            } else {
-                var teamList = new ArrayList<Team>();
-                teamList.add(team);
-                presentCity.setTeams(teamList);
-            }
-            return repository.save(presentCity);
-        } else {
-            var teamList = new ArrayList<Team>();
-            teamList.add(team);
-            city.setTeams(teamList);
-        }
-        return repository.save(city);
+    public List<City> save(List<City> cities) {
+        return repository.saveAll(cities);
+    }
+
+    @Override
+    public City findByCityEntityIdAndUser(Long cityEntityId, User user) {
+        return repository.findByCityEntityIdAndUser(cityEntityId, user);
+    }
+
+    @Override
+    public void assignTeamsToCities(List<Team> teams) {
+        var cities = teams.stream()
+                .map(team -> assignCurrentTeamToCity(team))
+                .collect(Collectors.toList());
+        save(cities);
+    }
+
+    private City assignCurrentTeamToCity(Team team) {
+        var city = team.getCity();
+        city.getTeams().add(team);
+        return city;
     }
 }

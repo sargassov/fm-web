@@ -1,4 +1,4 @@
-insert into IF NOT EXISTS days (                                          day,     is_passed, is_present, is_match) values
+insert into days (                                          day,     is_passed, is_present, is_match) values
                                                             ('2019-08-01',	'f',	't',	'f'),
                                                             ('2019-08-02',	'f',	'f',	'f'),
                                                             ('2019-08-03',	'f',	'f',	't'),

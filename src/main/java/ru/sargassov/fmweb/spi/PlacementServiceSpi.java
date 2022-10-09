@@ -19,15 +19,17 @@ public interface PlacementServiceSpi {
 
     void setPlacementsForAllTeams(User user);
 
-    void fillPlacement(Team team, User user);
+    void fillPlacement(Team team, User user, int quantity);
 
-    List<Placement> getPlacementsFromPlacementApi();
+    void findByPlacementData(PlacementData placementData, Team team, User user);
 
-    PlacementOnPagePlacementsDto getCurrentPlacementInfo();
-
-    void setNewPlacement(PlacementData placementData);
-
-    void autoFillCurrentPlacement();
-
-    void deletePlayerFromCurrentPlacement(Integer number);
+//    List<Placement> getPlacementsFromPlacementApi();
+//
+//    PlacementOnPagePlacementsDto getCurrentPlacementInfo();
+//
+//    void setNewPlacement(PlacementData placementData);
+//
+//    void autoFillCurrentPlacement();
+//
+//    void deletePlayerFromCurrentPlacement(Integer number);
 }

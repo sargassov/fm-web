@@ -17,43 +17,48 @@ public class StadiumController {
     @GetMapping("/stadium/info")
     public List<InformationDto> getInfo() {
         log.info("StadiumController.getInfo");
-        return stadiumService.getInfo();
+//        return stadiumService.getInfo();
+        return null;
     }
 
     @GetMapping("/stadium/status_info")
     public List<InformationDto> getCurrentStatusInfo() {
         log.info("StadiumController.getCurrentStatusInfo");
-        return stadiumService.getCurrentStatusInfo();
+//        return stadiumService.getCurrentStatusInfo();
+        return null;
     }
 
     @GetMapping("/stadium/ticket_cost/information")
     public List<InformationDto> getTicketCostInfo() {
         log.info("StadiumController.getTicketCostInfo");
-        return stadiumService.getTicketCostInfo();
+//        return stadiumService.getTicketCostInfo();
+        return null;
     }
 
     @PostMapping("/stadium/ticket_cost/change")
     public void changeTicketCost(@RequestBody InformationDto dto) {
         log.info("StadiumController.changeTicketCost");
-        stadiumService.changeTicketCost(dto);
+//        stadiumService.changeTicketCost(dto);
     }
 
     @GetMapping("/stadium/sectors/info")
     public List<InformationDto> getSplitSectorsInfo() {
         log.info("StadiumController.getSplitSectorsInfo");
-        return stadiumService.getSplitSectorsInfo();
+//        return stadiumService.getSplitSectorsInfo();
+        return null;
     }
 
     @GetMapping("/stadium/sectors/info/all")
     public List<InformationDto> getSectorsCapacityInfo() {
         log.info("StadiumController.getSectorsCapacityInfo");
-        return stadiumService.getSectorsCapacityInfo();
+//        return stadiumService.getSectorsCapacityInfo();
+        return null;
     }
 
     @PutMapping("/stadium/sectors/change")
     public void changeSectorCapacity(@RequestBody InformationDto dto) {
         log.info("StadiumController.changeSectorCapacity");
-        stadiumService.changeSectorCapacity(dto);
+//        stadiumService.changeSectorCapacity(dto);
     }
 
 }

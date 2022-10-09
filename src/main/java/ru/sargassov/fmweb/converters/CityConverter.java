@@ -9,19 +9,17 @@ import ru.sargassov.fmweb.intermediate_entities.Team;
 import ru.sargassov.fmweb.intermediate_entities.User;
 import ru.sargassov.fmweb.intermediate_spi.CityIntermediateServiceSpi;
 
-import java.util.ArrayList;
-
 @Component
 @AllArgsConstructor
 public class CityConverter {
     private final CityIntermediateServiceSpi cityIntermediateService;
 
-    public City getIntermediateEntityFromEntity(CityEntity cityEntity, Team team, User user, League league){
+    public City getIntermediateEntityFromEntity(CityEntity cityEntity, League league, User user){
         City city = new City();
         city.setLeague(league);
         city.setName(cityEntity.getName());
         city.setUser(user);
-
-        return cityIntermediateService.findExistsOrSave(city, team);
+        city.setCityEntityId(cityEntity.getId());
+        return city;
     }
 }

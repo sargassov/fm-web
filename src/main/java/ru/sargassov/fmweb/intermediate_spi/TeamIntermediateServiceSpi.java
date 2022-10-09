@@ -1,5 +1,7 @@
 package ru.sargassov.fmweb.intermediate_spi;
 
+import ru.sargassov.fmweb.dto.player_dtos.PlayerSoftSkillDto;
+import ru.sargassov.fmweb.dto.team_dtos.TeamOnPagePlayersDto;
 import ru.sargassov.fmweb.intermediate_entities.Player;
 import ru.sargassov.fmweb.intermediate_entities.Role;
 import ru.sargassov.fmweb.intermediate_entities.Team;
@@ -10,7 +12,7 @@ import java.util.List;
 public interface TeamIntermediateServiceSpi {
     List<Team> save(List<Team> newTeamsWithoutId);
 
-    List<Team> findAll();
+    List<Team> findAllByUser(User user);
 
     Team save(Team team);
 
@@ -26,7 +28,13 @@ public interface TeamIntermediateServiceSpi {
 
     void powerTeamCounter(Team team);
 
-    Team findByName(String s);
+    Team findByNameAndUser(String name, User user);
 
-    List<Team> findAllSortedByName();
+    List<Team> findAllByUserSortedByName(User user);
+
+    Team findByTeamEntityIdAndUser(Long teamEntityId, User user);
+
+    TeamOnPagePlayersDto getNameOfUserTeam();
+
+    List<PlayerSoftSkillDto> getAllPlayersByUserTeam(Integer parameter);
 }

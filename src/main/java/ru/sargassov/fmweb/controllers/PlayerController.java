@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import ru.sargassov.fmweb.dto.*;
 import ru.sargassov.fmweb.dto.player_dtos.CreatedPlayerDto;
 import ru.sargassov.fmweb.dto.player_dtos.PlayerSoftSkillDto;
+import ru.sargassov.fmweb.intermediate_entities.User;
+import ru.sargassov.fmweb.intermediate_spi.PlayerIntermediateServiceSpi;
 import ru.sargassov.fmweb.spi.PlayerServiceSpi;
 
 @RestController
@@ -13,34 +15,35 @@ import ru.sargassov.fmweb.spi.PlayerServiceSpi;
 @Slf4j
 public class PlayerController {
     private final PlayerServiceSpi playerService;
+    private final PlayerIntermediateServiceSpi playerIntermediateService;
 
     @GetMapping("/player/{name}")
     public PlayerSoftSkillDto getOnePlayerForIndividualPlayerPage(@PathVariable String name) {
         log.info("PlayerController.getPlayerForIndividualPlayerPage()");
-        return playerService.getOnePlayerOnPagePlacementsDtoFromPlayer(name);
+        return playerIntermediateService.getOnePlayerOnPagePlacementsDtoFromPlayer(name);
     }
 
     @GetMapping("/player/vision/next/{number}")
     public PlayerSoftSkillDto getNextPlayerByNumber(@PathVariable Integer number) {
         log.info("PlayerController.getNextPlayerByNumer()");
-        return playerService.getAnotherPlayerByNumber(number, 1);
+        return playerIntermediateService.getAnotherPlayerByNumber(number, 1);
     }
 
     @GetMapping("/player/vision/prev/{number}")
     public PlayerSoftSkillDto getPrevPlayerByNumer(@PathVariable Integer number) {
         log.info("PlayerController.getPrevPlayerByNumer()");
-        return playerService.getAnotherPlayerByNumber(number, -1);
+        return playerIntermediateService.getAnotherPlayerByNumber(number, -1);
     }
 
     @PostMapping("/player/new/create")
     public void createNewPlayer(@RequestBody CreatedPlayerDto createdPlayerDto) {
         log.info("PlayerController.createNewPlayer");
-        playerService.createNewPlayer(createdPlayerDto);
+//        playerService.createNewPlayer(createdPlayerDto);
     }
 
     @PostMapping("/player/new/cost")
     public PriceResponce guessNewPlayerCost(@RequestBody CreatedPlayerDto createdPlayerDto) {
         log.info("PlayerController.guessNewPlayerCost()");
-        return playerService.guessNewPlayerCost(createdPlayerDto);
+        return playerService.guessNewPlayerCost(createdPlayerDto, new User()); // TODO временно
     }
 }

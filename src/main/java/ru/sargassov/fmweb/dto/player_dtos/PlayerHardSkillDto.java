@@ -1,10 +1,13 @@
 package ru.sargassov.fmweb.dto.player_dtos;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Random;
 
-@Data
+@Getter
+@Setter
 public class PlayerHardSkillDto extends PlayerDto{
     private Random random;
     protected Integer gkAble;

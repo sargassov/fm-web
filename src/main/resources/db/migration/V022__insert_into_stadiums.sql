@@ -1,6 +1,6 @@
-INSERT INTO stadiums IF NOT EXISTS (
+INSERT INTO stadiums (
 
-    id_teams, title,                       id_leagues, full_capacity, id_cities) FROM stdin;
+    id_teams, title,                       id_leagues, full_capacity, id_cities) VALUES
     (7,	      'Arsenal',	               1,	       19241,	      5),
     (1,	      'RZD-Arena',	               1,	       27320,	      1),
     (4,	      'Otkrytie-Arena',	           1,	       40000,	      1),

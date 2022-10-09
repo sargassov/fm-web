@@ -12,11 +12,11 @@ public interface BankServiceSpi {
 
     void loadBanks(User user);
 
-    List<BankDto> getAllPotencialLoans(Integer parameter);
-
-    void takeNewLoan(BankDto loan);
-
-    void returnBankToApi(Bank bank);
+//    List<BankDto> getAllPotencialLoans(Integer parameter);
+//
+//    void takeNewLoan(BankDto loan);
+//
+//    void returnBankToApi(Bank bank);
 
     List<LoanDto> getLoanDtoFromIntermediateEntity(Team userTeam);
 }

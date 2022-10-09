@@ -3,6 +3,7 @@ package ru.sargassov.fmweb.services;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.sargassov.fmweb.converters.DrawConverter;
+import ru.sargassov.fmweb.intermediate_entities.Draw;
 import ru.sargassov.fmweb.intermediate_entities.Team;
 import ru.sargassov.fmweb.entities.DrawEntity;
 import ru.sargassov.fmweb.entity_repositories.DrawRepository;
@@ -10,7 +11,6 @@ import ru.sargassov.fmweb.intermediate_entities.User;
 import ru.sargassov.fmweb.intermediate_spi.DrawIntermediateServiceSpi;
 import ru.sargassov.fmweb.intermediate_spi.TeamIntermediateServiceSpi;
 import ru.sargassov.fmweb.spi.DrawServiceSpi;
-import ru.sargassov.fmweb.spi.TeamServiceSpi;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -52,10 +52,10 @@ public class DrawService implements DrawServiceSpi {
         return tours;
     }
 
-    public List<Basket> drawBasket() {
+    public List<Basket> drawBasket(User user) {
         var baskets = new ArrayList<Basket>();
         int count = 1;
-        var teams = new ArrayList<>(teamIntermediateService.findAll());
+        var teams = new ArrayList<>(teamIntermediateService.findAllByUser(user));
         var random = new Random();
 
         while (teams.size() > 0){
@@ -77,9 +77,9 @@ public class DrawService implements DrawServiceSpi {
 
     public void loadShedule(User user){
         var projectOfShedule = toursProject();
-        var baskets = drawBasket();
+        var baskets = drawBasket(user);
         String deliver = "-";
-
+        var drawList = new ArrayList<Draw>();
         int tourCount = 1;
         for (var tour : projectOfShedule) {
             for (int match = 0; match < tour.size(); match++) {
@@ -87,11 +87,11 @@ public class DrawService implements DrawServiceSpi {
                 String[] splitTeamNumbers = currentMatch.split(deliver);
                 splitTeamNumbers[0] = findIf(baskets, Integer.parseInt(splitTeamNumbers[0]));
                 splitTeamNumbers[1] = findIf(baskets, Integer.parseInt(splitTeamNumbers[1]));
-                tour.set(match, splitTeamNumbers[0] + deliver + splitTeamNumbers[1]);
-                var draw = drawConverter.getIntermediateEntityFromString(currentMatch, user, tourCount);
-                drawIntermediateService.save(draw);
+                var draw = drawConverter.getIntermediateEntityFromString(splitTeamNumbers[0] + deliver + splitTeamNumbers[1], user, tourCount);
+                drawList.add(draw);
             }
             tourCount++;
         }
+        drawIntermediateService.save(drawList);
     }
 }

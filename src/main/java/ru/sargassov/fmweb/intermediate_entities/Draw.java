@@ -15,7 +15,6 @@ import javax.persistence.Table;
 @Table(name = "draw")
 @Getter
 @Setter
-@NoArgsConstructor
 @RequiredArgsConstructor
 public class Draw extends BaseUserEntity {
 

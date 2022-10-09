@@ -7,6 +7,7 @@ import ru.sargassov.fmweb.intermediate_entities.Stadium;
 import ru.sargassov.fmweb.intermediate_entities.Team;
 import ru.sargassov.fmweb.entities.StadiumEntity;
 import ru.sargassov.fmweb.intermediate_entities.User;
+import ru.sargassov.fmweb.intermediate_spi.CityIntermediateServiceSpi;
 import ru.sargassov.fmweb.intermediate_spi.LeagueIntermediateServiceSpi;
 
 import java.math.BigDecimal;
@@ -16,16 +17,15 @@ import java.math.BigDecimal;
 public class StadiumConverter {
     private final LeagueIntermediateServiceSpi leagueIntermediateServiceSpi;
     private final CityConverter cityConverter;
-
-    public Stadium getIntermediateEntityFromEntity(StadiumEntity stadiumEntity, Team team, User user, League league){
+    private final CityIntermediateServiceSpi cityIntermediateService;
+    public Stadium getIntermediateEntityFromEntity(StadiumEntity enitity, User user, League league) {
+        var cityEntityId = enitity.getCityEntity().getId();
         Stadium stadium = new Stadium();
-        var city = cityConverter.getIntermediateEntityFromEntity(stadiumEntity.getCityEntity(), team, user, league);
-
-        stadium.setTitle(stadiumEntity.getTitle());
+        stadium.setUser(user);
+        stadium.setStadiumEntityId(enitity.getId());
+        stadium.setTitle(enitity.getTitle());
         stadium.setLeague(league);
-        stadium.setFullCapacity(stadiumEntity.getFullCapacity());
-        stadium.setCity(city);
-        stadium.setTeam(team);
+        stadium.setFullCapacity(enitity.getFullCapacity());
         stadium.setUsualAverageCapacity((int) (stadium.getFullCapacity() * 0.3));
         stadium.setSimpleCapacity(stadium.getUsualAverageCapacity());
         stadium.setSimpleTicketCost(BigDecimal.valueOf(0.00004));
@@ -33,6 +33,8 @@ public class StadiumConverter {
         stadium.setFanTicketCost(BigDecimal.ZERO);
         stadium.setAwayTicketCost(BigDecimal.ZERO);
         stadium.setVipTicketCost(BigDecimal.ZERO);
+        var city = cityIntermediateService.findByCityEntityIdAndUser(cityEntityId, user);
+        stadium.setCity(city);
         return stadium;
     }
 }

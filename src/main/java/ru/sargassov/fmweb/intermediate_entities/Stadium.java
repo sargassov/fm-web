@@ -16,7 +16,6 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@RequiredArgsConstructor
 public class Stadium extends BaseUserEntity {
 
     @OneToOne
@@ -69,6 +68,9 @@ public class Stadium extends BaseUserEntity {
 
     @Column(name = "away_ticket_cost")
     private BigDecimal awayTicketCost;
+
+    @Column(name = "id_stadium_entity")
+    private Long stadiumEntityId;
 
     public BigDecimal getMatchTicketRevenue() {
 

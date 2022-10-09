@@ -1,5 +1,6 @@
 CREATE TABLE IF NOT EXISTS bank (
                                     id bigserial PRIMARY KEY NOT NULL,
+                                    title VARCHAR(64) NOT NULL,
                                     id_user BIGINT NOT NULL,
                                     id_team BIGINT,
                                     percent_day INTEGER NOT NULL,

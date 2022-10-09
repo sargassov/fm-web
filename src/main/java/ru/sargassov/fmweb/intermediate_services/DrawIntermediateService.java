@@ -5,9 +5,11 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.sargassov.fmweb.intermediate_entities.Draw;
+import ru.sargassov.fmweb.intermediate_entities.User;
 import ru.sargassov.fmweb.intermediate_repositories.DrawIntermediateRepository;
 import ru.sargassov.fmweb.intermediate_spi.DrawIntermediateServiceSpi;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -23,7 +25,12 @@ public class DrawIntermediateService implements DrawIntermediateServiceSpi {
     }
 
     @Override
-    public List<Draw> findAll() {
-        return repository.findAll();
+    public List<Draw> findAllByUser(User user) {
+        return repository.findByUser(user);
+    }
+
+    @Override
+    public List<Draw> save(ArrayList<Draw> drawList) {
+        return repository.saveAll(drawList);
     }
 }

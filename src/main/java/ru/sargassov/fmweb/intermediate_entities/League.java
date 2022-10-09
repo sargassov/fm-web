@@ -9,7 +9,6 @@ import javax.persistence.*;
 @Table(name = "league")
 @Getter
 @Setter
-@NoArgsConstructor
 @RequiredArgsConstructor
 public class League extends BaseUserEntity {
 

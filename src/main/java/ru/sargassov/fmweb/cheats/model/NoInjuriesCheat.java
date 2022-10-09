@@ -1,9 +1,12 @@
 package ru.sargassov.fmweb.cheats.model;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import ru.sargassov.fmweb.cheats.Cheat;
 
-@Data
+@Getter
+@Setter
 public class NoInjuriesCheat extends Cheat {
 
     private final String code = "ihavenoinjuriesnowandever";
@@ -11,6 +14,6 @@ public class NoInjuriesCheat extends Cheat {
 
     @Override
     public void activate() {
-        service.noInjuriesCheatActivate();
+//        service.noInjuriesCheatActivate();
     }
 }

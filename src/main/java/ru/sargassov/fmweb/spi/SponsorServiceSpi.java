@@ -9,15 +9,15 @@ import java.util.List;
 
 public interface SponsorServiceSpi {
 
-    List<Sponsor> getSponsorsFromApi();
+//    List<Sponsor> getSponsorsFromApi();
 
     void loadSponsors(User user);
 
-    void fillSponsor(Team t);
+    void fillSponsor(Team t, User user, int sponsorsQuantity);
 
-    void getRandomSponsorForAllTeams();
+    void getRandomSponsorForAllTeams(User user);
 
-    List<SponsorDto> gelAllSponsors();
+//    List<SponsorDto> gelAllSponsors();
 
-    void changeSponsor(SponsorDto sponsorDto);
+//    void changeSponsor(SponsorDto sponsorDto);
 }

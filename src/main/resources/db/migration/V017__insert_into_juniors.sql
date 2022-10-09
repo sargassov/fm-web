@@ -1,4 +1,4 @@
-INSERT INTO IF NOT EXISTS juniors (
+INSERT INTO juniors (
 
         name                                        ) VALUES
 

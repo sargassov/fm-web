@@ -1,8 +1,12 @@
 package ru.sargassov.fmweb.dto.player_dtos;
 
 import lombok.Data;
+import lombok.Generated;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class PlayerOnTrainingDto extends PlayerDto{
     private String onTraining;
     private String position;

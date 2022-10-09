@@ -4,8 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ru.sargassov.fmweb.api_temporary_classes_group.CheatApi;
 import ru.sargassov.fmweb.cheats.Cheat;
+import ru.sargassov.fmweb.cheats.CheatApi;
 import ru.sargassov.fmweb.constants.TextConstant;
 import ru.sargassov.fmweb.dto.text_responses.TextResponse;
 import ru.sargassov.fmweb.exceptions.CheatException;
@@ -50,7 +50,7 @@ public class CheatService implements CheatServiceSpi {
         List<Path> files = Files.walk(
                 Paths.get(CHEATS_ADDRESS))
                 .filter(Files::isRegularFile)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()); // TODO дописать
 
         List<Cheat> cheats = new ArrayList<>();
         for(Path file: files) {
@@ -84,42 +84,42 @@ public class CheatService implements CheatServiceSpi {
         return new TextResponse(cheat.getDescription());
     }
 
-    public void leoMessiCheatActivate() {
-        Player player = new Player();
-        player.setName(MESSI_LEONEL);
-        player.setNatio(ARGENTINA);
-        player.setGkAble(10);
-        player.setDefAble(15);
-        player.setMidAble(94);
-        player.setForwAble(98);
-        player.setCaptainAble(89);
-        player.setStrategyPlace(-100);
-        player.setBirthYear(1987);
-        player.setPosition(Position.FORWARD);
-        player.guessPower();
-        playerService.guessPrice(player);
+//    public void leoMessiCheatActivate() {
+//        Player player = new Player();
+//        player.setName(MESSI_LEONEL);
+//        player.setNatio(ARGENTINA);
+//        player.setGkAble(10);
+//        player.setDefAble(15);
+//        player.setMidAble(94);
+//        player.setForwAble(98);
+//        player.setCaptainAble(89);
+//        player.setStrategyPlace(-100);
+//        player.setBirthYear(1987);
+//        player.setPosition(Position.FORWARD);
+//        player.guessPower();
+//        playerService.guessPrice(player);
+//
+//        Team userTeam = userService.getUserTeam();
+//        if (userTeam.isPlayerExists(player.getName())) {
+//            throw new CheatException(YOUR_CLUB_HAD_ALREADY + MESSI_LEONEL);
+//        }
+//        userTeam.getPlayerList().add(player);
+//        player.setTeam(userTeam);
+//        player.guessNumber(10);
+//        player.setTrainingAble(10);
+//    }
 
-        Team userTeam = userService.getUserTeam();
-        if (userTeam.isPlayerExists(player.getName())) {
-            throw new CheatException(YOUR_CLUB_HAD_ALREADY + MESSI_LEONEL);
-        }
-        userTeam.getPlayerList().add(player);
-        player.setTeam(userTeam);
-        player.guessNumber(10);
-        player.setTrainingAble(10);
-    }
-
-    public void noInjuriesCheatActivate() {
-        Team userTeam = userService.getUserTeam();
-        List<Player> playerList = userTeam.getPlayerList();
-        for (Player player : playerList) {
-            player.setInjury(false);
-        }
-    }
-
-    public void tenMillionEuroCheat() {
-        Team userTeam = userService.getUserTeam();
-        BigDecimal wealthBefore = userTeam.getWealth();
-        userTeam.setWealth(wealthBefore.add(BigDecimal.valueOf(10)));
-    }
+//    public void noInjuriesCheatActivate() {
+//        Team userTeam = userService.getUserTeam();
+//        List<Player> playerList = userTeam.getPlayerList();
+//        for (Player player : playerList) {
+//            player.setInjury(false);
+//        }
+//    }
+//
+//    public void tenMillionEuroCheat() {
+//        Team userTeam = userService.getUserTeam();
+//        BigDecimal wealthBefore = userTeam.getWealth();
+//        userTeam.setWealth(wealthBefore.add(BigDecimal.valueOf(10)));
+//    }
 }

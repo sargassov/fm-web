@@ -5,11 +5,10 @@ angular.module('team_menu', ['ngStorage']).controller('teamController', function
         $http.get(contextPath + '/dates')
             .then(function successCallback(response) {
                 $scope.today = response.data;
-            }, function errorCallback(response) {
+            }, function errorCallback() {
                 alert('PRESENT DAY NOT FOUND');
             });
     };
-
 
     $scope.getActualDate();
 });

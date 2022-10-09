@@ -4,11 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ru.sargassov.fmweb.api_temporary_classes_group.PlacementApi;
 import ru.sargassov.fmweb.converters.PlacementConverter;
 import ru.sargassov.fmweb.dto.PlacementData;
-import ru.sargassov.fmweb.dto.PlacementOnPagePlacementsDto;
-import ru.sargassov.fmweb.intermediate_entities.League;
 import ru.sargassov.fmweb.intermediate_entities.Placement;
 import ru.sargassov.fmweb.intermediate_entities.Team;
 import ru.sargassov.fmweb.entities.PlacementEntity;
@@ -19,12 +16,10 @@ import ru.sargassov.fmweb.intermediate_spi.PlayerIntermediateServiceSpi;
 import ru.sargassov.fmweb.intermediate_spi.TeamIntermediateServiceSpi;
 import ru.sargassov.fmweb.spi.PlacementServiceSpi;
 import ru.sargassov.fmweb.spi.PlayerServiceSpi;
-import ru.sargassov.fmweb.spi.TeamServiceSpi;
 
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -37,7 +32,6 @@ public class PlacementService implements PlacementServiceSpi {
     private final PlacementConverter placementConverter;
     private final TeamIntermediateServiceSpi teamIntermediateService;
     private final PlayerServiceSpi playerService;
-    private final League league;
     private final UserService userService;
 
     @Override
@@ -65,12 +59,13 @@ public class PlacementService implements PlacementServiceSpi {
     @Override
     @Transactional
     public void setPlacementsForAllTeams(User user) {
-        teamIntermediateService.findAll().forEach(team -> fillPlacement(team, user));
+        int quantity = allPlacemntsQuantity();
+        teamIntermediateService.findAllByUser(user).forEach(team -> fillPlacement(team, user, quantity));
     }
 
     @Override
-    public void fillPlacement(Team team, User user) {
-        long selected = (int) (Math.random() * allPlacemntsQuantity());
+    public void fillPlacement(Team team, User user, int quantity) {
+        var selected = (long) (Math.random() * quantity) + 1;
         var optionalCurrentPlacementEntity = placementRepository.findById(selected);
         var savedPlacement = getIntermediateEntityAndSave(optionalCurrentPlacementEntity, team, user);
         team.setPlacement(savedPlacement);
@@ -83,44 +78,47 @@ public class PlacementService implements PlacementServiceSpi {
             var placement = placementConverter.getIntermediateEntityFromEntity(placementEntity, team, user);
             return placementIntermediateService.save(placement);
         }
-        throw new IllegalStateException("No match with ccurrent placement");
+        throw new IllegalStateException("No match with current placement");
     }
 
-    @Override
-    @Transactional
-    public List<Placement> getPlacementsFromPlacementApi(){
-        return placementApi.getPlacementApiList();
-    }
-
-    @Override
-    @Transactional
-    public PlacementOnPagePlacementsDto getCurrentPlacementInfo() {
-        return placementConverter.getPlacementOnPagePlacementsDtoFromTeam(userService.getUserTeam());
-    }
-
-    @Override
-    @Transactional
-    public void setNewPlacement(PlacementData placementData) {
-        Placement placement = placementApi.getPlacementByTitle(placementData.getTitle());
-        Team userTeam = userService.getUserTeam();
+    public void findByPlacementData(PlacementData placementData, Team userTeam, User user) {
+        var title = placementData.getTitle();
+        var entity = placementRepository.findByName(title);
+        var placement = placementConverter.getIntermediateEntityFromEntity(entity, userTeam, user);
+        placementIntermediateService.save(placement);
         userTeam.setPlacement(placement);
-        userTeam.setTeamPower(0);
-        playerService.resetAllStrategyPlaces(userTeam);
+        userTeam.resetAllStrategyPlaces();
     }
 
-    @Override
-    @Transactional
-    public void autoFillCurrentPlacement() {
-        Team userTeam = userService.getUserTeam();
-        teamService.autoFillPlacement(userTeam);
-        teamService.powerTeamCounter(userTeam);
-    }
+//    @Override
+//    @Transactional
+//    public List<Placement> getPlacementsFromPlacementApi(){
+//        return placementApi.getPlacementApiList();
+//    }
 
-    @Override
-    @Transactional
-    public void deletePlayerFromCurrentPlacement(Integer number) {
-        teamService.deletePlayerFromCurrentPlacement(number);
-    }
+//    @Override
+//    @Transactional
+//    public PlacementOnPagePlacementsDto getCurrentPlacementInfo() {
+//        return placementConverter.getPlacementOnPagePlacementsDtoFromTeam(userService.getUserTeam());
+//    }
+
+//    @Override
+//    @Transactional
+//    public void setNewPlacement(PlacementData placementData) {
+//        Placement placement = placementApi.getPlacementByTitle(placementData.getTitle());
+//        Team userTeam = userService.getUserTeam();
+//        userTeam.setPlacement(placement);
+//        userTeam.setTeamPower(0);
+//        playerService.resetAllStrategyPlaces(userTeam);
+//    }
+
+
+
+//    @Override
+//    @Transactional
+//    public void deletePlayerFromCurrentPlacement(Integer number) {
+//        teamService.deletePlayerFromCurrentPlacement(number);
+//    }
 }
 
 

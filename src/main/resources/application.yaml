@@ -6,4 +6,4 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/fm_database
     username: postgres
-    password:
+    password: postgres

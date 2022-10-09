@@ -5,9 +5,7 @@ import org.springframework.stereotype.Component;
 import ru.sargassov.fmweb.intermediate_entities.*;
 import ru.sargassov.fmweb.intermediate_spi.TeamIntermediateServiceSpi;
 
-import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.List;
 
 import static ru.sargassov.fmweb.constants.TextConstant.DASH_DELIVER;
 
@@ -16,19 +14,19 @@ import static ru.sargassov.fmweb.constants.TextConstant.DASH_DELIVER;
 public class MatchConverter {
     private final TeamIntermediateServiceSpi teamIntermediateService;
 
-    public Match getIntermediateEntityFromDraw(Draw draw, Day day, User user) {
+    public Match getIntermediateEntityFromDraw(Draw draw, User user) {
         var match = new Match();
         var matchDescription = draw.getMatch().split(DASH_DELIVER);
-        var homeTeam = teamIntermediateService.findByName(matchDescription[0]);
-        var awayTeam = teamIntermediateService.findByName(matchDescription[1]);
+        var homeTeam = teamIntermediateService.findByNameAndUser(matchDescription[0], user);
+        var awayTeam = teamIntermediateService.findByNameAndUser(matchDescription[1], user);
         match.setUser(user);
         match.setHome(homeTeam);
         match.setAway(awayTeam);
+        match.setCountOfTour(draw.getTourNumber());
         match.setStadium(homeTeam.getStadium());
-        match.setTourDay(day);
-        match.setCortage(null);
         match.setImpossibleMatch(false);
-        match.setGoals(new ArrayList<>());
+        match.setHomeTeamGoals(new ArrayList<>());
+        match.setAwayTeamGoals(new ArrayList<>());
         match.setMatchPassed(false);
         return match;
     }

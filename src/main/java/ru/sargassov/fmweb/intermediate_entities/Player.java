@@ -7,21 +7,19 @@ import ru.sargassov.fmweb.services.PlayerPriceSetter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.Random;
 
 @Entity
 @Table(name = "player")
 @Getter
 @Setter
-@NoArgsConstructor
 @RequiredArgsConstructor
 public class Player extends BaseUserEntity {
 
     private final static int LEVEL_UP_TRAINING_BALANCE = 100;
     private final static int MAX_POWER = 99;
     private final static int YOUNG_PAYER_TRINING_ABILITY = 30;
-    private static final PlayerPriceSetter playerPriceSetter = new PlayerPriceSetter();
+    private static PlayerPriceSetter playerPriceSetter;
 
     @Column(name = "name")
     private String name;
@@ -29,30 +27,30 @@ public class Player extends BaseUserEntity {
     @Column(name = "natio")
     private String natio;
     @Column(name = "gk_able")
-    private int gkAble;
+    private Integer gkAble;
     @Column(name = "def_able")
-    private int defAble;
+    private Integer defAble;
     @Column(name = "mid_able")
-    private int midAble;
+    private Integer midAble;
     @Column(name = "forw_able")
-    private int forwAble;
+    private Integer forwAble;
 
     @Column(name = "captain_able")
-    private int captainAble;
+    private Integer captainAble;
     @Column(name = "number")
-    private int number;
+    private Integer number;
 
     @Column(name = "strategy_place")
-    private int strategyPlace;
+    private Integer strategyPlace;
 
     @Column(name = "birth_year")
-    private int birthYear;
+    private Integer birthYear;
 
     @Column(name = "price")
     private BigDecimal price;
 
     @Column(name = "power")
-    private int power;
+    private Integer power;
 
     @ManyToOne
     @JoinColumn(name = "id_position")
@@ -63,16 +61,16 @@ public class Player extends BaseUserEntity {
     private Team team;
 
     @Column(name = "tire")
-    private int tire;
+    private Integer tire;
 
     @Column(name = "time_before_treat")
-    private int timeBeforeTreat;
+    private Integer timeBeforeTreat;
 
     @Column(name = "training_able")
-    private int trainingAble;
+    private Integer trainingAble;
 
     @Column(name = "training_balance")
-    private int trainingBalance;
+    private Integer trainingBalance;
 
     @Column(name = "is_injury")
     private boolean isInjury;
@@ -82,6 +80,10 @@ public class Player extends BaseUserEntity {
 
     @Column(name = "is_captain")
     private boolean isCapitan;
+
+    @ManyToOne
+    @JoinColumn(name = "id_league")
+    private League league;
 
     public final static Integer youngPlayerBirthYear = 2004;
 
@@ -111,13 +113,13 @@ public class Player extends BaseUserEntity {
             return true;
         }
 
-        if (titleRole.endsWith("GS") && titlePosition.equals("Gaolkeeper")) {
+        if (titleRole.endsWith("GS") && titlePosition.equals("Goalkeeper")) {
             return true;
         } else if (titleRole.endsWith("DS") && titlePosition.equals("Defender")) {
             return true;
         } else if (titleRole.endsWith("MS") && titlePosition.equals("Midfielder")) {
             return true;
-        } else if (titleRole.endsWith("FS") && titlePosition.equals("Forweard")) {
+        } else if (titleRole.endsWith("FS") && titlePosition.equals("Forward")) {
             return true;
         } else {
             return false;
@@ -131,12 +133,12 @@ public class Player extends BaseUserEntity {
                 '}';
     }
 
-    public void guessPosition(String pos) {
-        Position[] positions = Position.values();
-        for(Position p : positions)
-            if(p.toString().equals(pos))
-                this.position = p;
-    }
+//    public void guessPosition(String pos) {
+//        Position[] positions = Position.values();
+//        for(Position p : positions)
+//            if(p.toString().equals(pos))
+//                this.position = p;
+//    }
 
     public void guessTrainigAble(){
         int trainingAbleValue = 20;
@@ -164,53 +166,53 @@ public class Player extends BaseUserEntity {
         }while (flag);
     }
 
-    public void levelUpCheckAuto() {
-        if(trainingBalance >= LEVEL_UP_TRAINING_BALANCE) {
-            switch (position) {
-                case GOALKEEPER:
-                    gkAble += 1;
-                    break;
-                case DEFENDER:
-                    defAble += 1;
-                    break;
-                case MIDFIELDER:
-                    midAble += 1;
-                    break;
-                default:
-                    forwAble += 1;
-            }
-            trainingBalance -= 100;
-        }
-    }
+//    public void levelUpCheckAuto() {
+//        if(trainingBalance >= LEVEL_UP_TRAINING_BALANCE) {
+//            switch (position) {
+//                case GOALKEEPER:
+//                    gkAble += 1;
+//                    break;
+//                case DEFENDER:
+//                    defAble += 1;
+//                    break;
+//                case MIDFIELDER:
+//                    midAble += 1;
+//                    break;
+//                default:
+//                    forwAble += 1;
+//            }
+//            trainingBalance -= 100;
+//        }
+//    }
 
-    public void levelUpCheckManual(Coach coach) {
-        while (trainingBalance >= LEVEL_UP_TRAINING_BALANCE) {
-            Position coachPosition = coach.getPosition();
-            trainingBalance -= 100;
-
-            if (power < MAX_POWER) {
-                switch (coachPosition) {
-                    case GOALKEEPER:
-                        gkAble += 1;
-                        break;
-                    case DEFENDER:
-                        defAble += 1;
-                        break;
-                    case MIDFIELDER:
-                        midAble += 1;
-                        break;
-                    default:
-                        forwAble +=1;
-                }
-
-                power += 1;
-                price = BigDecimal.valueOf(
-                                playerPriceSetter.createPrice(this))
-                        .setScale(2, RoundingMode.HALF_UP);
-            }
-
-        }
-    }
+//    public void levelUpCheckManual(Coach coach) {
+//        while (trainingBalance >= LEVEL_UP_TRAINING_BALANCE) {
+//            Position coachPosition = coach.getPosition();
+//            trainingBalance -= 100;
+//
+//            if (power < MAX_POWER) {
+//                switch (coachPosition) {
+//                    case GOALKEEPER:
+//                        gkAble += 1;
+//                        break;
+//                    case DEFENDER:
+//                        defAble += 1;
+//                        break;
+//                    case MIDFIELDER:
+//                        midAble += 1;
+//                        break;
+//                    default:
+//                        forwAble +=1;
+//                }
+//
+//                power += 1;
+//                price = BigDecimal.valueOf(
+//                                playerPriceSetter.createPrice(this))
+//                        .setScale(2, RoundingMode.HALF_UP);
+//            }
+//
+//        }
+//    }
 
     public void guessTrainingTire(Coach.CoachProgram program) {
         if (program.equals(Coach.CoachProgram.STANDART)) {
@@ -232,6 +234,10 @@ public class Player extends BaseUserEntity {
 
     public void selectYoungPlayerTrainingAble() {
         trainingAble = YOUNG_PAYER_TRINING_ABILITY;
+    }
+
+    public void resetStrategyPlace() {
+        strategyPlace = -100;
     }
 
     //    private static PlayerPriceSetter priceSetter;

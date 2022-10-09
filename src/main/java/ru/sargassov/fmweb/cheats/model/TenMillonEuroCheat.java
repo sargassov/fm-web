@@ -1,11 +1,14 @@
 package ru.sargassov.fmweb.cheats.model;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import ru.sargassov.fmweb.cheats.Cheat;
 import ru.sargassov.fmweb.spi.UserServiceSpi;
 
 
-@Data
+@Getter
+@Setter
 public class TenMillonEuroCheat extends Cheat {
 
     private final String code = "iwanttolargemoneyy";
@@ -15,6 +18,6 @@ public class TenMillonEuroCheat extends Cheat {
 
     @Override
     public void activate() {
-        service.tenMillionEuroCheat();
+//        service.tenMillionEuroCheat();
     }
 }

@@ -15,7 +15,6 @@ public class GameController {
     private final GameServiceSpi gameService;
 
     @PostMapping("/new_game")
-    // необходим булеан
     public void createNewGame(@RequestBody UserData userData) {
         log.info("GameController.createNewGame");
         gameService.createNewGame(userData);

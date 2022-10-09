@@ -47,45 +47,45 @@ public class LeagueService implements LeagueServiceSpi {
         leagueIntermediateService.save(newLeague);
     }
 
-    @Override
-    @Transactional
-    public LeagueDto getLeagueName() {
-        return leagueConverter.getLeagueDtoFromIntermediateEntity();
-    }
+//    @Override
+//    @Transactional
+//    public LeagueDto getLeagueName() {
+//        return leagueConverter.getLeagueDtoFromIntermediateEntity();
+//    }
 
-    @Override
-    @Transactional
-    public List<TeamResultDto> loadTeamTable() {
-        List<TeamResultDto> dtoList = new ArrayList<>();
-        List<Team> teamList = teamService.findAll();
-
-        for (Team team : teamList) {
-            team.calculateTeamPoints();
-        }
-        teamList = teamList.stream().sorted(new Comparator<Team>() {
-                    @Override
-                    public int compare(Team o1, Team o2) {
-                        return Integer.compare(o1.getPoints(), o2.getPoints());
-                    }
-                }).collect(Collectors.toList());
-
-        int counter = 1;
-        for(Team team : teamList) {
-            team.calculateTeamPoints();
-            dtoList.add(new TeamResultDto(
-                    "" + (counter++) + ".",
-                    "" + team.getName(),
-                    "" + team.getGames(),
-                    "" + team.getWon(),
-                    "" + team.getDrawn(),
-                    "" + team.getLost(),
-                    "" + team.getScored(),
-                    "" + team.getMissed(),
-                    "" + team.calculateTeamPoints())
-            );
-        }
-        return dtoList;
-    }
+//    @Override
+//    @Transactional
+//    public List<TeamResultDto> loadTeamTable() {
+//        List<TeamResultDto> dtoList = new ArrayList<>();
+//        List<Team> teamList = teamService.findAll();
+//
+//        for (Team team : teamList) {
+//            team.calculateTeamPoints();
+//        }
+//        teamList = teamList.stream().sorted(new Comparator<Team>() {
+//                    @Override
+//                    public int compare(Team o1, Team o2) {
+//                        return Integer.compare(o1.getPoints(), o2.getPoints());
+//                    }
+//                }).collect(Collectors.toList());
+//
+//        int counter = 1;
+//        for(Team team : teamList) {
+//            team.calculateTeamPoints();
+//            dtoList.add(new TeamResultDto(
+//                    "" + (counter++) + ".",
+//                    "" + team.getName(),
+//                    "" + team.getGames(),
+//                    "" + team.getWon(),
+//                    "" + team.getDrawn(),
+//                    "" + team.getLost(),
+//                    "" + team.getScored(),
+//                    "" + team.getMissed(),
+//                    "" + team.calculateTeamPoints())
+//            );
+//        }
+//        return dtoList;
+//    }
 
     @Override
     public List<CortageDto> loadResultMatrix() {
@@ -98,6 +98,7 @@ public class LeagueService implements LeagueServiceSpi {
 
     @Override
     public List<PlayerSoftSkillDto> loadPlayersSort(Integer parameter) {
-        return teamService.getAllPlayersByAllTeam(parameter);
+//        return teamService.getAllPlayersByAllTeam(parameter);
+        return null;
     }
 }

@@ -26,7 +26,7 @@ public class CoachConverter {
 
     public Coach getIntermediateEntityFromCoachDto(CoachDto coachDto) {
         Coach coach = new Coach();
-        coach.setPosition(coachDto.guessPosition());
+//        coach.setPosition(coachDto.guessPosition());
         coach.setType(coachDto.guessType());
         coach.setPrice(coachDto.guessPrice());
         coach.setCoachProgram(Coach.CoachProgram.STANDART);

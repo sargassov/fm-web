@@ -1,11 +1,14 @@
 package ru.sargassov.fmweb.exceptions;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Data
+@Getter
+@Setter
 public class ValidationException extends RuntimeException {
     private List<String> errorFieldsMessages;
 

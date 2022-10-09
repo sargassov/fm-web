@@ -12,13 +12,13 @@ public interface JuniorServiceSpi {
 
     void loadYouthList(User user);
 
-    List<String> getNamesFromJuniorPoolApi();
+//    List<String> getNamesFromJuniorPoolApi();
+//
+//    Player getYoungPlayer(Position position);
+//
+//    TextResponse isUserVisitedYouthAcademyToday();
+//
+//    List<JuniorDto> getRandomFiveYoungPlyers();
 
-    Player getYoungPlayer(Position position);
-
-    TextResponse isUserVisitedYouthAcademyToday();
-
-    List<JuniorDto> getRandomFiveYoungPlyers();
-
-    TextResponse invokeYoungPlayerInUserTeam(JuniorDto juniorDto);
+//    TextResponse invokeYoungPlayerInUserTeam(JuniorDto juniorDto);
 }

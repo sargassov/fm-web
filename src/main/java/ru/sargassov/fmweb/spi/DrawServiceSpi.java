@@ -14,7 +14,7 @@ public interface DrawServiceSpi {
 
     List<List<String>> toursProject();
 
-    List<DrawService.Basket> drawBasket();
+    List<DrawService.Basket> drawBasket(User user);
 
     String findIf(List<DrawService.Basket> baskets, int condition);
 

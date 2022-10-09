@@ -20,16 +20,19 @@ public class JuniorController {
 
     @GetMapping("/junior")
     private TextResponse isUserVisitedYouthAcademyToday(){
-        return juniorService.isUserVisitedYouthAcademyToday();
+//        return juniorService.isUserVisitedYouthAcademyToday();
+        return null;
     }
 
     @GetMapping("/junior/all_five")
     private List<JuniorDto> getRandomFiveYoungPlyers(){
-        return juniorService.getRandomFiveYoungPlyers();
+//        return juniorService.getRandomFiveYoungPlyers();
+        return null;
     }
 
     @PostMapping("/junior/new/create")
     private TextResponse invokeYoungPlayerInUserTeam(@RequestBody JuniorDto juniorDto){
-        return juniorService.invokeYoungPlayerInUserTeam(juniorDto);
+//        return juniorService.invokeYoungPlayerInUserTeam(juniorDto);
+        return null;
     }
 }

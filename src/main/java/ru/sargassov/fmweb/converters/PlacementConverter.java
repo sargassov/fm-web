@@ -4,12 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import ru.sargassov.fmweb.constants.Constant;
+import ru.sargassov.fmweb.constants.UserHolder;
 import ru.sargassov.fmweb.dto.PlacementOnPagePlacementsDto;
 import ru.sargassov.fmweb.dto.player_dtos.PlayerOnPagePlacementsDto;
 import ru.sargassov.fmweb.intermediate_entities.*;
 import ru.sargassov.fmweb.entities.PlacementEntity;
 import ru.sargassov.fmweb.intermediate_spi.RoleIntermediateServiceSpi;
 
+import javax.transaction.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -37,9 +39,9 @@ public class PlacementConverter {
         for(int x = 0; x < rolesSplit.length; x++){
             rolesSplit[x] = purePlacementName(rolesSplit[x]);
             var role = getRoleIntermediateEntityFromString(rolesSplit[x], x, user, team);
-            listRoles.add(role);
+            listRoles.add(role); //TODO испраивть значение NULL в столбце "id_player" отношения "role" нарушает ограничение NOT NULL
         }
-        return listRoles;
+        return roleIntermediateService.save(listRoles);
     }
 
     private Role getRoleIntermediateEntityFromString(String roleName, int count, User user, Team team) {
@@ -48,18 +50,20 @@ public class PlacementConverter {
         role.setPosNumber(count);
         role.setUser(user);
         role.setTeam(team);
-        return roleIntermediateService.save(role);
+        return role;
     }
 
     private String purePlacementName(String s) {
-        s = s.replace("{", "");
-        s = s.replace("}", "");
+        s = s.replaceAll("[{}\"]", "");
         return s;
     }
 
 //    /////////////////////////////////////////////////////////////////////////////
 
-    public PlacementOnPagePlacementsDto getPlacementOnPagePlacementsDtoFromTeam(Team userTeam) {
+
+    public PlacementOnPagePlacementsDto getPlacementOnPagePlacementsDtoFromTeam() {
+        var userTeam = UserHolder.user.getUserTeam();
+        userTeam.powerTeamCounter();
         PlacementOnPagePlacementsDto pOnPagePlDto = new PlacementOnPagePlacementsDto();
         pOnPagePlDto.setTitle(userTeam.getPlacement().getName());
         pOnPagePlDto.setCurrentTeamPower(userTeam.getTeamPower());
@@ -68,7 +72,8 @@ public class PlacementConverter {
         return pOnPagePlDto;
     }
 
-    private List<PlayerOnPagePlacementsDto> setPlayersDtoForPlacement(Team userTeam, PlacementOnPagePlacementsDto pOnPagePlDto) {
+    @Transactional
+    public List<PlayerOnPagePlacementsDto> setPlayersDtoForPlacement(Team userTeam, PlacementOnPagePlacementsDto pOnPagePlDto) {
         List<PlayerOnPagePlacementsDto> dtoList = new ArrayList<>(Constant.placementSize);
         List<Player> playerList = userTeam.getPlayerList().stream()
                         .filter(p -> p.getStrategyPlace() >= 0)

@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "cities")
@@ -21,4 +22,7 @@ public class CityEntity {
     @ManyToOne
     @JoinColumn(name = "id_leagues")
     private LeagueEntity leagueEntity;
+
+    @OneToMany(mappedBy = "cityEntity")
+    private List<TeamEntity> teams;
 }

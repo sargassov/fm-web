@@ -4,12 +4,16 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import ru.sargassov.fmweb.intermediate_entities.Day;
 import ru.sargassov.fmweb.intermediate_entities.Match;
 import ru.sargassov.fmweb.intermediate_entities.Team;
+import ru.sargassov.fmweb.intermediate_entities.User;
 import ru.sargassov.fmweb.intermediate_repositories.MatchIntermediateRepository;
 import ru.sargassov.fmweb.intermediate_spi.DayIntermediateServiceSpi;
 import ru.sargassov.fmweb.intermediate_spi.MatchIntermediateServiceSpi;
 
+import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -31,17 +35,35 @@ public class MatchIntermediateService implements MatchIntermediateServiceSpi {
     }
 
     @Override
-    public Match findCurrentMatch(Team homeTeam, Team awayTeam) {
-        var allDaysWithMatches = dayIntermediateService.findAllWhereIsMatchTrue();
+    public Match findCurrentMatch(Team homeTeam, Team awayTeam, User user) {
+        return repository.findByHomeAndAwayAndUser(homeTeam, awayTeam, user);
+    }
 
-        for(var tour : allDaysWithMatches) {
-            for (var match : tour.getMatches()) {
-                var home = match.getHome();
-                var away = match.getAway();
-                if (home.equals(homeTeam) && away.equals(awayTeam)) {
-                    return match;
+    @Override
+    public List<Match> findAllByUser(User user) {
+        return repository.findByUser(user);
+    }
+
+    @Override
+    public List<Match> findByUserAndCountOfTour(User user, int countOfTour) {
+        return repository.findByUserAndCountOfTour(user, countOfTour);
+    }
+
+    @Override
+    @Transactional
+    public void assignTourDayToMatches(User user) {
+        var tourCounter = 1;
+        var calendar = dayIntermediateService.findByUser(user);
+        var matchList = new ArrayList<Match>();
+        for (var day : calendar) {
+            if (day.isMatch()) {
+                var allMatchesFromCurrentTour = repository.findByUserAndCountOfTour(user, tourCounter);
+                for (var match : allMatchesFromCurrentTour) {
+                    match.setTourDay(day);
                 }
+                matchList.addAll(allMatchesFromCurrentTour);
             }
         }
+        save(matchList);
     }
 }

@@ -9,10 +9,9 @@ import ru.sargassov.fmweb.constants.IntermediateEntity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "user")
+@Table(name = "user_table")
 @Getter
 @Setter
-@NoArgsConstructor
 @RequiredArgsConstructor
 public class User extends IntermediateEntity {
 

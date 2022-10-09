@@ -15,13 +15,13 @@ public interface DayServiceSpi {
 
     void loadCalendar(User user);
 
-    List<Day> getCalendarFromApi();
-
-    DayDto getActualDateFromApi();
-
-    boolean isMatchday();
-
-    String addDate();
-
-    Day getActualDay();
+//    List<Day> getCalendarFromApi();
+//
+//    DayDto getActualDateFromApi();
+//
+//    boolean isMatchday();
+//
+//    String addDate();
+//
+//    Day getActualDay();
 }

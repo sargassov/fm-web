@@ -20,12 +20,12 @@ public class CortageIntermediateService implements CortageIntermediateServiceSpi
     private CortageIntermediateRepository repository;
 
     @Override
-    public List<Cortage> constructMatrix() {
-        return new ArrayList<Cortage>(16);
+    public Cortage save(Cortage cortage) {
+        return repository.save(cortage);
     }
 
     @Override
-    public Cortage save(Cortage cortage) {
-        return repository.save(cortage);
+    public List<Cortage> save(ArrayList<Cortage> cortages) {
+        return repository.saveAll(cortages);
     }
 }

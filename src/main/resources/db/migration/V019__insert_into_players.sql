@@ -1,4 +1,4 @@
-INSERT INTO IF NOT EXISTS players (
+INSERT INTO players (
 
                      name,                      natio,  gk_able, def_able, mid_able, forw_able, captain_able, number,   strategy_place, id_teams, year, id_positions) VALUES
                      ('Adgoev Guram',           'Rus',	4,	     21,   	   31,	     69,    	3,	          17,      	-100,	        7,	      1995,	4),
@@ -21,7 +21,7 @@ INSERT INTO IF NOT EXISTS players (
                      ('Pesyakov Sergey',        'Rus',	74,	     7,   	   8,	     9,	    	5,	          30,      	-100,	        6,	      1988,	1),
                      ('Baburin Egor',           'Rus',	70,	     8,   	   0,	     1,	    	8,	          1,        -100,	        6,	      1993,	1),
                      ('Popov Denis',            'Rus',	62,	     1,   	   0,	     1,	    	8,	          46,      	-100,	        6,	      2002,	1),
-                     ('Larsson Jordan',         'Swe',	8,	     11,   	   21,	     77	    	12,	          86,      	-100,	        4,	      1997,	4),
+                     ('Larsson Jordan',         'Swe',	8,	     11,   	   21,	     77,	    12,	          86,      	-100,	        4,	      1997,	4),
                      ('Maksimenko Aleksandr',   'Rus',	82,	     7,   	   7,	     5,	    	9,	          98,      	-100,	        4,	      1999,	1),
                      ('Kutepov Iliya',          'Rus',	7,	     83,   	   34,	     29,    	61,	          29,      	-100,	        4,	      1993,	2),
                      ('Jikia Georgy',           'Rus',	8,	     83,   	   26,	     33,    	10,	          14,      	-100,	        4,	      1993,	2),
@@ -135,7 +135,7 @@ INSERT INTO IF NOT EXISTS players (
                      ('Vedernikov Danila',	    'Rus',	3,	     68,   	   29,	     34,    	8,	          4,        -100,	        6,	      2001,	2),
                      ('Bezrukov Ruslan',        'Rus',	1,	     61,   	   15,	     23,    	1,	          91,      	-100,	        6,	      2002,	2),
                      ('Schurrle Andre',         'Ger',	4,	     27,   	   23,	     79,    	3,	          20,      	-100,	        4,	      1990,	4),
-                     ('Ponce Ezequiel'          'Arg',	7,	     24,   	   24,	     82,    	8,	          19,      	-100,	        4,	      1997,	4),
+                     ('Ponce Ezequiel',         'Arg',	7,	     24,   	   24,	     82,    	8,	          19,      	-100,	        4,	      1997,	4),
                      ('Sobolev Aleksandr',	    'Rus',	7,	     34,   	   29,	     81,    	5,	          77,      	-100,	        4,	      1997,	4),
                      ('Markitesov Dmitry',	    'Rus',	8,	     34,   	   21,	     64,    	12,	          74,      	-100,	        4,	      2001,	4),
                      ('Tabidze Dzhemal',        'Geo',	2,	     75,   	   11,	     31,    	1,	          55,      	-100,	        8,	      1996,	2),
@@ -419,7 +419,7 @@ INSERT INTO IF NOT EXISTS players (
                      ('Popovic Denis',          'Svn',	3,	     30,   	   72,	     30,    	8,	          12,      	-100,	        14,	      1989,	3),
                      ('Smirnov Danila',         'Rus',	1,	     24,   	   68,	     22,    	9,	          52,      	-100,	        14,	      2001,	3),
                      ('Gigolaev Roland',        'Rus',	4,	     69,   	   29,	     23,    	2,	          13,      	-100,	        15,	      1990,	2),
-                     ('Wilker Angel,'           'Ven',	6,	     73,   	   28,	     26,    	4,	          4,        -100,	        15,	      1993,	2),
+                     ('Wilker Angel',           'Ven',	6,	     73,   	   28,	     26,    	4,	          4,        -100,	        15,	      1993,	2),
                      ('Musalov Magomed',        'Rus',	7,	     66,   	   17,	     26,    	3,	          5,        -100,	        15,	      1994,	2),
                      ('Gorodov Evgeni',         'Rus',	70,	     1,   	   1,	     3,	    	3,	          16,      	-100,	        15,	      1985,	1),
                      ('Gudiev Vitaly',          'Rus',	71,	     1,   	   3,	     2,	    	5,	          33,      	-100,	        15,	      1995,	1),

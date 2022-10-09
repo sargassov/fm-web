@@ -10,5 +10,7 @@ import java.util.List;
 public interface JuniorIntermediateServiceSpi {
     void save(List<Junior> juniorPlayers);
 
-    Player getYoungPlayerForPosition(Position currentPosition, User user);
+    Player getYoungPlayerForPosition(Position currentPosition, User user, List<Junior> allJuniors);
+
+    List<Junior> findByUser(User user);
 }
