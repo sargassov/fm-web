@@ -27,9 +27,21 @@ public class JuniorDto extends PlayerHardSkillDto{
     }
 
     private void setJuniorDtoPower(){
-        if(position.equals("GOALKEEPER")) gkAble = correctPower();
-        else if(position.equals("DEFENDER")) defAble = correctPower();
-        else if(position.equals("MIDFIELDER")) midAble = correctPower();
-        else forwAble = correctPower();
+        switch (position) {
+            case "GOALKEEPER":
+                gkAble = correctPower();
+                break;
+            case "DEFENDER":
+                defAble = correctPower();
+                break;
+            case "MIDFIELDER":
+                midAble = correctPower();
+                break;
+            case "FORWARD":
+                forwAble = correctPower();
+                break;
+            default:
+                throw new IllegalStateException("Illegal position");
+        }
     }
 }

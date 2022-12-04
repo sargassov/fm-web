@@ -8,4 +8,5 @@ public class UserData {
     private String lastname;
     private String homeTown;
     private String teamName;
+    private String password;
 }

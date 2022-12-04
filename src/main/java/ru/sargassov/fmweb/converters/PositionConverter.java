@@ -3,6 +3,7 @@ package ru.sargassov.fmweb.converters;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import ru.sargassov.fmweb.constants.UserHolder;
 import ru.sargassov.fmweb.entities.PositionEntity;
 import ru.sargassov.fmweb.intermediate_entities.League;
 import ru.sargassov.fmweb.intermediate_entities.Position;

@@ -430,6 +430,13 @@ public class Team extends BaseUserEntity {
         throw new PlayerNotFoundException("Players with number #" + anotherPlayerPositionNumber + " not found");
     }
 
+    public Player getCaptainOfTeam() {
+        return playerList.stream()
+                .filter(Player::isCapitan)
+                .findFirst()
+                .orElseThrow();
+    }
+
 
     //    public Team(String info) {
 //        //        markets = new ArrayList<>();

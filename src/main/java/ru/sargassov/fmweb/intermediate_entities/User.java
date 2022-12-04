@@ -30,4 +30,7 @@ public class User extends IntermediateEntity {
 
     @Column(name = "user_team_description")
     private String userTeamDescription;
+
+    @Column(name = "youth_academy_visited")
+    private boolean youthAcademyVisited;
 }

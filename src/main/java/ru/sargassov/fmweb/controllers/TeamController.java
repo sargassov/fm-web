@@ -39,8 +39,7 @@ public class TeamController {
     @PutMapping("/team/captain")
     public void setNewCaptain(@RequestBody String name) {
         log.info("TeamController.setNewCaptain()");
-//        teamService.setNewCaptainHandle(name);
-
+        teamIntermediateService.setNewCaptainHandle(name);
     }
 
     @GetMapping("/team/players_on_training/{parameter}")

@@ -127,21 +127,6 @@ public class TeamService implements TeamServiceSpi {
 //        return teamApi.getTeamApiList();
 //    }
 //
-//    @Transactional
-//    @Override
-//    public void setNewCaptainHandle(String name){
-//        Player nowCap = null, futureCap;
-//        try{
-//            nowCap = userService.getCaptainOfUserTeam();
-//        }
-//        catch (RuntimeException r) {
-//            log.error("Captain function is not avalible");
-//        }
-//        futureCap = userService.getPlayerByNameFromUserTeam(name);
-//
-//        nowCap.setCapitan(false);
-//        futureCap.setCapitan(true);
-//    }
     ///////////////////////////////////////////////////////////////стартовые методы
 
 //    @Transactional

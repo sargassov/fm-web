@@ -7,7 +7,7 @@ angular.module('youth_academy', ['ngStorage']).controller('youth_academyControll
                 window.location.href = 'youth_academy.html';
                 $scope.isUserAlreadyVisited();
                 $scope.message = response.data.response;
-            }, function errorCallback(response) {
+            }, function errorCallback() {
                 alert('YOUNG PLAYER WAS NOT INVOKED');
             });
     };
@@ -15,15 +15,16 @@ angular.module('youth_academy', ['ngStorage']).controller('youth_academyControll
     $scope.isUserAlreadyVisited = function () {
         $http.get(contextPath + '/junior')
             .then(function successCallback(response) {
+                $scope.textResponse = response.data;
+                $scope.message = $scope.textResponse.response;
                 $scope.loadRandomYoungPlayers();
-                $scope.message = response.data.response;
-            }, function errorCallback(response) {
+            }, function errorCallback() {
                 alert('YOU HAVE ALREADY VISITED THE ACADEMY TODAY');
             });
     }
 
     $scope.loadRandomYoungPlayers = function () {
-        $http.get(contextPath + '/junior/all_five')
+        $http.post(contextPath + '/junior/all_five', $scope.textResponse)
             .then(function successCallback(response) {
                 $scope.Players = response.data;
             }, function errorCallback(response) {

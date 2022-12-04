@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Repository
 public interface PositionIntermediateRepository extends JpaRepository<Position, Long> {
-    Optional<Position> findByTitle(String title);
+    Optional<Position> findByTitleAndUser(String title, User user);
 
     Position findByPositionEntityIdAndUser(Long positionEntityId, User user);
 

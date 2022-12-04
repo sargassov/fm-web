@@ -3,6 +3,7 @@ package ru.sargassov.fmweb.controllers;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+import ru.sargassov.fmweb.constants.UserHolder;
 import ru.sargassov.fmweb.dto.*;
 import ru.sargassov.fmweb.dto.player_dtos.CreatedPlayerDto;
 import ru.sargassov.fmweb.dto.player_dtos.PlayerSoftSkillDto;
@@ -38,12 +39,12 @@ public class PlayerController {
     @PostMapping("/player/new/create")
     public void createNewPlayer(@RequestBody CreatedPlayerDto createdPlayerDto) {
         log.info("PlayerController.createNewPlayer");
-//        playerService.createNewPlayer(createdPlayerDto);
+        playerIntermediateService.createNewPlayer(createdPlayerDto);
     }
 
     @PostMapping("/player/new/cost")
     public PriceResponce guessNewPlayerCost(@RequestBody CreatedPlayerDto createdPlayerDto) {
         log.info("PlayerController.guessNewPlayerCost()");
-        return playerService.guessNewPlayerCost(createdPlayerDto, new User()); // TODO временно
+        return playerIntermediateService.guessNewPlayerCost(createdPlayerDto, UserHolder.user); // TODO временно
     }
 }

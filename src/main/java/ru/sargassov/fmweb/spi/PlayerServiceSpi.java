@@ -24,8 +24,6 @@ public interface PlayerServiceSpi {
 //
 //    void createNewPlayer(CreatedPlayerDto createdPlayerDto);
 
-    PriceResponce guessNewPlayerCost(CreatedPlayerDto createdPlayerDto, User user);
-
 //    List<PlayerOnTrainingDto> getPlayerOnTrainingDtoFromPlayer(List<Player> players);
 
     IdNamePricePlayerDto getIdNamePricePlayerDtoFromPlayer(Player p);

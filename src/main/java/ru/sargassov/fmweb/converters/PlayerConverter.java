@@ -3,18 +3,22 @@ package ru.sargassov.fmweb.converters;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import ru.sargassov.fmweb.constants.UserHolder;
 import ru.sargassov.fmweb.dto.player_dtos.*;
 import ru.sargassov.fmweb.exceptions.CoachException;
 import ru.sargassov.fmweb.intermediate_entities.*;
 import ru.sargassov.fmweb.entities.PlayerEntity;
 import ru.sargassov.fmweb.intermediate_spi.PositionIntermediateServiceSpi;
 import ru.sargassov.fmweb.intermediate_spi.TeamIntermediateServiceSpi;
+import ru.sargassov.fmweb.intermediate_spi.UserIntermediateServiceSpi;
 import ru.sargassov.fmweb.services.PlayerPriceSetter;
+import ru.sargassov.fmweb.services.UserService;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 @Component
 @AllArgsConstructor
@@ -24,6 +28,9 @@ public class PlayerConverter {
     private final PlayerPriceSetter playerPriceSetter;
     private final JuniorConverter juniorConverter;
     private final TeamIntermediateServiceSpi teamIntermediateService;
+    private final UserIntermediateServiceSpi userIntermediateService;
+    private static final String CAPTAIN = "Captain";
+    private static final String COACH_WAS_NOT_FOUND = "Coach was not found";
 
 
     public Player getIntermediateEntityFromEntity(PlayerEntity playerEntity, User user, League league){
@@ -97,7 +104,7 @@ public class PlayerConverter {
     }
 
     private static String booleanToString(boolean capitan) {
-        if(capitan) return "Captain";
+        if (capitan) return CAPTAIN;
         return "";
     }
 
@@ -112,39 +119,42 @@ public class PlayerConverter {
     }
 
     private void setSkillsOfIntermediateEntity(Player p, PlayerHardSkillDto playerHardSkillDto, User user){
+        var position = positionIntermediateService.findByTitle(playerHardSkillDto.getPosition());
+        userIntermediateService.save(user);
         p.setGkAble(playerHardSkillDto.getGkAble());
         p.setDefAble(playerHardSkillDto.getDefAble());
         p.setMidAble(playerHardSkillDto.getMidAble());
         p.setForwAble(playerHardSkillDto.getForwAble());
         p.setCaptainAble(playerHardSkillDto.getCaptainAble());
         p.setBirthYear(playerHardSkillDto.getBirthYear());
-//        p.guessPosition(playerHardSkillDto.getPosition());
+        p.setPosition(position.get());
         guessPrice(p, user);
     }
 
-//    public Player getIntermediateEntityFromCreatedDto(CreatedPlayerDto createdPlayerDto) {
-//        Player p = new Player();
-//        p.setName(createdPlayerDto.getName());
-//        p.setNatio(createdPlayerDto.getNatio());
-//        setSkillsOfIntermediateEntity(p, createdPlayerDto);
-//        p.setStrategyPlace(-100);
-//        p.guessPower();
-//        p.setTeam(userApi.getTeam());
-//        p.guessNumber(createdPlayerDto.getNumber());
-//        p.guessTrainigAble();
-//        return p;
-//    }
+    public Player getIntermediateEntityFromCreatedDto(CreatedPlayerDto createdPlayerDto) {
+        Player p = new Player();
+        var user = UserHolder.user;
+        p.setName(createdPlayerDto.getName());
+        p.setNatio(createdPlayerDto.getNatio());
+        setSkillsOfIntermediateEntity(p, createdPlayerDto, user);
+        p.setStrategyPlace(-100);
+        p.guessPower();
+        p.setTeam(user.getUserTeam());
+        p.guessNumber(createdPlayerDto.getNumber());
+        p.guessTrainigAble();
+        p.setTimeBeforeTreat(0);
+        p.setTire(0);
+        return p;
+    }
 
     public BigDecimal getPriceOfIntermediateEntityFromCreatedDto(PlayerHardSkillDto playerHardSkillDto, User user) {
         Player p = new Player();
         setSkillsOfIntermediateEntity(p, playerHardSkillDto, user);
-        return BigDecimal.valueOf(playerPriceSetter.createPrice(p, user)).setScale(2, RoundingMode.HALF_UP);
+        return playerPriceSetter.createPrice(new PlayerPriceSetter.ValueContainer(p), user);
     }
 
     public void guessPrice(Player p, User user){
-        p.setPrice(BigDecimal.valueOf(
-                playerPriceSetter.createPrice(p, user))
-                .setScale(2, RoundingMode.HALF_UP));
+        p.setPrice(playerPriceSetter.createPrice(new PlayerPriceSetter.ValueContainer(p), user));
     }
 
 
@@ -175,8 +185,8 @@ public class PlayerConverter {
     private Coach getCoachForCurrentPlayer(List<Coach> coaches, Player p) {
         Optional<Coach> coachOpt = coaches.stream().filter(c -> c.getPlayerOnTraining() == p).findFirst();
         if(coachOpt.isEmpty()){
-            log.error("Coach was not found");
-            throw new CoachException("Coach was not found");
+            log.error(COACH_WAS_NOT_FOUND);
+            throw new CoachException(COACH_WAS_NOT_FOUND);
         }
         return coachOpt.get();
     }

@@ -1,12 +1,17 @@
 package ru.sargassov.fmweb.converters;
 
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
+import ru.sargassov.fmweb.constants.UserHolder;
+import ru.sargassov.fmweb.dto.player_dtos.JuniorDto;
 import ru.sargassov.fmweb.intermediate_entities.Junior;
 import ru.sargassov.fmweb.intermediate_entities.Player;
 import ru.sargassov.fmweb.entities.JuniorEntity;
 import ru.sargassov.fmweb.intermediate_entities.User;
+import ru.sargassov.fmweb.intermediate_services.PositionIntermediateService;
+import ru.sargassov.fmweb.intermediate_spi.PositionIntermediateServiceSpi;
 import ru.sargassov.fmweb.services.PlayerPriceSetter;
 
 import java.math.BigDecimal;
@@ -14,10 +19,12 @@ import java.math.RoundingMode;
 import java.util.Random;
 
 @Component
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class JuniorConverter {
     private final PlayerPriceSetter playerPriceSetter;
     private final Random random = getRandom();
+
+    private final PositionIntermediateServiceSpi positionIntermediateService;
 
     public Junior getIntermediateEntityFromEntity(JuniorEntity juniorEntity, User user){
         var junuior = new Junior();
@@ -43,7 +50,8 @@ public class JuniorConverter {
         player.setStrategyPlace(strategyPlaceStarting);
         player.selectYoungPlayerBirthYear();
         player.selectYoungPlayerTrainingAble();
-        player.setPrice(BigDecimal.valueOf(playerPriceSetter.createPrice(player, user)).setScale(2, RoundingMode.HALF_UP));
+        var price = playerPriceSetter.createPrice(new PlayerPriceSetter.ValueContainer(player), user);
+        player.setPrice(price);
         return player;
     }
 
@@ -86,23 +94,42 @@ public class JuniorConverter {
         player.guessPower();
     }
 
-//    public Player juniorDtoToIntermediateEntityPlayer(JuniorDto juniorDto) {
-//        Player p = new Player();
-//        p.setName(juniorDto.getName());
-//        p.setGkAble(juniorDto.getGkAble());
-//        p.setDefAble(juniorDto.getDefAble());
-//        p.setMidAble(juniorDto.getMidAble());
-//        p.setForwAble(juniorDto.getForwAble());
-//        p.setCaptainAble(juniorDto.getCaptainAble());
-//        p.setBirthYear(Player.youngPlayerBirthYear);
-//        p.guessPosition(juniorDto.getPosition());
-//        p.setNatio(juniorDto.getNatio());
-//        p.setPower(juniorDto.getPower());
-//        p.setPrice(juniorDto.getPrice());
-//        p.setStrategyPlace(-100);
-//        p.setTeam(userService.getUserTeam());
-//        p.guessNumber(random.nextInt(99) + 1);
-//        p.guessTrainigAble();
-//        return p;
-//    }
+    public Player intermediatePlayerEntityFromJuniorDto(JuniorDto juniorDto) {
+        var p = new Player();
+        p.setName(juniorDto.getName());
+        p.setGkAble(juniorDto.getGkAble());
+        p.setDefAble(juniorDto.getDefAble());
+        p.setMidAble(juniorDto.getMidAble());
+        p.setForwAble(juniorDto.getForwAble());
+        p.setCaptainAble(juniorDto.getCaptainAble());
+        p.setBirthYear(juniorDto.getBirthYear());
+        var position = positionIntermediateService.findByTitle(juniorDto.getPosition());
+        if (position.isEmpty()) {
+            throw new IllegalStateException("Unexpect position");
+        }
+        p.setPosition(position.get());
+        p.setNatio(juniorDto.getNatio());
+        p.setPower(juniorDto.getPower());
+        p.setPrice(juniorDto.getPrice());
+        p.setStrategyPlace(-100);
+        var userTeam = UserHolder.user.getUserTeam();
+        p.setTeam(userTeam);
+        p.guessNumber(random.nextInt(99) + 1);
+        p.guessTrainigAble();
+        p.setTire(0);
+        p.setTimeBeforeTreat(0);
+        p.setTrainingBalance(0);
+        return p;
+    }
+
+    public JuniorDto juniorDtoFromJunior(Junior junior) {
+        var juniorDto = new JuniorDto();
+        juniorDto.setName(junior.getName());
+        juniorDto.setYoungPlayerHardSkills();
+        juniorDto.juniorDtoInit();
+        var price = playerPriceSetter.createPrice(new PlayerPriceSetter.ValueContainer(juniorDto), UserHolder.user);
+        juniorDto.setPrice(price);
+        juniorDto.setId(junior.getId());
+        return juniorDto;
+    }
 }

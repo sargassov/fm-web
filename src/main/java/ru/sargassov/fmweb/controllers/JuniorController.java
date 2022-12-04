@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import ru.sargassov.fmweb.dto.player_dtos.JuniorDto;
 import ru.sargassov.fmweb.dto.text_responses.TextResponse;
+import ru.sargassov.fmweb.intermediate_spi.JuniorIntermediateServiceSpi;
 import ru.sargassov.fmweb.spi.JuniorServiceSpi;
 
 import java.util.List;
@@ -17,22 +18,20 @@ import java.util.List;
 @Slf4j
 public class JuniorController {
     private final JuniorServiceSpi juniorService;
+    private final JuniorIntermediateServiceSpi juniorIntermediateService;
 
     @GetMapping("/junior")
     private TextResponse isUserVisitedYouthAcademyToday(){
-//        return juniorService.isUserVisitedYouthAcademyToday();
-        return null;
+        return juniorIntermediateService.isUserVisitedYouthAcademyToday();
     }
 
-    @GetMapping("/junior/all_five")
-    private List<JuniorDto> getRandomFiveYoungPlyers(){
-//        return juniorService.getRandomFiveYoungPlyers();
-        return null;
+    @PostMapping("/junior/all_five")
+    private List<JuniorDto> getRandomFiveYoungPlyers(@RequestBody TextResponse response){
+        return juniorIntermediateService.getRandomFiveYoungPlayers(response);
     }
 
     @PostMapping("/junior/new/create")
     private TextResponse invokeYoungPlayerInUserTeam(@RequestBody JuniorDto juniorDto){
-//        return juniorService.invokeYoungPlayerInUserTeam(juniorDto);
-        return null;
+        return juniorIntermediateService.invokeYoungPlayerInUserTeam(juniorDto);
     }
 }

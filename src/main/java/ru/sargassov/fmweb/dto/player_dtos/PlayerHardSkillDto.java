@@ -26,13 +26,25 @@ public class PlayerHardSkillDto extends PlayerDto{
         guessMidAble(randomValue);
         guessForwAble(randomValue);
         guessCaptainAble(randomValue);
-        guessBirthYear();
         guessPosition();
+    }
 
+    public void setYoungPlayerHardSkills() {
+        guessYoungPlayerBirthYear();
+        playerRandomHardSkillInit(10);
+    }
+
+    public void setPlayerHardSkills() {
+        guessBirthYear();
+        playerRandomHardSkillInit(10);
     }
 
     private void guessBirthYear() {
         birthYear = random.nextInt(25) + 1980;
+    }
+
+    private void guessYoungPlayerBirthYear() {
+        birthYear = 2004;
     }
 
     private void guessCaptainAble(int randomValue) {

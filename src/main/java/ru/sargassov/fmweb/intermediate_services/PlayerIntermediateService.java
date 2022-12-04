@@ -7,13 +7,17 @@ import org.springframework.stereotype.Service;
 import ru.sargassov.fmweb.constants.UserHolder;
 import ru.sargassov.fmweb.converters.PlayerConverter;
 import ru.sargassov.fmweb.dto.PlacementOnPagePlacementsDto;
+import ru.sargassov.fmweb.dto.PriceResponce;
+import ru.sargassov.fmweb.dto.player_dtos.CreatedPlayerDto;
 import ru.sargassov.fmweb.dto.player_dtos.PlayerSoftSkillDto;
 import ru.sargassov.fmweb.intermediate_entities.Player;
 import ru.sargassov.fmweb.intermediate_entities.Team;
 import ru.sargassov.fmweb.intermediate_entities.User;
 import ru.sargassov.fmweb.intermediate_repositories.PlayerIntermediateRepository;
 import ru.sargassov.fmweb.intermediate_spi.PlayerIntermediateServiceSpi;
+import ru.sargassov.fmweb.validators.CreatedPlayersValidator;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,6 +29,7 @@ public class PlayerIntermediateService implements PlayerIntermediateServiceSpi {
 
     private final PlayerIntermediateRepository repository;
     private final PlayerConverter playerConverter;
+    private final CreatedPlayersValidator createdPlayersValidator;
 
     @Override
     public List<Player> save(List<Player> newPlayersWithoutIds) {
@@ -81,5 +86,29 @@ public class PlayerIntermediateService implements PlayerIntermediateServiceSpi {
 
     public PlayerIntermediateRepository getRepository() {
         return repository;
+    }
+
+    @Override
+    @Transactional
+    public PriceResponce guessNewPlayerCost(CreatedPlayerDto createdPlayerDto, User user) {
+        createdPlayersValidator.newPlayervValidate(createdPlayerDto);
+
+        PriceResponce cp = new PriceResponce();
+        cp.setPrice("The price of the " + createdPlayerDto.getName() + " is " +
+                playerConverter.getPriceOfIntermediateEntityFromCreatedDto(createdPlayerDto, user) + " mln $,");
+        return cp;
+    }
+
+    @Override
+    @Transactional
+    public void createNewPlayer(CreatedPlayerDto createdPlayerDto) {
+        createdPlayersValidator.newPlayervValidate(createdPlayerDto);
+        Team team = UserHolder.user.getUserTeam();
+
+        Player player = playerConverter.getIntermediateEntityFromCreatedDto(createdPlayerDto);
+        createdPlayersValidator.teamEnoughCreditsValidate(player, team);
+        team.setWealth(team.getWealth().subtract(player.getPrice()));
+        team.substractTransferExpenses(player.getPrice());
+        team.getPlayerList().add(player);
     }
 }

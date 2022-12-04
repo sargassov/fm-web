@@ -20,6 +20,7 @@ public class UserConverter {
         var user = new User();
         user.setName(userData.getLastname() + " " + userData.getName());
         user.setAbout(userData.getHomeTown());
+        user.setPassword(userData.getPassword());
 //        user.setTeam(teamApi.findByName(userData.getTeamName()));
 //        userApi.getTeam().setHeadCoach(new HeadCoach(userApi.getName()));
 //        userApi.setVisitToYouthAcademyToday(false);

@@ -161,4 +161,31 @@ public class TeamIntermediateService implements TeamIntermediateServiceSpi {
                 .filter(p -> p.equalsPosition(role))
                 .collect(Collectors.toList());
     }
+
+    @Transactional
+    @Override
+    public void setNewCaptainHandle(String name){
+        Player nowCap, futureCap;
+        try{
+            nowCap = getCaptainOfUserTeam();
+            nowCap.setCapitan(false);
+        }
+        catch (RuntimeException r) {
+            log.error("Captain function is not avalible");
+        }
+        futureCap = getPlayerByNameFromUserTeam(name);
+        futureCap.setCapitan(true);
+    }
+
+    private Player getPlayerByNameFromUserTeam(String name) {
+        var user = UserHolder.user;
+        var userTeam = user.getUserTeam();
+        return userTeam.findPlayerByName(name);
+    }
+
+    private Player getCaptainOfUserTeam() {
+        var user = UserHolder.user;
+        var userTeam = user.getUserTeam();
+        return userTeam.getCaptainOfTeam();
+    }
 }

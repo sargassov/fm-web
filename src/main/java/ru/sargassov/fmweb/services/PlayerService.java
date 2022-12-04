@@ -74,29 +74,7 @@ public class PlayerService implements PlayerServiceSpi {
 //        return playerConverter.getPlayerSoftSkillDtoFromIntermediateEntity(p);
 //    }
 
-//    @Override
-//    @Transactional
-//    public void createNewPlayer(CreatedPlayerDto createdPlayerDto) {
-//        createdPlayersValidator.newPlayervValidate(createdPlayerDto);
-//        Team team = userService.getUserTeam();
-//
-//        Player player = playerConverter.getIntermediateEntityFromCreatedDto(createdPlayerDto);
-//        createdPlayersValidator.teamEnoughCreditsValidate(player, team);
-//        team.setWealth(team.getWealth().subtract(player.getPrice()));
-//        team.substractTransferExpenses(player.getPrice());
-//        team.getPlayerList().add(player);
-//    }
 
-    @Override
-    @Transactional
-    public PriceResponce guessNewPlayerCost(CreatedPlayerDto createdPlayerDto, User user) {
-        createdPlayersValidator.newPlayervValidate(createdPlayerDto);
-
-        PriceResponce cp = new PriceResponce();
-                cp.setPrice("The price of the " + createdPlayerDto.getName() + " is " +
-                playerConverter.getPriceOfIntermediateEntityFromCreatedDto(createdPlayerDto, user) + " mln $,");
-                return cp;
-    }
 
 //    @Override
 //    @Transactional

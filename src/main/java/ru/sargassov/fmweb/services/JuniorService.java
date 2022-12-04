@@ -55,43 +55,4 @@ public class JuniorService implements JuniorServiceSpi {
 //
 //        return player;
 //    }
-
-//    @Override
-//    @Transactional
-//    public TextResponse isUserVisitedYouthAcademyToday() {
-//        return userService.isUserVisitedYouthAcademyToday();
-//    }
-
-
-//    @Override
-//    @Transactional
-//    public List<JuniorDto> getRandomFiveYoungPlyers() {
-//        return juniorPoolApi.getRandomFiveYoungPlyers().stream()
-//                .map(juniorConverter::nameToJuniorDto)
-//                .collect(Collectors.toList());
-//    }
-
-//    @Override
-//    @Transactional
-//    public TextResponse invokeYoungPlayerInUserTeam(JuniorDto juniorDto) {
-//        Team team = userService.getUserTeam();
-//        if(team.getWealth().compareTo(juniorDto.getPrice()) < 0){
-//            try{
-//                throw new YouthAcademyException("The wealth of User team is less than young player price!");
-//            } catch (YouthAcademyException y){
-//                log.error(y.getMessage());
-//                return new TextResponse(y.getMessage());
-//            }
-//        }
-//        if(userService.isVisited()) {
-//            throw new YouthAcademyException("");
-//        }
-//
-//        Player p = juniorConverter.juniorDtoToIntermediateEntityPlayer(juniorDto);
-//        team.setWealth(team.getWealth().subtract(p.getPrice()));
-//        team.getPlayerList().add(p);
-//        juniorPoolApi.deleteFromApiList(juniorDto.getName());
-//        userService.visit(true);
-//        return new TextResponse("Player " + p.getName() + " was invoked in Your team");
-//    }
 }

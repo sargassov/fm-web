@@ -1,12 +1,17 @@
 package ru.sargassov.fmweb.services;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import ru.sargassov.fmweb.dto.player_dtos.PlayerHardSkillDto;
 import ru.sargassov.fmweb.intermediate_entities.Player;
 import ru.sargassov.fmweb.intermediate_entities.Position;
 import ru.sargassov.fmweb.intermediate_entities.User;
 import ru.sargassov.fmweb.intermediate_spi.PositionIntermediateServiceSpi;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Arrays;
 import java.util.List;
 
@@ -16,12 +21,40 @@ public class PlayerPriceSetter {
 
     private PositionIntermediateServiceSpi positionIntermediateService;
 
-    static class TechPrice{
+    static class TechPrice {
 
         private double priceInDouble;
 
         public TechPrice(double priceInDounble) {
             this.priceInDouble = priceInDounble;
+        }
+    }
+
+    @Data
+    public static class ValueContainer {
+        private Integer gkAble;
+        private Integer defAble;
+        private Integer midAble;
+        private Integer forwAble;
+        private Integer captainAble;
+        private Integer birthYear;
+
+        public ValueContainer(Player p) {
+            this.birthYear = p.getBirthYear();
+            this.captainAble = p.getCaptainAble();
+            this.gkAble = p.getGkAble();
+            this.defAble = p.getDefAble();
+            this.midAble = p.getMidAble();
+            this.forwAble = p.getForwAble();
+        }
+
+        public ValueContainer(PlayerHardSkillDto p) {
+            this.birthYear = p.getBirthYear();
+            this.captainAble = p.getCaptainAble();
+            this.gkAble = p.getGkAble();
+            this.defAble = p.getDefAble();
+            this.midAble = p.getMidAble();
+            this.forwAble = p.getForwAble();
         }
     }
 
@@ -32,29 +65,30 @@ public class PlayerPriceSetter {
     private static List<Position> positions;
     private List<Integer> ables;
 
-    public double createPrice(Player player, User user){
+
+
+    public BigDecimal createPrice(ValueContainer v, User user){
         TechPrice techPrice = new TechPrice(zeroPrice);
-
-        init(player, user);
+        init(v.getGkAble(), v.getDefAble(), v.getMidAble(), v.getForwAble(), user);
         priceDetermination(techPrice);
-        captainValue(player, techPrice);
-        yearBirthValue(player, techPrice);
+        captainValue(v.getCaptainAble(), techPrice);
+        yearBirthValue(v.getBirthYear(), techPrice);
 
-        return techPrice.priceInDouble;
+        return BigDecimal.valueOf(techPrice.priceInDouble).setScale(2, RoundingMode.HALF_UP);
     }
 
-    private void yearBirthValue(Player player, TechPrice techPrice) {
-        if(player.getBirthYear() < 1988) techPrice.priceInDouble *= 0.8;
-        if(player.getBirthYear() > 2000) techPrice.priceInDouble *= 1.2;
+    private void yearBirthValue(int birthYear, TechPrice techPrice) {
+        if(birthYear < 1988) techPrice.priceInDouble *= 0.8;
+        if(birthYear > 2000) techPrice.priceInDouble *= 1.2;
     }
 
-    private void captainValue(Player player, TechPrice techPrice) {
+    private void captainValue(int captainAble, TechPrice techPrice) {
 
         for (int i = 20, y = 0; i < 70; i += 10, y++) {
-            if (player.getCaptainAble() > i && player.getCaptainAble() < i + 11)
+            if (captainAble> i && captainAble < i + 11)
                 techPrice.priceInDouble *= captainCoeff[y];
         }
-        if (player.getCaptainAble() > 70) techPrice.priceInDouble *= 1.35;
+        if (captainAble > 70) techPrice.priceInDouble *= 1.35;
     }
 
     private void priceDetermination(TechPrice techPrice) {
@@ -73,11 +107,8 @@ public class PlayerPriceSetter {
         }
     }
 
-    private void init(Player player, User user){
+    private void init(int gkAble, int defAble, int midAble, int forwAble, User user){
         positions = positionIntermediateService.findAllByUser(user);
-        ables = Arrays.asList(player.getGkAble(),
-                player.getDefAble(),
-                player.getMidAble(),
-                player.getForwAble());
+        ables = Arrays.asList(gkAble, defAble, midAble, forwAble);
     }
 }

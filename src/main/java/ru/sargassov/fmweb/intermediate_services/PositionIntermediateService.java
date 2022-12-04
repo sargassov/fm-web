@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import ru.sargassov.fmweb.constants.UserHolder;
 import ru.sargassov.fmweb.intermediate_entities.Position;
 import ru.sargassov.fmweb.intermediate_entities.User;
 import ru.sargassov.fmweb.intermediate_repositories.PositionIntermediateRepository;
@@ -21,7 +22,17 @@ public class PositionIntermediateService implements PositionIntermediateServiceS
     private final PositionIntermediateRepository repository;
     @Override
     public Optional<Position> findByTitle(String title) {
-        return repository.findByTitle(title);
+        var correctTitle = "";
+        if (title.equalsIgnoreCase("goalkeeper")) {
+            correctTitle = "Goalkeeper";
+        } else if (title.equalsIgnoreCase("defender")) {
+            correctTitle = "Defender";
+        } else if (title.equalsIgnoreCase("midfielder")) {
+            correctTitle = "Midfielder";
+        } else if (title.equalsIgnoreCase("forward")) {
+            correctTitle = "Forward";
+        }
+        return repository.findByTitleAndUser(correctTitle, UserHolder.user);
     }
 
     @Override
