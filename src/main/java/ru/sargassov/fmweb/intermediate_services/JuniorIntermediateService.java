@@ -10,10 +10,10 @@ import ru.sargassov.fmweb.converters.JuniorConverter;
 import ru.sargassov.fmweb.converters.PlayerConverter;
 import ru.sargassov.fmweb.dto.player_dtos.JuniorDto;
 import ru.sargassov.fmweb.dto.text_responses.TextResponse;
+import ru.sargassov.fmweb.enums.PositionType;
 import ru.sargassov.fmweb.exceptions.YouthAcademyException;
 import ru.sargassov.fmweb.intermediate_entities.Junior;
 import ru.sargassov.fmweb.intermediate_entities.Player;
-import ru.sargassov.fmweb.intermediate_entities.Position;
 import ru.sargassov.fmweb.intermediate_entities.User;
 import ru.sargassov.fmweb.intermediate_repositories.JuniorIntermediateRepository;
 import ru.sargassov.fmweb.intermediate_spi.JuniorIntermediateServiceSpi;
@@ -40,7 +40,7 @@ public class JuniorIntermediateService implements JuniorIntermediateServiceSpi {
     }
 
     @Override
-    public Player getYoungPlayerForPosition(Position currentPosition, User user, List<Junior> allJuniors) {
+    public Player getYoungPlayerForPosition(PositionType currentPosition, User user, List<Junior> allJuniors) {
         log.info("JuniorService.getYoungPlayer");
         var random = new Random();
         var allJuniorsSize = allJuniors.size();

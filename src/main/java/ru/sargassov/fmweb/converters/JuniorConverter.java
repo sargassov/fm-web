@@ -6,16 +6,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import ru.sargassov.fmweb.constants.UserHolder;
 import ru.sargassov.fmweb.dto.player_dtos.JuniorDto;
+import ru.sargassov.fmweb.enums.PositionType;
 import ru.sargassov.fmweb.intermediate_entities.Junior;
 import ru.sargassov.fmweb.intermediate_entities.Player;
 import ru.sargassov.fmweb.entities.JuniorEntity;
 import ru.sargassov.fmweb.intermediate_entities.User;
-import ru.sargassov.fmweb.intermediate_services.PositionIntermediateService;
-import ru.sargassov.fmweb.intermediate_spi.PositionIntermediateServiceSpi;
 import ru.sargassov.fmweb.services.PlayerPriceSetter;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.Random;
 
 @Component
@@ -23,8 +20,6 @@ import java.util.Random;
 public class JuniorConverter {
     private final PlayerPriceSetter playerPriceSetter;
     private final Random random = getRandom();
-
-    private final PositionIntermediateServiceSpi positionIntermediateService;
 
     public Junior getIntermediateEntityFromEntity(JuniorEntity juniorEntity, User user){
         var junuior = new Junior();
@@ -72,19 +67,19 @@ public class JuniorConverter {
         var averageCraftValue = 10;
         var bottomCraftValue = 60;
         var craftValue = random.nextInt(averageCraftValue) + bottomCraftValue;
-        var position = player.getPosition().getTitle();
+        var position = player.getPosition();
 
         switch (position) {
-            case "Goalkeeper":
+            case GOALKEEPER:
                 player.setGkAble(craftValue);
                 break;
-            case "Defender":
+            case DEFENDER:
                 player.setDefAble(craftValue);
                 break;
-            case "Midfielder":
+            case MIDFIELDER:
                 player.setMidAble(craftValue);
                 break;
-            case "Forward":
+            case FORWARD:
                 player.setForwAble(craftValue);
                 break;
             default:
@@ -103,11 +98,8 @@ public class JuniorConverter {
         p.setForwAble(juniorDto.getForwAble());
         p.setCaptainAble(juniorDto.getCaptainAble());
         p.setBirthYear(juniorDto.getBirthYear());
-        var position = positionIntermediateService.findByTitle(juniorDto.getPosition());
-        if (position.isEmpty()) {
-            throw new IllegalStateException("Unexpect position");
-        }
-        p.setPosition(position.get());
+        var position = PositionType.findByDescription(juniorDto.getPosition());
+        p.setPosition(position);
         p.setNatio(juniorDto.getNatio());
         p.setPower(juniorDto.getPower());
         p.setPrice(juniorDto.getPrice());

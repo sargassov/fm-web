@@ -8,12 +8,10 @@ import ru.sargassov.fmweb.constants.UserHolder;
 import ru.sargassov.fmweb.converters.DayConverter;
 import ru.sargassov.fmweb.dto.days_dtos.DayDto;
 import ru.sargassov.fmweb.intermediate_entities.Day;
-import ru.sargassov.fmweb.intermediate_entities.Position;
 import ru.sargassov.fmweb.intermediate_entities.User;
 import ru.sargassov.fmweb.intermediate_repositories.DayIntermediateRepository;
 import ru.sargassov.fmweb.intermediate_spi.DayIntermediateServiceSpi;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service

@@ -5,26 +5,23 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import ru.sargassov.fmweb.constants.UserHolder;
 import ru.sargassov.fmweb.dto.player_dtos.*;
+import ru.sargassov.fmweb.enums.PositionType;
 import ru.sargassov.fmweb.exceptions.CoachException;
 import ru.sargassov.fmweb.intermediate_entities.*;
 import ru.sargassov.fmweb.entities.PlayerEntity;
-import ru.sargassov.fmweb.intermediate_spi.PositionIntermediateServiceSpi;
 import ru.sargassov.fmweb.intermediate_spi.TeamIntermediateServiceSpi;
 import ru.sargassov.fmweb.intermediate_spi.UserIntermediateServiceSpi;
 import ru.sargassov.fmweb.services.PlayerPriceSetter;
-import ru.sargassov.fmweb.services.UserService;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 @Component
 @AllArgsConstructor
 @Slf4j
 public class PlayerConverter {
-    private final PositionIntermediateServiceSpi positionIntermediateService;
     private final PlayerPriceSetter playerPriceSetter;
     private final JuniorConverter juniorConverter;
     private final TeamIntermediateServiceSpi teamIntermediateService;
@@ -34,10 +31,9 @@ public class PlayerConverter {
 
 
     public Player getIntermediateEntityFromEntity(PlayerEntity playerEntity, User user, League league){
-        Player player = new Player();
-        var positionEntityId = playerEntity.getPositionEntity().getId();
+        var player = new Player();
         var teamEntityId = playerEntity.getTeamEntity().getId();
-        var position = positionIntermediateService.findByPositionEntityIdAndUser(positionEntityId, user);
+        var position = PositionType.findByDescription(playerEntity.getPositionEntity().getTitle());
         var team = teamIntermediateService.findByTeamEntityIdAndUser(teamEntityId, user);
 
         player.setUser(user);
@@ -118,16 +114,15 @@ public class PlayerConverter {
         return pOnPagePlDto;
     }
 
-    private void setSkillsOfIntermediateEntity(Player p, PlayerHardSkillDto playerHardSkillDto, User user){
-        var position = positionIntermediateService.findByTitle(playerHardSkillDto.getPosition());
-        userIntermediateService.save(user);
+    private void setSkillsOfIntermediateEntityForNewPlayerCreated(Player p, PlayerHardSkillDto playerHardSkillDto, User user){
+        var position = PositionType.findByDescription(playerHardSkillDto.getPosition());
         p.setGkAble(playerHardSkillDto.getGkAble());
         p.setDefAble(playerHardSkillDto.getDefAble());
         p.setMidAble(playerHardSkillDto.getMidAble());
         p.setForwAble(playerHardSkillDto.getForwAble());
         p.setCaptainAble(playerHardSkillDto.getCaptainAble());
         p.setBirthYear(playerHardSkillDto.getBirthYear());
-        p.setPosition(position.get());
+        p.setPosition(position);
         guessPrice(p, user);
     }
 
@@ -136,7 +131,7 @@ public class PlayerConverter {
         var user = UserHolder.user;
         p.setName(createdPlayerDto.getName());
         p.setNatio(createdPlayerDto.getNatio());
-        setSkillsOfIntermediateEntity(p, createdPlayerDto, user);
+        setSkillsOfIntermediateEntityForNewPlayerCreated(p, createdPlayerDto, user);
         p.setStrategyPlace(-100);
         p.guessPower();
         p.setTeam(user.getUserTeam());
@@ -149,7 +144,7 @@ public class PlayerConverter {
 
     public BigDecimal getPriceOfIntermediateEntityFromCreatedDto(PlayerHardSkillDto playerHardSkillDto, User user) {
         Player p = new Player();
-        setSkillsOfIntermediateEntity(p, playerHardSkillDto, user);
+        setSkillsOfIntermediateEntityForNewPlayerCreated(p, playerHardSkillDto, user);
         return playerPriceSetter.createPrice(new PlayerPriceSetter.ValueContainer(p), user);
     }
 
@@ -198,7 +193,7 @@ public class PlayerConverter {
         return pDto;
     }
 
-    public Player getIntermadiateEntityFromJunior(Junior junior, Position currentPosition, User user) {
+    public Player getIntermadiateEntityFromJunior(Junior junior, PositionType currentPosition, User user) {
         var player = new Player();
         player.setName(junior.getName());
         player.setPosition(currentPosition);

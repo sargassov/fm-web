@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import ru.sargassov.fmweb.comparators.TeamsPlayersComparators;
 import ru.sargassov.fmweb.comparators.TrainingPlayersComparators;
 import ru.sargassov.fmweb.converters.TeamConverter;
+import ru.sargassov.fmweb.enums.PositionType;
 import ru.sargassov.fmweb.intermediate_entities.*;
 import ru.sargassov.fmweb.entity_repositories.TeamRepository;
 import ru.sargassov.fmweb.intermediate_spi.*;
@@ -24,7 +25,6 @@ public class TeamService implements TeamServiceSpi {
     private final StadiumIntermediateServiceSpi stadiumIntermediateService;
     private final CityIntermediateServiceSpi cityIntermediateService;
     private final LeagueIntermediateServiceSpi leagueIntermediateService;
-    private final PositionIntermediateServiceSpi positionIntermediateService;
     private final JuniorIntermediateServiceSpi juniorIntermediateService;
     private final SponsorIntermediateServiceSpi sponsorIntermediateService;
     private final TeamConverter teamConverter;
@@ -80,11 +80,10 @@ public class TeamService implements TeamServiceSpi {
         log.info("TeamService.juniorRecruitment");
         int maxValueOfYoungPlayersForOnePosition = 2;
         var teams = teamIntermediateService.findAllByUser(user);
-        var positions = positionIntermediateService.findAllByUser(user);
+        var positions = PositionType.values();
         var allJuniors = juniorIntermediateService.findByUser(user);
-// TODO просмотреть падения здесб
         for(Team currentTeam : teams){
-            for(Position currentPosition : positions){
+            for(var currentPosition : positions){
                 for (int i = 0; i < maxValueOfYoungPlayersForOnePosition; i++) {
                     addJuniorToTeam(currentTeam, currentPosition, user, allJuniors);
                 }
@@ -93,7 +92,7 @@ public class TeamService implements TeamServiceSpi {
     }
 
     @Override
-    public void addJuniorToTeam(Team currentTeam, Position currentPosition, User user, List<Junior> allJuniors){
+    public void addJuniorToTeam(Team currentTeam, PositionType currentPosition, User user, List<Junior> allJuniors){
         var player = juniorIntermediateService.getYoungPlayerForPosition(currentPosition, user, allJuniors);
         var league = currentTeam.getLeague();
 

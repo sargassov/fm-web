@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS coach (
                                     id_user BIGINT NOT NULL,
                                     count INTEGER NOT NULL,
                                     id_team BIGINT,
-                                    id_position BIGINT NOT NULL,
+                                    position VARCHAR(64) NOT NULL,
                                     coach_type VARCHAR(255) NOT NULL,
                                     coach_program VARCHAR(255) NOT NULL,
                                     id_player_on_training BIGINT,

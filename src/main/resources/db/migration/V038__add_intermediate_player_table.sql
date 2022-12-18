@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS player (
                                          strategy_place INTEGER NOT NULL,
                                          price NUMERIC(6, 2) NOT NULL,
                                          power INTEGER NOT NULL,
-                                         id_position BIGINT NOT NULL,
+                                         position VARCHAR(64) NOT NULL,
                                          id_league BIGINT,
                                          id_team BIGINT NOT NULL,
                                          tire INTEGER NOT NULL,

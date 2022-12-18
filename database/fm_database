@@ -2622,7 +2622,7 @@ ALTER TABLE ONLY public.cities
 --
 
 ALTER TABLE ONLY public.players
-    ADD CONSTRAINT fk_positions FOREIGN KEY (id_positions) REFERENCES public.positions(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+    ADD CONSTRAINT fk_positions FOREIGN KEY (positions) REFERENCES public.positions(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --

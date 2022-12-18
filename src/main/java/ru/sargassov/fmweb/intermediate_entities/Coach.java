@@ -2,6 +2,7 @@ package ru.sargassov.fmweb.intermediate_entities;
 
 import lombok.*;
 import ru.sargassov.fmweb.constants.BaseUserEntity;
+import ru.sargassov.fmweb.enums.PositionType;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -20,9 +21,9 @@ public class Coach extends BaseUserEntity {
     @JoinColumn(name = "id_team")
     private Team team;
 
-    @ManyToOne
-    @JoinColumn(name = "id_position")
-    private Position position;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "position")
+    private PositionType position;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "coach_type")

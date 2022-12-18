@@ -2,13 +2,11 @@ package ru.sargassov.fmweb.services;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.sargassov.fmweb.dto.player_dtos.PlayerHardSkillDto;
+import ru.sargassov.fmweb.enums.PositionType;
 import ru.sargassov.fmweb.intermediate_entities.Player;
-import ru.sargassov.fmweb.intermediate_entities.Position;
 import ru.sargassov.fmweb.intermediate_entities.User;
-import ru.sargassov.fmweb.intermediate_spi.PositionIntermediateServiceSpi;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -18,8 +16,6 @@ import java.util.List;
 @Component
 @AllArgsConstructor
 public class PlayerPriceSetter {
-
-    private PositionIntermediateServiceSpi positionIntermediateService;
 
     static class TechPrice {
 
@@ -62,7 +58,7 @@ public class PlayerPriceSetter {
     private static final double[] priceCoeff = {0.01, 1.0, 2.5, 7.0, 34.0};
     private static final double[] mltpyCoeff = {0.01, 0.15, 0.45, 2.7, 6.5};
     private static final double[] captainCoeff = {1.1, 1.15, 1.2, 1.25, 1.3};
-    private static List<Position> positions;
+    private static PositionType[] positions;
     private List<Integer> ables;
 
 
@@ -108,7 +104,7 @@ public class PlayerPriceSetter {
     }
 
     private void init(int gkAble, int defAble, int midAble, int forwAble, User user){
-        positions = positionIntermediateService.findAllByUser(user);
+        positions = PositionType.values();
         ables = Arrays.asList(gkAble, defAble, midAble, forwAble);
     }
 }

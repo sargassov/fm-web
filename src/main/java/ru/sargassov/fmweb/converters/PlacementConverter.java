@@ -39,7 +39,7 @@ public class PlacementConverter {
         for(int x = 0; x < rolesSplit.length; x++){
             rolesSplit[x] = purePlacementName(rolesSplit[x]);
             var role = getRoleIntermediateEntityFromString(rolesSplit[x], x, user, team);
-            listRoles.add(role); //TODO испраивть значение NULL в столбце "id_player" отношения "role" нарушает ограничение NOT NULL
+            listRoles.add(role);
         }
         return roleIntermediateService.save(listRoles);
     }

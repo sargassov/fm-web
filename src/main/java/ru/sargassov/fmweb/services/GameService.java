@@ -23,7 +23,6 @@ public class GameService implements GameServiceSpi {
     private final UserService userService;
     private final CityServiceSpi cityService;
     private final StadiumServiceSpi stadiumService;
-    private final PositionServiceSpi positionService;
     private final MatchServiceSpi matchService;
     private final MatrixCreateServiceSpi matrixService;
     private final HeadCoachIntermediateServiceSpi headCoachIntermediateService;
@@ -38,7 +37,6 @@ public class GameService implements GameServiceSpi {
         juniorService.loadYouthList(user);
         cityService.loadCities(user);
         stadiumService.loadStadiums(user);
-        positionService.loadPositions(user);
         sponsorService.loadSponsors(user);
         teamService.loadTeams(user);
         placementService.loadPlacements(user);

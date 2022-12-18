@@ -4,6 +4,7 @@ import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import ru.sargassov.fmweb.constants.BaseUserEntity;
 import ru.sargassov.fmweb.dto.FinalPayment;
+import ru.sargassov.fmweb.enums.PositionType;
 import ru.sargassov.fmweb.exceptions.BankNotFoundException;
 import ru.sargassov.fmweb.exceptions.MarketException;
 import ru.sargassov.fmweb.exceptions.PlayerNotFoundException;
@@ -412,10 +413,9 @@ public class Team extends BaseUserEntity {
         }
     }
 
-    public List<Player> findPlayersByPosition(Position position) {
-        var positionTitle = position.getTitle();
+    public List<Player> findPlayersByPosition(PositionType position) {
         return playerList.stream()
-                .filter(p -> p.getPosition().getTitle().equals(positionTitle))
+                .filter(p -> p.getPosition().equals(position))
                 .collect(Collectors.toList());
     }
 

@@ -3,6 +3,7 @@ package ru.sargassov.fmweb.intermediate_entities;
 
 import lombok.*;
 import ru.sargassov.fmweb.constants.BaseUserEntity;
+import ru.sargassov.fmweb.enums.PositionType;
 import ru.sargassov.fmweb.services.PlayerPriceSetter;
 
 import javax.persistence.*;
@@ -52,9 +53,9 @@ public class Player extends BaseUserEntity {
     @Column(name = "power")
     private Integer power;
 
-    @ManyToOne
-    @JoinColumn(name = "id_position")
-    private Position position;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "position")
+    private PositionType position;
 
     @ManyToOne
     @JoinColumn(name = "id_team")
@@ -88,26 +89,26 @@ public class Player extends BaseUserEntity {
     public final static Integer youngPlayerBirthYear = 2004;
 
     public void guessPower(){
-        switch (position.getTitle()) {
-            case "Goalkeeper":
+        switch (position) {
+            case GOALKEEPER:
                 power = gkAble;
                 break;
-            case "Defender":
+            case DEFENDER:
                 power = defAble;
                 break;
-            case "Midfielder":
+            case MIDFIELDER:
                 power = midAble;
                 break;
-            case "Forward":
+            case FORWARD:
                 power = forwAble;
                 break;
             default:
-                throw new IllegalStateException("Wrong player position " + position.getTitle());
+                throw new IllegalStateException("Wrong player position " + position.getDescription());
         }
     }
 
     public boolean equalsPosition(Role role){
-        var titlePosition = position.getTitle();
+        var titlePosition = position.getDescription();
         var titleRole = role.getTitle();
         if (titlePosition.equals(titleRole)) {
             return true;
