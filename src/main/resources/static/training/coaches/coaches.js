@@ -39,8 +39,8 @@ angular.module('coaches', ['ngStorage']).controller('coachesController', functio
             });
     };
 
-    $scope.setCoachFree = function (count) {
-        $http.delete(contextPath + '/coach/delete/' + count)
+    $scope.setCoachFree = function (id) {
+        $http.delete(contextPath + '/coach/delete/' + id)
             .then(function successCallback(response) {
                 $scope.loadCoaches();
             }, function errorCallback(response) {

@@ -6,7 +6,7 @@ angular.module('add_new_coach', ['ngStorage']).controller('add_new_coachControll
             .then(function successCallback() {
                 window.history.back();
                 window.location.reload();
-                // window.location.href('../coaches/coaches.html');
+                window.location.href('../coaches/coaches.html');
             }, function errorCallback() {
                 alert('NEW COACH WAS NOT ADD');
             });

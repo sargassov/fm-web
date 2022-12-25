@@ -22,4 +22,13 @@ public enum PositionType {
         }
         throw new IllegalStateException("Unexpected position");
     }
+
+    public static PositionType defineByDescription(String description) {
+        for (var pt : values()) {
+            if (pt.getDescription().equals(description)) {
+                return pt;
+            }
+        }
+        throw new IllegalStateException("Wrong position type description");
+    }
 }

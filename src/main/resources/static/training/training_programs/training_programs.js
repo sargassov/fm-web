@@ -5,7 +5,7 @@ angular.module('training_programs', ['ngStorage']).controller('training_programs
         $http.get(contextPath + '/coach/all')
             .then(function successCallback(response) {
                 $scope.Coaches = response.data;
-            }, function errorCallback(response) {
+            }, function errorCallback() {
                 alert('COACH PROGRAMS OF YOUR TEAM NOT FOUND');
             });
     };
@@ -14,7 +14,7 @@ angular.module('training_programs', ['ngStorage']).controller('training_programs
         $http.get(contextPath + '/dates')
             .then(function successCallback(response) {
                 $scope.today = response.data;
-            }, function errorCallback(response) {
+            }, function errorCallback() {
                 alert('PRESENT DAY NOT FOUND');
             });
     };
@@ -23,16 +23,16 @@ angular.module('training_programs', ['ngStorage']).controller('training_programs
         $http.get(contextPath + '/team/name')
             .then(function successCallback(response) {
                 $scope.team = response.data;
-            }, function errorCallback(response) {
+            }, function errorCallback() {
                 alert('TEAM NAME NOT FOUND');
             });
     };
 
-    $scope.changeProgram = function (count, progrId) {
-        $http.put(contextPath + '/coach/program/' + count + '/' + progrId)
-            .then(function successCallback(response) {
+    $scope.changeProgram = function (id, progrId) {
+        $http.put(contextPath + '/coach/program/' + id + '/' + progrId)
+            .then(function successCallback() {
                 $scope.loadCoaches();
-            }, function errorCallback(response) {
+            }, function errorCallback() {
                 alert('COACH PROGRAM CHANGE FAILURE')
             });
     };

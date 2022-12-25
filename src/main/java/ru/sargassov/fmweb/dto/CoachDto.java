@@ -4,11 +4,23 @@ import lombok.Data;
 import ru.sargassov.fmweb.intermediate_entities.Coach;
 
 import java.math.BigDecimal;
+import java.util.List;
+
+import static ru.sargassov.fmweb.intermediate_entities.Coach.CoachType.LOCAL;
+import static ru.sargassov.fmweb.intermediate_entities.Coach.CoachType.PROFESSIONAL;
+import static ru.sargassov.fmweb.intermediate_entities.Coach.CoachType.WORLD_CLASS;
 
 
 @Data
 public class CoachDto {
-    private int count;
+
+    private static final String LOCAL_PRICE = "1";
+    private static final String PROFESSIONAL_PRICE = "3";
+    private static final String WORLD_CLASS_PRICE = "5";
+    private static final String UNKNOWN_COACH_TYPE = "Unknown coach type";
+
+
+    private Long id;
     private String position;
     private String type;
     private String playerOnTraining;
@@ -19,29 +31,36 @@ public class CoachDto {
         String response = "Price of " + type + " " +
                 position + " coach is ";
 
-        if(type.equals("LOCAL")) response += "1";
-        else if(type.equals("PROFESSIONAL")) response += "3";
-        else response += "5";
+        if (type.equals(LOCAL.getDescription())) {
+            response += LOCAL_PRICE;
+        } else if (type.equals(PROFESSIONAL.getDescription())) {
+            response += PROFESSIONAL_PRICE;
+        } else if (type.equals(WORLD_CLASS.getDescription())) {
+            response += WORLD_CLASS_PRICE;
+        } else {
+            throw new IllegalStateException(UNKNOWN_COACH_TYPE);
+        }
 
         return response += " mln. $. ";
     }
 
-//    public Position guessPosition(){
-//        if(position.equals("GOALKEEPER")) return Position.GOALKEEPER;
-//        else if(position.equals("DEFENDER")) return Position.DEFENDER;
-//        else if(position.equals("MIDFIELDER")) return Position.MIDFIELDER;
-//        else return Position.FORWARD;
-//    }
-
     public Coach.CoachType guessType() {
-        if(type.equals("LOCAL")) return Coach.CoachType.LOCAL;
-        else if(type.equals("PROFESSIONAL")) return Coach.CoachType.PROFESSIONAL;
-        else return Coach.CoachType.WORLD_CLASS;
+        for (var value : Coach.CoachType.values()) {
+            var valueDescription = value.getDescription();
+            if (valueDescription.equals(type)) {
+                return value;
+            }
+        }
+        throw new IllegalStateException(UNKNOWN_COACH_TYPE);
     }
 
     public BigDecimal guessPrice() {
-        if(type.equals("LOCAL")) return BigDecimal.valueOf(1);
-        else if(type.equals("PROFESSIONAL")) return BigDecimal.valueOf(3);
-        else return BigDecimal.valueOf(5);
+        for (var value : Coach.CoachType.values()) {
+            var valueDescription = value.getDescription();
+            if (valueDescription.equals(type)) {
+                return value.getPrice();
+            }
+        }
+        throw new IllegalStateException(UNKNOWN_COACH_TYPE);
     }
 }

@@ -14,6 +14,7 @@ import ru.sargassov.fmweb.dto.text_responses.StartFinishInformationDto;
 import ru.sargassov.fmweb.dto.text_responses.TextResponse;
 import ru.sargassov.fmweb.intermediate_spi.TeamIntermediateServiceSpi;
 import ru.sargassov.fmweb.spi.TeamServiceSpi;
+import ru.sargassov.fmweb.spi.TrainingServiceSpi;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
@@ -23,6 +24,7 @@ import java.util.List;
 @Slf4j
 public class TeamController {
     private final TeamIntermediateServiceSpi teamIntermediateService;
+    private final TrainingServiceSpi trainingService;
 
     @GetMapping("/team/players/{parameter}")
     public List<PlayerSoftSkillDto> getAllPlayersByUserTeam(@PathVariable Integer parameter) {
@@ -45,8 +47,7 @@ public class TeamController {
     @GetMapping("/team/players_on_training/{parameter}")
     public List<PlayerOnTrainingDto> getAllPlayersOnTrainingByUserTeam(@PathVariable Integer parameter) {
         log.info("TeamController.getAllPlayersByUserTeam(parameter)");
-//        return teamService.getAllPlayersOnTrainingByUserTeam(parameter);
-        return null;
+        return trainingService.getAllPlayersOnTrainingByUserTeam(parameter);
     }
 
     @GetMapping("/team/name/next/{parameter}/{i}")

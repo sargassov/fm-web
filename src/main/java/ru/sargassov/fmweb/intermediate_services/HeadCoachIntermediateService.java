@@ -16,6 +16,7 @@ import ru.sargassov.fmweb.intermediate_spi.HeadCoachIntermediateServiceSpi;
 public class HeadCoachIntermediateService implements HeadCoachIntermediateServiceSpi {
 
     private final HeadCoachIntermediateRepository repository;
+
     @Override
     public HeadCoach save(HeadCoach headCoach) {
         return repository.save(headCoach);

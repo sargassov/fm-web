@@ -1,5 +1,6 @@
 package ru.sargassov.fmweb.intermediate_spi;
 
+import ru.sargassov.fmweb.dto.player_dtos.PlayerOnTrainingDto;
 import ru.sargassov.fmweb.dto.player_dtos.PlayerSoftSkillDto;
 import ru.sargassov.fmweb.dto.team_dtos.TeamOnPagePlayersDto;
 import ru.sargassov.fmweb.intermediate_entities.Player;

@@ -17,6 +17,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 @AllArgsConstructor
@@ -152,31 +153,6 @@ public class PlayerConverter {
         p.setPrice(playerPriceSetter.createPrice(new PlayerPriceSetter.ValueContainer(p), user));
     }
 
-
-//    public PlayerOnTrainingDto getPlayerOnTrainingDtoFromPlayer(Player p) {
-//        List<Coach> coaches = userApi.getTeam().getCoaches();
-//        List<Player> coachPlayers = coaches.stream()
-//                .map(Coach::getPlayerOnTraining)
-//                .collect(Collectors.toList());
-//
-//        PlayerOnTrainingDto pDto = new PlayerOnTrainingDto();
-//        complectSkillsOfPlayerDto(pDto, p);
-//        pDto.setTrainingBalance(p.getTrainingBalance());
-//        pDto.setPosition(p.getPosition().toString());
-//        pDto.setTire(p.getTire());
-//
-//        if(coachPlayers.contains(p)){
-//            Coach coach = getCoachForCurrentPlayer(coaches, p);
-//            pDto.setOnTraining(coach.getType().toString() + "/" + coach.getCoachProgram().toString());
-//            pDto.setTrainingAble(coach.getTrainingAble());
-//            return pDto;
-//        }
-//
-//        pDto.setOnTraining("");
-//        pDto.setTrainingAble(p.getTrainingAble());
-//        return pDto;
-//    }
-
     private Coach getCoachForCurrentPlayer(List<Coach> coaches, Player p) {
         Optional<Coach> coachOpt = coaches.stream().filter(c -> c.getPlayerOnTraining() == p).findFirst();
         if(coachOpt.isEmpty()){
@@ -202,5 +178,30 @@ public class PlayerConverter {
         player.setTrainingBalance(0);
         player.setTimeBeforeTreat(0);
         return juniorConverter.setSkillForYoungPlayerIntermediateEntity(player, user);
+    }
+
+    public PlayerOnTrainingDto getPlayerOnTrainingDtoFromPlayer(Player p) {
+        var userTeam = UserHolder.user.getUserTeam();
+        var coaches = userTeam.getCoaches();
+        var coachPlayers = coaches.stream()
+                .map(Coach::getPlayerOnTraining)
+                .collect(Collectors.toList());
+
+        var pDto = new PlayerOnTrainingDto();
+        complectSkillsOfPlayerDto(pDto, p);
+        pDto.setTrainingBalance(p.getTrainingBalance());
+        pDto.setPosition(p.getPosition().getDescription());
+        pDto.setTire(p.getTire());
+
+        if (coachPlayers.contains(p)) {
+            var coach = getCoachForCurrentPlayer(coaches, p);
+            pDto.setOnTraining(coach.getType().getDescription() + "/" + coach.getCoachProgram().getDescription());
+            pDto.setTrainingAble(coach.getTrainingAble());
+            return pDto;
+        }
+
+        pDto.setOnTraining("");
+        pDto.setTrainingAble(p.getTrainingAble());
+        return pDto;
     }
 }

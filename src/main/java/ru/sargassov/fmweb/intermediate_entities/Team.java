@@ -2,6 +2,7 @@ package ru.sargassov.fmweb.intermediate_entities;
 
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.util.CollectionUtils;
 import ru.sargassov.fmweb.constants.BaseUserEntity;
 import ru.sargassov.fmweb.dto.FinalPayment;
 import ru.sargassov.fmweb.enums.PositionType;
@@ -126,9 +127,9 @@ public class Team extends BaseUserEntity {
 
     //__________________________
 
-    public static final int maxValueOfLoans = 5;
-    public static final int maxValueOfMarkets = 5;
-    public static final int maxValueOfCoaches = 6;
+    public static final int MAX_VALUE_OF_LOANS = 5;
+    public static final int MAX_VALUE_OF_MARKETS = 5;
+    public static final int MAX_VALUE_OF_COACHES = 6;
     //////////////////////////
 
 
@@ -175,6 +176,13 @@ public class Team extends BaseUserEntity {
         for(Bank b : loans)
             expenses = expenses.add(function.apply(b));
         return expenses;
+    }
+
+    public List<Coach> getCoaches() {
+        if (CollectionUtils.isEmpty(coaches)) {
+            coaches = new ArrayList<>();
+        }
+        return coaches;
     }
 
     public void addPersonalExpenses(BigDecimal value){
@@ -437,6 +445,12 @@ public class Team extends BaseUserEntity {
                 .orElseThrow();
     }
 
+    public Coach getCoachById(Long coachId) {
+        return coaches.stream()
+                .filter(c -> c.getId().equals(coachId))
+                .findFirst()
+                .orElseThrow();
+    }
 
     //    public Team(String info) {
 //        //        markets = new ArrayList<>();

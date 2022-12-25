@@ -1,7 +1,6 @@
 CREATE TABLE IF NOT EXISTS coach (
                                     id bigserial PRIMARY KEY NOT NULL,
                                     id_user BIGINT NOT NULL,
-                                    count INTEGER NOT NULL,
                                     id_team BIGINT,
                                     position VARCHAR(64) NOT NULL,
                                     coach_type VARCHAR(255) NOT NULL,

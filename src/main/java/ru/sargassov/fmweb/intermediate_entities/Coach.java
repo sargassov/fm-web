@@ -14,9 +14,6 @@ import java.math.BigDecimal;
 @RequiredArgsConstructor
 public class Coach extends BaseUserEntity {
 
-    @Column(name = "count")
-    private int count;
-
     @ManyToOne
     @JoinColumn(name = "id_team")
     private Team team;
@@ -43,32 +40,27 @@ public class Coach extends BaseUserEntity {
     @Column(name = "training_able")
     private int trainingAble;
 
+    @Getter
+    @RequiredArgsConstructor
     public enum CoachProgram {
-        STANDART(1),
-        INTENSIVE(1.5),
-        HARD(2);
+        STANDART(1, "Standart"),
+        INTENSIVE(1.5, "Intensive"),
+        HARD(2, "Hard");
 
         private final double programCode;
-
-        CoachProgram(double programCode){
-            this.programCode = programCode;
-        }
+        private final String description;
     }
 
+    @Getter
+    @RequiredArgsConstructor
     public enum CoachType {
-        LOCAL(1),
-        PROFESSIONAL(1.5),
-        WORLD_CLASS(2);
+        LOCAL(1, "Local", BigDecimal.valueOf(1)),
+        PROFESSIONAL(1.5, "Professional", BigDecimal.valueOf(3)),
+        WORLD_CLASS(2, "World Class", BigDecimal.valueOf(5));
 
         private final double typeCode;
-
-        CoachType(double typeCode){
-            this.typeCode = typeCode;
-        }
-
-        public double getTypeCode() {
-            return typeCode;
-        }
+        private final String description;
+        private final BigDecimal price;
     }
 
     public double getTrainingCoeff() {

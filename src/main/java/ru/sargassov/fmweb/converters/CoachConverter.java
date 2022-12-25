@@ -1,15 +1,19 @@
 package ru.sargassov.fmweb.converters;
 
 import org.springframework.stereotype.Component;
+import ru.sargassov.fmweb.constants.UserHolder;
 import ru.sargassov.fmweb.dto.CoachDto;
+import ru.sargassov.fmweb.enums.PositionType;
 import ru.sargassov.fmweb.intermediate_entities.Coach;
+
+import static ru.sargassov.fmweb.intermediate_entities.Coach.CoachProgram.STANDART;
 
 @Component
 public class CoachConverter {
 
     public CoachDto getCoachDtoFromIntermediateEntity(Coach coach){
-        CoachDto cDto = new CoachDto();
-        cDto.setCount(coach.getCount());
+        var cDto = new CoachDto();
+        cDto.setId(coach.getId());
         cDto.setPosition(coach.getPosition().toString());
         cDto.setType(coach.getType().toString());
         cDto.setCoachProgram(coach.getCoachProgram().toString());
@@ -25,11 +29,14 @@ public class CoachConverter {
 
 
     public Coach getIntermediateEntityFromCoachDto(CoachDto coachDto) {
-        Coach coach = new Coach();
-//        coach.setPosition(coachDto.guessPosition());
+        var coach = new Coach();
+        var user = UserHolder.user;
+        var coachPosition = PositionType.defineByDescription(coachDto.getPosition());
+        coach.setPosition(coachPosition);
         coach.setType(coachDto.guessType());
         coach.setPrice(coachDto.guessPrice());
-        coach.setCoachProgram(Coach.CoachProgram.STANDART);
+        coach.setCoachProgram(STANDART);
+        coach.setUser(user);
         return coach;
     }
 }
