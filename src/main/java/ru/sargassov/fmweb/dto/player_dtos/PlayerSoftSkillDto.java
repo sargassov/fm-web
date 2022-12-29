@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 @Setter
 public class PlayerSoftSkillDto extends CreatedPlayerDto {
     private String club;
+    private Long teamId;
     private boolean isInjury;
     private int strategyPlace;
     private int power;

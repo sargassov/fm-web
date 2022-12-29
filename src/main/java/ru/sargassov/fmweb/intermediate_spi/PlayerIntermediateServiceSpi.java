@@ -3,6 +3,7 @@ package ru.sargassov.fmweb.intermediate_spi;
 import ru.sargassov.fmweb.dto.PlacementOnPagePlacementsDto;
 import ru.sargassov.fmweb.dto.PriceResponce;
 import ru.sargassov.fmweb.dto.player_dtos.CreatedPlayerDto;
+import ru.sargassov.fmweb.dto.player_dtos.IdNamePricePlayerDto;
 import ru.sargassov.fmweb.dto.player_dtos.PlayerSoftSkillDto;
 import ru.sargassov.fmweb.intermediate_entities.Player;
 import ru.sargassov.fmweb.intermediate_entities.Team;
@@ -30,4 +31,6 @@ public interface PlayerIntermediateServiceSpi {
     PriceResponce guessNewPlayerCost(CreatedPlayerDto createdPlayerDto, User user);
 
     void createNewPlayer(CreatedPlayerDto createdPlayerDto);
+
+    IdNamePricePlayerDto getIdNamePricePlayerDtoFromPlayer(Player p);
 }

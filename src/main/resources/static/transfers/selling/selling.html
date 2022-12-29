@@ -38,7 +38,7 @@
         <tr ng-repeat="p in Players">
             <td class="cell">{{p.name}}</td>
             <td class="cell">{{p.price}}</td>
-            <td><button class="btn btn-primary" ng-click="sellForHalfPrice(p.name, p.price)">Sell For Half Price</button>
+            <td><button class="btn btn-primary" ng-click="sellForHalfPrice(p.id, p.price)">Sell For Half Price</button>
             </td>
         </tr>
         </tbody>

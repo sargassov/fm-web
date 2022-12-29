@@ -8,7 +8,7 @@ import java.util.Random;
 
 @Getter
 @Setter
-public class PlayerHardSkillDto extends PlayerDto{
+public class PlayerHardSkillDto extends PlayerDto {
     private Random random;
     protected Integer gkAble;
     protected Integer defAble;

@@ -8,6 +8,6 @@ import java.math.BigDecimal;
 
 @Getter
 @Setter
-public class IdNamePricePlayerDto extends PlayerDto{
+public class IdNamePricePlayerDto extends PlayerDto {
     private BigDecimal price;
 }

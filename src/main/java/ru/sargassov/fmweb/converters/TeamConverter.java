@@ -28,6 +28,9 @@ public class TeamConverter {
 
     private final StadiumIntermediateServiceSpi stadiumIntermediateService;
     private final HeadCoachIntermediateServiceSpi headCoachIntermediateService;
+    private static final Integer START_PLAYER_PARAMETER = -1;
+    private static final Integer START_SORT_PARAMETER = 0;
+    private static final Integer BIG_DECIMAL_SCALE = 2;
 
     public Team getIntermediateEntityFromEntity(TeamEntity teamEntity, User user, League league){
         Team team = new Team();
@@ -37,7 +40,7 @@ public class TeamConverter {
         team.setName(teamEntity.getName());
         team.setHeadCoach(headCoach);
         team.setLeague(league);
-        team.setWealth(BigDecimal.valueOf(teamEntity.getWealth()).setScale(2, RoundingMode.HALF_UP));
+        team.setWealth(BigDecimal.valueOf(teamEntity.getWealth()).setScale(BIG_DECIMAL_SCALE, RoundingMode.HALF_UP));
         team.setStartWealth(team.getWealth());
         team.setCoaches(new ArrayList<>());
         team.setLoans(new ArrayList<>());
@@ -63,11 +66,12 @@ public class TeamConverter {
 
     public TeamOnPagePlayersDto dtoToTeamOnPagePlayersDto(Team team){
         TeamOnPagePlayersDto tOnPageDto = new TeamOnPagePlayersDto();
+        tOnPageDto.setId(team.getId());
         tOnPageDto.setName(team.getName());
         tOnPageDto.setWealth(team.getWealth().setScale(2, RoundingMode.HALF_UP));
         tOnPageDto.setTeamFullSize(team.getPlayerList().size());
-        tOnPageDto.setPlayerParameter(-1);
-        tOnPageDto.setSortParameter(0);
+        tOnPageDto.setPlayerParameter(START_PLAYER_PARAMETER);
+        tOnPageDto.setSortParameter(START_SORT_PARAMETER);
         tOnPageDto.setStadium(team.getStadium().getTitle());
         return tOnPageDto;
     }

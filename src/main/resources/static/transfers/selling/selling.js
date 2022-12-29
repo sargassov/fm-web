@@ -29,13 +29,13 @@ angular.module('selling', ['ngStorage']).controller('sellingController', functio
             });
     };
 
-    $scope.sellForHalfPrice = function (name, price) {
-        $http.delete(contextPath + '/team/players/sell/' + name)
-            .then(function successCallback(responce) {
+    $scope.sellForHalfPrice = function (id, price) {
+        $http.delete(contextPath + '/team/players/sell/' + id)
+            .then(function successCallback() {
                 $scope.getActualDate();
                 $scope.getSellingList();
                 $scope.getUserTeamName();
-                alert('PLAYER ' + name + ' WAS SOLD FOR ' + price);
+                alert('PLAYER WITH ID #' + id + ' WAS SOLD FOR ' + price);
             }, function errorCallback(responce) {
                 alert('CANT SELL PLAYER');
             });

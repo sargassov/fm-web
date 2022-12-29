@@ -3,6 +3,7 @@ package ru.sargassov.fmweb.intermediate_entities;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.CollectionUtils;
+import ru.sargassov.fmweb.comparators.TeamsPlayersComparators;
 import ru.sargassov.fmweb.constants.BaseUserEntity;
 import ru.sargassov.fmweb.dto.FinalPayment;
 import ru.sargassov.fmweb.enums.PositionType;
@@ -14,6 +15,7 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -131,8 +133,6 @@ public class Team extends BaseUserEntity {
     public static final int MAX_VALUE_OF_MARKETS = 5;
     public static final int MAX_VALUE_OF_COACHES = 6;
     //////////////////////////
-
-
 
 
     @Override
@@ -450,6 +450,29 @@ public class Team extends BaseUserEntity {
                 .filter(c -> c.getId().equals(coachId))
                 .findFirst()
                 .orElseThrow();
+    }
+
+    public List<Player> getNextTenPlayersForTransferList(Integer playerParameter, Comparator<Player> comparator) {
+        var playerListSize = playerList.size();
+        var maxTransferWindowSize = 10;
+        if (playerParameter < 0) {
+            playerParameter = 0;
+        }
+        if (playerParameter > playerListSize - maxTransferWindowSize) {
+            playerParameter = playerListSize - maxTransferWindowSize;
+        }
+        return playerList.stream()
+                .sorted(comparator)
+                .skip(playerParameter)
+                .limit(10)
+                .collect(Collectors.toList());
+    }
+
+    public Player findPlayerById(Long id) {
+        return playerList.stream()
+                .filter(p -> p.getId().equals(id))
+                .findFirst()
+                .orElse(null);
     }
 
     //    public Team(String info) {

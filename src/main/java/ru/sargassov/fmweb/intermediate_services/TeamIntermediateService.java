@@ -6,12 +6,9 @@ import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.sargassov.fmweb.comparators.TeamsPlayersComparators;
-import ru.sargassov.fmweb.comparators.TrainingPlayersComparators;
 import ru.sargassov.fmweb.constants.UserHolder;
-import ru.sargassov.fmweb.controllers.TeamController;
 import ru.sargassov.fmweb.converters.PlayerConverter;
 import ru.sargassov.fmweb.converters.TeamConverter;
-import ru.sargassov.fmweb.dto.player_dtos.PlayerOnTrainingDto;
 import ru.sargassov.fmweb.dto.player_dtos.PlayerSoftSkillDto;
 import ru.sargassov.fmweb.dto.team_dtos.TeamOnPagePlayersDto;
 import ru.sargassov.fmweb.exceptions.PlayerNotFoundException;
@@ -20,15 +17,14 @@ import ru.sargassov.fmweb.intermediate_entities.Role;
 import ru.sargassov.fmweb.intermediate_entities.Team;
 import ru.sargassov.fmweb.intermediate_entities.User;
 import ru.sargassov.fmweb.intermediate_repositories.TeamIntermediateRepository;
-import ru.sargassov.fmweb.intermediate_spi.PlayerIntermediateServiceSpi;
 import ru.sargassov.fmweb.intermediate_spi.RoleIntermediateServiceSpi;
 import ru.sargassov.fmweb.intermediate_spi.TeamIntermediateServiceSpi;
-import ru.sargassov.fmweb.services.PlayerService;
-import ru.sargassov.fmweb.spi.PlayerServiceSpi;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -100,13 +96,13 @@ public class TeamIntermediateService implements TeamIntermediateServiceSpi {
         var userTeam = UserHolder.user.getUserTeam();
         var playerList = userTeam.getPlayerList();
         var playerSoftSkillDtos = getPlayerSoftSkillDtoFromPlayer(playerList);
-        playerSoftSkillDtos.sort(teamsPlayersComparators.getComparators().get(parameter));
+        playerSoftSkillDtos.sort(teamsPlayersComparators.getPlayerSoftSkillDtoComparators().get(parameter));
         return playerSoftSkillDtos;
     }
 
     private List<PlayerSoftSkillDto> getPlayerSoftSkillDtoFromPlayer(List<Player> playerList) {
         return playerList.stream()
-                .map(p -> PlayerConverter.getPlayerSoftSkillDtoFromIntermediateEntity(p))
+                .map(PlayerConverter::getPlayerSoftSkillDtoFromIntermediateEntity)
                 .collect(Collectors.toList());
     }
 
@@ -177,6 +173,15 @@ public class TeamIntermediateService implements TeamIntermediateServiceSpi {
         }
         futureCap = getPlayerByNameFromUserTeam(name);
         futureCap.setCapitan(true);
+    }
+
+    @Override
+    public Team getById(Long teamId) {
+        var optTeam = repository.findById(teamId);
+        if (optTeam.isPresent()) {
+            return optTeam.get();
+        }
+        throw new EntityNotFoundException("Team with id #" + teamId + " not found");
     }
 
     private Player getPlayerByNameFromUserTeam(String name) {

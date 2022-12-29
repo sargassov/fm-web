@@ -29,16 +29,16 @@
     <p></p>
     <a class="linktext" href="../transfers.html">Back to Transfers Menu</a><br>
     <h3 class="oppenent_team_name">{{opponentTeam.name}} have {{opponentTeam.wealth}} mln. $</h3>
-    <button ng-click="loadOpponentNextPlayersSort(opponentTeam.name, -1, 0, 1)">Name</button>
-    <button ng-click="loadOpponentNextPlayersSort(opponentTeam.name, -1, 1, 1)">Club</button>
-    <button ng-click="loadOpponentNextPlayersSort(opponentTeam.name, -1, 2, 1)">Natio</button>
-    <button ng-click="loadOpponentNextPlayersSort(opponentTeam.name, -1, 4, 1)">Pos</button>
-    <button ng-click="loadOpponentNextPlayersSort(opponentTeam.name, -1, 5, 1)">Gk</button>
-    <button ng-click="loadOpponentNextPlayersSort(opponentTeam.name, -1, 6, 1)">Def</button>
-    <button ng-click="loadOpponentNextPlayersSort(opponentTeam.name, -1, 7, 1)">Mid</button>
-    <button ng-click="loadOpponentNextPlayersSort(opponentTeam.name, -1, 8, 1)">Forw</button>
-    <button ng-click="loadOpponentNextPlayersSort(opponentTeam.name, -1, 14, 1)">Power</button>
-    <button ng-click="loadOpponentNextPlayersSort(opponentTeam.name, -1, 17, 1)">Price</button>
+    <button ng-click="loadTeamNextPlayersSort(opponentTeam.id, -1, 0, 1, false)">Name</button>
+    <button ng-click="loadTeamNextPlayersSort(opponentTeam.id, -1, 1, 1, false)">Club</button>
+    <button ng-click="loadTeamNextPlayersSort(opponentTeam.id, -1, 2, 1, false)">Natio</button>
+    <button ng-click="loadTeamNextPlayersSort(opponentTeam.id, -1, 4, 1, false)">Pos</button>
+    <button ng-click="loadTeamNextPlayersSort(opponentTeam.id, -1, 5, 1, false)">Gk</button>
+    <button ng-click="loadTeamNextPlayersSort(opponentTeam.id, -1, 6, 1, false)">Def</button>
+    <button ng-click="loadTeamNextPlayersSort(opponentTeam.id, -1, 7, 1, false)">Mid</button>
+    <button ng-click="loadTeamNextPlayersSort(opponentTeam.id, -1, 8, 1, false)">Forw</button>
+    <button ng-click="loadTeamNextPlayersSort(opponentTeam.id, -1, 14, 1, false)">Power</button>
+    <button ng-click="loadTeamNextPlayersSort(opponentTeam.id, -1, 17, 1, false)">Price</button>
 
     <table id="scrolltable" class="table table-sm">
         <tr>
@@ -69,23 +69,23 @@
         </tr>
         </tbody>
     </table>
-    <td><button class="btn btn-warning" ng-click="loadOpponentNextPlayersSort(opponentTeam.name, opponentTeam.playerParameter, opponentTeam.sortParameter, -1)">Previous Player</button></td>
-    <td><button class="btn btn-warning" ng-click="loadOpponentNextPlayersSort(opponentTeam.name, opponentTeam.playerParameter, opponentTeam.sortParameter, 1)">Next Player</button></td>
+    <td><button class="btn btn-warning" ng-click="loadTeamNextPlayersSort(opponentTeam.id, opponentTeam.playerParameter, opponentTeam.sortParameter, -1, false)">Previous Player</button></td>
+    <td><button class="btn btn-warning" ng-click="loadTeamNextPlayersSort(opponentTeam.id, opponentTeam.playerParameter, opponentTeam.sortParameter, 1, false)">Next Player</button></td>
     <td><button class="btn btn-warning" ng-click="getNextOppenentTeamName(opponentTeam.countParameter, -1)">Previous Team</button></td>
     <td><button class="btn btn-warning" ng-click="getNextOppenentTeamName(opponentTeam.countParameter, 1)">Next Team</button></td>
     <p></p>
     <p></p>
     <h3 class="your_team_name">{{team.name}} have {{team.wealth}} mln. $</h3>
-    <button ng-click="loadUserTeamNextPlayersSort(team.name, -1, 0, 1)">Name</button>
-    <button ng-click="loadUserTeamNextPlayersSort(team.name, -1, 1, 1)">Club</button>
-    <button ng-click="loadUserTeamNextPlayersSort(team.name, -1, 2, 1)">Natio</button>
-    <button ng-click="loadUserTeamNextPlayersSort(team.name, -1, 4, 1)">Pos</button>
-    <button ng-click="loadUserTeamNextPlayersSort(team.name, -1, 5, 1)">Gk</button>
-    <button ng-click="loadUserTeamNextPlayersSort(team.name, -1, 6, 1)">Def</button>
-    <button ng-click="loadUserTeamNextPlayersSort(team.name, -1, 7, 1)">Mid</button>
-    <button ng-click="loadUserTeamNextPlayersSort(team.name, -1, 8, 1)">Forw</button>
-    <button ng-click="loadUserTeamNextPlayersSort(team.name, -1, 14, 1)">Power</button>
-    <button ng-click="loadUserTeamNextPlayersSort(team.name, -1, 17, 1)">Price</button>
+    <button ng-click="loadTeamNextPlayersSort(team.id, -1, 0, 1, true)">Name</button>
+    <button ng-click="loadTeamNextPlayersSort(team.id, -1, 1, 1, true)">Club</button>
+    <button ng-click="loadTeamNextPlayersSort(team.id, -1, 2, 1, true)">Natio</button>
+    <button ng-click="loadTeamNextPlayersSort(team.id, -1, 4, 1, true)">Pos</button>
+    <button ng-click="loadTeamNextPlayersSort(team.id, -1, 5, 1, true)">Gk</button>
+    <button ng-click="loadTeamNextPlayersSort(team.id, -1, 6, 1, true)">Def</button>
+    <button ng-click="loadTeamNextPlayersSort(team.id, -1, 7, 1, true)">Mid</button>
+    <button ng-click="loadTeamNextPlayersSort(team.id, -1, 8, 1, true)">Forw</button>
+    <button ng-click="loadTeamNextPlayersSort(team.id, -1, 14, 1, true)">Power</button>
+    <button ng-click="loadTeamNextPlayersSort(team.id, -1, 17, 1, true)">Price</button>
     <table class="table table-striped">
         <tr>
             <td class="cell">Name</td>
@@ -114,8 +114,8 @@
         </tr>
         </tbody>
     </table>
-    <td><button class="btn btn-warning" ng-click="loadUserTeamNextPlayersSort(team.name, team.playerParameter, team.sortParameter, -1)">Previous Player</button></td>
-    <td><button class="btn btn-warning" ng-click="loadUserTeamNextPlayersSort(team.name, team.playerParameter, team.sortParameter, 1)">Next Player</button></td>
+    <td><button class="btn btn-warning" ng-click="loadTeamNextPlayersSort(team.id, team.playerParameter, team.sortParameter, -1, true)">Previous Player</button></td>
+    <td><button class="btn btn-warning" ng-click="loadTeamNextPlayersSort(team.id, team.playerParameter, team.sortParameter, 1, true)">Next Player</button></td>
 
 </div>
 

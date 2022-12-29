@@ -66,6 +66,10 @@ public class PlayerConverter {
         complectSkillsOfPlayerHardSkillDto(pOnPageDto, player);
         complectSkillCreatedPlayerDto(pOnPageDto, player);
         pOnPageDto.setCaptain(booleanToString(player.isCapitan()));
+
+        var teamId = player.getTeam() != null ? player.getTeam().getId() : null;
+        pOnPageDto.setTeamId(teamId);
+        pOnPageDto.setId(player.getId());
         pOnPageDto.setClub(player.getTeam().getName());
         pOnPageDto.setInjury(player.isInjury());
         pOnPageDto.setStrategyPlace(player.getStrategyPlace() + 1);
@@ -101,7 +105,9 @@ public class PlayerConverter {
     }
 
     private static String booleanToString(boolean capitan) {
-        if (capitan) return CAPTAIN;
+        if (capitan) {
+            return CAPTAIN;
+        }
         return "";
     }
 
@@ -166,6 +172,7 @@ public class PlayerConverter {
         IdNamePricePlayerDto pDto = new IdNamePricePlayerDto();
         complectSkillsOfPlayerDto(pDto, p);
         pDto.setPrice(p.getPrice().divide(BigDecimal.valueOf(2), RoundingMode.HALF_UP));
+        pDto.setId(p.getId());
         return pDto;
     }
 

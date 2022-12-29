@@ -28,6 +28,8 @@ public interface TeamServiceSpi {
 
     int randomGuessNum(Team currentTeam);
 
+    void addJuniorToTeam(Team sellerTeam, PositionType position);
+
 //    List<Team> getTeamListFromApi();
 //
 //    void captainAppointment(Team team);

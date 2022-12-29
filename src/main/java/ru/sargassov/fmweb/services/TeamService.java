@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.sargassov.fmweb.comparators.TeamsPlayersComparators;
 import ru.sargassov.fmweb.comparators.TrainingPlayersComparators;
+import ru.sargassov.fmweb.constants.UserHolder;
 import ru.sargassov.fmweb.converters.TeamConverter;
 import ru.sargassov.fmweb.enums.PositionType;
 import ru.sargassov.fmweb.intermediate_entities.*;
@@ -92,6 +93,13 @@ public class TeamService implements TeamServiceSpi {
     }
 
     @Override
+    public void addJuniorToTeam(Team sellerTeam, PositionType position) {
+        var user = UserHolder.user;
+        var juniorList = juniorIntermediateService.findByUser(user);
+        addJuniorToTeam(sellerTeam, position, user, juniorList);
+    }
+
+    @Override
     public void addJuniorToTeam(Team currentTeam, PositionType currentPosition, User user, List<Junior> allJuniors){
         var player = juniorIntermediateService.getYoungPlayerForPosition(currentPosition, user, allJuniors);
         var league = currentTeam.getLeague();
@@ -119,6 +127,8 @@ public class TeamService implements TeamServiceSpi {
         }
         return num;
     }
+
+
 
 //    @Transactional
 //    @Override
@@ -260,14 +270,7 @@ public class TeamService implements TeamServiceSpi {
 //        userTeam.addTransferExpenses(halfPriceOfPlayer);
 //    }
 //
-//    @Transactional
-//    @Override
-//    public List<IdNamePricePlayerDto> getSellingList() {
-//        return userService.getUserTeam().getPlayerList().stream()
-//                .map(playerService::getIdNamePricePlayerDtoFromPlayer)
-//                .sorted(Comparator.comparing(IdNamePricePlayerDto::getPrice, Comparator.reverseOrder()))
-//                .collect(Collectors.toList());
-//    }
+
 
 //    @Transactional
 //    @Override

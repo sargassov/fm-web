@@ -15,6 +15,7 @@ import ru.sargassov.fmweb.dto.text_responses.TextResponse;
 import ru.sargassov.fmweb.intermediate_spi.TeamIntermediateServiceSpi;
 import ru.sargassov.fmweb.spi.TeamServiceSpi;
 import ru.sargassov.fmweb.spi.TrainingServiceSpi;
+import ru.sargassov.fmweb.spi.TransferServiceSpi;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
@@ -25,6 +26,7 @@ import java.util.List;
 public class TeamController {
     private final TeamIntermediateServiceSpi teamIntermediateService;
     private final TrainingServiceSpi trainingService;
+    private final TransferServiceSpi transferService;
 
     @GetMapping("/team/players/{parameter}")
     public List<PlayerSoftSkillDto> getAllPlayersByUserTeam(@PathVariable Integer parameter) {
@@ -50,39 +52,36 @@ public class TeamController {
         return trainingService.getAllPlayersOnTrainingByUserTeam(parameter);
     }
 
-    @GetMapping("/team/name/next/{parameter}/{i}")
+    @GetMapping("/team/next/players/{parameter}/{i}")
     public TeamOnPagePlayersDto getNextNameOfOpponentTeam(@PathVariable Integer parameter, @PathVariable Integer i) {
         log.info("TeamController.getNextNameOfOpponentTeam()");
-//        return teamService.getNameOfOpponentTeam(parameter, i);
-        return null;
+        return transferService.getNameOfOpponentTeam(parameter, i);
     }
 
-    @PutMapping("/team/{name}/players")
-    public List<PlayerSoftSkillDto> getTenPlayersFromNextTeam(@PathVariable String name, @RequestBody TeamTransInformationDto teamDto) {
+    @PutMapping("/team/transfer/players")
+    public List<PlayerSoftSkillDto> getTenPlayersFromNextTeam(@RequestBody TeamTransInformationDto teamDto) {
         log.info("TeamController.getTenPlayersFromNextByOtherTeam");
-//        return teamService.getTenPlayersFromNextTeam(name,
-//                teamDto.getPlayerParameter() + teamDto.getDelta(), teamDto.getSortParameter())
-        return null;
-
+        var deltaPlayerParameter = teamDto.getPlayerParameter() + teamDto.getDelta();
+        var teamId = teamDto.getId();
+        return transferService.getTenPlayersFromNextTeam(deltaPlayerParameter, teamDto.getSortParameter(), teamId);
     }
 
     @PostMapping("/team/players/buy")
     public void buyNewPlayer(@RequestBody PlayerSoftSkillDto o) {
         log.info("TeamController.buyNewPlayer()");
-//        teamService.buyNewPlayer(o);
+        transferService.buyNewPlayer(o);
     }
 
-    @DeleteMapping("/team/players/sell/{name}")
-    public void sellPlayer(@PathVariable String name) {
+    @DeleteMapping("/team/players/sell/{id}")
+    public void sellPlayer(@PathVariable Long id) {
         log.info("TeamController.sellPlayer()");
-//        teamService.sellPlayer(name);
+        transferService.sellPlayer(id);
     }
 
     @GetMapping("/team/players/selllist")
     public List<IdNamePricePlayerDto> getSellingList() {
         log.info("TeamController.getSellingList(parameter)");
-//        return teamService.getSellingList();
-        return null;
+        return transferService.getSellingList();
     }
 
     @GetMapping("/team/finance/income")

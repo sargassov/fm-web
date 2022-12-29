@@ -9,6 +9,7 @@ import ru.sargassov.fmweb.converters.PlayerConverter;
 import ru.sargassov.fmweb.dto.PlacementOnPagePlacementsDto;
 import ru.sargassov.fmweb.dto.PriceResponce;
 import ru.sargassov.fmweb.dto.player_dtos.CreatedPlayerDto;
+import ru.sargassov.fmweb.dto.player_dtos.IdNamePricePlayerDto;
 import ru.sargassov.fmweb.dto.player_dtos.PlayerSoftSkillDto;
 import ru.sargassov.fmweb.intermediate_entities.Player;
 import ru.sargassov.fmweb.intermediate_entities.Team;
@@ -110,5 +111,11 @@ public class PlayerIntermediateService implements PlayerIntermediateServiceSpi {
         team.setWealth(team.getWealth().subtract(player.getPrice()));
         team.substractTransferExpenses(player.getPrice());
         team.getPlayerList().add(player);
+    }
+
+    @Override
+    @Transactional
+    public IdNamePricePlayerDto getIdNamePricePlayerDtoFromPlayer(Player p) {
+        return playerConverter.getIdNamePricePlayerDtoFromPlayer(p);
     }
 }

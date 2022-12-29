@@ -107,6 +107,10 @@ public class Player extends BaseUserEntity {
         }
     }
 
+    public String getTeamName() {
+        return team.getName();
+    }
+
     public boolean equalsPosition(Role role){
         var titlePosition = position.getDescription();
         var titleRole = role.getTitle();

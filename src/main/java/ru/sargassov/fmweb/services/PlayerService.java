@@ -83,11 +83,6 @@ public class PlayerService implements PlayerServiceSpi {
 //                .map(playerConverter::getPlayerOnTrainingDtoFromPlayer)
 //                .collect(Collectors.toList());
 //    }
-    @Override
-    @Transactional
-    public IdNamePricePlayerDto getIdNamePricePlayerDtoFromPlayer(Player p) {
-        return playerConverter.getIdNamePricePlayerDtoFromPlayer(p);
-    }
 
     @Override
     public void guessPrice(Player p, User user) {

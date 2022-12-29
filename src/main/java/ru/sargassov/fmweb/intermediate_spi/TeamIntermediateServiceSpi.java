@@ -9,6 +9,7 @@ import ru.sargassov.fmweb.intermediate_entities.Team;
 import ru.sargassov.fmweb.intermediate_entities.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface TeamIntermediateServiceSpi {
     List<Team> save(List<Team> newTeamsWithoutId);
@@ -40,4 +41,6 @@ public interface TeamIntermediateServiceSpi {
     List<PlayerSoftSkillDto> getAllPlayersByUserTeam(Integer parameter);
 
     void setNewCaptainHandle(String name);
+
+    Team getById(Long teamId);
 }
