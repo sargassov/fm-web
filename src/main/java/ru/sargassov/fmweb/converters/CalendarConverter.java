@@ -1,13 +1,25 @@
 package ru.sargassov.fmweb.converters;
 
 import lombok.AllArgsConstructor;
+import org.flywaydb.core.internal.util.StringUtils;
 import org.springframework.stereotype.Component;
+import ru.sargassov.fmweb.constants.UserHolder;
 import ru.sargassov.fmweb.dto.NameOfMonthDto;
+import ru.sargassov.fmweb.dto.days_dtos.EventDto;
+import ru.sargassov.fmweb.dto.days_dtos.MatchDto;
+import ru.sargassov.fmweb.exceptions.CalendarException;
+import ru.sargassov.fmweb.intermediate_entities.Day;
+import ru.sargassov.fmweb.intermediate_entities.Goal;
 import ru.sargassov.fmweb.intermediate_entities.Team;
 import ru.sargassov.fmweb.intermediate_entities.Match;
 import ru.sargassov.fmweb.services.UserService;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Component
 @AllArgsConstructor
@@ -17,41 +29,48 @@ public class CalendarConverter {
     private static final String EMPTY = "";
     private final UserService userService;
 
-//    public EventDto getEventDtoFromTourDayEntity(TourDay t){
-//        EventDto eventDto = new EventDto();
-//        eventDto.setDate(dateFormer(t.getDate()));
-//        eventDto.setTour(t.getCountOfTour());
-//        eventDto.setMatches(t.getMatches().stream()
-//                .map(this::getMatchDtoFromEntity)
-//                .collect(Collectors.toList()));
-//
-//        String passed = t.getMatches().get(0).isMatchPassed()
-//                ? PASSED
-//                : EMPTY;
-//        eventDto.setPassed(passed);
-//        return eventDto;
-//    }
+    public EventDto getEventDtoFromTourDayEntity(Day matchDay){
+        var eventDto = new EventDto();
+        eventDto.setDate(dateFormer(matchDay.getDate()));
+        eventDto.setTour(matchDay.getCountOfTour());
+        eventDto.setMatches(matchDay.getMatches().stream()
+                .map(this::getMatchDtoFromEntity)
+                .collect(Collectors.toList()));
+
+        String passed = matchDay.getMatches().get(0).isMatchPassed()
+                ? PASSED
+                : EMPTY;
+        eventDto.setPassed(passed);
+        return eventDto;
+    }
 
     public String dateFormer(LocalDate localDate) {
         return localDate.getDayOfMonth() + " " + localDate.getMonth() + " " + localDate.getYear();
     }
 
-//    public MatchDto getMatchDtoFromEntity(Match m){
-//        MatchDto matchDto = new MatchDto();
-//        matchDto.setHomeTeam(m.getHome().getName());
-//        matchDto.setAwayTeam(m.getAway().getName());
-//        matchDto.setStadium(m.getStadium().getTitle());
-//        matchDto.setScore(scoreFormer(m));
-//        matchDto.setGoals(goalsFormer(m));
-//        return matchDto;
-//    }
+    public MatchDto getMatchDtoFromEntity(Match m){
+        var matchDto = new MatchDto();
+        matchDto.setHomeTeam(m.getHome().getName());
+        matchDto.setAwayTeam(m.getAway().getName());
+        matchDto.setStadium(m.getStadium().getTitle());
+        matchDto.setScore(scoreFormer(m));
+        matchDto.setGoals(goalsFormer(m));
+        return matchDto;
+    }
 
-//    private String goalsFormer(Match m) {
-//        String goals = "";
-//        for(Goal g : m.getScorePlayers())
-//            goals += g.getScorePlayer() + "(" + g.getMin() + ")";
-//        return goals;
-//    }
+    private String goalsFormer(Match m) {
+        var allGoals = new ArrayList<>(m.getHomeTeamGoals());
+        allGoals.addAll(m.getAwayTeamGoals());
+        var allGoalsSorted = allGoals
+                .stream()
+                .sorted(Comparator.comparing(Goal::getMin))
+                .collect(Collectors.toList());
+        var goals = EMPTY;
+        for(var g : allGoalsSorted) {
+            goals += g.getScorePlayer() + "(" + g.getMin() + ")";
+        }
+        return goals;
+    }
 
     private String scoreFormer(Match m) {
         if(!m.isMatchPassed())
@@ -59,36 +78,39 @@ public class CalendarConverter {
         return m.getHomeScore() + ":" + m.getAwayScore();
     }
 
-//    public EventDto getEventDtoFromDayEntity(Day day) {
-//        EventDto eventDto = new EventDto();
-//        eventDto.setDate(dateFormer(day.getDate()));
-//        eventDto.setType(typeFormer(day));
-//        eventDto.setEvent(eventFormer(day));
-//
-//        String passed = day.isPassed()
-//                ? PASSED
-//                : EMPTY;
-//        eventDto.setPassed(passed);
-//
-//        return eventDto;
-//    }
+    public EventDto getEventDtoFromDayEntity(Day day) {
+        var eventDto = new EventDto();
+        eventDto.setDate(dateFormer(day.getDate()));
+        eventDto.setType(typeFormer(day));
+        eventDto.setEvent(eventFormer(day));
 
-//    private String eventFormer(Day day) {
-//        if(day instanceof TrainDay) return "";
-//        StringBuilder response = new StringBuilder();
-//        Team userTeam = userService.getUserTeam();
-//        Match match = getUserMatch(day, userTeam);
-//        response.append(homeOrAwayInfo(match, userTeam));
-//        response.append(matchInfo(match));
-//        if(match.isMatchPassed()) response.append(matchPassedInfo(match));
-//        return response.toString();
-//    }
+        String passed = day.isPassed()
+                ? PASSED
+                : EMPTY;
+        eventDto.setPassed(passed);
 
-//    private String typeFormer(Day day) {
-//        if(day instanceof TrainDay) return "Train";
-//        if(day instanceof TourDay) return "Russian Premier League";
-//        return null;
-//    }
+        return eventDto;
+    }
+
+    private String eventFormer(Day day) {
+        if (!day.isMatch()) {
+            return "";
+        }
+        var response = new StringBuilder();
+        var userTeam = UserHolder.user.getUserTeam();
+        var match = getUserMatch(day, userTeam);
+        response.append(homeOrAwayInfo(match, userTeam));
+        response.append(matchInfo(match));
+        if(match.isMatchPassed()) response.append(matchPassedInfo(match));
+        return response.toString();
+    }
+
+    private String typeFormer(Day day) {
+        if (day.isMatch()) {
+            return "Russian Premier League";
+        }
+        return "Train";
+    }
 
     private StringBuilder matchPassedInfo(Match match) {
         return new StringBuilder("(")
@@ -111,13 +133,13 @@ public class CalendarConverter {
         else return new StringBuilder("(A) ");
     }
 
-//    private Match getUserMatch(Day day, Team userTeam){
-//       return  ((TourDay) day).getMatches().stream()
-//                .filter(m -> m.getHome() == userTeam || m.getAway() == userTeam)
-//                .findFirst()
-//                .orElseThrow(() ->
-//                        new CalendarException("Match with userteam not found"));
-//    }
+    private Match getUserMatch(Day day, Team userTeam){
+       return  (day.getMatches().stream()
+                .filter(m -> m.getHome().equals(userTeam) || m.getAway().equals(userTeam))
+                .findFirst()
+                .orElseThrow(() ->
+                        new CalendarException("Match with userteam not found")));
+    }
 
     public NameOfMonthDto getNameOfMonthDtoFromConstant(String name) {
         NameOfMonthDto dto = new NameOfMonthDto();

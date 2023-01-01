@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.sargassov.fmweb.constants.Constant;
+import ru.sargassov.fmweb.constants.ConstantUtils;
 import ru.sargassov.fmweb.converters.CalendarConverter;
 import ru.sargassov.fmweb.dto.IntegerDto;
 import ru.sargassov.fmweb.dto.NameOfMonthDto;
@@ -12,9 +13,11 @@ import ru.sargassov.fmweb.exceptions.MatchException;
 import ru.sargassov.fmweb.intermediate_entities.Team;
 import ru.sargassov.fmweb.intermediate_entities.Day;
 import ru.sargassov.fmweb.intermediate_entities.Match;
+import ru.sargassov.fmweb.intermediate_spi.DayIntermediateServiceSpi;
 import ru.sargassov.fmweb.spi.CalendarServiceSpi;
 
 import javax.transaction.Transactional;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,25 +26,30 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class CalendarService implements CalendarServiceSpi {
     private final CalendarConverter calendarConverter;
+    private final DayIntermediateServiceSpi dayIntermediateService;
 
-//    @Transactional
-//    @Override
-//    public EventDto getTour(Integer parameter) {
-//        if (parameter == 0) parameter = 30;
-//        if (parameter == 31) parameter = 1;
-//        return calendarConverter.getEventDtoFromTourDayEntity(
-//                calendarApi.getTour(parameter));
-//    }
+    @Transactional
+    @Override
+    public EventDto getTour(Integer parameter) {
+        if (parameter == 0) {
+            parameter = 30;
+        }
+        if (parameter == 31) {
+            parameter = 1;
+        }
+        var currentTour = dayIntermediateService.getTour(parameter);
+        return calendarConverter.getEventDtoFromTourDayEntity(currentTour);
+    }
 
-//    @Transactional
-//    @Override
-//    public List<EventDto> getMonth(Integer parameter) {
-//        if (parameter < 0) parameter = 10;
-//        if (parameter > 10) parameter = 0;
-//        return calendarApi.getMonth(parameter).stream()
-//                .map(calendarConverter::getEventDtoFromDayEntity)
-//                .collect(Collectors.toList());
-//    }
+    @Transactional
+    @Override
+    public List<EventDto> getMonth(Integer parameter) {
+        if (parameter < 0) parameter = 10;
+        if (parameter > 10) parameter = 0;
+        return dayIntermediateService.getMonth(parameter).stream()
+                .map(calendarConverter::getEventDtoFromDayEntity)
+                .collect(Collectors.toList());
+    }
 
     @Transactional
     @Override
@@ -75,17 +83,29 @@ public class CalendarService implements CalendarServiceSpi {
 //        throw new MatchException("Match between " + homeTeam + " and " + awayTeam + " not found!");
 //    }
 
-//    @Override
-//    public IntegerDto getMonthParameter() {
-//        IntegerDto iDto = new IntegerDto();
-//        iDto.setParameter(calendarApi.getMonthParameter());
-//        return iDto;
-//    }
-//
-//    @Override
-//    public IntegerDto getTourParameter() {
-//        IntegerDto iDto = new IntegerDto();
-//        iDto.setParameter(calendarApi.getTourParameter());
-//        return iDto;
-//    }
+    @Override
+    public IntegerDto getMonthParameter() {
+        var actualDay = dayIntermediateService.findByPresent();
+        var actualMonthValue = ConstantUtils.getActualMonthValue(actualDay);
+        IntegerDto iDto = new IntegerDto();
+        iDto.setParameter(actualMonthValue);
+        return iDto;
+    }
+
+    @Override
+    public IntegerDto getTourParameter() {
+        var actualDay = dayIntermediateService.findByPresent();
+        var actualLocalDate = actualDay.getDate();
+        var allTourDates = dayIntermediateService.loacAllMatchDates();
+
+        var currentTour = allTourDates.stream()
+                .filter(md -> !md.getDate().isBefore(actualLocalDate))
+                .min(Comparator.comparing(Day::getDate))
+                .map(Day::getCountOfTour)
+                .orElse(30);
+
+        var iDto = new IntegerDto();
+        iDto.setParameter(currentTour);
+        return iDto;
+    }
 }

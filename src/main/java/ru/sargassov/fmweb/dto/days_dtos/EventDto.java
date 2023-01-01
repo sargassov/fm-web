@@ -7,8 +7,6 @@ import java.util.List;
 @Data
 public class EventDto {
     private String date;
-
-    
     private Integer tour;
     private List<MatchDto> matches;
     private String passed;

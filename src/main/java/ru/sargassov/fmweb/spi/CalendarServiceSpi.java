@@ -11,9 +11,9 @@ import java.util.List;
 
 public interface CalendarServiceSpi {
 
-//    EventDto getTour(Integer parameter);
+    EventDto getTour(Integer parameter);
 //
-//    List<EventDto> getMonth(Integer parameter);
+    List<EventDto> getMonth(Integer parameter);
 
     NameOfMonthDto getMonthName(Integer parameter);
 
@@ -21,7 +21,7 @@ public interface CalendarServiceSpi {
 //
 //    Match findCurrentMatch(Team team, Team team1);
 //
-//    IntegerDto getMonthParameter();
+    IntegerDto getMonthParameter();
 //
-//    IntegerDto getTourParameter();
+    IntegerDto getTourParameter();
 }

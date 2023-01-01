@@ -12,7 +12,7 @@ angular.module('visual_calendar', ['ngStorage']).controller('visual_calendarCont
                 if(parameter > 10)
                     parameter = 0;
                 $scope.eventsCoeff = parameter;
-            }, function errorCallback(response) {
+            }, function errorCallback() {
                 alert('CANT LOAD CALENDAR');
             });
     };
@@ -22,7 +22,7 @@ angular.module('visual_calendar', ['ngStorage']).controller('visual_calendarCont
             .then(function successCallback(response) {
                 $scope.parameter = response.data.parameter;
                 $scope.loadMonth($scope.parameter);
-            }, function errorCallback(response) {
+            }, function errorCallback() {
                 alert('CANT LOAD MONTH PARAMETER');
             });
     };

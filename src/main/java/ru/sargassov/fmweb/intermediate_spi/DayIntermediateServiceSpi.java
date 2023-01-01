@@ -6,6 +6,7 @@ import ru.sargassov.fmweb.intermediate_entities.Team;
 import ru.sargassov.fmweb.intermediate_entities.User;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public interface DayIntermediateServiceSpi {
@@ -16,6 +17,14 @@ public interface DayIntermediateServiceSpi {
     List<Day> save(List<Day> days);
 
     DayDto getActualDate();
+
+    Day findByPresent();
+
+    List<Day> loacAllMatchDates();
+
+    Day getTour(Integer parameter);
+
+    List<Day> getMonth(Integer parameter);
 }
 
 

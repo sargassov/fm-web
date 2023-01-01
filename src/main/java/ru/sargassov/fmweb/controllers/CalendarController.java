@@ -21,15 +21,13 @@ public class CalendarController {
     @GetMapping("/calendar/league_calendar/{parameter}")
     public EventDto getTour(@PathVariable Integer parameter) {
         log.info("CalendarController.getTour");
-//        return calendarService.getTour(parameter);
-        return null;
+        return calendarService.getTour(parameter);
     }
 
     @GetMapping("/calendar/month/{parameter}")
     public List<EventDto> getMonth(@PathVariable Integer parameter) {
         log.info("CalendarController.getMonth");
-//        return calendarService.getMonth(parameter);
-        return null;
+        return calendarService.getMonth(parameter);
     }
 
     @GetMapping("/calendar/month/{parameter}/name")
@@ -41,14 +39,12 @@ public class CalendarController {
     @GetMapping("/calendar/month/parameter")
     public IntegerDto getMonthParameter() {
         log.info("CalendarController.getMonthParameter");
-//        return calendarService.getMonthParameter();
-        return null;
+        return calendarService.getMonthParameter();
     }
 
     @GetMapping("/calendar/league_calendar/parameter")
     public IntegerDto getTourParameter() {
         log.info("CalendarController.getTourParameter");
-//        return calendarService.getTourParameter();
-        return null;
+        return calendarService.getTourParameter();
     }
 }
