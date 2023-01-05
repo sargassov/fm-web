@@ -48,12 +48,7 @@ public class StadiumService implements StadiumServiceSpi {
         stadiumIntermediateService.save(notSavedStadiums);
     }
 
-//    @Override
-//    @Transactional
-//    public List<InformationDto> getInfo() {
-//        Team userTeam = userService.getUserTeam();
-//        return StadiumAnalytics.getStadiumInforamtion(userTeam);
-//    }
+
 
 //    @Override
 //    @Transactional

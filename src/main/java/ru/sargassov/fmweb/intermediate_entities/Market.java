@@ -31,7 +31,7 @@ public class Market extends BaseUserEntity {
     private Day finishDate;
 
     public static Market getMarketByTitle(String type) {
-        MarketType marketType =  List.of(MarketType.values()).stream()
+        var marketType =  List.of(MarketType.values()).stream()
                 .filter(t -> t.toString().equals(type))
                 .findFirst()
                 .orElseThrow(() ->

@@ -6,16 +6,22 @@ angular.module('marketing', ['ngStorage']).controller('marketingController', fun
         $http.get(contextPath + '/team/markets/info')
             .then(function successCallback(response) {
                 $scope.Information = response.data;
-            }, function errorCallback(response) {
+                $http.get(contextPath + '/team/markets/show')
+                    .then(function successCallback(response) {
+                        $scope.showCondition = response.data;
+                    }, function errorCallback() {
+                        alert('SHOW CONDITION NOT LOADED');
+                    });
+            }, function errorCallback() {
                 alert('CURRENT MARKETS INFO NOT FOUND');
             });
     };
 
     $scope.canTakeMore = function () {
-        if ($scope.Information.size >= 5){
-            return false
+        if ($scope.showCondition){
+            return true
         }
-        return true;
+        return false;
     };
 
     $scope.loadPotencialMarketPrograms = function () {

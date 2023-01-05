@@ -27,7 +27,7 @@ public interface DayIntermediateServiceSpi {
 
     List<Day> getMonth(Integer parameter);
 
-    Day findByDate(LocalDate remainsDayDate);
+    Day findByDate(LocalDate date);
 }
 
 

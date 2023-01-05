@@ -12,15 +12,14 @@ import ru.sargassov.fmweb.dto.team_dtos.TeamTransInformationDto;
 import ru.sargassov.fmweb.dto.text_responses.InformationDto;
 import ru.sargassov.fmweb.dto.text_responses.StartFinishInformationDto;
 import ru.sargassov.fmweb.dto.text_responses.TextResponse;
-import ru.sargassov.fmweb.intermediate_services.SponsorIntermediateService;
 import ru.sargassov.fmweb.intermediate_spi.SponsorIntermediateServiceSpi;
+import ru.sargassov.fmweb.intermediate_spi.StadiumIntermediateServiceSpi;
 import ru.sargassov.fmweb.intermediate_spi.TeamIntermediateServiceSpi;
 import ru.sargassov.fmweb.spi.FinanceServiceSpi;
-import ru.sargassov.fmweb.spi.TeamServiceSpi;
+import ru.sargassov.fmweb.spi.MarketServiceSpi;
 import ru.sargassov.fmweb.spi.TrainingServiceSpi;
 import ru.sargassov.fmweb.spi.TransferServiceSpi;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 @RestController
@@ -29,9 +28,11 @@ import java.util.List;
 public class TeamController {
     private final TeamIntermediateServiceSpi teamIntermediateService;
     private final SponsorIntermediateServiceSpi sponsorIntermediateService;
+    private final StadiumIntermediateServiceSpi stadiumIntermediateService;
     private final TrainingServiceSpi trainingService;
     private final TransferServiceSpi transferService;
     private final FinanceServiceSpi financeService;
+    private final MarketServiceSpi marketService;
 
     @GetMapping("/team/players/{parameter}")
     public List<PlayerSoftSkillDto> getAllPlayersByUserTeam(@PathVariable Integer parameter) {
@@ -128,40 +129,37 @@ public class TeamController {
     @GetMapping("/team/markets/info")
     public List<StartFinishInformationDto> getCurrentmarketsInfo() {
         log.info("TeamController.getCurrentmarketsInfo");
-//        return teamService.getCurrentmarketsInfo();
-        return null;
+        return marketService.getCurrentmarketsInfo();
     }
 
     @PostMapping("/team/market/addNew")
     public void addNewMarketProgram(@RequestBody InformationDto dto) {
         log.info("TeamController.addNewMarketProgram");
-//        teamService.addNewMarketProgram(dto);
+        marketService.addNewMarketProgram(dto);
     }
 
     @GetMapping("/team/market/programs")
     public List<MarketDto> loadPotencialMarketPrograms() {
         log.info("TeamController.loadPotencialMarketPrograms");
-//        return teamService.loadPotencialMarketPrograms();
-        return null;
+        return marketService.loadPotencialMarketPrograms();
     }
 
     @PostMapping("/team/market/reject")
     public void rejectProgram(@RequestBody String title) {
         log.info("TeamController.rejectProgram");
-//        teamService.rejectProgram(title);
+        marketService.rejectProgram(title);
     }
 
     @GetMapping("/team/stadium/capacity")
     public List<InformationDto> getFullCapacityInformation() {
         log.info("TeamController.getFullCapacityInformation");
-//        return teamService.getFullCapacityInformation();
-        return null;
+        return stadiumIntermediateService.getFullCapacityInformation();
     }
 
     @PostMapping("/team/stadium/expand")
     public void expandTheStadium(@RequestBody Integer delta) {
         log.info("TeamController.expandTheStadium");
-//        teamService.expandTheStadium(delta);
+        stadiumIntermediateService.expandTheStadium(delta);
     }
 
 }

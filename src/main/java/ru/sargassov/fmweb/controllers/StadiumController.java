@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import ru.sargassov.fmweb.dto.text_responses.InformationDto;
+import ru.sargassov.fmweb.intermediate_spi.StadiumIntermediateServiceSpi;
 import ru.sargassov.fmweb.services.StadiumService;
 
 import java.util.List;
@@ -12,53 +13,53 @@ import java.util.List;
 @AllArgsConstructor
 @Slf4j
 public class StadiumController {
-    private final StadiumService stadiumService;
+    private final StadiumIntermediateServiceSpi stadiumIntermediateService;
 
     @GetMapping("/stadium/info")
     public List<InformationDto> getInfo() {
         log.info("StadiumController.getInfo");
-//        return stadiumService.getInfo();
-        return null;
+        return stadiumIntermediateService.getInfo();
     }
 
     @GetMapping("/stadium/status_info")
     public List<InformationDto> getCurrentStatusInfo() {
         log.info("StadiumController.getCurrentStatusInfo");
-//        return stadiumService.getCurrentStatusInfo();
-        return null;
+        return stadiumIntermediateService.getCurrentStatusInfo();
     }
 
     @GetMapping("/stadium/ticket_cost/information")
     public List<InformationDto> getTicketCostInfo() {
         log.info("StadiumController.getTicketCostInfo");
-//        return stadiumService.getTicketCostInfo();
-        return null;
+        return stadiumIntermediateService.getTicketCostInfo();
     }
 
     @PostMapping("/stadium/ticket_cost/change")
     public void changeTicketCost(@RequestBody InformationDto dto) {
         log.info("StadiumController.changeTicketCost");
-//        stadiumService.changeTicketCost(dto);
+        stadiumIntermediateService.changeTicketCost(dto);
     }
 
     @GetMapping("/stadium/sectors/info")
     public List<InformationDto> getSplitSectorsInfo() {
         log.info("StadiumController.getSplitSectorsInfo");
-//        return stadiumService.getSplitSectorsInfo();
-        return null;
+        return stadiumIntermediateService.getSplitSectorsInfo();
     }
 
     @GetMapping("/stadium/sectors/info/all")
     public List<InformationDto> getSectorsCapacityInfo() {
         log.info("StadiumController.getSectorsCapacityInfo");
-//        return stadiumService.getSectorsCapacityInfo();
-        return null;
+        return stadiumIntermediateService.getSectorsCapacityInfo();
     }
 
     @PutMapping("/stadium/sectors/change")
     public void changeSectorCapacity(@RequestBody InformationDto dto) {
         log.info("StadiumController.changeSectorCapacity");
-//        stadiumService.changeSectorCapacity(dto);
+        stadiumIntermediateService.changeSectorCapacity(dto);
     }
 
+    @GetMapping("/team/markets/show")
+    public Boolean getShowOtherMarketProgramsCondition() {
+        log.info("StadiumController.getShowOtherMarketProgramsCondition");
+        return stadiumIntermediateService.getShowOtherMarketProgramsCondition();
+    }
 }

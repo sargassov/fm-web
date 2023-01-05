@@ -1,6 +1,7 @@
 package ru.sargassov.fmweb.intermediate_spi;
 
 import ru.sargassov.fmweb.dto.SponsorDto;
+import ru.sargassov.fmweb.dto.text_responses.InformationDto;
 import ru.sargassov.fmweb.dto.text_responses.TextResponse;
 import ru.sargassov.fmweb.intermediate_entities.Sponsor;
 import ru.sargassov.fmweb.intermediate_entities.User;

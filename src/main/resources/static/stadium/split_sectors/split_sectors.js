@@ -6,7 +6,7 @@ angular.module('split_sectors', ['ngStorage']).controller('split_sectorsControll
         $http.get(contextPath + '/stadium/sectors/info')
             .then(function successCallback(response) {
                 $scope.Information = response.data;
-            }, function errorCallback(response) {
+            }, function errorCallback() {
                 alert('CURRENT SECTORS INFO NOT FOUND');
             });
     };
@@ -15,7 +15,7 @@ angular.module('split_sectors', ['ngStorage']).controller('split_sectorsControll
         $http.get(contextPath + '/stadium/sectors/info/all')
             .then(function successCallback(response) {
                 $scope.SectorCapacityInformation = response.data;
-            }, function errorCallback(response) {
+            }, function errorCallback() {
                 alert('SECTORS CAPACITY INFORMATION NOT FOUND');
             });
     };
@@ -24,7 +24,7 @@ angular.module('split_sectors', ['ngStorage']).controller('split_sectorsControll
         $http.get(contextPath + '/dates')
             .then(function successCallback(response) {
                 $scope.today = response.data;
-            }, function errorCallback(response) {
+            }, function errorCallback() {
                 alert('PRESENT DAY NOT FOUND');
             });
     };
@@ -45,7 +45,7 @@ angular.module('split_sectors', ['ngStorage']).controller('split_sectorsControll
                 $scope.loadCurrentSectorsInfo();
                 $scope.loadSectorCapacityInformation();
                 $scope.getUserTeamName();
-            }, function errorCallback(response) {
+            }, function errorCallback() {
                 alert('CANT CHANGE CAPACITY');
             });
     };
