@@ -12,7 +12,10 @@ import ru.sargassov.fmweb.dto.team_dtos.TeamTransInformationDto;
 import ru.sargassov.fmweb.dto.text_responses.InformationDto;
 import ru.sargassov.fmweb.dto.text_responses.StartFinishInformationDto;
 import ru.sargassov.fmweb.dto.text_responses.TextResponse;
+import ru.sargassov.fmweb.intermediate_services.SponsorIntermediateService;
+import ru.sargassov.fmweb.intermediate_spi.SponsorIntermediateServiceSpi;
 import ru.sargassov.fmweb.intermediate_spi.TeamIntermediateServiceSpi;
+import ru.sargassov.fmweb.spi.FinanceServiceSpi;
 import ru.sargassov.fmweb.spi.TeamServiceSpi;
 import ru.sargassov.fmweb.spi.TrainingServiceSpi;
 import ru.sargassov.fmweb.spi.TransferServiceSpi;
@@ -25,8 +28,10 @@ import java.util.List;
 @Slf4j
 public class TeamController {
     private final TeamIntermediateServiceSpi teamIntermediateService;
+    private final SponsorIntermediateServiceSpi sponsorIntermediateService;
     private final TrainingServiceSpi trainingService;
     private final TransferServiceSpi transferService;
+    private final FinanceServiceSpi financeService;
 
     @GetMapping("/team/players/{parameter}")
     public List<PlayerSoftSkillDto> getAllPlayersByUserTeam(@PathVariable Integer parameter) {
@@ -87,42 +92,37 @@ public class TeamController {
     @GetMapping("/team/finance/income")
     public List<InformationDto> getAllIncomes() {
         log.info("TeamController.getAllIncomes");
-//        return teamService.gelAllIncomes();
-        return null;
+        return financeService.gelAllIncomes();
     }
 
     @GetMapping("/team/finance/expenses")
     public List<InformationDto> getAllExpenses() {
         log.info("TeamController.getAllExpenses");
-//        return teamService.gelAllExpenses();
-        return null;
+        return financeService.gelAllExpenses();
     }
 
     @GetMapping("/team/finance/start_message")
     public TextResponse getStartFinanceMessage() {
         log.info("TeamController.getStartFinanceMessage");
-//        return teamService.getStartFinanceMessage();
-        return null;
+        return financeService.getStartFinanceMessage();
     }
 
     @GetMapping("/team/finance/load_loans")
     public List<LoanDto> loadCurrentLoans() {
         log.info("TeamController.loadCurrentLoans");
-//        return teamService.loadCurrentLoans();
-        return null;
+        return financeService.loadCurrentLoans();
     }
 
     @PostMapping("/team/finance/reamin_loan")
     public void remainCurrentLoan(@RequestBody LoanDto loan) {
         log.info("TeamController.remainCurrentLoans");
-//        teamService.remainCurrentLoan(loan);
+        financeService.remainCurrentLoan(loan);
     }
 
     @GetMapping("/team/sponspor/start_message")
     public TextResponse getStartSponsorMessage() {
         log.info("TeamController.getStartSponsorMessage");
-//        return teamService.getStartSponsorMessage();
-        return null;
+        return sponsorIntermediateService.getStartSponsorMessage();
     }
 
     @GetMapping("/team/markets/info")

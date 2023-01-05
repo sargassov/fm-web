@@ -28,7 +28,8 @@ public class SponsorConverter {
     }
 
     public SponsorDto getSponsorDtoFromIntermediateEntity(Sponsor s) {
-        SponsorDto sponsorDto = new SponsorDto();
+        var sponsorDto = new SponsorDto();
+        sponsorDto.setId(s.getId());
         sponsorDto.setName(s.getName());
         sponsorDto.setDayWage(s.getDayWage());
         sponsorDto.setMatchWage(s.getMatchWage());

@@ -7,6 +7,7 @@ import ru.sargassov.fmweb.dto.LoanDto;
 import ru.sargassov.fmweb.intermediate_entities.Bank;
 import ru.sargassov.fmweb.entities.BankEntity;
 import ru.sargassov.fmweb.intermediate_entities.User;
+import ru.sargassov.fmweb.intermediate_spi.DayIntermediateServiceSpi;
 import ru.sargassov.fmweb.spi.CalendarServiceSpi;
 
 import java.math.BigDecimal;
@@ -15,7 +16,7 @@ import java.math.RoundingMode;
 @Component
 @AllArgsConstructor
 public class BankConverter {
-    private final CalendarServiceSpi calendarService;
+    private final DayIntermediateServiceSpi dayIntermediateService;
     private final CalendarConverter calendarConverter;
 
     public Bank getIntermediateEntityFromEntity(BankEntity bankEntity, User user){
@@ -46,6 +47,7 @@ public class BankConverter {
                 .setScale(2, RoundingMode.HALF_UP));
         bankDto.setMaxLoanAmount(b.getMaxLoanAmount().setScale(2, RoundingMode.HALF_UP));
         bankDto.setTookMoney(BigDecimal.valueOf(parameter).setScale(2, RoundingMode.HALF_UP));
+        bankDto.setId(b.getId());
         return bankDto;
     }
 
@@ -56,12 +58,15 @@ public class BankConverter {
 
     public void getFullLoanInformation(Bank bank, BankDto loan) {
         bank.setTypeOfReturn(Bank.guessTypeOfReturn(loan.getTypeOfReturn()));
+        bank.setId(loan.getId());
         setExpenses(bank, loan);
         bank.setAlreadyPaid(BigDecimal.ZERO);
         bank.setRemainMoney(loan.getFullLoanCoeff());
         bank.setTookMoney(loan.getTookMoney());
-//        bank.setDateOfLoan(calendarService.getPresentDay());
-        bank.setRemainsDate(Bank.guessRemainsDate(bank.getDateOfLoan(), loan));
+        bank.setDateOfLoan(dayIntermediateService.findByPresent());
+        var remainsDayDate = Bank.guessRemainsDate(bank.getDateOfLoan(), loan).getDate();
+        var remainsDay = dayIntermediateService.findByDate(remainsDayDate);
+        bank.setRemainsDate(remainsDay);
     }
 
     private void setExpenses(Bank bank, BankDto loan) {
@@ -78,6 +83,7 @@ public class BankConverter {
 
     public LoanDto getLoanDtoFromIntermediateEntity(Bank b) {
         LoanDto loanDto = new LoanDto();
+        loanDto.setId(b.getId());
         loanDto.setTitle(b.getTitle());
         loanDto.setLoanDate(
                 calendarConverter.dateFormer(

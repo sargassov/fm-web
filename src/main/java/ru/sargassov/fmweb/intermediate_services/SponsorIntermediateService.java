@@ -4,13 +4,22 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import ru.sargassov.fmweb.constants.TextConstant;
+import ru.sargassov.fmweb.constants.UserHolder;
+import ru.sargassov.fmweb.controllers.SponsorController;
+import ru.sargassov.fmweb.converters.SponsorConverter;
+import ru.sargassov.fmweb.dto.SponsorDto;
+import ru.sargassov.fmweb.dto.text_responses.TextResponse;
+import ru.sargassov.fmweb.exceptions.MarketException;
 import ru.sargassov.fmweb.intermediate_entities.Sponsor;
 import ru.sargassov.fmweb.intermediate_entities.User;
 import ru.sargassov.fmweb.intermediate_repositories.SponsorIntermediateRepository;
 import ru.sargassov.fmweb.intermediate_spi.SponsorIntermediateServiceSpi;
 
 import javax.persistence.EntityExistsException;
+import javax.transaction.Transactional;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Data
@@ -18,6 +27,10 @@ import java.util.List;
 @Slf4j
 public class SponsorIntermediateService implements SponsorIntermediateServiceSpi {
     private SponsorIntermediateRepository repository;
+
+    private SponsorConverter sponsorConverter;
+
+
     @Override
     public Sponsor save(Sponsor sponsor) {
         return repository.save(sponsor);
@@ -51,5 +64,42 @@ public class SponsorIntermediateService implements SponsorIntermediateServiceSpi
     @Override
     public Sponsor findBySponsorEntityIdAndUser(long sponsorEntityId, User user) {
         return repository.findBySponsorEntityIdAndUser(sponsorEntityId, user);
+    }
+
+    @Override
+    public TextResponse getStartSponsorMessage() {
+        var userTeam = UserHolder.user.getUserTeam();
+        var response = new TextResponse();
+        var answer = TextConstant.permissionToChangeSponsor(userTeam.isChangeSponsor());
+        response.setResponse(answer);
+        return response;
+    }
+
+    @Override
+    public List<SponsorDto> gelAllSponsors() {
+        return repository.findByUser(UserHolder.user)
+                .stream()
+                .filter(s -> !s.getName().equals("Юндекс"))
+                .map(s -> sponsorConverter.getSponsorDtoFromIntermediateEntity(s))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional
+    public void changeSponsor(SponsorDto sponsorDto) {
+        var userTeam = UserHolder.user.getUserTeam();
+        var sponsor = userTeam.getSponsor();
+        userTeam.setWealth(userTeam.getWealth().subtract(sponsor.getContractBonusWage()));
+
+        var newSponsor = findById(sponsorDto.getId());
+        userTeam.setSponsor(newSponsor);
+        userTeam.setWealth(userTeam.getWealth().add(newSponsor.getContractBonusWage()));
+        userTeam.setChangeSponsor(true);
+    }
+
+    public Sponsor findById(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() ->
+                        new MarketException("Sponsor with id = " + id + " not found!"));
     }
 }

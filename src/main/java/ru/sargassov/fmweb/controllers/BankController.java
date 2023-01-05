@@ -17,15 +17,12 @@ public class BankController {
     @GetMapping("/banks/loan_request/{parameter}")
     public List<BankDto> getAllPotencialLoans(@PathVariable Integer parameter) {
         log.info("BankService.getTour");
-//        return bankService.getAllPotencialLoans(parameter);
-        return null;
+        return bankService.getAllPotencialLoans(parameter);
     }
 
     @PostMapping("/banks/finance/get")
     public void takeNewLoan(@RequestBody BankDto loan) {
         log.info("BankController.takeNewLoan");
-//        bankService.takeNewLoan(loan);
+        bankService.takeNewLoan(loan);
     }
-
-
 }

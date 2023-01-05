@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import ru.sargassov.fmweb.dto.SponsorDto;;
+import ru.sargassov.fmweb.intermediate_spi.SponsorIntermediateServiceSpi;
 import ru.sargassov.fmweb.spi.SponsorServiceSpi;
 
 import java.util.List;
@@ -12,19 +13,17 @@ import java.util.List;
 @AllArgsConstructor
 @Slf4j
 public class SponsorController {
-    private final SponsorServiceSpi sponsorService;
+    private final SponsorIntermediateServiceSpi sponsorIntermediateService;
 
     @GetMapping("/sponsor/all")
     public List<SponsorDto> gelAllSponsors() {
         log.info("SponsorController.gelAllSponsors()");
-//        return sponsorService.gelAllSponsors();
-        return null;
+        return sponsorIntermediateService.gelAllSponsors();
     }
 
     @PostMapping("/sponspor/change")
     public void changeSponsor(@RequestBody SponsorDto sponsorDto) {
         log.info("SponsorController.changeSponsor");
-//        sponsorService.changeSponsor(sponsorDto);
-
+        sponsorIntermediateService.changeSponsor(sponsorDto);
     }
 }

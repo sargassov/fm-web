@@ -12,7 +12,7 @@ angular.module('marketing', ['ngStorage']).controller('marketingController', fun
     };
 
     $scope.canTakeMore = function () {
-        if ($scope.Information.size == 5){
+        if ($scope.Information.size >= 5){
             return false
         }
         return true;

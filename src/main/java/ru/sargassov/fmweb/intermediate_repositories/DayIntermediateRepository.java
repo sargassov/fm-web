@@ -7,6 +7,7 @@ import ru.sargassov.fmweb.dto.days_dtos.DayDto;
 import ru.sargassov.fmweb.intermediate_entities.Day;
 import ru.sargassov.fmweb.intermediate_entities.User;
 
+import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;
 
@@ -25,4 +26,6 @@ public interface DayIntermediateRepository extends JpaRepository<Day, Long> {
 
     @Query("select d from Day d where d.user = ?1")
     List<Day> getCalendar(User user);
+
+    Day findByDateAndUser(LocalDate dayDate,User user);
 }

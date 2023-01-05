@@ -5,7 +5,7 @@ angular.module('banks', ['ngStorage']).controller('banksController', function ($
         $http.get(contextPath + '/team/finance/start_message')
             .then(function successCallback(response) {
                 $scope.start_message = response.data;
-            }, function errorCallback(response) {
+            }, function errorCallback() {
                 alert('START MESSAGE NOT FOUND');
             });
     };
@@ -14,7 +14,7 @@ angular.module('banks', ['ngStorage']).controller('banksController', function ($
         $http.get(contextPath + '/team/finance/load_loans')
             .then(function successCallback(response) {
                 $scope.Loans = response.data;
-            }, function errorCallback(response) {
+            }, function errorCallback() {
                 alert('CANT LOAD CURRENT LOANS');
             });
     };
@@ -22,18 +22,18 @@ angular.module('banks', ['ngStorage']).controller('banksController', function ($
 
     $scope.payTheLoan= function (loan) {
         $http.post(contextPath + '/team/finance/reamin_loan', loan)
-            .then(function successCallback(response) {
+            .then(function successCallback() {
                 window.location.reload();
-            }, function errorCallback(response) {
+            }, function errorCallback() {
                 alert('CANT REMAIN THIS LOAN');
             });
     };
 
     $scope.canTakeMore = function () {
-        if ($scope.start_message.toString().endsWith("more!")){
-            return false
+        if ($scope.start_message.condition){
+            return true
         }
-        return true;
+        return false;
     };
 
     $scope.isClicked = function () {
@@ -47,7 +47,7 @@ angular.module('banks', ['ngStorage']).controller('banksController', function ($
         $http.get(contextPath + '/banks/loan_request/' + $scope.loan.request)
             .then(function successCallback(response) {
                 $scope.potencialLoans = response.data;
-            }, function errorCallback(response) {
+            }, function errorCallback() {
                 alert('CANT GET ANSWER WITH LOAN INFORMATION');
             });
     };
@@ -80,9 +80,9 @@ angular.module('banks', ['ngStorage']).controller('banksController', function ($
         }
 
         $http.post(contextPath + '/banks/finance/get', loan)
-            .then(function successCallback(response) {
+            .then(function successCallback() {
                 window.location.reload();
-            }, function errorCallback(response) {
+            }, function errorCallback() {
                 alert('LOAN ' + loan + ' NOT FOUND');
             });
     };

@@ -9,4 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class TextResponse {
     private String response;
+    private Boolean condition;
+
+    public TextResponse (String s) {
+        this.response = s;
+    }
 }

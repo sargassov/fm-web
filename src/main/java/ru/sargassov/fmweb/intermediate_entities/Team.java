@@ -3,7 +3,6 @@ package ru.sargassov.fmweb.intermediate_entities;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.CollectionUtils;
-import ru.sargassov.fmweb.comparators.TeamsPlayersComparators;
 import ru.sargassov.fmweb.constants.BaseUserEntity;
 import ru.sargassov.fmweb.dto.FinalPayment;
 import ru.sargassov.fmweb.enums.PositionType;
@@ -217,12 +216,13 @@ public class Team extends BaseUserEntity {
         stadiumExpenses = stadiumExpenses.subtract(value);
     }
 
-    public Bank getBankInLoansListByTitle(String title){
-        return loans.stream()
-                .filter(b -> b.getTitle().equals(title))
+    public void deleteBankById(Long id){
+        var bank = loans.stream()
+                .filter(b -> b.getId().equals(id))
                 .findFirst()
                 .orElseThrow(()
-                        -> new BankNotFoundException(String.format("Bank with title = %s not found", title)));
+                        -> new BankNotFoundException(String.format("Bank with id = %d not found", id)));
+        loans.remove(bank);
     }
 
     public void rejectMarketProgram(String title) {

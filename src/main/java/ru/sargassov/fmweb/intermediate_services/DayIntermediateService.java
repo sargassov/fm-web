@@ -8,11 +8,13 @@ import ru.sargassov.fmweb.constants.ConstantUtils;
 import ru.sargassov.fmweb.constants.UserHolder;
 import ru.sargassov.fmweb.converters.DayConverter;
 import ru.sargassov.fmweb.dto.days_dtos.DayDto;
+import ru.sargassov.fmweb.exceptions.CalendarException;
 import ru.sargassov.fmweb.intermediate_entities.Day;
 import ru.sargassov.fmweb.intermediate_entities.User;
 import ru.sargassov.fmweb.intermediate_repositories.DayIntermediateRepository;
 import ru.sargassov.fmweb.intermediate_spi.DayIntermediateServiceSpi;
 
+import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -68,5 +70,10 @@ public class DayIntermediateService implements DayIntermediateServiceSpi {
                 .filter(d -> d.getDate().getMonth().equals(month))
                 .sorted(Comparator.comparing(d -> d.getDate().getMonth()))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Day findByDate(LocalDate dayDate) {
+        return repository.findByDateAndUser(dayDate, UserHolder.user);
     }
 }

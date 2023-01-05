@@ -40,9 +40,9 @@ angular.module('change_sponsor', ['ngStorage']).controller('change_sponsorContro
 
     $scope.changeSponsor = function (sponsor) {
         $http.post(contextPath + '/sponspor/change', sponsor)
-            .then(function successCallback(response) {
+            .then(function successCallback() {
                 window.location.reload();
-            }, function errorCallback(response) {
+            }, function errorCallback() {
                 alert('SPONSOR WAS NOT CHANGED');
             });
     };

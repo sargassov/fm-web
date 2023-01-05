@@ -81,17 +81,17 @@ public class Bank extends BaseUserEntity {
     }
 
     public static Day guessRemainsDate(Day dateOfLoan, BankDto loan) {
-        Day remainsDay = new Day();
-        LocalDate startLocalDate = dateOfLoan.getDate();
+        var remainsDay = new Day();
+        var startLocalDate = dateOfLoan.getDate();
 
         if(loan.getTypeOfReturn().equals("PER_DAY")){
-            int valueDays = loan.getFullLoanCoeff().divide(loan.getPercentDay(), RoundingMode.HALF_UP).intValue() + 1;
+            var valueDays = loan.getFullLoanCoeff().divide(loan.getPercentDay(), RoundingMode.HALF_UP).intValue() + 1;
             remainsDay.setDate(startLocalDate.plusDays(valueDays));
         } else if (loan.getTypeOfReturn().equals("PER_WEEK")) {
-            int valueWeeks = loan.getFullLoanCoeff().divide(loan.getPercentWeek(), RoundingMode.HALF_UP).intValue() + 1;
+            var valueWeeks = loan.getFullLoanCoeff().divide(loan.getPercentWeek(), RoundingMode.HALF_UP).intValue() + 1;
             remainsDay.setDate(startLocalDate.plusWeeks(valueWeeks));
         } else {
-            int valueMonths = loan.getFullLoanCoeff().divide(loan.getPercentMonth(), RoundingMode.HALF_UP).intValue() + 1;
+            var valueMonths = loan.getFullLoanCoeff().divide(loan.getPercentMonth(), RoundingMode.HALF_UP).intValue() + 1;
             remainsDay.setDate(startLocalDate.plusMonths(valueMonths));
         }
 
