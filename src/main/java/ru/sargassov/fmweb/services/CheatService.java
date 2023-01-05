@@ -7,13 +7,17 @@ import org.springframework.stereotype.Service;
 import ru.sargassov.fmweb.cheats.Cheat;
 import ru.sargassov.fmweb.cheats.CheatApi;
 import ru.sargassov.fmweb.constants.TextConstant;
+import ru.sargassov.fmweb.constants.UserHolder;
 import ru.sargassov.fmweb.dto.text_responses.TextResponse;
+import ru.sargassov.fmweb.enums.PositionType;
 import ru.sargassov.fmweb.exceptions.CheatException;
+import ru.sargassov.fmweb.intermediate_entities.Player;
 import ru.sargassov.fmweb.intermediate_entities.User;
 import ru.sargassov.fmweb.spi.CheatServiceSpi;
 import ru.sargassov.fmweb.spi.PlayerServiceSpi;
 import ru.sargassov.fmweb.spi.UserServiceSpi;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -44,20 +48,20 @@ public class CheatService implements CheatServiceSpi {
     @SneakyThrows
     @Override
     public void constructCheats(User user) {
-        List<Path> files = Files.walk(
+        var files = Files.walk(
                 Paths.get(CHEATS_ADDRESS))
                 .filter(Files::isRegularFile)
-                .collect(Collectors.toList()); // TODO дописать
+                .collect(Collectors.toList());
 
-        List<Cheat> cheats = new ArrayList<>();
+        var cheats = new ArrayList<Cheat>();
         for(Path file: files) {
-            String s = file.toString();
-            String shortAddress = s.substring(s.indexOf(BEGIN_FILE));
-            String replaceAddress = shortAddress.replaceAll("\\\\", POINT);
+            var s = file.toString();
+            var shortAddress = s.substring(s.indexOf(BEGIN_FILE));
+            var replaceAddress = shortAddress.replaceAll("\\\\", POINT);
             if (replaceAddress.endsWith(END_FILE)) {;
-                String filename = replaceAddress.replaceAll(END_FILE, EMPTY);
-                Class clazz = Class.forName(filename);
-                Object o = clazz.getConstructor().newInstance();
+                var filename = replaceAddress.replaceAll(END_FILE, EMPTY);
+                var clazz = Class.forName(filename);
+                var o = clazz.getConstructor().newInstance();
                 if (o instanceof Cheat) {
                     ((Cheat) o).setService(this);
                     cheats.add((Cheat) o);
@@ -69,8 +73,8 @@ public class CheatService implements CheatServiceSpi {
 
     @Override
     public TextResponse activateCheat(TextResponse cheatInfo) {
-        String cheatCode = cheatInfo.getResponse();
-        Cheat cheat = cheatApi.findByCode(cheatCode);
+        var cheatCode = cheatInfo.getResponse();
+        var cheat = cheatApi.findByCode(cheatCode);
         if (Objects.isNull(cheat)) {
             String message = WRONG_CHEAT_CODE;
             log.error(message);
@@ -81,42 +85,49 @@ public class CheatService implements CheatServiceSpi {
         return new TextResponse(cheat.getDescription());
     }
 
-//    public void leoMessiCheatActivate() {
-//        Player player = new Player();
-//        player.setName(MESSI_LEONEL);
-//        player.setNatio(ARGENTINA);
-//        player.setGkAble(10);
-//        player.setDefAble(15);
-//        player.setMidAble(94);
-//        player.setForwAble(98);
-//        player.setCaptainAble(89);
-//        player.setStrategyPlace(-100);
-//        player.setBirthYear(1987);
-//        player.setPosition(Position.FORWARD);
-//        player.guessPower();
-//        playerService.guessPrice(player);
-//
-//        Team userTeam = userService.getUserTeam();
-//        if (userTeam.isPlayerExists(player.getName())) {
-//            throw new CheatException(YOUR_CLUB_HAD_ALREADY + MESSI_LEONEL);
-//        }
-//        userTeam.getPlayerList().add(player);
-//        player.setTeam(userTeam);
-//        player.guessNumber(10);
-//        player.setTrainingAble(10);
-//    }
+    @Transactional
+    public void leoMessiCheatActivate() {
+        var player = new Player();
+        var user = UserHolder.user;
+        player.setName(MESSI_LEONEL);
+        player.setNatio(ARGENTINA);
+        player.setGkAble(10);
+        player.setDefAble(15);
+        player.setMidAble(94);
+        player.setForwAble(98);
+        player.setCaptainAble(89);
+        player.setStrategyPlace(-100);
+        player.setBirthYear(1987);
+        player.setPosition(PositionType.FORWARD);
+        player.guessPower();
+        playerService.guessPrice(player, user);
 
-//    public void noInjuriesCheatActivate() {
-//        Team userTeam = userService.getUserTeam();
-//        List<Player> playerList = userTeam.getPlayerList();
-//        for (Player player : playerList) {
-//            player.setInjury(false);
-//        }
-//    }
-//
-//    public void tenMillionEuroCheat() {
-//        Team userTeam = userService.getUserTeam();
-//        BigDecimal wealthBefore = userTeam.getWealth();
-//        userTeam.setWealth(wealthBefore.add(BigDecimal.valueOf(10)));
-//    }
+        var userTeam = user.getUserTeam();
+        if (userTeam.isPlayerExists(player.getName())) {
+            throw new CheatException(YOUR_CLUB_HAD_ALREADY + MESSI_LEONEL);
+        }
+        userTeam.getPlayerList().add(player);
+        player.setTeam(userTeam);
+        player.setNumber(10);
+        player.guessNumber(10);
+        player.setTrainingAble(10);
+        player.setTimeBeforeTreat(0);
+        player.setTire(0);
+    }
+
+    @Transactional
+    public void noInjuriesCheatActivate() {
+        var userTeam = UserHolder.user.getUserTeam();
+        var playerList = userTeam.getPlayerList();
+        for (Player player : playerList) {
+            player.setInjury(false);
+        }
+    }
+
+    @Transactional
+    public void tenMillionEuroCheat() {
+        var userTeam = UserHolder.user.getUserTeam();
+        BigDecimal wealthBefore = userTeam.getWealth();
+        userTeam.setWealth(wealthBefore.add(BigDecimal.valueOf(10)));
+    }
 }

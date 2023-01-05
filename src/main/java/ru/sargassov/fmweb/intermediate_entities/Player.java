@@ -154,9 +154,8 @@ public class Player extends BaseUserEntity {
     }
 
     public void guessNumber(int number) {
-
         boolean flag = true;
-        do{
+        do {
             int finalNumber = number;
             flag = team.getPlayerList().stream().anyMatch(p -> p.getNumber() == finalNumber);
 
@@ -168,7 +167,7 @@ public class Player extends BaseUserEntity {
             } else{
                 this.number = number;
             }
-        }while (flag);
+        } while (flag);
     }
 
 //    public void levelUpCheckAuto() {

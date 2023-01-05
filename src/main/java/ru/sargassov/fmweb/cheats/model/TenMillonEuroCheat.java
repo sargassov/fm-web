@@ -18,6 +18,6 @@ public class TenMillonEuroCheat extends Cheat {
 
     @Override
     public void activate() {
-//        service.tenMillionEuroCheat();
+        service.tenMillionEuroCheat();
     }
 }

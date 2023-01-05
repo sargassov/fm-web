@@ -45,7 +45,7 @@ public class GameService implements GameServiceSpi {
         dayService.loadCalendar(user);
         matrixService.createMatrix(user);
         userService.setUserTeam(userData, user);
-//        cheatService.constructCheats(user); TODO завершить рефакторинг чит кодов
+        cheatService.constructCheats(user);
         UserHolder.user = user;
     }
 }

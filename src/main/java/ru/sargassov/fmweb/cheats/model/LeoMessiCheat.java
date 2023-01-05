@@ -14,6 +14,6 @@ public class LeoMessiCheat extends Cheat {
 
     @Override
     public void activate() {
-//        service.leoMessiCheatActivate();
+        service.leoMessiCheatActivate();
     }
 }

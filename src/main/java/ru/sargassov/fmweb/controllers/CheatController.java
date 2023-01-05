@@ -18,7 +18,6 @@ public class CheatController {
     @PostMapping("/cheat")
     public TextResponse activateCheat(@RequestBody TextResponse response){
         log.info("CheatController.getPriceForNewCoach");
-        var f = cheatService.activateCheat(response);
-        return f;
+        return cheatService.activateCheat(response);
     }
 }

@@ -14,6 +14,6 @@ public class NoInjuriesCheat extends Cheat {
 
     @Override
     public void activate() {
-//        service.noInjuriesCheatActivate();
+        service.noInjuriesCheatActivate();
     }
 }
