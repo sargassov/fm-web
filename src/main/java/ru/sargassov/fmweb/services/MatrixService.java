@@ -2,6 +2,7 @@ package ru.sargassov.fmweb.services;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.sargassov.fmweb.constants.UserHolder;
 import ru.sargassov.fmweb.intermediate_entities.Cortage;
 import ru.sargassov.fmweb.intermediate_entities.Match;
 import ru.sargassov.fmweb.intermediate_entities.User;
@@ -33,6 +34,9 @@ public class MatrixService implements MatrixCreateServiceSpi {
             for (int y = 0; y < teamsSortedByName.size(); y++) {
                 if (x == y) {
                     var impossibleMatch = new Match();
+                    impossibleMatch.setImpossibleMatch(true);
+                    impossibleMatch.setHome(teamsSortedByName.get(x));
+                    impossibleMatch.setAway(teamsSortedByName.get(y));
                     impossibleMatch.setUser(user);
                     matchIntermediateService.save(impossibleMatch);
                     matches.add(impossibleMatch);
@@ -60,6 +64,6 @@ public class MatrixService implements MatrixCreateServiceSpi {
 
     @Override
     public List<Cortage> getActualMatrix() {
-        return null;
+        return cortageIntermediateService.getByUser(UserHolder.user);
     }
 }

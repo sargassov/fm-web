@@ -5,7 +5,9 @@ import ru.sargassov.fmweb.dto.matrix_dto.CortageDto;
 import ru.sargassov.fmweb.intermediate_entities.Cortage;
 import ru.sargassov.fmweb.intermediate_entities.Match;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class CortageConverter {
@@ -13,8 +15,8 @@ public class CortageConverter {
     public CortageDto getCortageDtoFromCortage(Cortage cortage) {
         CortageDto cortageDto = new CortageDto();
         cortageDto.setCurrentName(cortage.getTeam().getName());
-        List<Match> matchList = cortage.getMatchList();
-        cortageDto.setWithAmkar(calculateScore(matchList.get(0)));
+        var matchList = sortMatchlist(cortage.getMatchList());
+        cortageDto.setWithAhmat(calculateScore(matchList.get(0)));
         cortageDto.setWithArsenal(calculateScore(matchList.get(1)));
         cortageDto.setWithCska(calculateScore(matchList.get(2)));
         cortageDto.setWithDinamo(calculateScore(matchList.get(3)));
@@ -31,6 +33,12 @@ public class CortageConverter {
         cortageDto.setWithUfa(calculateScore(matchList.get(14)));
         cortageDto.setWithZenit(calculateScore(matchList.get(15)));
         return cortageDto;
+    }
+
+    private List<Match> sortMatchlist(List<Match> matchList) {
+        return matchList.stream()
+                .sorted(Comparator.comparing(m -> m.getAway().getName()))
+                .collect(Collectors.toList());
     }
 
     private String calculateScore(Match match) {

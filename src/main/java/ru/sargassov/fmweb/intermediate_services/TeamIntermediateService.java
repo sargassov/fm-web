@@ -22,6 +22,7 @@ import ru.sargassov.fmweb.intermediate_spi.TeamIntermediateServiceSpi;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -194,5 +195,20 @@ public class TeamIntermediateService implements TeamIntermediateServiceSpi {
         var user = UserHolder.user;
         var userTeam = user.getUserTeam();
         return userTeam.getCaptainOfTeam();
+    }
+
+    @Override
+    @Transactional
+    public List<PlayerSoftSkillDto> loadPlayersSort(Integer parameter) {
+        log.info("TeamService.getAllPlayersByAllTeam()");
+        var teams = repository.findByUser(UserHolder.user);
+        var playerSoftSkillDtos = new ArrayList<PlayerSoftSkillDto>();
+
+        for (var t : teams) {
+            var teamPlayers = t.getPlayerList();
+            playerSoftSkillDtos.addAll(getPlayerSoftSkillDtoFromPlayer(teamPlayers));
+        }
+        playerSoftSkillDtos.sort(teamsPlayersComparators.getPlayerSoftSkillDtoComparators().get(parameter));
+        return playerSoftSkillDtos;
     }
 }

@@ -7,6 +7,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class TeamResultDto extends TeamDto {
     private String num;
+    private String name;
     private String games;
     private String won;
     private String drawn;

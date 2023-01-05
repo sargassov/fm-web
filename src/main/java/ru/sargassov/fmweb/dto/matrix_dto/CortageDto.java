@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CortageDto {
     private String currentName;
-    private String withAmkar;
+    private String withAhmat;
     private String withArsenal;
     private String withCska;
     private String withDinamo;

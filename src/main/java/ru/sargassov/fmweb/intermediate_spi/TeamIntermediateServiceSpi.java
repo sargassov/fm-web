@@ -43,4 +43,6 @@ public interface TeamIntermediateServiceSpi {
     void setNewCaptainHandle(String name);
 
     Team getById(Long teamId);
+
+    List<PlayerSoftSkillDto> loadPlayersSort(Integer parameter);
 }

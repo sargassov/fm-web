@@ -14,9 +14,7 @@ public interface LeagueServiceSpi {
 
 //   LeagueDto getLeagueName();
 //
-//    List<TeamResultDto> loadTeamTable();
+    List<TeamResultDto> loadTeamTable();
 
     List<CortageDto> loadResultMatrix();
-
-    List<PlayerSoftSkillDto> loadPlayersSort(Integer parameter);
 }
