@@ -14,7 +14,7 @@ angular.module('changes', ['ngStorage']).controller('changesController', functio
         $http.get(contextPath + '/new_day/changes')
             .then(function successCallback(response) {
                 $scope.information = response.data;
-            }, function errorCallback(response) {
+            }, function errorCallback() {
                 alert('CANT LOAD CHANGES');
             });
     };

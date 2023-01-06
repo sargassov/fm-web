@@ -28,6 +28,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Slf4j
 public class SponsorIntermediateService implements SponsorIntermediateServiceSpi {
+
     private SponsorIntermediateRepository repository;
 
     private SponsorConverter sponsorConverter;

@@ -2,25 +2,18 @@ package ru.sargassov.fmweb.converters;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
-import ru.sargassov.fmweb.constants.UserHolder;
-import ru.sargassov.fmweb.dto.player_dtos.PlayerOnTrainingDto;
 import ru.sargassov.fmweb.dto.team_dtos.TeamOnPagePlayersDto;
 import ru.sargassov.fmweb.entities.TeamEntity;
-import ru.sargassov.fmweb.intermediate_entities.Coach;
 import ru.sargassov.fmweb.intermediate_entities.HeadCoach;
 import ru.sargassov.fmweb.intermediate_entities.League;
-import ru.sargassov.fmweb.intermediate_entities.Player;
 import ru.sargassov.fmweb.intermediate_entities.Team;
 import ru.sargassov.fmweb.intermediate_entities.User;
 import ru.sargassov.fmweb.intermediate_spi.HeadCoachIntermediateServiceSpi;
-import ru.sargassov.fmweb.intermediate_spi.LeagueIntermediateServiceSpi;
 import ru.sargassov.fmweb.intermediate_spi.StadiumIntermediateServiceSpi;
 
-import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
-import java.util.stream.Collectors;
 
 @Component
 @AllArgsConstructor

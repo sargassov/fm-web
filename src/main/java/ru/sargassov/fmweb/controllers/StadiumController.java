@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import ru.sargassov.fmweb.dto.text_responses.InformationDto;
 import ru.sargassov.fmweb.intermediate_spi.StadiumIntermediateServiceSpi;
-import ru.sargassov.fmweb.services.StadiumService;
 
 import java.util.List;
 

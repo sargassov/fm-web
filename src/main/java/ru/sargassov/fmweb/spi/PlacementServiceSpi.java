@@ -1,9 +1,7 @@
 package ru.sargassov.fmweb.spi;
 
 import ru.sargassov.fmweb.dto.PlacementData;
-import ru.sargassov.fmweb.dto.PlacementOnPagePlacementsDto;
 import ru.sargassov.fmweb.entities.PlacementEntity;
-import ru.sargassov.fmweb.intermediate_entities.Placement;
 import ru.sargassov.fmweb.intermediate_entities.Team;
 import ru.sargassov.fmweb.intermediate_entities.User;
 

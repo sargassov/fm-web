@@ -5,16 +5,16 @@ angular.module('new_day', ['ngStorage']).controller('new_dayController', functio
         $http.get(contextPath + '/dates')
             .then(function successCallback(response) {
                 $scope.today = response.data;
-            }, function errorCallback(response) {
+            }, function errorCallback() {
                 alert('PRESENT DAY NOT FOUND');
             });
     };
 
     $scope.createNewDay = function () {
         $http.post(contextPath + '/new_day')
-            .then(function successCallback(response) {
+            .then(function successCallback() {
                 $scope.getActualDate();
-            }, function errorCallback(response) {
+            }, function errorCallback() {
                 alert('CANT GO INTO THE FUTURE UNTIL ALL THE THINGS ARE DONE!');
             });
     };

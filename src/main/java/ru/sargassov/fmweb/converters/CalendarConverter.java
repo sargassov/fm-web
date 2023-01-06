@@ -1,7 +1,6 @@
 package ru.sargassov.fmweb.converters;
 
 import lombok.AllArgsConstructor;
-import org.flywaydb.core.internal.util.StringUtils;
 import org.springframework.stereotype.Component;
 import ru.sargassov.fmweb.constants.UserHolder;
 import ru.sargassov.fmweb.dto.NameOfMonthDto;
@@ -17,9 +16,7 @@ import ru.sargassov.fmweb.services.UserService;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Component
 @AllArgsConstructor

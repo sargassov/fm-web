@@ -2,6 +2,7 @@ package ru.sargassov.fmweb.services;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.sargassov.fmweb.dto.player_dtos.PlayerHardSkillDto;
 import ru.sargassov.fmweb.enums.PositionType;
@@ -15,6 +16,7 @@ import java.util.List;
 
 @Component
 @AllArgsConstructor
+@NoArgsConstructor
 public class PlayerPriceSetter {
 
     static class TechPrice {

@@ -3,11 +3,13 @@ package ru.sargassov.fmweb.intermediate_entities;
 
 import lombok.*;
 import ru.sargassov.fmweb.constants.BaseUserEntity;
+import ru.sargassov.fmweb.constants.UserHolder;
 import ru.sargassov.fmweb.enums.PositionType;
 import ru.sargassov.fmweb.services.PlayerPriceSetter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Random;
 
 @Entity
@@ -20,7 +22,7 @@ public class Player extends BaseUserEntity {
     private final static int LEVEL_UP_TRAINING_BALANCE = 100;
     private final static int MAX_POWER = 99;
     private final static int YOUNG_PAYER_TRINING_ABILITY = 30;
-    private static PlayerPriceSetter playerPriceSetter;
+    private static PlayerPriceSetter playerPriceSetter = new PlayerPriceSetter();
 
     @Column(name = "name")
     private String name;
@@ -170,53 +172,52 @@ public class Player extends BaseUserEntity {
         } while (flag);
     }
 
-//    public void levelUpCheckAuto() {
-//        if(trainingBalance >= LEVEL_UP_TRAINING_BALANCE) {
-//            switch (position) {
-//                case GOALKEEPER:
-//                    gkAble += 1;
-//                    break;
-//                case DEFENDER:
-//                    defAble += 1;
-//                    break;
-//                case MIDFIELDER:
-//                    midAble += 1;
-//                    break;
-//                default:
-//                    forwAble += 1;
-//            }
-//            trainingBalance -= 100;
-//        }
-//    }
+    public void levelUpCheckAuto() {
+        if(trainingBalance >= LEVEL_UP_TRAINING_BALANCE) {
+            switch (position) {
+                case GOALKEEPER:
+                    gkAble += 1;
+                    break;
+                case DEFENDER:
+                    defAble += 1;
+                    break;
+                case MIDFIELDER:
+                    midAble += 1;
+                    break;
+                default:
+                    forwAble += 1;
+            }
+            trainingBalance -= 100;
+        }
+    }
 
-//    public void levelUpCheckManual(Coach coach) {
-//        while (trainingBalance >= LEVEL_UP_TRAINING_BALANCE) {
-//            Position coachPosition = coach.getPosition();
-//            trainingBalance -= 100;
-//
-//            if (power < MAX_POWER) {
-//                switch (coachPosition) {
-//                    case GOALKEEPER:
-//                        gkAble += 1;
-//                        break;
-//                    case DEFENDER:
-//                        defAble += 1;
-//                        break;
-//                    case MIDFIELDER:
-//                        midAble += 1;
-//                        break;
-//                    default:
-//                        forwAble +=1;
-//                }
-//
-//                power += 1;
-//                price = BigDecimal.valueOf(
-//                                playerPriceSetter.createPrice(this))
-//                        .setScale(2, RoundingMode.HALF_UP);
-//            }
-//
-//        }
-//    }
+    public void levelUpCheckManual(Coach coach) {
+        while (trainingBalance >= LEVEL_UP_TRAINING_BALANCE) {
+            var coachPosition = coach.getPosition();
+            trainingBalance -= 100;
+
+            if (power < MAX_POWER) {
+                switch (coachPosition) {
+                    case GOALKEEPER:
+                        gkAble += 1;
+                        break;
+                    case DEFENDER:
+                        defAble += 1;
+                        break;
+                    case MIDFIELDER:
+                        midAble += 1;
+                        break;
+                    default:
+                        forwAble +=1;
+                }
+
+                var valContainer = new PlayerPriceSetter.ValueContainer(this);
+                power += 1;
+                price = playerPriceSetter.createPrice(valContainer, UserHolder.user)
+                        .setScale(2, RoundingMode.HALF_UP);
+            }
+        }
+    }
 
     public void guessTrainingTire(Coach.CoachProgram program) {
         if (program.equals(Coach.CoachProgram.STANDART)) {

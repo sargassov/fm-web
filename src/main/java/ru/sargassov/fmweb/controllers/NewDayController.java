@@ -20,14 +20,13 @@ public class NewDayController {
     @PostMapping("/new_day")
     public void createNewDay() {
         log.info("NewDayController.createNewDay");
-//        newDayService.createNewDay();
+        newDayService.createNewDay();
 
     }
 
     @GetMapping("/new_day/changes")
     public List<TextResponse> loadChanges() {
         log.info("NewDayController.loadChanges");
-//        return newDayService.loadChanges();
-        return null;
+        return newDayService.loadChanges();
     }
 }

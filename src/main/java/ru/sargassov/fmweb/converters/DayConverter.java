@@ -5,12 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import ru.sargassov.fmweb.dto.days_dtos.DayDto;
 import ru.sargassov.fmweb.intermediate_entities.Day;
-import ru.sargassov.fmweb.intermediate_entities.Match;
 import ru.sargassov.fmweb.entities.DayEntity;
 import ru.sargassov.fmweb.intermediate_entities.User;
 
-import java.util.ArrayList;
-import java.util.List;
 
 @Component
 @AllArgsConstructor

@@ -47,6 +47,7 @@ public class CalendarService implements CalendarServiceSpi {
         if (parameter < 0) parameter = 10;
         if (parameter > 10) parameter = 0;
         return dayIntermediateService.getMonth(parameter).stream()
+                .sorted(Comparator.comparing(Day::getDate))
                 .map(calendarConverter::getEventDtoFromDayEntity)
                 .collect(Collectors.toList());
     }

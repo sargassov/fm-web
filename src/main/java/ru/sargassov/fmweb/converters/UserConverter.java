@@ -4,12 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import ru.sargassov.fmweb.dto.UserData;
-import ru.sargassov.fmweb.intermediate_entities.Team;
 import ru.sargassov.fmweb.intermediate_entities.User;
-
-import javax.persistence.Column;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 
 @Component
 @AllArgsConstructor
@@ -21,9 +16,6 @@ public class UserConverter {
         user.setName(userData.getLastname() + " " + userData.getName());
         user.setAbout(userData.getHomeTown());
         user.setPassword(userData.getPassword());
-//        user.setTeam(teamApi.findByName(userData.getTeamName()));
-//        userApi.getTeam().setHeadCoach(new HeadCoach(userApi.getName()));
-//        userApi.setVisitToYouthAcademyToday(false);
         return user;
     }
 }

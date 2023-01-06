@@ -1,14 +1,5 @@
 package ru.sargassov.fmweb.spi;
 
-import ru.sargassov.fmweb.dto.LoanDto;
-import ru.sargassov.fmweb.dto.MarketDto;
-import ru.sargassov.fmweb.dto.team_dtos.TeamOnPagePlayersDto;
-import ru.sargassov.fmweb.dto.player_dtos.IdNamePricePlayerDto;
-import ru.sargassov.fmweb.dto.player_dtos.PlayerOnTrainingDto;
-import ru.sargassov.fmweb.dto.player_dtos.PlayerSoftSkillDto;
-import ru.sargassov.fmweb.dto.text_responses.InformationDto;
-import ru.sargassov.fmweb.dto.text_responses.StartFinishInformationDto;
-import ru.sargassov.fmweb.dto.text_responses.TextResponse;
 import ru.sargassov.fmweb.enums.PositionType;
 import ru.sargassov.fmweb.intermediate_entities.*;
 

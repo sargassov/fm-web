@@ -1,6 +1,5 @@
 package ru.sargassov.fmweb.converters;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;

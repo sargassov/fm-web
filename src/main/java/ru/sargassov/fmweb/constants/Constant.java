@@ -1,7 +1,5 @@
 package ru.sargassov.fmweb.constants;
 
-import org.hibernate.annotations.BatchSize;
-
 public final class Constant {
     public static int placementSize = 18;
     public enum Month {

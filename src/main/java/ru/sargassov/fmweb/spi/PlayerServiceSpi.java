@@ -1,10 +1,5 @@
 package ru.sargassov.fmweb.spi;
 
-import ru.sargassov.fmweb.dto.PriceResponce;
-import ru.sargassov.fmweb.dto.player_dtos.CreatedPlayerDto;
-import ru.sargassov.fmweb.dto.player_dtos.IdNamePricePlayerDto;
-import ru.sargassov.fmweb.dto.player_dtos.PlayerOnTrainingDto;
-import ru.sargassov.fmweb.dto.player_dtos.PlayerSoftSkillDto;
 import ru.sargassov.fmweb.intermediate_entities.League;
 import ru.sargassov.fmweb.intermediate_entities.Player;
 import ru.sargassov.fmweb.intermediate_entities.Team;

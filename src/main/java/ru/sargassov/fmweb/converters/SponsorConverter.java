@@ -5,13 +5,11 @@ import ru.sargassov.fmweb.dto.SponsorDto;
 import ru.sargassov.fmweb.intermediate_entities.Sponsor;
 import ru.sargassov.fmweb.entities.SponsorEntity;
 import ru.sargassov.fmweb.intermediate_entities.User;
-import ru.sargassov.fmweb.intermediate_spi.SponsorIntermediateServiceSpi;
 
 import java.math.BigDecimal;
 
 @Component
 public class SponsorConverter {
-    private SponsorIntermediateServiceSpi sponsorIntermediateService;
 
     public Sponsor getIntermediateEntityFromEntity(SponsorEntity sponsorEntity, User user){
         var sponsor = new Sponsor();

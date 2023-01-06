@@ -45,4 +45,12 @@ public interface TeamIntermediateServiceSpi {
     Team getById(Long teamId);
 
     List<PlayerSoftSkillDto> loadPlayersSort(Integer parameter);
+
+    List<String> setTrainingEffects();
+
+    List<String> setFinanceUpdates();
+
+    List<String> setMarketingChanges();
+
+    void setPlayerRecovery();
 }

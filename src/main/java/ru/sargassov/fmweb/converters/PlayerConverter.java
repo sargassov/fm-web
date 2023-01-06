@@ -10,7 +10,6 @@ import ru.sargassov.fmweb.exceptions.CoachException;
 import ru.sargassov.fmweb.intermediate_entities.*;
 import ru.sargassov.fmweb.entities.PlayerEntity;
 import ru.sargassov.fmweb.intermediate_spi.TeamIntermediateServiceSpi;
-import ru.sargassov.fmweb.intermediate_spi.UserIntermediateServiceSpi;
 import ru.sargassov.fmweb.services.PlayerPriceSetter;
 
 import java.math.BigDecimal;
@@ -26,7 +25,6 @@ public class PlayerConverter {
     private final PlayerPriceSetter playerPriceSetter;
     private final JuniorConverter juniorConverter;
     private final TeamIntermediateServiceSpi teamIntermediateService;
-    private final UserIntermediateServiceSpi userIntermediateService;
     private static final String CAPTAIN = "Captain";
     private static final String COACH_WAS_NOT_FOUND = "Coach was not found";
 

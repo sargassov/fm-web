@@ -80,63 +80,6 @@ public class Bank extends BaseUserEntity {
         else return TypeOfReturn.PER_MONTH;
     }
 
-    public static Day guessRemainsDate(Day dateOfLoan, BankDto loan) {
-        var remainsDay = new Day();
-        var startLocalDate = dateOfLoan.getDate();
-
-        if(loan.getTypeOfReturn().equals("PER_DAY")){
-            var valueDays = loan.getFullLoanCoeff().divide(loan.getPercentDay(), RoundingMode.HALF_UP).intValue() + 1;
-            remainsDay.setDate(startLocalDate.plusDays(valueDays));
-        } else if (loan.getTypeOfReturn().equals("PER_WEEK")) {
-            var valueWeeks = loan.getFullLoanCoeff().divide(loan.getPercentWeek(), RoundingMode.HALF_UP).intValue() + 1;
-            remainsDay.setDate(startLocalDate.plusWeeks(valueWeeks));
-        } else {
-            var valueMonths = loan.getFullLoanCoeff().divide(loan.getPercentMonth(), RoundingMode.HALF_UP).intValue() + 1;
-            remainsDay.setDate(startLocalDate.plusMonths(valueMonths));
-        }
-
-        return remainsDay;
-    }
-
-    public List<String> paymentPeriod(TypeOfReturn type, Team team, FinalPayment finalPayment) {
-        List<String> notesOfChanges = new ArrayList<>();
-        BigDecimal payType;
-
-        switch (type) {
-            case PER_DAY:
-                payType = payPerDay;
-                break;
-            case PER_WEEK:
-                payType = payPerWeek;
-                break;
-            default:
-                payType = payPerMonth;
-        }
-
-        if(remainMoney.compareTo(payType) < 0){
-            finalPayment.setFinal(true);
-            lastPayment(team);
-            notesOfChanges.add(payType + " Euro was paid to the Bank " + title + ". It is " + type);
-            notesOfChanges.add(title + " is closed!");
-            return notesOfChanges;
-        }
-
-        BigDecimal wealth = team.getWealth();
-        wealth = wealth.add(payType);
-        alreadyPaid = alreadyPaid.add(payType);
-        remainMoney = remainMoney.subtract(payType);
-        notesOfChanges.add(payType + " Euro was paid to the Bank " + title + ". It is " + type);
-        return notesOfChanges;
-    }
-
-    private void lastPayment(Team team) {
-        BigDecimal wealth = team.getWealth();
-        wealth = wealth.subtract(remainMoney);
-        remainMoney = BigDecimal.ZERO;
-        team.getLoans().remove(this);
-        remainLoan();
-    }
-
     public void remainLoan() {
         dateOfLoan = null;
         remainsDate = null;

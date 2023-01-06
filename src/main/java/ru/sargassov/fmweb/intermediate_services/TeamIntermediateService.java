@@ -9,14 +9,19 @@ import ru.sargassov.fmweb.comparators.TeamsPlayersComparators;
 import ru.sargassov.fmweb.constants.UserHolder;
 import ru.sargassov.fmweb.converters.PlayerConverter;
 import ru.sargassov.fmweb.converters.TeamConverter;
+import ru.sargassov.fmweb.dto.FinalPayment;
 import ru.sargassov.fmweb.dto.player_dtos.PlayerSoftSkillDto;
 import ru.sargassov.fmweb.dto.team_dtos.TeamOnPagePlayersDto;
 import ru.sargassov.fmweb.exceptions.PlayerNotFoundException;
+import ru.sargassov.fmweb.intermediate_entities.Bank;
+import ru.sargassov.fmweb.intermediate_entities.Day;
 import ru.sargassov.fmweb.intermediate_entities.Player;
 import ru.sargassov.fmweb.intermediate_entities.Role;
 import ru.sargassov.fmweb.intermediate_entities.Team;
 import ru.sargassov.fmweb.intermediate_entities.User;
 import ru.sargassov.fmweb.intermediate_repositories.TeamIntermediateRepository;
+import ru.sargassov.fmweb.intermediate_spi.BankIntermediateServiceSpi;
+import ru.sargassov.fmweb.intermediate_spi.DayIntermediateServiceSpi;
 import ru.sargassov.fmweb.intermediate_spi.RoleIntermediateServiceSpi;
 import ru.sargassov.fmweb.intermediate_spi.TeamIntermediateServiceSpi;
 
@@ -38,6 +43,8 @@ public class TeamIntermediateService implements TeamIntermediateServiceSpi {
     private final TeamConverter teamConverter;
     private final RoleIntermediateServiceSpi roleIntermediateService;
     private final TeamsPlayersComparators teamsPlayersComparators;
+    private final DayIntermediateServiceSpi dayIntermediateService;
+    private final BankIntermediateServiceSpi bankIntermediateService;
 
     @Override
     public List<Team> save(List<Team> newTeamsWithoutId) {
@@ -210,5 +217,93 @@ public class TeamIntermediateService implements TeamIntermediateServiceSpi {
         }
         playerSoftSkillDtos.sort(teamsPlayersComparators.getPlayerSoftSkillDtoComparators().get(parameter));
         return playerSoftSkillDtos;
+    }
+
+    @Override
+    @Transactional
+    public List<String> setTrainingEffects() {
+        var noteOfChanges = new ArrayList<String>();
+        var user = UserHolder.user;
+        var teams = repository.findByUser(user);
+        var userTeam = user.getUserTeam();
+        for (var t : teams) {
+            if (!t.equals(userTeam)) {
+                noteOfChanges.addAll(t.setRandomTrainingEffects());
+            }
+        }
+        return userTeam.userTeamTrainingEffects(noteOfChanges);
+    }
+
+    @Override
+    @Transactional
+    public List<String> setFinanceUpdates() {
+        var userTeam = UserHolder.user.getUserTeam();
+        var day = dayIntermediateService.findByPresent();
+        return setFinanceUpdates(userTeam, day);
+    }
+
+    public List<String> setFinanceUpdates(Team team, Day day) {
+        var notesOfChanges = new ArrayList<String>();
+        var teamSponsor = team.getSponsor();
+        team.setWealth(team.getWealth().add(teamSponsor.getDayWage()));
+        notesOfChanges.add("Sponsor " + teamSponsor.getName() + " gave your team " + teamSponsor.getDayWage() + " Euro. It is day wage.");
+
+        if(day.isMatch()){
+            team.setWealth(team.getWealth().add(teamSponsor.getMatchWage()));
+            notesOfChanges.add("Sponsor " + teamSponsor.getName() + " gave your team " + teamSponsor.getMatchWage() + " Euro. It is match wage.");
+        }
+
+        return expensesUpdate(team, notesOfChanges, day);
+    }
+
+    private List<String> expensesUpdate(Team team, List<String> notesOfChanges, Day day) {
+        var loans = team.getLoans();
+        for (var x = 0; x < loans.size(); x++) {
+            var dayOfWeek = day.getDate().getDayOfWeek();
+            var loanDayOfWeek = loans.get(x).getDateOfLoan().getDate().getDayOfWeek();
+            var dayOfMonth = day.getDate().getDayOfMonth();
+            var loanDayOfMonth = loans.get(x).getDateOfLoan().getDate().getDayOfMonth();
+            var finalPayment = new FinalPayment(false);
+
+            if (loans.get(x).getTypeOfReturn().equals(Bank.TypeOfReturn.PER_DAY)) {
+                notesOfChanges.addAll(bankIntermediateService.paymentPeriod(loans.get(x), Bank.TypeOfReturn.PER_DAY, team, finalPayment));
+            }
+
+            else if (loans.get(x).getTypeOfReturn().equals(Bank.TypeOfReturn.PER_WEEK)
+                    && dayOfWeek.equals(loanDayOfWeek)) {
+                notesOfChanges.addAll(bankIntermediateService.paymentPeriod(loans.get(x), Bank.TypeOfReturn.PER_WEEK, team, finalPayment));
+            }
+
+            else if(loans.get(x).getTypeOfReturn().equals(Bank.TypeOfReturn.PER_MONTH)
+                    && dayOfMonth == loanDayOfMonth) {
+                notesOfChanges.addAll(bankIntermediateService.paymentPeriod(loans.get(x), Bank.TypeOfReturn.PER_MONTH, team, finalPayment));
+            }
+
+            if (finalPayment.isFinal()) {
+                x--;
+            }
+        }
+        return notesOfChanges;
+    }
+
+
+    @Override
+    @Transactional
+    public List<String> setMarketingChanges() {
+        var userTeam = UserHolder.user.getUserTeam();
+        return userTeam.setMarketingChanges(dayIntermediateService.findByPresent());
+    }
+
+    @Override
+    @Transactional
+    public void setPlayerRecovery() {
+        var teams = repository.findByUser(UserHolder.user);
+        for (var t : teams) {
+            for (var p : t.getPlayerList()) {
+                if (p.getTire() > 0) {
+                    p.setTire(p.getTire() - 5);
+                }
+            }
+        }
     }
 }

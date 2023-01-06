@@ -38,9 +38,7 @@ public class LeagueService implements LeagueServiceSpi {
     private final LeagueConverter leagueConverter;
     private final CortageConverter cortageConverter;
     private final MatrixServiceSpi matrixService;
-    private final TeamServiceSpi teamService;
     private final TeamIntermediateServiceSpi teamIntermediateService;
-    private final PlayerConverter playerConverter;
     private static final long RussianLeagueNumber = 1;
 
     @Override

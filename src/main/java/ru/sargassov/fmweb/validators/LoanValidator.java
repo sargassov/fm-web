@@ -3,7 +3,6 @@ package ru.sargassov.fmweb.validators;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 import ru.sargassov.fmweb.dto.BankDto;
-import ru.sargassov.fmweb.dto.player_dtos.CreatedPlayerDto;
 import ru.sargassov.fmweb.exceptions.ValidationException;
 
 import java.util.ArrayList;

@@ -31,12 +31,6 @@ public class TeamService implements TeamServiceSpi {
     private final TeamConverter teamConverter;
     private final PlayerServiceSpi playerService;
     private final PlayerIntermediateServiceSpi playerIntermediateService;
-    private final UserService userService;
-    private final TeamsPlayersComparators teamsPlayersComparators;
-    private final TrainingPlayersComparators trainingPlayersComparators;
-    private final BankServiceSpi bankService;
-    private final DayServiceSpi dayService;
-    private final CalendarServiceSpi calendarService;
 
     @Override
     public void loadTeams(User user){

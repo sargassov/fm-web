@@ -7,9 +7,7 @@ import ru.sargassov.fmweb.constants.UserHolder;
 import ru.sargassov.fmweb.dto.PlacementData;
 import ru.sargassov.fmweb.dto.PlacementOnPagePlacementsDto;
 import ru.sargassov.fmweb.intermediate_spi.PlacementIntermediateServiceSpi;
-import ru.sargassov.fmweb.intermediate_spi.PlayerIntermediateServiceSpi;
 import ru.sargassov.fmweb.services.PlacementService;
-import ru.sargassov.fmweb.spi.PlacementServiceSpi;
 
 @RestController
 @AllArgsConstructor

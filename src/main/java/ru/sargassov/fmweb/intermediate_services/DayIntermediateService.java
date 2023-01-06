@@ -14,6 +14,7 @@ import ru.sargassov.fmweb.intermediate_entities.User;
 import ru.sargassov.fmweb.intermediate_repositories.DayIntermediateRepository;
 import ru.sargassov.fmweb.intermediate_spi.DayIntermediateServiceSpi;
 
+import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
@@ -75,5 +76,35 @@ public class DayIntermediateService implements DayIntermediateServiceSpi {
     @Override
     public Day findByDate(LocalDate dayDate) {
         return repository.findByDateAndUser(dayDate, UserHolder.user);
+    }
+
+    @Override
+    public boolean isMatchDay() {
+        var day = findByPresent();
+        if (!day.isMatch()) {
+            return false;
+        }
+
+        var userTeam = UserHolder.user.getUserTeam();
+        var match = day.getUserTeamMatch(userTeam);
+        return !match.isMatchPassed();
+    }
+
+    @Override
+    @Transactional
+    public String addDate() {
+        var presentDay = findByPresent();
+        var presentDate = presentDay.getDate();
+        var tomorrowDate = presentDate.plusDays(1);
+        var tomorrowDay = findByDate(tomorrowDate);
+
+        presentDay.setPresent(false);
+        presentDay.setPassed(true);
+        tomorrowDay.setPresent(true);
+
+        var day = tomorrowDate.getDayOfMonth();
+        var month = tomorrowDate.getMonth().toString();
+        var year = tomorrowDate.getYear();
+        return "Today is " + day + " " + month + " " + year + ".";
     }
 }

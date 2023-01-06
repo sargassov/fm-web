@@ -29,7 +29,6 @@ public class PlayerService implements PlayerServiceSpi {
     private final PlayerRepository playerRepository;
     private final PlayerIntermediateServiceSpi playerIntermediateService;
     private final PlayerConverter playerConverter;
-    private final CreatedPlayersValidator createdPlayersValidator;
 
     @Override
     @SneakyThrows

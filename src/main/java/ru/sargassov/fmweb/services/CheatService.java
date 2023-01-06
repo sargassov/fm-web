@@ -43,7 +43,6 @@ public class CheatService implements CheatServiceSpi {
     private static final String YOUR_CLUB_HAD_ALREADY = TextConstant.YOUR_CLUB_HAD_ALREADY;
     private CheatApi cheatApi;
     private PlayerServiceSpi playerService;
-    private UserServiceSpi userService;
 
     @SneakyThrows
     @Override

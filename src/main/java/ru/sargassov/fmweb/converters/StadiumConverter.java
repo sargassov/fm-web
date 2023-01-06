@@ -4,19 +4,15 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.sargassov.fmweb.intermediate_entities.League;
 import ru.sargassov.fmweb.intermediate_entities.Stadium;
-import ru.sargassov.fmweb.intermediate_entities.Team;
 import ru.sargassov.fmweb.entities.StadiumEntity;
 import ru.sargassov.fmweb.intermediate_entities.User;
 import ru.sargassov.fmweb.intermediate_spi.CityIntermediateServiceSpi;
-import ru.sargassov.fmweb.intermediate_spi.LeagueIntermediateServiceSpi;
 
 import java.math.BigDecimal;
 
 @Component
 @AllArgsConstructor
 public class StadiumConverter {
-    private final LeagueIntermediateServiceSpi leagueIntermediateServiceSpi;
-    private final CityConverter cityConverter;
     private final CityIntermediateServiceSpi cityIntermediateService;
     public Stadium getIntermediateEntityFromEntity(StadiumEntity enitity, User user, League league) {
         var cityEntityId = enitity.getCityEntity().getId();

@@ -24,11 +24,8 @@ import java.util.stream.Collectors;
 public class DayService implements DayServiceSpi {
     private final DayRepository dayRepository;
     private final DayConverter dayConverter;
-    private final MatchConverter matchConverter;
-    private final DayIntermediateServiceSpi dayIntermediateService; //TODO написать DayIntermediateService
+    private final DayIntermediateServiceSpi dayIntermediateService;
     private final MatchIntermediateServiceSpi matchIntermediateService;
-
-    private final UserServiceSpi userService;
 
     @Transactional
     @Override

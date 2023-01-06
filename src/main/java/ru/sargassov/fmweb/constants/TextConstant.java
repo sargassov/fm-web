@@ -26,7 +26,7 @@ public final class TextConstant {
     }
 
     public static String permissionToChangeSponsor(boolean permission) {
-        if(permission) {
+        if (permission) {
             return "You have already changed your sponsor. You can't do it ones again!";
         } else {
             return "You can choose a new sponsor from the list.";
@@ -34,8 +34,8 @@ public final class TextConstant {
     }
 
     public static List<TextResponse> dropStringsIntoTextResponses(List<String> strings) {
-        List<TextResponse> responses = new ArrayList<>();
-        for (String s : strings) {
+        var responses = new ArrayList<TextResponse>();
+        for (var s : strings) {
             responses.add(new TextResponse(s));
         }
         return responses;

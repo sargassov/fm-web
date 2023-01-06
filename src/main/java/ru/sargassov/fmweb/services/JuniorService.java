@@ -19,7 +19,6 @@ public class JuniorService implements JuniorServiceSpi {
     private final JuniorRepository juniorRepository;
     private final JuniorConverter juniorConverter;
     private final JuniorIntermediateServiceSpi juniorIntermediateService;
-    private final UserService userService;
 
     @Override
     @Transactional

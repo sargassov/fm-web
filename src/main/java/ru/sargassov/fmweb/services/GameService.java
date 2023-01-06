@@ -25,7 +25,6 @@ public class GameService implements GameServiceSpi {
     private final StadiumServiceSpi stadiumService;
     private final MatchServiceSpi matchService;
     private final MatrixCreateServiceSpi matrixService;
-    private final HeadCoachIntermediateServiceSpi headCoachIntermediateService;
     private final CheatServiceSpi cheatService;
 
     @Override

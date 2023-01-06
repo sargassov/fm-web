@@ -1,13 +1,7 @@
 package ru.sargassov.fmweb.spi;
 
 import ru.sargassov.fmweb.dto.UserData;
-import ru.sargassov.fmweb.dto.text_responses.TextResponse;
-import ru.sargassov.fmweb.intermediate_entities.Coach;
-import ru.sargassov.fmweb.intermediate_entities.Player;
-import ru.sargassov.fmweb.intermediate_entities.Team;
 import ru.sargassov.fmweb.intermediate_entities.User;
-
-import java.util.List;
 
 
 public interface UserServiceSpi {

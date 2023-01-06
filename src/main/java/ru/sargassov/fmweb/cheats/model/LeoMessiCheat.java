@@ -1,6 +1,5 @@
 package ru.sargassov.fmweb.cheats.model;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import ru.sargassov.fmweb.cheats.Cheat;

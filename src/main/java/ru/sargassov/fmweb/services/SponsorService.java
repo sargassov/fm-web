@@ -25,12 +25,6 @@ public class SponsorService implements SponsorServiceSpi {
     private final TeamIntermediateServiceSpi teamIntermediateService;
     private final SponsorIntermediateServiceSpi sponsorIntermediateService;
 
-//    @Override
-//    @Transactional
-//    public List<Sponsor> getSponsorsFromApi(){
-//        return sponsorApi.getSponsorApiList();
-//    }
-
     @Override
     @Transactional
     public void loadSponsors(User user){
