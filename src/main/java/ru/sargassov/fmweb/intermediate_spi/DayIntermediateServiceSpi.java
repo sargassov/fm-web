@@ -2,12 +2,9 @@ package ru.sargassov.fmweb.intermediate_spi;
 
 import ru.sargassov.fmweb.dto.days_dtos.DayDto;
 import ru.sargassov.fmweb.intermediate_entities.Day;
-import ru.sargassov.fmweb.intermediate_entities.Team;
 import ru.sargassov.fmweb.intermediate_entities.User;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public interface DayIntermediateServiceSpi {
@@ -32,6 +29,8 @@ public interface DayIntermediateServiceSpi {
     boolean isMatchDay();
 
     String addDate();
+
+    Boolean getShowCondition();
 }
 
 

@@ -6,22 +6,17 @@ import org.springframework.stereotype.Service;
 import ru.sargassov.fmweb.constants.UserHolder;
 import ru.sargassov.fmweb.converters.CortageConverter;
 import ru.sargassov.fmweb.converters.LeagueConverter;
-import ru.sargassov.fmweb.converters.PlayerConverter;
 import ru.sargassov.fmweb.dto.LeagueDto;
 import ru.sargassov.fmweb.dto.matrix_dto.CortageDto;
-import ru.sargassov.fmweb.dto.player_dtos.PlayerSoftSkillDto;
 import ru.sargassov.fmweb.dto.team_dtos.TeamResultDto;
-import ru.sargassov.fmweb.intermediate_entities.Cortage;
 import ru.sargassov.fmweb.exceptions.LeagueNotFoundException;
 import ru.sargassov.fmweb.intermediate_entities.Team;
 import ru.sargassov.fmweb.entity_repositories.LeagueRepository;
 import ru.sargassov.fmweb.intermediate_entities.User;
 import ru.sargassov.fmweb.intermediate_spi.LeagueIntermediateServiceSpi;
-import ru.sargassov.fmweb.intermediate_spi.PlayerIntermediateServiceSpi;
 import ru.sargassov.fmweb.intermediate_spi.TeamIntermediateServiceSpi;
 import ru.sargassov.fmweb.spi.LeagueServiceSpi;
 import ru.sargassov.fmweb.spi.MatrixServiceSpi;
-import ru.sargassov.fmweb.spi.TeamServiceSpi;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -51,11 +46,11 @@ public class LeagueService implements LeagueServiceSpi {
         leagueIntermediateService.save(newLeague);
     }
 
-//    @Override
-//    @Transactional
-//    public LeagueDto getLeagueName() {
-//        return leagueConverter.getLeagueDtoFromIntermediateEntity();
-//    }
+    @Override
+    @Transactional
+    public LeagueDto getLeagueName() {
+        return leagueConverter.getLeagueDtoFromIntermediateEntity();
+    }
 
     @Override
     @Transactional
@@ -65,16 +60,10 @@ public class LeagueService implements LeagueServiceSpi {
         for (var team : teamList) {
             team.calculateTeamPoints();
         }
-        teamList = teamList.stream().sorted(new Comparator<Team>() {
-            @Override
-            public int compare(Team o1, Team o2) {
-                return Integer.compare(o1.getPoints(), o2.getPoints());
-            }
-        }).collect(Collectors.toList());
+        var sortedTeamList = getSortedTeamList(teamList);
 
         var counter = 1;
-        for(var team : teamList) {
-            team.calculateTeamPoints();
+        for (var team : sortedTeamList) {
             dtoList.add(new TeamResultDto(
                     "" + (counter++) + ".",
                     "" + team.getName(),
@@ -84,10 +73,33 @@ public class LeagueService implements LeagueServiceSpi {
                     "" + team.getLost(),
                     "" + team.getScored(),
                     "" + team.getMissed(),
-                    "" + team.calculateTeamPoints())
+                    "" + team.getPoints())
             );
         }
         return dtoList;
+    }
+
+    private List<Team> getSortedTeamList(List<Team> teamList) {
+        var sortedByPoints = teamList.stream()
+                .sorted(Comparator.comparing(Team::getPoints, Comparator.reverseOrder()))
+                .collect(Collectors.toList());
+
+        var additionalSortedByWons = new ArrayList<Team>();
+        var levelPoints = sortedByPoints.get(0).getPoints();
+        while (additionalSortedByWons.size() < teamList.size()) {
+            final var finalLevelPoints = levelPoints;
+            var levelPointsTeams = sortedByPoints.stream().filter(t -> t.getWon() == finalLevelPoints).collect(Collectors.toList());
+            if (levelPointsTeams.isEmpty()) {
+                levelPoints -= 1;
+                continue;
+            }
+            var levelPointsTeamsSortedByWons = levelPointsTeams.stream()
+                    .sorted(Comparator.comparing(Team::getWon))
+                    .collect(Collectors.toList());
+            additionalSortedByWons.addAll(levelPointsTeamsSortedByWons);
+            levelPoints -= 1;
+        }
+        return additionalSortedByWons;
     }
 
     @Override

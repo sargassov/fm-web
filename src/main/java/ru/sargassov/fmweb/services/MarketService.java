@@ -11,6 +11,7 @@ import ru.sargassov.fmweb.dto.text_responses.StartFinishInformationDto;
 import ru.sargassov.fmweb.exceptions.MarketException;
 import ru.sargassov.fmweb.intermediate_entities.Market;
 import ru.sargassov.fmweb.intermediate_spi.DayIntermediateServiceSpi;
+import ru.sargassov.fmweb.intermediate_spi.MarketIntermediateServiceSpi;
 import ru.sargassov.fmweb.spi.MarketServiceSpi;
 
 import javax.transaction.Transactional;
@@ -24,6 +25,7 @@ import java.util.List;
 public class MarketService implements MarketServiceSpi {
 
     private final DayIntermediateServiceSpi dayIntermediateService;
+    private final MarketIntermediateServiceSpi marketIntermediateService;
 
     @Override
     public List<StartFinishInformationDto> getCurrentmarketsInfo() {
@@ -58,7 +60,8 @@ public class MarketService implements MarketServiceSpi {
     @Transactional
     @Override
     public void addNewMarketProgram(InformationDto dto) {
-        var team = UserHolder.user.getUserTeam();
+        var user = UserHolder.user;
+        var team = user.getUserTeam();
         var market = Market.getMarketByTitle(dto.getType());
         var multyCoeff = (Integer) dto.getValue();
         var askingCost = market.getMarketType().getOneWeekCost().multiply(BigDecimal.valueOf(multyCoeff));
@@ -76,9 +79,12 @@ public class MarketService implements MarketServiceSpi {
         var finishDay = dayIntermediateService.findByDate(finishDate);
         market.setStartDate(startDay);
         market.setFinishDate(finishDay);
+        market.setTeam(team);
+        market.setUser(user);
         team.getMarkets().add(market);
         team.setWealth(team.getWealth().subtract(askingCost));
         team.substractMarketExpenses(askingCost);
+        marketIntermediateService.save(market);
     }
 
     @Transactional

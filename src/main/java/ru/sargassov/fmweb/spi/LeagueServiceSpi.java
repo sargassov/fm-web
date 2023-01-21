@@ -1,5 +1,6 @@
 package ru.sargassov.fmweb.spi;
 
+import ru.sargassov.fmweb.dto.LeagueDto;
 import ru.sargassov.fmweb.dto.matrix_dto.CortageDto;
 import ru.sargassov.fmweb.dto.team_dtos.TeamResultDto;
 import ru.sargassov.fmweb.intermediate_entities.User;
@@ -10,9 +11,8 @@ public interface LeagueServiceSpi {
 
    void getRussianLeague(User user);
 
-//   LeagueDto getLeagueName();
-//
-    List<TeamResultDto> loadTeamTable();
+   LeagueDto getLeagueName();
+   List<TeamResultDto> loadTeamTable();
 
-    List<CortageDto> loadResultMatrix();
+   List<CortageDto> loadResultMatrix();
 }

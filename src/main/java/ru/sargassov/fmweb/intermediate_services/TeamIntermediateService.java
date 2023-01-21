@@ -64,11 +64,14 @@ public class TeamIntermediateService implements TeamIntermediateServiceSpi {
     @Override
     public void fillPlacementForAllTeams(User user) {
         findAllByUser(user).
-                forEach(t -> {
-                    autoFillPlacement(t);
-                    captainAppointment(t);
-                    powerTeamCounter(t);
-                });
+                forEach(this::fillPlacementForCurrentTeam);
+    }
+
+    @Override
+    public void fillPlacementForCurrentTeam (Team team) {
+        autoFillPlacement(team);
+        captainAppointment(team);
+        powerTeamCounter(team);
     }
 
     @Override

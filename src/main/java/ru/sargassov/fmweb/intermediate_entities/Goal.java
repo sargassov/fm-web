@@ -22,4 +22,16 @@ public class Goal extends BaseUserEntity {
     @ManyToOne
     @JoinColumn(name = "id_match")
     private Match match;
+
+    @ManyToOne
+    @JoinColumn(name = "id_team")
+    private Team team;
+
+    public Goal(Player player, Team team, Integer min, Match match, User user) {
+        this.scorePlayer = player;
+        this.team = team;
+        this.min = min;
+        this.match = match;
+        setUser(user);
+    }
 }

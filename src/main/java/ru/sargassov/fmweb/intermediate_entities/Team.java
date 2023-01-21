@@ -4,22 +4,26 @@ import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.CollectionUtils;
 import ru.sargassov.fmweb.constants.BaseUserEntity;
-import ru.sargassov.fmweb.dto.FinalPayment;
 import ru.sargassov.fmweb.enums.PositionType;
 import ru.sargassov.fmweb.exceptions.BankNotFoundException;
 import ru.sargassov.fmweb.exceptions.MarketException;
 import ru.sargassov.fmweb.exceptions.PlayerNotFoundException;
 
 import javax.persistence.*;
-import javax.transaction.Transactional;
 import java.math.BigDecimal;
-import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+
+import static ru.sargassov.fmweb.enums.PositionType.DEFENDER;
+import static ru.sargassov.fmweb.enums.PositionType.FORWARD;
+import static ru.sargassov.fmweb.enums.PositionType.GOALKEEPER;
+import static ru.sargassov.fmweb.enums.PositionType.MIDFIELDER;
 
 
 @Entity
@@ -236,8 +240,8 @@ public class Team extends BaseUserEntity {
         markets.remove(currentMarket);
     }
 
-    public int calculateTeamPoints() {
-        return won * 3 + drawn;
+    public void calculateTeamPoints() {
+        points = won * 3 + drawn;
     }
 
     @Override
@@ -425,6 +429,70 @@ public class Team extends BaseUserEntity {
                 .filter(p -> p.getId().equals(id))
                 .findFirst()
                 .orElse(null);
+    }
+
+    public List<Player> getMatchApplication() {
+        return playerList.stream()
+                .filter(p -> p.getStrategyPlace() >= 0 && p.getStrategyPlace() < 11)
+                .sorted(Comparator.comparing(Player::getStrategyPlace, Comparator.reverseOrder()))
+                .collect(Collectors.toList());
+    }
+
+    public Long getInjuriesValue() {
+        return playerList.stream()
+                .filter(Player::isInjury)
+                .count();
+    }
+
+    public Player getBestSubstitution(PositionType substitutionPosition) {
+        return playerList.stream()
+                .filter(p -> p.getStrategyPlace() > 10)
+                .filter(p -> p.getPosition().equals(substitutionPosition))
+                .max(Comparator.comparing(Player::getPower))
+                .orElse(null);
+    }
+
+    public Player getAnyValidSubstitution(PositionType substitutionPosition) {
+        String compareField;
+        var playerAbleMap = new HashMap<Integer, Player>();
+        if (substitutionPosition.equals(GOALKEEPER)) {
+            compareField = "gkAble";
+        } else if (substitutionPosition.equals(DEFENDER)) {
+            compareField = "defAble";
+        } else if (substitutionPosition.equals(MIDFIELDER)) {
+            compareField = "midAble";
+        } else if (substitutionPosition.equals(FORWARD)) {
+            compareField = "forwAble";
+        } else {
+            throw new IllegalStateException("Illegal position");
+        }
+
+        for (var player : playerList) {
+            if (player.getStrategyPlace() > 10) {
+                try {
+                    var field = player.getClass().getField(compareField);
+                    field.setAccessible(true);
+                    playerAbleMap.put((Integer) field.get(player), player);
+                } catch (NoSuchFieldException | IllegalAccessException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+
+        var result =  playerAbleMap.entrySet().stream()
+                .max(Map.Entry.comparingByKey())
+                .orElse(null);
+        return result.getValue();
+    }
+
+    public Player findPlayerByStrategyPlace(int strategyPlace) {
+        if (strategyPlace < 0 || strategyPlace > 17) {
+            throw new IllegalStateException("illegal strategtPlace");
+        }
+        return playerList.stream()
+                .filter(p -> p.getStrategyPlace() == strategyPlace)
+                .findFirst()
+                .orElseThrow();
     }
 
     //    public Team(String info) {

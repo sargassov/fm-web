@@ -25,8 +25,7 @@ public class MatchConverter {
         match.setCountOfTour(draw.getTourNumber());
         match.setStadium(homeTeam.getStadium());
         match.setImpossibleMatch(false);
-        match.setHomeTeamGoals(new ArrayList<>());
-        match.setAwayTeamGoals(new ArrayList<>());
+        match.setGoals(new ArrayList<>());
         match.setMatchPassed(false);
         return match;
     }

@@ -25,8 +25,7 @@ public class LeagueController {
     @GetMapping("/league/name")
     public LeagueDto getLeagueName() {
         log.info("LeagueController.getLeagueName");
-//        return leagueService.getLeagueName();
-        return null;
+        return leagueService.getLeagueName();
     }
 
     @GetMapping("/league/table")

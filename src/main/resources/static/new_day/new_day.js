@@ -12,7 +12,11 @@ angular.module('new_day', ['ngStorage']).controller('new_dayController', functio
 
     $scope.createNewDay = function () {
         $http.post(contextPath + '/new_day')
-            .then(function successCallback() {
+            .then(function successCallback(response) {
+                $scope.newDayResponse = response.data;
+                if (!$scope.newDayResponse.condition) {
+                    window.location.href = 'match/match.html';
+                }
                 $scope.getActualDate();
             }, function errorCallback() {
                 alert('CANT GO INTO THE FUTURE UNTIL ALL THE THINGS ARE DONE!');

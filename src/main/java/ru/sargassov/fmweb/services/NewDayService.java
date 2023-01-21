@@ -6,19 +6,13 @@ import org.springframework.stereotype.Service;
 import ru.sargassov.fmweb.constants.TextConstant;
 import ru.sargassov.fmweb.constants.UserHolder;
 import ru.sargassov.fmweb.dto.text_responses.TextResponse;
-import ru.sargassov.fmweb.exceptions.NewDayException;
-import ru.sargassov.fmweb.intermediate_entities.Day;
 import ru.sargassov.fmweb.intermediate_spi.DayIntermediateServiceSpi;
 import ru.sargassov.fmweb.intermediate_spi.TeamIntermediateServiceSpi;
-import ru.sargassov.fmweb.spi.DayServiceSpi;
 import ru.sargassov.fmweb.spi.NewDayServiceSpi;
-import ru.sargassov.fmweb.spi.TeamServiceSpi;
-import ru.sargassov.fmweb.spi.UserServiceSpi;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,10 +27,13 @@ public class NewDayService implements NewDayServiceSpi {
 
     @Override
     @Transactional
-    public void createNewDay() {
-        if (dayIntermediateService.isMatchDay()) {
-            log.error(MATCH_DONT_PLAYED);
-            throw new NewDayException(MATCH_DONT_PLAYED);
+    public Boolean createNewDay() {
+        var currentDay = dayIntermediateService.findByPresent();
+        if (currentDay.isMatch()) {
+            var userTeamMatch = currentDay.getUserTeamMatch(UserHolder.user.getUserTeam());
+            if (!userTeamMatch.isMatchPassed()) {
+                return false;
+            }
         }
 
         var notesOfChanges = new ArrayList<String>();
@@ -47,7 +44,6 @@ public class NewDayService implements NewDayServiceSpi {
         notesOfChanges.addAll(setMarketingChanges());
         setPlayerRecovery();
 
-        var currentDay = dayIntermediateService.findByPresent();
         var notesOfChangesArray = new String[notesOfChanges.size()];
         var i = 0;
         for (var s : notesOfChanges) {
@@ -55,6 +51,7 @@ public class NewDayService implements NewDayServiceSpi {
             i++;
         }
         currentDay.setNoteOfChanges(notesOfChangesArray);
+        return true;
     }
 
     private void setPlayerRecovery() {

@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.sargassov.fmweb.constants.UserHolder;
 import ru.sargassov.fmweb.dto.PlacementData;
 import ru.sargassov.fmweb.dto.PlacementOnPagePlacementsDto;
+import ru.sargassov.fmweb.intermediate_spi.DayIntermediateServiceSpi;
 import ru.sargassov.fmweb.intermediate_spi.PlacementIntermediateServiceSpi;
 import ru.sargassov.fmweb.services.PlacementService;
 
@@ -15,6 +16,7 @@ import ru.sargassov.fmweb.services.PlacementService;
 public class PlacementController {
     private final PlacementIntermediateServiceSpi placementIntermediateService;
     private final PlacementService placementService;
+    private final DayIntermediateServiceSpi dayIntermediateService;
 
     @GetMapping("/placement/current")
     public PlacementOnPagePlacementsDto getCurrentPlacementInfo() {
@@ -33,7 +35,7 @@ public class PlacementController {
     @GetMapping("/placement/current/autoselect")
     public void autoFillCurrentPlacement() {
         log.info("PlacementController.autoFillCurrentPlacement");
-        placementIntermediateService.autoFillCurrentPlacement();
+        placementIntermediateService.autoFillCurrentPlacement(UserHolder.user.getUserTeam());
     }
 
 
@@ -49,7 +51,9 @@ public class PlacementController {
         placementIntermediateService.changePlayerInPlacement(name);
     }
 
-
-
-
+    @GetMapping("/placement/show_condition")
+    public void getShowCondition() {
+        log.info("PlacementController.getShowCondition");
+        dayIntermediateService.getShowCondition();
+    }
 }

@@ -1,6 +1,5 @@
 package ru.sargassov.fmweb.intermediate_spi;
 
-import ru.sargassov.fmweb.dto.player_dtos.PlayerOnTrainingDto;
 import ru.sargassov.fmweb.dto.player_dtos.PlayerSoftSkillDto;
 import ru.sargassov.fmweb.dto.team_dtos.TeamOnPagePlayersDto;
 import ru.sargassov.fmweb.intermediate_entities.Player;
@@ -9,7 +8,6 @@ import ru.sargassov.fmweb.intermediate_entities.Team;
 import ru.sargassov.fmweb.intermediate_entities.User;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface TeamIntermediateServiceSpi {
     List<Team> save(List<Team> newTeamsWithoutId);
@@ -19,6 +17,8 @@ public interface TeamIntermediateServiceSpi {
     Team save(Team team);
 
     void fillPlacementForAllTeams(User user);
+
+    void fillPlacementForCurrentTeam (Team team);
 
     void autoFillPlacement(Team team);
 

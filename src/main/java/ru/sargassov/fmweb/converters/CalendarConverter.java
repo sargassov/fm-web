@@ -56,17 +56,16 @@ public class CalendarConverter {
     }
 
     private String goalsFormer(Match m) {
-        var allGoals = new ArrayList<>(m.getHomeTeamGoals());
-        allGoals.addAll(m.getAwayTeamGoals());
+        var allGoals = new ArrayList<>(m.getGoals());
         var allGoalsSorted = allGoals
                 .stream()
                 .sorted(Comparator.comparing(Goal::getMin))
                 .collect(Collectors.toList());
-        var goals = EMPTY;
+        StringBuilder goals = new StringBuilder(EMPTY);
         for(var g : allGoalsSorted) {
-            goals += g.getScorePlayer() + "(" + g.getMin() + ")";
+            goals.append(g.getScorePlayer().getName()).append("(").append(g.getMin()).append("), ");
         }
-        return goals;
+        return goals.substring(0, goals.length() - 2);
     }
 
     private String scoreFormer(Match m) {

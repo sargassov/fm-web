@@ -3,6 +3,10 @@ package ru.sargassov.fmweb.intermediate_spi;
 import ru.sargassov.fmweb.dto.PlacementData;
 import ru.sargassov.fmweb.dto.PlacementOnPagePlacementsDto;
 import ru.sargassov.fmweb.intermediate_entities.Placement;
+import ru.sargassov.fmweb.intermediate_entities.Team;
+import ru.sargassov.fmweb.intermediate_entities.User;
+
+import java.util.List;
 
 public interface PlacementIntermediateServiceSpi {
     Placement save(Placement placement);
@@ -13,7 +17,11 @@ public interface PlacementIntermediateServiceSpi {
 
     void deletePlayerFromCurrentPlacement(String name);
 
-    void autoFillCurrentPlacement();
+    void autoFillCurrentPlacement(Team team);
 
     void changePlayerInPlacement(String name);
+
+    List<Placement> findByUser(User user);
+
+    void optimalOpponentPlacement(Team team);
 }

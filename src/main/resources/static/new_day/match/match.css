@@ -1,0 +1,34 @@
+body {
+    background-image: url(match.jpg);
+    background-size: cover;
+}
+
+.header {
+    text-align: center;
+    font-family: "Arial Black", fantasy;
+    font-size: 26px;
+    color: snow;
+}
+
+.date_show {
+    text-align: center;
+    font-family: "Arial Black", fantasy;
+    color: snow;
+}
+
+.submenu {
+    text-align: center;
+}
+
+.links {
+    text-align: center;
+    font-size: 26px;
+    font-family: "Arial Black", fantasy;
+    color: snow;
+}
+
+.cell {
+    font-family: "Arial Black", fantasy;
+    text-align: center;
+    color: snow;
+}

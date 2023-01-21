@@ -2,7 +2,6 @@ package ru.sargassov.fmweb.intermediate_entities;
 
 import lombok.*;
 import ru.sargassov.fmweb.constants.BaseUserEntity;
-import ru.sargassov.fmweb.intermediate_entities.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -41,10 +40,7 @@ public class Match extends BaseUserEntity {
     private Integer countOfTour;
 
     @OneToMany(mappedBy = "match")
-    private List<Goal> homeTeamGoals;
-
-    @OneToMany(mappedBy = "match")
-    private List<Goal> awayTeamGoals;
+    private List<Goal> goals;
 
     @Column(name = "home_score")
     private int homeScore;
@@ -65,8 +61,7 @@ public class Match extends BaseUserEntity {
                 "home=" + home +
                 ", away=" + away +
                 ", stadium=" + stadium +
-                ", homeScorePlayers=" + homeTeamGoals +
-                ", awayScorePlayers=" + awayTeamGoals +
+                ", goals=" + goals +
                 ", homeScore=" + homeScore +
                 ", awayScore=" + awayScore +
                 ", matchPassed=" + matchPassed +

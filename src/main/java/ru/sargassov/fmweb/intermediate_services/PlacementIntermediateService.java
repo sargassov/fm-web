@@ -10,12 +10,13 @@ import ru.sargassov.fmweb.dto.PlacementData;
 import ru.sargassov.fmweb.dto.PlacementOnPagePlacementsDto;
 import ru.sargassov.fmweb.entity_repositories.PlacementRepository;
 import ru.sargassov.fmweb.exceptions.PlayerNotFoundException;
+import ru.sargassov.fmweb.form.TeamPlacementPowerForm;
 import ru.sargassov.fmweb.intermediate_entities.Placement;
 import ru.sargassov.fmweb.intermediate_entities.Player;
+import ru.sargassov.fmweb.intermediate_entities.Team;
+import ru.sargassov.fmweb.intermediate_entities.User;
 import ru.sargassov.fmweb.intermediate_repositories.PlacementIntermediateRepository;
 import ru.sargassov.fmweb.intermediate_spi.PlacementIntermediateServiceSpi;
-import ru.sargassov.fmweb.intermediate_spi.PlayerIntermediateServiceSpi;
-import ru.sargassov.fmweb.intermediate_spi.RoleIntermediateServiceSpi;
 import ru.sargassov.fmweb.intermediate_spi.TeamIntermediateServiceSpi;
 
 import javax.transaction.Transactional;
@@ -30,6 +31,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class PlacementIntermediateService implements PlacementIntermediateServiceSpi {
     private final PlacementIntermediateRepository repository;
+    private final PlacementRepository placementRepository;
     private final PlacementConverter placementConverter;
     private final TeamIntermediateServiceSpi teamIntermediateService;
 
@@ -74,10 +76,9 @@ public class PlacementIntermediateService implements PlacementIntermediateServic
 
     @Override
     @Transactional
-    public void autoFillCurrentPlacement() {
-        var userTeam = UserHolder.user.getUserTeam();
-        teamIntermediateService.autoFillPlacement(userTeam);
-        teamIntermediateService.powerTeamCounter(userTeam);
+    public void autoFillCurrentPlacement(Team team) {
+        teamIntermediateService.autoFillPlacement(team);
+        teamIntermediateService.powerTeamCounter(team);
     }
 
     @Override
@@ -125,5 +126,40 @@ public class PlacementIntermediateService implements PlacementIntermediateServic
             }
         }
         return anotherPlayerPositionNumber;
+    }
+
+    @Override
+    public List<Placement> findByUser(User user) {
+        return repository.findByUser(user);
+    }
+
+    @Override
+    @Transactional
+    public void optimalOpponentPlacement(Team team) {
+        var allPlacements = placementRepository.findAll();
+        var allIntermediatePlacements = allPlacements.stream()
+                .map(pl -> placementConverter.getIntermediateEntityFromEntity(pl, team, UserHolder.user))
+                .collect(Collectors.toList());
+        var forms = new ArrayList<TeamPlacementPowerForm>();
+        team.resetAllStrategyPlaces();
+        for (var p : allIntermediatePlacements) {
+            var desc = p.getName();
+            save(p);
+            setAndAutoFillCurrentPlacement(team, p);
+            var currentPlacementTeamPower = team.getTeamPower();
+            forms.add(new TeamPlacementPowerForm(desc, currentPlacementTeamPower, p));
+            team.resetAllStrategyPlaces();
+        }
+
+        var optimalPlacement = forms.stream()
+                .max(Comparator.comparing(TeamPlacementPowerForm::getCurrentPlacementTeamPower))
+                .orElseThrow(); //todo обработать
+        setAndAutoFillCurrentPlacement(team, optimalPlacement.getPlacement());
+        teamIntermediateService.captainAppointment(team);
+    }
+
+    private void setAndAutoFillCurrentPlacement(Team team, Placement placement) {
+        team.setPlacement(placement);
+        autoFillCurrentPlacement(team);
     }
 }

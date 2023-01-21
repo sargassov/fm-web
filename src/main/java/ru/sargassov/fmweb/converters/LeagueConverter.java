@@ -2,6 +2,7 @@ package ru.sargassov.fmweb.converters;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
+import ru.sargassov.fmweb.dto.LeagueDto;
 import ru.sargassov.fmweb.intermediate_entities.League;
 import ru.sargassov.fmweb.entities.LeagueEntity;
 import ru.sargassov.fmweb.intermediate_entities.User;
@@ -17,9 +18,9 @@ public class LeagueConverter {
         return league;
     }
 
-//    public LeagueDto getLeagueDtoFromIntermediateEntity() {
-//        LeagueDto leagueDto = new LeagueDto();
-//        leagueDto.setName(league.getName());
-//        return leagueDto;
-//    }
+    public LeagueDto getLeagueDtoFromIntermediateEntity() {
+        LeagueDto leagueDto = new LeagueDto();
+        leagueDto.setName("Russian Premier League");
+        return leagueDto;
+    }
 }

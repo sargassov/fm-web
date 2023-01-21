@@ -3,7 +3,6 @@ package ru.sargassov.fmweb.intermediate_entities;
 
 import lombok.*;
 import ru.sargassov.fmweb.constants.BaseUserEntity;
-import ru.sargassov.fmweb.entities.StadiumEntity;
 import ru.sargassov.fmweb.exceptions.PlayerNotFoundException;
 
 import javax.persistence.*;
@@ -20,6 +19,8 @@ public class Placement extends BaseUserEntity {
     private String name;
 
     @OneToMany(mappedBy = "title", cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private List<Role> roles;
 
     @OneToOne

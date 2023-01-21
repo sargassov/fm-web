@@ -13,6 +13,12 @@ public final class TextConstant {
     public static final String ARGENTINA = "Arg";
     public static final String YOUR_CLUB_HAD_ALREADY = "Your club had already ";
     public static final String MATCH_DONT_PLAYED = "Your club don't played match today";
+    public static final String _4_4_2 = "4 - 4 - 2";
+    public static final String _3_5_2 = "3 - 5 - 2";
+    public static final String _3_4_3 = "3 - 4 - 3";
+    public static final String _4_5_1 = "4 - 5 - 1";
+    public static final String _5_4_1 = "5 - 4 - 1";
+    public static final String _4_3_3 = "4 - 3 - 3";
     public static final String DASH_DELIVER = "-";
 
     public static String getBanksStartMessage(Team userTeam, int banksValue){

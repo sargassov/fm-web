@@ -5,7 +5,7 @@ import ru.sargassov.fmweb.dto.text_responses.TextResponse;
 import java.util.List;
 
 public interface NewDayServiceSpi {
-    void createNewDay();
+    Boolean createNewDay();
 
     List<TextResponse> loadChanges();
 }

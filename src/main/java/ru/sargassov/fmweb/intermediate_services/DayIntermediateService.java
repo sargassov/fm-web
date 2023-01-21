@@ -8,7 +8,6 @@ import ru.sargassov.fmweb.constants.ConstantUtils;
 import ru.sargassov.fmweb.constants.UserHolder;
 import ru.sargassov.fmweb.converters.DayConverter;
 import ru.sargassov.fmweb.dto.days_dtos.DayDto;
-import ru.sargassov.fmweb.exceptions.CalendarException;
 import ru.sargassov.fmweb.intermediate_entities.Day;
 import ru.sargassov.fmweb.intermediate_entities.User;
 import ru.sargassov.fmweb.intermediate_repositories.DayIntermediateRepository;
@@ -106,5 +105,11 @@ public class DayIntermediateService implements DayIntermediateServiceSpi {
         var month = tomorrowDate.getMonth().toString();
         var year = tomorrowDate.getYear();
         return "Today is " + day + " " + month + " " + year + ".";
+    }
+
+    @Override
+    public Boolean getShowCondition() {
+        var currentDay = findByPresent();
+        return !currentDay.isMatch();
     }
 }

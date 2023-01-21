@@ -20,6 +20,7 @@ public class Market extends BaseUserEntity {
     private Team team;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "market_type")
     private MarketType marketType;
 
     @ManyToOne
