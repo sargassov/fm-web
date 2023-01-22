@@ -9,6 +9,4 @@ angular.module('registr', ['ngStorage']).controller('registrController', functio
                 alert('NEW GAME WAS NOT CREATED');
             });
     };
-
-
 });
