@@ -44,12 +44,12 @@ public class DayIntermediateService implements DayIntermediateServiceSpi {
 
     @Override
     public DayDto getActualDate() {
-        return dayConverter.dtoToPresentDayRequest(repository.findByPresentIsTrueAnduser(UserHolder.user));
+        return dayConverter.dtoToPresentDayRequest(repository.findByPresentIsTrueAndUser(UserHolder.user));
     }
 
     @Override
     public Day findByPresent() {
-        return repository.findByPresentIsTrueAnduser(UserHolder.user);
+        return repository.findByPresentIsTrueAndUser(UserHolder.user);
     }
 
     @Override

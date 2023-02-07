@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import ru.sargassov.fmweb.constants.UserHolder;
 import ru.sargassov.fmweb.dto.UserData;
 import ru.sargassov.fmweb.intermediate_spi.HeadCoachIntermediateServiceSpi;
+import ru.sargassov.fmweb.intermediate_spi.UserIntermediateServiceSpi;
 import ru.sargassov.fmweb.spi.*;
 
 @Service
@@ -26,6 +27,7 @@ public class GameService implements GameServiceSpi {
     private final MatchServiceSpi matchService;
     private final MatrixCreateServiceSpi matrixService;
     private final CheatServiceSpi cheatService;
+    private final UserIntermediateServiceSpi userIntermediateService;
 
     @Override
     public void createNewGame(UserData userData) {
@@ -45,6 +47,19 @@ public class GameService implements GameServiceSpi {
         matrixService.createMatrix(user);
         userService.setUserTeam(userData, user);
         cheatService.constructCheats(user);
+        UserHolder.user = user;
+    }
+
+    @Override
+    public void loadGame(UserData userData) {
+        var user = userIntermediateService.findByUserData(userData);
+        if (user == null) {
+            throw new IllegalStateException("User + " + userData.getName() + " does not exist");
+        }
+        var password = user.getPassword();
+        if (!userData.getPassword().equals(password)) {
+            throw new IllegalStateException("Password incorrect");
+        }
         UserHolder.user = user;
     }
 }

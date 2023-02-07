@@ -17,7 +17,7 @@ public interface DayIntermediateRepository extends JpaRepository<Day, Long> {
     List<Day> findByUser(User user);
 
     @Query("select d from Day d where d.isPresent = true and d.user = ?1")
-    Day findByPresentIsTrueAnduser(User user);
+    Day findByPresentIsTrueAndUser(User user);
 
     @Query("select d from Day d where d.isMatch = true and d.user = ?1")
     List<Day> loacAllMatchDates(User user);
