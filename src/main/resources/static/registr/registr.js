@@ -3,10 +3,14 @@ angular.module('registr', ['ngStorage']).controller('registrController', functio
 
     $scope.createNewGame = function () {
         $http.post(contextPath + '/new_game', $scope.user)
-            .then(function successCallback(response) {
+            .then(function successCallback() {
                 window.location.href = '../main_menu/main_menu.html';
-            }, function errorCallback(response) {
+            }, function errorCallback() {
                 alert('NEW GAME WAS NOT CREATED');
             });
+    };
+
+    $scope.back = function () {
+        window.location.href = '../index.html';
     };
 });

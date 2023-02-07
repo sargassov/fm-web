@@ -33,9 +33,7 @@
 			<div class="centerdiv">
 				<input class="form-control" type="text" placeholder="Name" ng-model="user.name">
 				<p></p>
-				<input class="form-control" type="text" placeholder="Lastname" ng-model="user.lastname">
-				<p></p>
-				<input class="form-control" type="password" placeholder="Password" ng-model="user.password">
+				<input id="pass" class="form-control" type="password" placeholder="Password" ng-model="user.password">
 				<p></p>
 				<input class="form-control" type="text" placeholder="Where are you from" ng-model="user.homeTown">
 			<p></p>
@@ -65,7 +63,7 @@
 
 			<div class="div-button">
 				<button class="btn btn-primary" href="../main_menu/main_menu.html" ng-click="createNewGame()">Save</button>
-				<button class="btn btn-secondary" ng-click="clearForm()">Clear</button>
+				<button class="btn btn-secondary" ng-click="back()">Back</button>
 			</div>
 
 

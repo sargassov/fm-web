@@ -18,7 +18,7 @@ body {
 
 input[type=text],
 input[type=number],
-input[typeof=password],
+input[type=password],
 select[typeof=text]{
     margin: auto;
     align-content: center;
