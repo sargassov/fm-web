@@ -9,6 +9,7 @@ import ru.sargassov.fmweb.intermediate_entities.League;
 import ru.sargassov.fmweb.intermediate_entities.Team;
 import ru.sargassov.fmweb.intermediate_entities.User;
 import ru.sargassov.fmweb.intermediate_spi.HeadCoachIntermediateServiceSpi;
+import ru.sargassov.fmweb.intermediate_spi.PlayerIntermediateServiceSpi2;
 import ru.sargassov.fmweb.intermediate_spi.StadiumIntermediateServiceSpi;
 
 import java.math.BigDecimal;
@@ -18,8 +19,8 @@ import java.util.ArrayList;
 @Component
 @AllArgsConstructor
 public class TeamConverter {
-
     private final StadiumIntermediateServiceSpi stadiumIntermediateService;
+    private final PlayerIntermediateServiceSpi2 playerIntermediateService2;
     private final HeadCoachIntermediateServiceSpi headCoachIntermediateService;
     private static final Integer START_PLAYER_PARAMETER = -1;
     private static final Integer START_SORT_PARAMETER = 0;
@@ -57,12 +58,12 @@ public class TeamConverter {
         return headCoachIntermediateService.save(headCoach);
     }
 
-    public TeamOnPagePlayersDto dtoToTeamOnPagePlayersDto(Team team){
+    public TeamOnPagePlayersDto dtoToTeamOnPagePlayersDto(Team team) {
         TeamOnPagePlayersDto tOnPageDto = new TeamOnPagePlayersDto();
         tOnPageDto.setId(team.getId());
         tOnPageDto.setName(team.getName());
         tOnPageDto.setWealth(team.getWealth().setScale(2, RoundingMode.HALF_UP));
-        tOnPageDto.setTeamFullSize(team.getPlayerList().size());
+        tOnPageDto.setTeamFullSize(playerIntermediateService2.findByTeam(team).size());
         tOnPageDto.setPlayerParameter(START_PLAYER_PARAMETER);
         tOnPageDto.setSortParameter(START_SORT_PARAMETER);
         tOnPageDto.setStadium(team.getStadium().getTitle());

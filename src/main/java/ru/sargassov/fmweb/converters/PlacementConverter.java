@@ -9,6 +9,9 @@ import ru.sargassov.fmweb.dto.PlacementOnPagePlacementsDto;
 import ru.sargassov.fmweb.dto.player_dtos.PlayerOnPagePlacementsDto;
 import ru.sargassov.fmweb.intermediate_entities.*;
 import ru.sargassov.fmweb.entities.PlacementEntity;
+import ru.sargassov.fmweb.intermediate_services.PlayerIntermediateService;
+import ru.sargassov.fmweb.intermediate_spi.PlayerIntermediateServiceSpi;
+import ru.sargassov.fmweb.intermediate_spi.PlayerIntermediateServiceSpi2;
 import ru.sargassov.fmweb.intermediate_spi.RoleIntermediateServiceSpi;
 
 import javax.transaction.Transactional;
@@ -20,6 +23,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class PlacementConverter {
     private PlayerConverter playerConverter;
+    private PlayerIntermediateServiceSpi2 playerIntermediateService2;
     private RoleIntermediateServiceSpi roleIntermediateService;
 
     public Placement getIntermediateEntityFromEntity(PlacementEntity placementEntity, Team team, User user){
@@ -63,6 +67,7 @@ public class PlacementConverter {
 
     public PlacementOnPagePlacementsDto getPlacementOnPagePlacementsDtoFromTeam() {
         var userTeam = UserHolder.user.getUserTeam();
+        userTeam.setPlayerList(playerIntermediateService2.findByTeam(userTeam));
         userTeam.powerTeamCounter();
         PlacementOnPagePlacementsDto pOnPagePlDto = new PlacementOnPagePlacementsDto();
         pOnPagePlDto.setTitle(userTeam.getPlacement().getName());

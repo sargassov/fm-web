@@ -17,6 +17,7 @@ import ru.sargassov.fmweb.intermediate_entities.Team;
 import ru.sargassov.fmweb.intermediate_entities.User;
 import ru.sargassov.fmweb.intermediate_repositories.PlacementIntermediateRepository;
 import ru.sargassov.fmweb.intermediate_spi.PlacementIntermediateServiceSpi;
+import ru.sargassov.fmweb.intermediate_spi.RoleIntermediateServiceSpi;
 import ru.sargassov.fmweb.intermediate_spi.TeamIntermediateServiceSpi;
 
 import javax.transaction.Transactional;

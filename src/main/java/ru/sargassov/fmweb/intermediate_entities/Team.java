@@ -288,49 +288,6 @@ public class Team extends BaseUserEntity {
         return noteOfChanges;
     }
 
-    public List<String> userTeamTrainingEffects(List<String> noteOfChanges) {
-        noteOfChanges.add("Your team training effects:");
-
-        for (var coach : coaches) {
-            if (coach.getPlayerOnTraining() != null) {
-                var player = coach.getPlayerOnTraining();
-                var program = coach.getCoachProgram();
-                var playerTrainingBalance = player.getTrainingBalance();
-                var playerTriningAble = player.getTrainingAble();
-                var coachTrainingAble = coach.getTrainingAble();
-                player.setTrainingBalance(playerTrainingBalance + coachTrainingAble);
-                noteOfChanges.add(player.getName() + " in your club increase his training balance +" + (playerTriningAble * coach.getTrainingCoeff()));
-                player.levelUpCheckManual(coach);
-                player.guessTrainingTire(program);
-
-                if (player.getTire() > 50) {
-                    coach.setPlayerOnTraining(null);
-                }
-            }
-        }
-        return noteOfChanges;
-    }
-
-    public List<String> setMarketingChanges(Day day) {
-        var notesOfChanges = new ArrayList<String>();
-        for (var x = 0; x < markets.size(); x++) {
-            var capacity = stadium.getUsualAverageCapacity();
-            var marketType = markets.get(x).getMarketType();
-            var newFansValue = (int) (capacity + capacity / 100 * marketType.capacityCoeff);
-
-            stadium.setUsualAverageCapacity(newFansValue);
-            stadium.setSimpleCapacity(newFansValue);
-            notesOfChanges.add("New Stadium capacity is " + stadium.getUsualAverageCapacity());
-            var finishDay = markets.get(x).getFinishDate();
-            if (finishDay.getDate().equals(day.getDate())){
-                markets.remove(markets.get(x));
-                log.info("Market program is finished");
-                x--;
-            }
-        }
-        return notesOfChanges;
-    }
-
     public void captainAppointment() {
         var player = playerList.stream()
                 .sorted((o1, o2) -> Integer.compare(o2.getCaptainAble(), o1.getCaptainAble()))

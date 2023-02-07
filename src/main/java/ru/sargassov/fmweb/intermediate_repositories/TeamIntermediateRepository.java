@@ -9,7 +9,6 @@ import java.util.List;
 
 @Repository
 public interface TeamIntermediateRepository extends JpaRepository<Team, Long> {
-    Team findByName(String s);
     Team findByNameAndUser(String name, User user);
     Team findByTeamEntityIdAndUser(Long teamEntityId, User user);
 

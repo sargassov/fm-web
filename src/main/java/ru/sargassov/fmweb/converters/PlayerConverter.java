@@ -209,4 +209,10 @@ public class PlayerConverter {
         pDto.setTrainingAble(p.getTrainingAble());
         return pDto;
     }
+
+    public static List<PlayerSoftSkillDto> getPlayerSoftSkillDtoFromPlayer(List<Player> playerList) {
+        return playerList.stream()
+                .map(PlayerConverter::getPlayerSoftSkillDtoFromIntermediateEntity)
+                .collect(Collectors.toList());
+    }
 }

@@ -38,8 +38,6 @@ public interface TeamIntermediateServiceSpi {
 
     TeamOnPagePlayersDto getNameOfUserTeam();
 
-    List<PlayerSoftSkillDto> getAllPlayersByUserTeam(Integer parameter);
-
     void setNewCaptainHandle(String name);
 
     Team getById(Long teamId);

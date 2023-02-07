@@ -21,7 +21,10 @@ import ru.sargassov.fmweb.intermediate_entities.Team;
 import ru.sargassov.fmweb.intermediate_entities.User;
 import ru.sargassov.fmweb.intermediate_repositories.TeamIntermediateRepository;
 import ru.sargassov.fmweb.intermediate_spi.BankIntermediateServiceSpi;
+import ru.sargassov.fmweb.intermediate_spi.CoachIntermediateServiceSpi;
 import ru.sargassov.fmweb.intermediate_spi.DayIntermediateServiceSpi;
+import ru.sargassov.fmweb.intermediate_spi.MarketIntermediateServiceSpi;
+import ru.sargassov.fmweb.intermediate_spi.PlayerIntermediateServiceSpi;
 import ru.sargassov.fmweb.intermediate_spi.RoleIntermediateServiceSpi;
 import ru.sargassov.fmweb.intermediate_spi.TeamIntermediateServiceSpi;
 
@@ -45,6 +48,8 @@ public class TeamIntermediateService implements TeamIntermediateServiceSpi {
     private final TeamsPlayersComparators teamsPlayersComparators;
     private final DayIntermediateServiceSpi dayIntermediateService;
     private final BankIntermediateServiceSpi bankIntermediateService;
+    private final CoachIntermediateServiceSpi coachIntermediateService;
+    private final MarketIntermediateServiceSpi marketIntermediateService;
 
     @Override
     public List<Team> save(List<Team> newTeamsWithoutId) {
@@ -99,22 +104,6 @@ public class TeamIntermediateService implements TeamIntermediateServiceSpi {
     @Override
     public TeamOnPagePlayersDto getNameOfUserTeam() {
         return teamConverter.dtoToTeamOnPagePlayersDto(UserHolder.user.getUserTeam());
-    }
-
-    @Override
-    public List<PlayerSoftSkillDto> getAllPlayersByUserTeam(@NonNull Integer parameter) {
-        log.info("TeamService.getAllPlayersByUserTeam()");
-        var userTeam = UserHolder.user.getUserTeam();
-        var playerList = userTeam.getPlayerList();
-        var playerSoftSkillDtos = getPlayerSoftSkillDtoFromPlayer(playerList);
-        playerSoftSkillDtos.sort(teamsPlayersComparators.getPlayerSoftSkillDtoComparators().get(parameter));
-        return playerSoftSkillDtos;
-    }
-
-    private List<PlayerSoftSkillDto> getPlayerSoftSkillDtoFromPlayer(List<Player> playerList) {
-        return playerList.stream()
-                .map(PlayerConverter::getPlayerSoftSkillDtoFromIntermediateEntity)
-                .collect(Collectors.toList());
     }
 
     @Override
@@ -216,7 +205,7 @@ public class TeamIntermediateService implements TeamIntermediateServiceSpi {
 
         for (var t : teams) {
             var teamPlayers = t.getPlayerList();
-            playerSoftSkillDtos.addAll(getPlayerSoftSkillDtoFromPlayer(teamPlayers));
+            playerSoftSkillDtos.addAll(PlayerConverter.getPlayerSoftSkillDtoFromPlayer(teamPlayers));
         }
         playerSoftSkillDtos.sort(teamsPlayersComparators.getPlayerSoftSkillDtoComparators().get(parameter));
         return playerSoftSkillDtos;
@@ -234,7 +223,31 @@ public class TeamIntermediateService implements TeamIntermediateServiceSpi {
                 noteOfChanges.addAll(t.setRandomTrainingEffects());
             }
         }
-        return userTeam.userTeamTrainingEffects(noteOfChanges);
+        return userTeamTrainingEffects(userTeam, noteOfChanges);
+    }
+
+    public List<String> userTeamTrainingEffects(Team userTeam, List<String> noteOfChanges) {
+        noteOfChanges.add("Your team training effects:");
+        var coaches = coachIntermediateService.findByTeam(userTeam);
+
+        for (var coach : coaches) {
+            if (coach.getPlayerOnTraining() != null) {
+                var player = coach.getPlayerOnTraining();
+                var program = coach.getCoachProgram();
+                var playerTrainingBalance = player.getTrainingBalance();
+                var playerTriningAble = player.getTrainingAble();
+                var coachTrainingAble = coach.getTrainingAble();
+                player.setTrainingBalance(playerTrainingBalance + coachTrainingAble);
+                noteOfChanges.add(player.getName() + " in your club increase his training balance +" + (playerTriningAble * coach.getTrainingCoeff()));
+                player.levelUpCheckManual(coach);
+                player.guessTrainingTire(program);
+
+                if (player.getTire() > 50) {
+                    coach.setPlayerOnTraining(null);
+                }
+            }
+        }
+        return noteOfChanges;
     }
 
     @Override
@@ -260,7 +273,7 @@ public class TeamIntermediateService implements TeamIntermediateServiceSpi {
     }
 
     private List<String> expensesUpdate(Team team, List<String> notesOfChanges, Day day) {
-        var loans = team.getLoans();
+        var loans = bankIntermediateService.findByTeam(team);
         for (var x = 0; x < loans.size(); x++) {
             var dayOfWeek = day.getDate().getDayOfWeek();
             var loanDayOfWeek = loans.get(x).getDateOfLoan().getDate().getDayOfWeek();
@@ -293,8 +306,30 @@ public class TeamIntermediateService implements TeamIntermediateServiceSpi {
     @Override
     @Transactional
     public List<String> setMarketingChanges() {
+        return setMarketingChanges(dayIntermediateService.findByPresent());
+    }
+
+    public List<String> setMarketingChanges(Day day) {
         var userTeam = UserHolder.user.getUserTeam();
-        return userTeam.setMarketingChanges(dayIntermediateService.findByPresent());
+        var notesOfChanges = new ArrayList<String>();
+        var markets = marketIntermediateService.findByTeam(userTeam);
+        var stadium = userTeam.getStadium();
+        for (var x = 0; x < markets.size(); x++) {
+            var capacity = stadium.getUsualAverageCapacity();
+            var marketType = markets.get(x).getMarketType();
+            var newFansValue = (int) (capacity + capacity / 100 * marketType.getCapacityCoeff());
+
+            stadium.setUsualAverageCapacity(newFansValue);
+            stadium.setSimpleCapacity(newFansValue);
+            notesOfChanges.add("New Stadium capacity is " + stadium.getUsualAverageCapacity());
+            var finishDay = markets.get(x).getFinishDate();
+            if (finishDay.getDate().equals(day.getDate())){
+                markets.remove(markets.get(x));
+                log.info("Market program is finished");
+                x--;
+            }
+        }
+        return notesOfChanges;
     }
 
     @Override

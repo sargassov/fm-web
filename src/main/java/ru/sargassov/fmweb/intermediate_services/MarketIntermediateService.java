@@ -5,8 +5,11 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.sargassov.fmweb.intermediate_entities.Market;
+import ru.sargassov.fmweb.intermediate_entities.Team;
 import ru.sargassov.fmweb.intermediate_repositories.MarketIntermediateRepository;
 import ru.sargassov.fmweb.intermediate_spi.MarketIntermediateServiceSpi;
+
+import java.util.List;
 
 @Service
 @Data
@@ -18,5 +21,10 @@ public class MarketIntermediateService implements MarketIntermediateServiceSpi {
     @Override
     public Market save(Market market) {
         return repository.save(market);
+    }
+
+    @Override
+    public List<Market> findByTeam(Team team) {
+        return repository.findByTeam(team);
     }
 }
