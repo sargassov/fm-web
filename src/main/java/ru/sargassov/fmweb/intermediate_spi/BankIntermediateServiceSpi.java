@@ -17,4 +17,6 @@ public interface BankIntermediateServiceSpi {
     Bank findById(long id);
 
     List<String> paymentPeriod(Bank bank, Bank.TypeOfReturn type, Team team, FinalPayment finalPayment);
+
+    List<Bank> findByTeam(Team team);
 }

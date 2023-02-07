@@ -78,6 +78,11 @@ public class BankIntermediateService implements BankIntermediateServiceSpi {
         return notesOfChanges;
     }
 
+    @Override
+    public List<Bank> findByTeam(Team team) {
+        return repository.findByTeam(team);
+    }
+
     @Transactional
     public void lastPayment(Team team, Bank bank) {
         var remainMoney = bank.getRemainMoney();
