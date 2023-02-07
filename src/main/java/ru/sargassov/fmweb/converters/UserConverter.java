@@ -13,7 +13,7 @@ public class UserConverter {
 
     public User parseUserData(UserData userData){
         var user = new User();
-        user.setName(userData.getLastname() + " " + userData.getName());
+        user.setName(userData.getName());
         user.setAbout(userData.getHomeTown());
         user.setPassword(userData.getPassword());
         return user;

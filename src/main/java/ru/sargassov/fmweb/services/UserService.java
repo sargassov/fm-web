@@ -26,8 +26,13 @@ public class UserService implements UserServiceSpi {
     @Override
     @Transactional
     public User constructNewUser(UserData userData){
-        log.info("UserService.constructNewUser " + userData.getLastname() + " " + userData.getName());
+        var name = userData.getName();
+        log.info("UserService.constructNewUser " + name);
         var userWithoutId = userConverter.parseUserData(userData);
+        var user = userIntermediateService.findByUserData(userData);
+        if (user != null) {
+            throw new IllegalStateException("User " + user.getName() + " already exists");
+        }
         return userIntermediateService.save(userWithoutId);
     }
 
