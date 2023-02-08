@@ -10,6 +10,6 @@ import java.util.Optional;
 @Repository
 public interface UserIntermediateRepository extends JpaRepository<User, Long> {
 
-    @Query(value = "SELECT u FROM user_table u WHERE u.name = ?1", nativeQuery = true)
+    @Query(value = "SELECT * FROM user_table u WHERE u.name = ?1", nativeQuery = true)
     Optional<User> findByName(String login);
 }
