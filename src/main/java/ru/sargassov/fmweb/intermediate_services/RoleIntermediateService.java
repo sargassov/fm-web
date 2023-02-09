@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.sargassov.fmweb.constants.UserHolder;
+import ru.sargassov.fmweb.intermediate_entities.Placement;
 import ru.sargassov.fmweb.intermediate_entities.Player;
 import ru.sargassov.fmweb.intermediate_entities.Role;
 import ru.sargassov.fmweb.intermediate_repositories.RoleIntermediateRepository;
@@ -37,5 +38,18 @@ public class RoleIntermediateService implements RoleIntermediateServiceSpi {
     @Override
     public Role findByPlayer(Player player) {
         return repository.findByPlayerAndUser(player, UserHolder.user);
+    }
+
+    @Override
+    public void rolePlacementRelation(Placement placement) {
+        for (var role : placement.getRoles()) {
+            role.setPlacement(placement);
+            save(role);
+        }
+    }
+
+    @Override
+    public List<Role> findByPlacement(Placement placement) {
+        return repository.findByPlacement(placement);
     }
 }

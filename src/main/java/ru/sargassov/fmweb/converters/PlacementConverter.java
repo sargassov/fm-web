@@ -29,26 +29,26 @@ public class PlacementConverter {
     public Placement getIntermediateEntityFromEntity(PlacementEntity placementEntity, Team team, User user){
         var placement = new Placement();
         placement.setName(placementEntity.getName());
-        placement.setRoles(roleUnpacker(placementEntity.getRoles(), user, team));
+        placement.setRoles(roleUnpacker(placementEntity.getRoles(), user, team, placement));
         placement.setUser(user);
         placement.setTeam(team);
         return placement;
     }
 
-    private List<Role> roleUnpacker(String roles, User user, Team team) {
+    private List<Role> roleUnpacker(String roles, User user, Team team, Placement placement) {
         var splitter = ",";
         var rolesSplit = roles.split(splitter);
         var listRoles = new ArrayList<Role>();
 
         for(int x = 0; x < rolesSplit.length; x++){
             rolesSplit[x] = purePlacementName(rolesSplit[x]);
-            var role = getRoleIntermediateEntityFromString(rolesSplit[x], x, user, team);
+            var role = getRoleIntermediateEntityFromString(rolesSplit[x], x, user, team, placement);
             listRoles.add(role);
         }
         return roleIntermediateService.save(listRoles);
     }
 
-    private Role getRoleIntermediateEntityFromString(String roleName, int count, User user, Team team) {
+    private Role getRoleIntermediateEntityFromString(String roleName, int count, User user, Team team, Placement p) {
         var role = new Role();
         role.setTitle(roleName);
         role.setPosNumber(count);

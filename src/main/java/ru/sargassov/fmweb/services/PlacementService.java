@@ -13,6 +13,7 @@ import ru.sargassov.fmweb.entity_repositories.PlacementRepository;
 import ru.sargassov.fmweb.intermediate_entities.User;
 import ru.sargassov.fmweb.intermediate_spi.PlacementIntermediateServiceSpi;
 import ru.sargassov.fmweb.intermediate_spi.PlayerIntermediateServiceSpi;
+import ru.sargassov.fmweb.intermediate_spi.RoleIntermediateServiceSpi;
 import ru.sargassov.fmweb.intermediate_spi.TeamIntermediateServiceSpi;
 import ru.sargassov.fmweb.spi.PlacementServiceSpi;
 import ru.sargassov.fmweb.spi.PlayerServiceSpi;
@@ -33,6 +34,7 @@ public class PlacementService implements PlacementServiceSpi {
     private final TeamIntermediateServiceSpi teamIntermediateService;
     private final PlayerServiceSpi playerService;
     private final UserService userService;
+    private final RoleIntermediateServiceSpi roleIntermediateService;
 
     @Override
     public List<PlacementEntity> findAllPlacements(){
@@ -76,7 +78,9 @@ public class PlacementService implements PlacementServiceSpi {
         if (optionalCurrentPlacementEntity.isPresent()) {
             var placementEntity = optionalCurrentPlacementEntity.get();
             var placement = placementConverter.getIntermediateEntityFromEntity(placementEntity, team, user);
-            return placementIntermediateService.save(placement);
+            var savedPlacement = placementIntermediateService.save(placement);
+            roleIntermediateService.rolePlacementRelation(savedPlacement);
+            return savedPlacement;
         }
         throw new IllegalStateException("No match with current placement");
     }

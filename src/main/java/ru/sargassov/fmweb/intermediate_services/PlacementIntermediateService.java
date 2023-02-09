@@ -35,6 +35,7 @@ public class PlacementIntermediateService implements PlacementIntermediateServic
     private final PlacementRepository placementRepository;
     private final PlacementConverter placementConverter;
     private final TeamIntermediateServiceSpi teamIntermediateService;
+    private final RoleIntermediateServiceSpi roleIntermediateService;
 
     @Override
     public Placement save(Placement placement) {
@@ -94,8 +95,9 @@ public class PlacementIntermediateService implements PlacementIntermediateServic
         var anotherPlayerPositionNumber = defineAnotherPlayerPositionNumber(playerNumber, positionPlayerListNumbers);
         var changedPlayer = userTeam.findPlayerByNumber(anotherPlayerPositionNumber);
         var userPlacement = userTeam.getPlacement();
+        var userPlacementRoles = roleIntermediateService.findByPlacement(userPlacement);
 
-        for (var role : userPlacement.getRoles()) {
+        for (var role : userPlacementRoles) { //todo разобраться с ошибкой
             if (role.getPlayer().equals(player)) {
                 player.setStrategyPlace(-100);
                 role.setPlayer(changedPlayer);

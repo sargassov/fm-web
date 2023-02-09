@@ -1,5 +1,6 @@
 package ru.sargassov.fmweb.intermediate_spi;
 
+import ru.sargassov.fmweb.intermediate_entities.Placement;
 import ru.sargassov.fmweb.intermediate_entities.Player;
 import ru.sargassov.fmweb.intermediate_entities.Role;
 
@@ -14,4 +15,8 @@ public interface RoleIntermediateServiceSpi {
     void resetPlayerById(Long roleId);
 
     Role findByPlayer(Player player);
+
+    void rolePlacementRelation(Placement savedPlacement);
+
+    List<Role> findByPlacement(Placement userPlacement);
 }

@@ -19,6 +19,10 @@ public class Role extends BaseUserEntity {
     @JoinColumn(name = "id_team")
     private Team team;
 
+    @ManyToOne
+    @JoinColumn(name = "id_placement")
+    private Placement placement;
+
     @OneToOne
     @JoinColumn(name = "id_player")
     private Player player;
