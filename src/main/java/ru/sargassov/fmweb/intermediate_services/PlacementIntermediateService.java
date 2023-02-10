@@ -13,6 +13,7 @@ import ru.sargassov.fmweb.exceptions.PlayerNotFoundException;
 import ru.sargassov.fmweb.form.TeamPlacementPowerForm;
 import ru.sargassov.fmweb.intermediate_entities.Placement;
 import ru.sargassov.fmweb.intermediate_entities.Player;
+import ru.sargassov.fmweb.intermediate_entities.Role;
 import ru.sargassov.fmweb.intermediate_entities.Team;
 import ru.sargassov.fmweb.intermediate_entities.User;
 import ru.sargassov.fmweb.intermediate_repositories.PlacementIntermediateRepository;
@@ -95,7 +96,10 @@ public class PlacementIntermediateService implements PlacementIntermediateServic
         var anotherPlayerPositionNumber = defineAnotherPlayerPositionNumber(playerNumber, positionPlayerListNumbers);
         var changedPlayer = userTeam.findPlayerByNumber(anotherPlayerPositionNumber);
         var userPlacement = userTeam.getPlacement();
-        var userPlacementRoles = roleIntermediateService.findByPlacement(userPlacement);
+        var userPlacementRoles = roleIntermediateService.findByPlacement(userPlacement)
+                .stream()
+                .sorted(Comparator.comparing(Role::getPosNumber))
+                .collect(Collectors.toList());
 
         for (var role : userPlacementRoles) { //todo разобраться с ошибкой
             if (role.getPlayer().equals(player)) {

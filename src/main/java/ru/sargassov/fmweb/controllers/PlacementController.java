@@ -52,8 +52,8 @@ public class PlacementController {
     }
 
     @GetMapping("/placement/show_condition")
-    public void getShowCondition() {
-        log.info("PlacementController.getShowCondition");
-        dayIntermediateService.getShowCondition();
+    public Boolean showConditionResponse() {
+        log.info("PlacementController.showConditionResponse");
+        return dayIntermediateService.getShowCondition();
     }
 }
