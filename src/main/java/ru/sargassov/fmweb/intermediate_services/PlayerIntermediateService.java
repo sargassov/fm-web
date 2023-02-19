@@ -110,6 +110,8 @@ public class PlayerIntermediateService implements PlayerIntermediateServiceSpi {
         player.setTeam(team);
         player.setTrainingBalance(0);
         player.setTire(0);
+        var league = team.getLeague();
+        player.setLeague(league);
         var savedPlayer = repository.save(player);
         team.getPlayerList().add(savedPlayer);
     }

@@ -17,6 +17,7 @@ import ru.sargassov.fmweb.intermediate_entities.Player;
 import ru.sargassov.fmweb.intermediate_entities.User;
 import ru.sargassov.fmweb.intermediate_repositories.JuniorIntermediateRepository;
 import ru.sargassov.fmweb.intermediate_spi.JuniorIntermediateServiceSpi;
+import ru.sargassov.fmweb.intermediate_spi.PlayerIntermediateServiceSpi;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -32,6 +33,7 @@ public class JuniorIntermediateService implements JuniorIntermediateServiceSpi {
 
     private PlayerConverter playerConverter;
     private JuniorConverter juniorConverter;
+    private PlayerIntermediateServiceSpi playerIntermediateService;
 
     private JuniorIntermediateRepository repository;
     @Override
@@ -105,11 +107,18 @@ public class JuniorIntermediateService implements JuniorIntermediateServiceSpi {
                 return new TextResponse(y.getMessage());
             }
         }
-        var p = juniorConverter.intermediatePlayerEntityFromJuniorDto(juniorDto);
-        userTeam.setWealth(userTeamWealth.subtract(p.getPrice()));
-        userTeam.getPlayerList().add(p);
+        var player = juniorConverter.intermediatePlayerEntityFromJuniorDto(juniorDto);
+        player.setTeam(userTeam);
+        player.setUser(UserHolder.user);
+        player.setTrainingBalance(0);
+        player.setTire(0);
+        var league = userTeam.getLeague();
+        player.setLeague(league);
+        var savedPlayer = playerIntermediateService.save(player);
+        userTeam.setWealth(userTeamWealth.subtract(savedPlayer.getPrice()));
+        userTeam.getPlayerList().add(savedPlayer);
         delete(juniorDto.getId());;
         UserHolder.user.setYouthAcademyVisited(true);
-        return new TextResponse("Player " + p.getName() + " was invoked in Your team");
+        return new TextResponse("Player " + savedPlayer.getName() + " was invoked in Your team");
     }
 }
