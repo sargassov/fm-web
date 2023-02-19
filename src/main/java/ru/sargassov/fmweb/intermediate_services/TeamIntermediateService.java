@@ -37,6 +37,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static ru.sargassov.fmweb.constants.Constant.DEFAULT_STRATEGY_PLACE;
+
 @Service
 @Data
 @AllArgsConstructor
@@ -119,11 +121,11 @@ public class TeamIntermediateService implements TeamIntermediateServiceSpi {
         log.info("TeamService.autoFillPlacement for " + t.getName());
 
         var healhtyPlayersSelect = healhtyPlayersSelect(t); // только здоровые игроки
-
-        t.getPlacement().getRoles().forEach(role -> {
+        var roles = roleIntermediateService.findByPlacement(t.getPlacement());
+        roles.forEach(role -> {
             log.info(t.getName() + " " + role.getTitle());
             var suitablePlayers = getSuitablePlayers(healhtyPlayersSelect, role).stream()
-                    .filter(p -> p.getStrategyPlace() == -100)
+                    .filter(p -> p.getStrategyPlace() == DEFAULT_STRATEGY_PLACE)
                     .collect(Collectors.toList());// подходящие игроки на конкретную позицию
 
             var selectedPlayer = (findBest(suitablePlayers));

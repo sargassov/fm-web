@@ -22,6 +22,8 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static ru.sargassov.fmweb.constants.Constant.DEFAULT_STRATEGY_PLACE;
+
 @Service
 @AllArgsConstructor
 @Slf4j
@@ -45,7 +47,7 @@ public class PlayerService implements PlayerServiceSpi {
     @Override
     @Transactional
     public void resetAllStrategyPlaces(Team userTeam) {
-        userTeam.getPlayerList().forEach(p -> p.setStrategyPlace(-100));
+        userTeam.getPlayerList().forEach(p -> p.setStrategyPlace(DEFAULT_STRATEGY_PLACE));
     }
 
 //    @Override

@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static java.math.BigDecimal.valueOf;
+import static ru.sargassov.fmweb.constants.Constant.DEFAULT_STRATEGY_PLACE;
 
 @Service
 @Data
@@ -118,7 +119,7 @@ public class TransferService implements TransferServiceSpi {
         userTeam.setWealth(userTeam.getWealth().subtract(purchasedPlayer.getPrice()));
         userTeam.substractTransferExpenses(purchasedPlayer.getPrice());
         sellerTeam.setWealth(sellerTeam.getWealth().add(purchasedPlayer.getPrice()));
-        purchasedPlayer.setStrategyPlace(-100);
+        purchasedPlayer.setStrategyPlace(DEFAULT_STRATEGY_PLACE);
         purchasedPlayer.setCapitan(false);
         purchasedPlayer.setTeam(userTeam);
         userTeam.getPlayerList().add(purchasedPlayer);

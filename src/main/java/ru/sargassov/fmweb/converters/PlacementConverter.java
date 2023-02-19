@@ -10,6 +10,7 @@ import ru.sargassov.fmweb.dto.player_dtos.PlayerOnPagePlacementsDto;
 import ru.sargassov.fmweb.intermediate_entities.*;
 import ru.sargassov.fmweb.entities.PlacementEntity;
 import ru.sargassov.fmweb.intermediate_services.PlayerIntermediateService;
+import ru.sargassov.fmweb.intermediate_services.TeamIntermediateService;
 import ru.sargassov.fmweb.intermediate_spi.PlayerIntermediateServiceSpi;
 import ru.sargassov.fmweb.intermediate_spi.PlayerIntermediateServiceSpi2;
 import ru.sargassov.fmweb.intermediate_spi.RoleIntermediateServiceSpi;
@@ -25,6 +26,8 @@ public class PlacementConverter {
     private PlayerConverter playerConverter;
     private PlayerIntermediateServiceSpi2 playerIntermediateService2;
     private RoleIntermediateServiceSpi roleIntermediateService;
+
+    private TeamIntermediateService teamIntermediateService;
 
     public Placement getIntermediateEntityFromEntity(PlacementEntity placementEntity, Team team, User user){
         var placement = new Placement();
@@ -52,6 +55,7 @@ public class PlacementConverter {
         var role = new Role();
         role.setTitle(roleName);
         role.setPosNumber(count);
+        role.setPlacement(p);
         role.setUser(user);
         role.setTeam(team);
         return role;
@@ -66,7 +70,8 @@ public class PlacementConverter {
 
 
     public PlacementOnPagePlacementsDto getPlacementOnPagePlacementsDtoFromTeam() {
-        var userTeam = UserHolder.user.getUserTeam();
+        var userTeamId = UserHolder.user.getUserTeam().getId();
+        var userTeam = teamIntermediateService.getById(userTeamId);
         userTeam.setPlayerList(playerIntermediateService2.findByTeam(userTeam));
         userTeam.powerTeamCounter();
         PlacementOnPagePlacementsDto pOnPagePlDto = new PlacementOnPagePlacementsDto();
@@ -85,6 +90,8 @@ public class PlacementConverter {
                         .sorted(Comparator.comparing(Player::getStrategyPlace))
                         .collect(Collectors.toList());
 
+        var placement = userTeam.getPlacement();
+        var roles = roleIntermediateService.findByPlacement(placement);
         for (int i = 0; i < Constant.placementSize; i++) {
             final int finalI = i;
             Optional<Player> opt = playerList.stream().filter(p -> p.getStrategyPlace() == finalI).findFirst();
@@ -93,7 +100,7 @@ public class PlacementConverter {
                 pOnPagePlDto.setSize(pOnPagePlDto.getSize() + 1);
             }
             else {
-                String role = userTeam.getPlacement().getRoles().get(i).getTitle().toUpperCase(Locale.ROOT);
+                String role = roles.get(i).getTitle().toUpperCase(Locale.ROOT);
                 dtoList.add(new PlayerOnPagePlacementsDto("", 0, 0, role, 0));
             }
         }

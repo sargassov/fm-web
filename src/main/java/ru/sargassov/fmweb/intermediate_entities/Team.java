@@ -20,6 +20,7 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import static ru.sargassov.fmweb.constants.Constant.DEFAULT_STRATEGY_PLACE;
 import static ru.sargassov.fmweb.enums.PositionType.DEFENDER;
 import static ru.sargassov.fmweb.enums.PositionType.FORWARD;
 import static ru.sargassov.fmweb.enums.PositionType.GOALKEEPER;
@@ -330,7 +331,8 @@ public class Team extends BaseUserEntity {
 
     public void resetAllStrategyPlaces() {
         for(var p : playerList) {
-            p.setStrategyPlace(-100);
+            p.setStrategyPlace(DEFAULT_STRATEGY_PLACE);
+            p.setFirstEighteen(false);
         }
     }
 

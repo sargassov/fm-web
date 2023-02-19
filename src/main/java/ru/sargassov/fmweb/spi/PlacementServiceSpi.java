@@ -19,7 +19,7 @@ public interface PlacementServiceSpi {
 
     void fillPlacement(Team team, User user, int quantity);
 
-    void findByPlacementData(PlacementData placementData, Team team, User user);
+    void findByPlacementData(PlacementData placementData, Long teamId);
 
 //    List<Placement> getPlacementsFromPlacementApi();
 //

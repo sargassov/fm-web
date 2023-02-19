@@ -11,10 +11,7 @@ import ru.sargassov.fmweb.exceptions.CalendarException;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
-
-import static ru.sargassov.fmweb.constants.Constant.DEFAULT_BATCH_SIZE;
 
 @Entity
 @Table(name = "day")

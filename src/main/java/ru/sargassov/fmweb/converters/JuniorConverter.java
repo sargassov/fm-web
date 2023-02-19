@@ -14,6 +14,8 @@ import ru.sargassov.fmweb.services.PlayerPriceSetter;
 
 import java.util.Random;
 
+import static ru.sargassov.fmweb.constants.Constant.DEFAULT_STRATEGY_PLACE;
+
 @Component
 @RequiredArgsConstructor
 public class JuniorConverter {
@@ -102,7 +104,7 @@ public class JuniorConverter {
         p.setNatio(juniorDto.getNatio());
         p.setPower(juniorDto.getPower());
         p.setPrice(juniorDto.getPrice());
-        p.setStrategyPlace(-100);
+        p.setStrategyPlace(DEFAULT_STRATEGY_PLACE);
         var userTeam = UserHolder.user.getUserTeam();
         p.setTeam(userTeam);
         p.guessNumber(random.nextInt(99) + 1);

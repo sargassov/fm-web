@@ -12,6 +12,8 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Random;
 
+import static ru.sargassov.fmweb.constants.Constant.DEFAULT_STRATEGY_PLACE;
+
 @Entity
 @Table(name = "player")
 @Getter
@@ -242,7 +244,7 @@ public class Player extends BaseUserEntity {
     }
 
     public void resetStrategyPlace() {
-        strategyPlace = -100;
+        strategyPlace = DEFAULT_STRATEGY_PLACE;
     }
 
     //    private static PlayerPriceSetter priceSetter;

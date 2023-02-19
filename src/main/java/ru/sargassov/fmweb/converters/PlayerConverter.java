@@ -18,6 +18,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static ru.sargassov.fmweb.constants.Constant.DEFAULT_STRATEGY_PLACE;
+
 @Component
 @AllArgsConstructor
 @Slf4j
@@ -137,7 +139,7 @@ public class PlayerConverter {
         p.setName(createdPlayerDto.getName());
         p.setNatio(createdPlayerDto.getNatio());
         setSkillsOfIntermediateEntityForNewPlayerCreated(p, createdPlayerDto, user);
-        p.setStrategyPlace(-100);
+        p.setStrategyPlace(DEFAULT_STRATEGY_PLACE);
         p.guessPower();
         p.setTeam(user.getUserTeam());
         p.guessNumber(createdPlayerDto.getNumber());

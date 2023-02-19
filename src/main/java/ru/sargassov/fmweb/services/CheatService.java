@@ -27,6 +27,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static ru.sargassov.fmweb.constants.Constant.DEFAULT_STRATEGY_PLACE;
+
 @Service
 @AllArgsConstructor
 @Slf4j
@@ -95,7 +97,7 @@ public class CheatService implements CheatServiceSpi {
         player.setMidAble(94);
         player.setForwAble(98);
         player.setCaptainAble(89);
-        player.setStrategyPlace(-100);
+        player.setStrategyPlace(DEFAULT_STRATEGY_PLACE);
         player.setBirthYear(1987);
         player.setPosition(PositionType.FORWARD);
         player.guessPower();

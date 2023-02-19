@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.Objects.isNull;
+import static ru.sargassov.fmweb.constants.Constant.DEFAULT_STRATEGY_PLACE;
 import static ru.sargassov.fmweb.constants.TextConstant._3_4_3;
 import static ru.sargassov.fmweb.constants.TextConstant._3_5_2;
 import static ru.sargassov.fmweb.constants.TextConstant._4_3_3;
@@ -212,7 +213,7 @@ public final class MatchImitateProcessor {
             bestSubstitutionPlayerOnPosition = team.getAnyValidSubstitution(randomInjuryPlayerPosition);
         }
         var randomInjuryPlayerStrategyPlace = randomInjuryPlayer.getStrategyPlace();
-        randomInjuryPlayer.setStrategyPlace(-100);
+        randomInjuryPlayer.setStrategyPlace(DEFAULT_STRATEGY_PLACE);
         randomInjuryPlayer.setTrainingBalance(randomInjuryPlayer.getTrainingAble() / 2);
         if (bestSubstitutionPlayerOnPosition != null) {
             bestSubstitutionPlayerOnPosition.setStrategyPlace(randomInjuryPlayerStrategyPlace);

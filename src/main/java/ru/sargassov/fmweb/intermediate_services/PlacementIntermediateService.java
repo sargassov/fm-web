@@ -9,6 +9,7 @@ import ru.sargassov.fmweb.converters.PlacementConverter;
 import ru.sargassov.fmweb.dto.PlacementData;
 import ru.sargassov.fmweb.dto.PlacementOnPagePlacementsDto;
 import ru.sargassov.fmweb.entity_repositories.PlacementRepository;
+import ru.sargassov.fmweb.enums.PositionType;
 import ru.sargassov.fmweb.exceptions.PlayerNotFoundException;
 import ru.sargassov.fmweb.form.TeamPlacementPowerForm;
 import ru.sargassov.fmweb.intermediate_entities.Placement;
@@ -26,6 +27,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static ru.sargassov.fmweb.constants.Constant.DEFAULT_STRATEGY_PLACE;
 
 @Service
 @Data
@@ -63,12 +66,13 @@ public class PlacementIntermediateService implements PlacementIntermediateServic
     @Transactional
     @Override
     public void deletePlayerFromCurrentPlacement(String name) {
-        var userTeam = UserHolder.user.getUserTeam();
+        var userTeamId = UserHolder.user.getUserTeam().getId();
+        var userTeam = teamIntermediateService.getById(userTeamId);
         var userTeamPlacement = userTeam.getPlacement();
         var player = userTeam.findPlayerByName(name);
         player.resetStrategyPlace();
 
-        for (var role : userTeamPlacement.getRoles()) {
+        for (var role : roleIntermediateService.findByPlacement(userTeamPlacement)) {
             var rolePlayer = role.getPlayer();
             if (rolePlayer != null && rolePlayer.equals(player)) {
                 role.setPlayer(null);
@@ -87,14 +91,18 @@ public class PlacementIntermediateService implements PlacementIntermediateServic
     @Override
     @Transactional
     public void changePlayerInPlacement(String name) {
-        var userTeam = UserHolder.user.getUserTeam();
-        var player = userTeam.findPlayerByName(name);
-        var position = player.getPosition();
+        // Получаем id команды
+        var userTeamId = UserHolder.user.getUserTeam().getId();
+        // Получаем сущность команды
+        var userTeam = teamIntermediateService.getById(userTeamId);
+        // Получаем игрока, которого хотим заменить в расстановке
+        var changedPlayer = userTeam.findPlayerByName(name);
+        var position = changedPlayer.getPosition();
         var positionPlayerList = userTeam.findPlayersByPosition(position);
-        var positionPlayerListNumbers = getPositionPlayersListNumbers(positionPlayerList, player);
-        var playerNumber = player.getNumber();
+        var positionPlayerListNumbers = getPositionPlayersListNumbers(positionPlayerList, changedPlayer);
+        var playerNumber = changedPlayer.getNumber();
         var anotherPlayerPositionNumber = defineAnotherPlayerPositionNumber(playerNumber, positionPlayerListNumbers);
-        var changedPlayer = userTeam.findPlayerByNumber(anotherPlayerPositionNumber);
+        var changeablePlayer = userTeam.findPlayerByNumber(anotherPlayerPositionNumber);
         var userPlacement = userTeam.getPlacement();
         var userPlacementRoles = roleIntermediateService.findByPlacement(userPlacement)
                 .stream()
@@ -102,10 +110,10 @@ public class PlacementIntermediateService implements PlacementIntermediateServic
                 .collect(Collectors.toList());
 
         for (var role : userPlacementRoles) {
-            if (role.getPlayer().equals(player)) {
-                player.setStrategyPlace(-100);
-                role.setPlayer(changedPlayer);
-                changedPlayer.setStrategyPlace(role.getPosNumber());
+            if (role.getPlayer().equals(changedPlayer)) {
+                changedPlayer.setStrategyPlace(DEFAULT_STRATEGY_PLACE);
+                role.setPlayer(changeablePlayer);
+                changeablePlayer.setStrategyPlace(role.getPosNumber());
                 return;
             }
         }
