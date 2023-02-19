@@ -25,6 +25,7 @@ import ru.sargassov.fmweb.intermediate_spi.CoachIntermediateServiceSpi;
 import ru.sargassov.fmweb.intermediate_spi.DayIntermediateServiceSpi;
 import ru.sargassov.fmweb.intermediate_spi.MarketIntermediateServiceSpi;
 import ru.sargassov.fmweb.intermediate_spi.PlayerIntermediateServiceSpi;
+import ru.sargassov.fmweb.intermediate_spi.PlayerIntermediateServiceSpi2;
 import ru.sargassov.fmweb.intermediate_spi.RoleIntermediateServiceSpi;
 import ru.sargassov.fmweb.intermediate_spi.TeamIntermediateServiceSpi;
 
@@ -50,6 +51,7 @@ public class TeamIntermediateService implements TeamIntermediateServiceSpi {
     private final BankIntermediateServiceSpi bankIntermediateService;
     private final CoachIntermediateServiceSpi coachIntermediateService;
     private final MarketIntermediateServiceSpi marketIntermediateService;
+    private final PlayerIntermediateServiceSpi2 playerIntermediateService;
 
     @Override
     public List<Team> save(List<Team> newTeamsWithoutId) {
@@ -163,9 +165,10 @@ public class TeamIntermediateService implements TeamIntermediateServiceSpi {
     @Transactional
     @Override
     public void setNewCaptainHandle(String name){
-        Player nowCap, futureCap;
+        Player nowCap = null, futureCap;
+        var userTeam = UserHolder.user.getUserTeam();
         try{
-            nowCap = getCaptainOfUserTeam();
+            nowCap = playerIntermediateService.findCaptainByTeam(userTeam);
             nowCap.setCapitan(false);
         }
         catch (RuntimeException r) {
@@ -173,6 +176,8 @@ public class TeamIntermediateService implements TeamIntermediateServiceSpi {
         }
         futureCap = getPlayerByNameFromUserTeam(name);
         futureCap.setCapitan(true);
+        playerIntermediateService.save(futureCap);
+        playerIntermediateService.save(nowCap);
     }
 
     @Override

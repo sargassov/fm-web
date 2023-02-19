@@ -31,9 +31,9 @@ angular.module('captains', ['ngStorage']).controller('captainsController', funct
 
     $scope.setToCaptain = function (name) {
         $http.put(contextPath + '/team/captain', name)
-            .then(function successCallback(responce) {
+            .then(function successCallback() {
                 $scope.loadPlayersSort(9)
-            }, function errorCallback(responce) {
+            }, function errorCallback() {
                 alert('TEAM NAME NOT FOUND');
             });
     };

@@ -50,7 +50,8 @@ public class NewDayService implements NewDayServiceSpi {
             notesOfChangesArray[i] = s;
             i++;
         }
-        currentDay.setNoteOfChanges(notesOfChangesArray);
+        var newCurrentDay = dayIntermediateService.findByPresent();
+        newCurrentDay.setNoteOfChanges(notesOfChangesArray);
         return true;
     }
 

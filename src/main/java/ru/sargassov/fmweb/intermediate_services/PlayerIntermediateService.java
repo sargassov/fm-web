@@ -110,7 +110,12 @@ public class PlayerIntermediateService implements PlayerIntermediateServiceSpi {
         createdPlayersValidator.teamEnoughCreditsValidate(player, team);
         team.setWealth(team.getWealth().subtract(player.getPrice()));
         team.substractTransferExpenses(player.getPrice());
-        team.getPlayerList().add(player);
+        player.setUser(UserHolder.user);
+        player.setTeam(team);
+        player.setTrainingBalance(0);
+        player.setTire(0);
+        var savedPlayer = repository.save(player);
+        team.getPlayerList().add(savedPlayer);
     }
 
     @Override

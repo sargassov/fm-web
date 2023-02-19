@@ -101,7 +101,7 @@ public class PlacementIntermediateService implements PlacementIntermediateServic
                 .sorted(Comparator.comparing(Role::getPosNumber))
                 .collect(Collectors.toList());
 
-        for (var role : userPlacementRoles) { //todo разобраться с ошибкой
+        for (var role : userPlacementRoles) {
             if (role.getPlayer().equals(player)) {
                 player.setStrategyPlace(-100);
                 role.setPlayer(changedPlayer);

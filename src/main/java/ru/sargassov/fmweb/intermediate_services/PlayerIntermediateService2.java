@@ -23,4 +23,14 @@ public class PlayerIntermediateService2 implements PlayerIntermediateServiceSpi2
     public List<Player> findByTeam(Team team) {
         return repository.findByTeam(team);
     }
+
+    @Override
+    public Player save(Player player) {
+        return repository.save(player);
+    }
+
+    @Override
+    public Player findCaptainByTeam(Team userTeam) {
+        return repository.findCapitanFromTeam(userTeam);
+    }
 }

@@ -8,4 +8,8 @@ import java.util.List;
 public interface PlayerIntermediateServiceSpi2 {
 
     List<Player> findByTeam(Team userTeam);
+
+    Player save (Player player);
+
+    Player findCaptainByTeam(Team userTeam);
 }

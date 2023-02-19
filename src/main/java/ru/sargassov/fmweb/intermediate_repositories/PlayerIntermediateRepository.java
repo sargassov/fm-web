@@ -23,4 +23,7 @@ public interface PlayerIntermediateRepository extends JpaRepository<Player, Long
     void resetStrategyPlaceByUserAndPlayerName(Integer resetStrategyPlace, String playerName, User user);
 
     List<Player> findByTeam(Team team);
+
+    @Query("select p from  Player p where p.isCapitan = true and p.team = ?1")
+    Player findCapitanFromTeam(Team userTeam);
 }
