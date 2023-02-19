@@ -55,13 +55,9 @@ public class PlayerIntermediateService implements PlayerIntermediateServiceSpi {
         var team = user.getUserTeam();
 
         do {
-            try {
-                player = repository.findByTeamAndNumberAndUser(team, number += i, user);
-            } catch (RuntimeException r) {
-                log.error("Player with number = " + number + " not found");
-                if (number > 99 && i > 0) number = 0;
-                if (number < 1 && i < 0) number = 100;
-            }
+            player = repository.findByTeamAndNumberAndUser(team, number += i, user);
+            if (number > 99 && i > 0) number = 0;
+            if (number < 1 && i < 0) number = 100;
         } while (player == null);
 
         return PlayerConverter.getPlayerSoftSkillDtoFromIntermediateEntity(player);
