@@ -245,6 +245,7 @@ public class Player extends BaseUserEntity {
 
     public void resetStrategyPlace() {
         strategyPlace = DEFAULT_STRATEGY_PLACE;
+        firstEighteen = false;
     }
 
     //    private static PlayerPriceSetter priceSetter;

@@ -111,11 +111,11 @@ public class PlacementIntermediateService implements PlacementIntermediateServic
         var changeablePlayer = userTeam.findPlayerByNumber(anotherPlayerPositionNumber);
 
         if (changedPlayer != null) {
-            changedPlayer.setStrategyPlace(DEFAULT_STRATEGY_PLACE);
+            changedPlayer.resetStrategyPlace();
         }
         targetRole.setPlayer(changeablePlayer);
         changeablePlayer.setStrategyPlace(place);
-        //todo разобраться с багом неправильного отображения заполнения расстановки игроков
+        changeablePlayer.setFirstEighteen(true);
     }
 
     private List<Integer> getPositionPlayersListNumbers(List<Player> positionPlayerList, Player currentPlayer) {
