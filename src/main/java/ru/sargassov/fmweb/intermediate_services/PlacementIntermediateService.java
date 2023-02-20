@@ -8,6 +8,7 @@ import ru.sargassov.fmweb.constants.UserHolder;
 import ru.sargassov.fmweb.converters.PlacementConverter;
 import ru.sargassov.fmweb.dto.PlacementData;
 import ru.sargassov.fmweb.dto.PlacementOnPagePlacementsDto;
+import ru.sargassov.fmweb.dto.player_dtos.PlayerOnPagePlacementsDto;
 import ru.sargassov.fmweb.entity_repositories.PlacementRepository;
 import ru.sargassov.fmweb.enums.PositionType;
 import ru.sargassov.fmweb.exceptions.PlayerNotFoundException;
@@ -69,16 +70,13 @@ public class PlacementIntermediateService implements PlacementIntermediateServic
         var userTeamId = UserHolder.user.getUserTeam().getId();
         var userTeam = teamIntermediateService.getById(userTeamId);
         var userTeamPlacement = userTeam.getPlacement();
-        var player = userTeam.findPlayerByName(name);
-        player.resetStrategyPlace();
+        var deletedPlayer = userTeam.findPlayerByName(name);
+        var deletedPlayerStrategyPlace = deletedPlayer.getStrategyPlace();
+        deletedPlayer.resetStrategyPlace();
 
-        for (var role : roleIntermediateService.findByPlacement(userTeamPlacement)) {
-            var rolePlayer = role.getPlayer();
-            if (rolePlayer != null && rolePlayer.equals(player)) {
-                role.setPlayer(null);
-                break;
-            }
-        }
+        var userTeamPlacementRoles = roleIntermediateService.findByPlacement(userTeamPlacement);
+        var targetRole = userTeamPlacementRoles.get(deletedPlayerStrategyPlace);
+        targetRole.setPlayer(null);
     }
 
     @Override
@@ -90,38 +88,38 @@ public class PlacementIntermediateService implements PlacementIntermediateServic
 
     @Override
     @Transactional
-    public void changePlayerInPlacement(String name) {
+    public void changePlayerInPlacement(Integer place) {
         // Получаем id команды
         var userTeamId = UserHolder.user.getUserTeam().getId();
         // Получаем сущность команды
         var userTeam = teamIntermediateService.getById(userTeamId);
-        // Получаем игрока, которого хотим заменить в расстановке
-        var changedPlayer = userTeam.findPlayerByName(name);
-        var position = changedPlayer.getPosition();
-        var positionPlayerList = userTeam.findPlayersByPosition(position);
-        var positionPlayerListNumbers = getPositionPlayersListNumbers(positionPlayerList, changedPlayer);
-        var playerNumber = changedPlayer.getNumber();
-        var anotherPlayerPositionNumber = defineAnotherPlayerPositionNumber(playerNumber, positionPlayerListNumbers);
-        var changeablePlayer = userTeam.findPlayerByNumber(anotherPlayerPositionNumber);
         var userPlacement = userTeam.getPlacement();
         var userPlacementRoles = roleIntermediateService.findByPlacement(userPlacement)
                 .stream()
                 .sorted(Comparator.comparing(Role::getPosNumber))
                 .collect(Collectors.toList());
 
-        for (var role : userPlacementRoles) {
-            if (role.getPlayer().equals(changedPlayer)) {
-                changedPlayer.setStrategyPlace(DEFAULT_STRATEGY_PLACE);
-                role.setPlayer(changeablePlayer);
-                changeablePlayer.setStrategyPlace(role.getPosNumber());
-                return;
-            }
+        var targetRole = userPlacementRoles.get(place);
+        var changedPlayer = targetRole.getPlayer();
+        var targetPosition = PositionType.defineByDescription(targetRole.getTitle());
+        var positionPlayerList = userTeam.findPlayersByPosition(targetPosition);
+        var positionPlayerListNumbers = getPositionPlayersListNumbers(positionPlayerList, changedPlayer);
+        var playerNumber = changedPlayer != null
+                ? changedPlayer.getNumber()
+                : 0;
+        var anotherPlayerPositionNumber = defineAnotherPlayerPositionNumber(playerNumber, positionPlayerListNumbers);
+        var changeablePlayer = userTeam.findPlayerByNumber(anotherPlayerPositionNumber);
+
+        if (changedPlayer != null) {
+            changedPlayer.setStrategyPlace(DEFAULT_STRATEGY_PLACE);
         }
-        throw new PlayerNotFoundException("Player " + name + " not found in user placement");
+        targetRole.setPlayer(changeablePlayer);
+        changeablePlayer.setStrategyPlace(place);
+        //todo разобраться с багом неправильного отображения заполнения расстановки игроков
     }
 
     private List<Integer> getPositionPlayersListNumbers(List<Player> positionPlayerList, Player currentPlayer) {
-       return positionPlayerList.stream()
+        return positionPlayerList.stream()
                 .filter(p -> p.getStrategyPlace() < 0 || p.equals(currentPlayer))
                 .sorted(Comparator.comparing(Player::getNumber))
                 .map(pl -> pl.getNumber())
@@ -130,6 +128,10 @@ public class PlacementIntermediateService implements PlacementIntermediateServic
 
     private Integer defineAnotherPlayerPositionNumber(Integer playerNumber, List<Integer> positionPlayerListNumbers) {
         Integer anotherPlayerPositionNumber = null;
+        if (playerNumber == 0) {
+            return positionPlayerListNumbers.get(0);
+        }
+
         for (int x = 0; x < positionPlayerListNumbers.size(); x++) {
             if (positionPlayerListNumbers.get(x).equals(playerNumber)) {
                 if (x < positionPlayerListNumbers.size() - 1) {

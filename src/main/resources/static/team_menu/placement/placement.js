@@ -55,8 +55,8 @@ angular.module('placement', ['ngStorage']).controller('placementController', fun
             });
     };
 
-    $scope.changePlayerInPlacement = function (name) {
-        $http.post(contextPath + '/placement/change_player/' + name)
+    $scope.changePlayerInPlacement = function (place) {
+        $http.post(contextPath + '/placement/change_player/' + place)
             .then(function successCallback() {
                 $scope.loadCurrentPlacement();
             }, function errorCallback() {

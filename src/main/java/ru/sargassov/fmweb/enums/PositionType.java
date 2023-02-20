@@ -24,11 +24,24 @@ public enum PositionType {
     }
 
     public static PositionType defineByDescription(String description) {
-        for (var pt : values()) {
-            if (pt.getDescription().equals(description)) {
-                return pt;
-            }
+        switch (description) {
+            case "GS":
+                return GOALKEEPER;
+            case "DS":
+                return DEFENDER;
+            case "MS":
+                return MIDFIELDER;
+            case "FS":
+                return FORWARD;
+            default:
+                for (var pt : values()) {
+                    if (pt.getDescription().equals(description)) {
+                        return pt;
+                    }
+                }
+                throw new IllegalStateException("Wrong position type description");
         }
-        throw new IllegalStateException("Wrong position type description");
+
+
     }
 }

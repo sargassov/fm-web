@@ -111,10 +111,10 @@ public class PlayerConverter {
         return "";
     }
 
-    public PlayerOnPagePlacementsDto getPlayerHardSkillDtoFromIntermediateEntity(Player p) {
+    public PlayerOnPagePlacementsDto getPlayerHardSkillDtoFromIntermediateEntity(Player p, Integer roleCount) {
         PlayerOnPagePlacementsDto pOnPagePlDto = new PlayerOnPagePlacementsDto();
         complectSkillsOfPlayerDto(pOnPagePlDto, p);
-        pOnPagePlDto.setStrategyPlace(p.getStrategyPlace());
+        pOnPagePlDto.setPlace(roleCount);
         pOnPagePlDto.setNumber(p.getNumber());
         pOnPagePlDto.setPower(p.getPower());
         pOnPagePlDto.setPosition(p.getPosition().toString());

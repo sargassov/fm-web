@@ -91,17 +91,20 @@ public class PlacementConverter {
                         .collect(Collectors.toList());
 
         var placement = userTeam.getPlacement();
-        var roles = roleIntermediateService.findByPlacement(placement);
+        var roles = roleIntermediateService.findByPlacement(placement)
+                .stream()
+                .sorted(Comparator.comparing(Role::getPosNumber))
+                .collect(Collectors.toList());
         for (int i = 0; i < Constant.placementSize; i++) {
             final int finalI = i;
             Optional<Player> opt = playerList.stream().filter(p -> p.getStrategyPlace() == finalI).findFirst();
             if(opt.isPresent()){
-                dtoList.add(playerConverter.getPlayerHardSkillDtoFromIntermediateEntity(opt.get()));
+                dtoList.add(playerConverter.getPlayerHardSkillDtoFromIntermediateEntity(opt.get(), i));
                 pOnPagePlDto.setSize(pOnPagePlDto.getSize() + 1);
             }
             else {
                 String role = roles.get(i).getTitle().toUpperCase(Locale.ROOT);
-                dtoList.add(new PlayerOnPagePlacementsDto("", 0, 0, role, 0));
+                dtoList.add(new PlayerOnPagePlacementsDto("", i, 0, role, 0));
             }
         }
         return dtoList;

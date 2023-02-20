@@ -2,6 +2,7 @@ package ru.sargassov.fmweb.intermediate_spi;
 
 import ru.sargassov.fmweb.dto.PlacementData;
 import ru.sargassov.fmweb.dto.PlacementOnPagePlacementsDto;
+import ru.sargassov.fmweb.dto.player_dtos.PlayerOnPagePlacementsDto;
 import ru.sargassov.fmweb.intermediate_entities.Placement;
 import ru.sargassov.fmweb.intermediate_entities.Team;
 import ru.sargassov.fmweb.intermediate_entities.User;
@@ -19,7 +20,7 @@ public interface PlacementIntermediateServiceSpi {
 
     void autoFillCurrentPlacement(Team team);
 
-    void changePlayerInPlacement(String name);
+    void changePlayerInPlacement(Integer place);
 
     List<Placement> findByUser(User user);
 

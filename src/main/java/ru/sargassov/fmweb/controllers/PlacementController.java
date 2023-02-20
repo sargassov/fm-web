@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.sargassov.fmweb.constants.UserHolder;
 import ru.sargassov.fmweb.dto.PlacementData;
 import ru.sargassov.fmweb.dto.PlacementOnPagePlacementsDto;
+import ru.sargassov.fmweb.dto.player_dtos.PlayerOnPagePlacementsDto;
 import ru.sargassov.fmweb.intermediate_spi.DayIntermediateServiceSpi;
 import ru.sargassov.fmweb.intermediate_spi.PlacementIntermediateServiceSpi;
 import ru.sargassov.fmweb.intermediate_spi.TeamIntermediateServiceSpi;
@@ -41,17 +42,16 @@ public class PlacementController {
         placementIntermediateService.autoFillCurrentPlacement(team);
     }
 
-
     @DeleteMapping("/placement/delete/{name}")
     public void deletePlayerFromCurrentPlacement(@PathVariable String name) {
         log.info("PlacementController.deletePlayerFromCurrentPlacement");
         placementIntermediateService.deletePlayerFromCurrentPlacement(name);
     }
 
-    @PostMapping("/placement/change_player/{name}")
-    public void changePlayerInPlacement(@PathVariable String name) {
+    @PostMapping("/placement/change_player/{place}")
+    public void changePlayerInPlacement(@PathVariable Integer place) {
         log.info("PlacementController.changePlayerInPlacement");
-        placementIntermediateService.changePlayerInPlacement(name);
+        placementIntermediateService.changePlayerInPlacement(place);
     }
 
     @GetMapping("/placement/show_condition")
