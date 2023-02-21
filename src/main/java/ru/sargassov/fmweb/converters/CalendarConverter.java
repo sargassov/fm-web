@@ -65,6 +65,10 @@ public class CalendarConverter {
         for(var g : allGoalsSorted) {
             goals.append(g.getScorePlayer().getName()).append("(").append(g.getMin()).append("), ");
         }
+        var stringGoals = goals.toString();
+        if (stringGoals.isEmpty()) {
+            return stringGoals;
+        }
         return goals.substring(0, goals.length() - 2);
     }
 
