@@ -33,4 +33,9 @@ public class PlayerIntermediateService2 implements PlayerIntermediateServiceSpi2
     public Player findCaptainByTeam(Team userTeam) {
         return repository.findCapitanFromTeam(userTeam);
     }
+
+    @Override
+    public void remove(Player player) {
+        repository.delete(player);
+    }
 }

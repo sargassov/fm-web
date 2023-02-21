@@ -353,4 +353,13 @@ public class TeamIntermediateService implements TeamIntermediateServiceSpi {
             }
         }
     }
+
+    @Override
+    @Transactional
+    public void removePlayerFromTeam(Team userTeam, Player player) {
+        var playerList = userTeam.getPlayerList();
+        playerList.remove(player);
+        roleIntermediateService.setFreeFromRoleIfExists(userTeam, player);
+        playerIntermediateService.remove(player);
+    }
 }

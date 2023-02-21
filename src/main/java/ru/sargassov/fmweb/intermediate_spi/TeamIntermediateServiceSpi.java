@@ -51,4 +51,6 @@ public interface TeamIntermediateServiceSpi {
     List<String> setMarketingChanges();
 
     void setPlayerRecovery();
+
+    void removePlayerFromTeam(Team userTeam, Player soldPlayer);
 }

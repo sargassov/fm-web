@@ -16,7 +16,6 @@ import ru.sargassov.fmweb.exceptions.TransferException;
 import ru.sargassov.fmweb.intermediate_entities.Team;
 import ru.sargassov.fmweb.intermediate_spi.PlayerIntermediateServiceSpi;
 import ru.sargassov.fmweb.intermediate_spi.TeamIntermediateServiceSpi;
-import ru.sargassov.fmweb.spi.PlayerServiceSpi;
 import ru.sargassov.fmweb.spi.TransferServiceSpi;
 
 import javax.transaction.Transactional;
@@ -45,7 +44,8 @@ public class TransferService implements TransferServiceSpi {
     public TeamOnPagePlayersDto getNameOfOpponentTeam(Integer parameter, Integer delta) {
 
         var user = UserHolder.user;
-        var userTeam = user.getUserTeam();
+        var userTeamId = user.getUserTeam().getId();
+        var userTeam = teamIntermediateService.getById(userTeamId);
         var teams = teamIntermediateService.findAllByUser(user)
                 .stream()
                 .sorted(Comparator.comparing(Team::getName))
@@ -95,7 +95,8 @@ public class TransferService implements TransferServiceSpi {
     @Transactional
     @Override
     public List<IdNamePricePlayerDto> getSellingList() {
-        var userTeam = UserHolder.user.getUserTeam();
+        var userTeamId = UserHolder.user.getUserTeam().getId();
+        var userTeam = teamIntermediateService.getById(userTeamId);
         return userTeam.getPlayerList().stream()
                 .map(playerIntermediateService::getIdNamePricePlayerDtoFromPlayer)
                 .sorted(Comparator.comparing(IdNamePricePlayerDto::getPrice, Comparator.reverseOrder()))
@@ -106,7 +107,8 @@ public class TransferService implements TransferServiceSpi {
     @Override
     public void buyNewPlayer(PlayerSoftSkillDto playerSoftSkillDto) {
         var sellerTeam = teamIntermediateService.getById(playerSoftSkillDto.getTeamId());
-        var userTeam = UserHolder.user.getUserTeam();
+        var userTeamId = UserHolder.user.getUserTeam().getId();
+        var userTeam = teamIntermediateService.getById(userTeamId);
         var userTeamWealth = userTeam.getWealth();
         var purchasedPlayer = sellerTeam.findPlayerById(playerSoftSkillDto.getId());
         if (purchasedPlayer == null) {
@@ -133,7 +135,9 @@ public class TransferService implements TransferServiceSpi {
     @Transactional
     @Override
     public void sellPlayer(Long id) {
-        var userTeam = UserHolder.user.getUserTeam();
+        var userTeamId = UserHolder.user.getUserTeam().getId();
+        var userTeam = teamIntermediateService.getById(userTeamId);
+        var userTeamPlayerList = userTeam.getPlayerList();
         var soldPlayer = userTeam.findPlayerById(id);
         if (soldPlayer == null) {
             throw new TransferException("Player with id #" + id + " not found in " + userTeam.getName());
@@ -141,11 +145,12 @@ public class TransferService implements TransferServiceSpi {
         if (userTeam.getPlayerList().size() == 18) {
             throw new TransferException("You can't have less than 18 players in your team");
         }
-        userTeam.getPlayerList().remove(soldPlayer);
+        teamIntermediateService.removePlayerFromTeam(userTeam, soldPlayer);
         var halfPriceOfPlayer = soldPlayer.getPrice().divide(valueOf(2), RoundingMode.HALF_UP);
         userTeam.setWealth(userTeam.getWealth().add(halfPriceOfPlayer));
         userTeam.addTransferExpenses(halfPriceOfPlayer);
         teamService.addJuniorToTeam(userTeam, soldPlayer.getPosition());
         teamIntermediateService.captainAppointment(userTeam);
+        teamIntermediateService.save(userTeam);
     }
 }

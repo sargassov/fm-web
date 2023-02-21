@@ -3,6 +3,7 @@ package ru.sargassov.fmweb.intermediate_spi;
 import ru.sargassov.fmweb.intermediate_entities.Placement;
 import ru.sargassov.fmweb.intermediate_entities.Player;
 import ru.sargassov.fmweb.intermediate_entities.Role;
+import ru.sargassov.fmweb.intermediate_entities.Team;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,4 +20,6 @@ public interface RoleIntermediateServiceSpi {
     void rolePlacementRelation(Placement savedPlacement);
 
     List<Role> findByPlacement(Placement userPlacement);
+
+    void setFreeFromRoleIfExists(Team userTeam, Player player);
 }

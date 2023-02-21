@@ -80,7 +80,7 @@ public class CoachIntermediateService implements CoachIntermediateServiceSpi {
         }
 
         var coaches = userTeam.getCoaches();
-        userTeam.setWealth(userTeam.getWealth().subtract(coachPrice)); //todo разобраться почему за тренеров не взимаются деньги
+        userTeam.setWealth(userTeam.getWealth().subtract(coachPrice));
         userTeam.substractPersonalExpenses(coachPrice);
         coaches.add(save(coach));
         teamIntermediateService.save(userTeam);

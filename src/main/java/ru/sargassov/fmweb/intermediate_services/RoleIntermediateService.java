@@ -8,11 +8,14 @@ import ru.sargassov.fmweb.constants.UserHolder;
 import ru.sargassov.fmweb.intermediate_entities.Placement;
 import ru.sargassov.fmweb.intermediate_entities.Player;
 import ru.sargassov.fmweb.intermediate_entities.Role;
+import ru.sargassov.fmweb.intermediate_entities.Team;
 import ru.sargassov.fmweb.intermediate_repositories.RoleIntermediateRepository;
 import ru.sargassov.fmweb.intermediate_spi.RoleIntermediateServiceSpi;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static ru.sargassov.fmweb.constants.Constant.DEFAULT_STRATEGY_PLACE;
 
 @Service
 @Data
@@ -51,5 +54,20 @@ public class RoleIntermediateService implements RoleIntermediateServiceSpi {
     @Override
     public List<Role> findByPlacement(Placement placement) {
         return repository.findByPlacement(placement);
+    }
+
+    @Override
+    public void setFreeFromRoleIfExists(Team userTeam, Player player) {
+        final var strategyPlace = player.getStrategyPlace();
+        var targetRole = findByPlacement(userTeam.getPlacement())
+                .stream()
+                .filter(r -> r.getPosNumber() == strategyPlace)
+                .findFirst()
+                .orElse(null);
+        if (targetRole != null) {
+            targetRole.setPlayer(null);
+            player.setStrategyPlace(DEFAULT_STRATEGY_PLACE);
+            save(targetRole);
+        }
     }
 }

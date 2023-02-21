@@ -12,4 +12,6 @@ public interface PlayerIntermediateServiceSpi2 {
     Player save (Player player);
 
     Player findCaptainByTeam(Team userTeam);
+
+    void remove(Player player);
 }
