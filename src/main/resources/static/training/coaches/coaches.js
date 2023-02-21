@@ -32,18 +32,18 @@ angular.module('coaches', ['ngStorage']).controller('coachesController', functio
 
     $scope.addNewCoach = function () {
         $http.get(contextPath + '/coach/new/responce')
-            .then(function successCallback(response) {
+            .then(function successCallback() {
                 window.location.href = '../add_new_coach/add_new_coach.html';
-            }, function errorCallback(response) {
+            }, function errorCallback() {
                 alert('YOU CANT ADD ONE MORE COACH')
             });
     };
 
     $scope.setCoachFree = function (id) {
         $http.delete(contextPath + '/coach/delete/' + id)
-            .then(function successCallback(response) {
+            .then(function successCallback() {
                 $scope.loadCoaches();
-            }, function errorCallback(response) {
+            }, function errorCallback() {
                 alert('YOU CANT DELETE THIS COACH')
             });
     };

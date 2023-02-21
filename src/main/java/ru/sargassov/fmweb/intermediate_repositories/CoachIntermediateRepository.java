@@ -9,5 +9,6 @@ import java.util.List;
 
 @Repository
 public interface CoachIntermediateRepository extends JpaRepository<Coach, Long> {
+
     List<Coach> findByTeam(Team team);
 }

@@ -10,9 +10,11 @@ import java.util.List;
 
 public interface CoachIntermediateServiceSpi {
 
+    Coach save(Coach coach);
+
     List<CoachDto> getAllCoachFromUserTeam();
 
-    void newCoachPurchaseResponce();
+    void newCoachPurchaseResponse();
 
     void createNewCoach(CoachDto coachDto);
 

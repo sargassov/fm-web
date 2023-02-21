@@ -107,7 +107,9 @@ public class TeamIntermediateService implements TeamIntermediateServiceSpi {
 
     @Override
     public TeamOnPagePlayersDto getNameOfUserTeam() {
-        return teamConverter.dtoToTeamOnPagePlayersDto(UserHolder.user.getUserTeam());
+        var userTeamId = UserHolder.user.getUserTeam().getId();
+        var userTeam = repository.getById(userTeamId);
+        return teamConverter.dtoToTeamOnPagePlayersDto(userTeam);
     }
 
     @Override

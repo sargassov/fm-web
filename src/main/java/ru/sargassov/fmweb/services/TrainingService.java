@@ -8,6 +8,7 @@ import ru.sargassov.fmweb.comparators.TrainingPlayersComparators;
 import ru.sargassov.fmweb.constants.UserHolder;
 import ru.sargassov.fmweb.converters.PlayerConverter;
 import ru.sargassov.fmweb.dto.player_dtos.PlayerOnTrainingDto;
+import ru.sargassov.fmweb.intermediate_spi.TeamIntermediateServiceSpi;
 import ru.sargassov.fmweb.spi.TrainingServiceSpi;
 
 import javax.transaction.Transactional;
@@ -22,12 +23,14 @@ public class TrainingService implements TrainingServiceSpi {
 
     private final PlayerConverter playerConverter;
     private final TrainingPlayersComparators trainingPlayersComparators;
+    private final TeamIntermediateServiceSpi teamIntermediateService;
 
     @Transactional
     @Override
     public List<PlayerOnTrainingDto> getAllPlayersOnTrainingByUserTeam(Integer parameter) {
         log.info("TrainingService.getAllPlayersOnTrainingByUserTeam()");
-        var userTeam = UserHolder.user.getUserTeam();
+        var userTeamId = UserHolder.user.getUserTeam().getId();
+        var userTeam = teamIntermediateService.getById(userTeamId);
         var players = userTeam.getPlayerList();
         var playerOnTrainingDtos = players.stream()
                 .map(playerConverter::getPlayerOnTrainingDtoFromPlayer)

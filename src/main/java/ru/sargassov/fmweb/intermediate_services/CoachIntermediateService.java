@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ObjectUtils;
 import ru.sargassov.fmweb.constants.UserHolder;
 import ru.sargassov.fmweb.converters.CoachConverter;
 import ru.sargassov.fmweb.dto.CoachDto;
@@ -15,7 +14,7 @@ import ru.sargassov.fmweb.intermediate_entities.Player;
 import ru.sargassov.fmweb.intermediate_entities.Team;
 import ru.sargassov.fmweb.intermediate_repositories.CoachIntermediateRepository;
 import ru.sargassov.fmweb.intermediate_spi.CoachIntermediateServiceSpi;
-import ru.sargassov.fmweb.intermediate_spi.TeamIntermediateServiceSpi;
+import ru.sargassov.fmweb.intermediate_spi.TeamIntermediateServiceSpi2;
 
 import javax.transaction.Transactional;
 import java.util.Comparator;
@@ -23,7 +22,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static java.util.Objects.nonNull;
 import static ru.sargassov.fmweb.constants.Constant.MAX_TIRE_FOR_TRAIN;
 import static ru.sargassov.fmweb.intermediate_entities.Coach.CoachProgram.STANDART;
 import static ru.sargassov.fmweb.intermediate_entities.Team.MAX_VALUE_OF_COACHES;
@@ -36,24 +34,33 @@ public class CoachIntermediateService implements CoachIntermediateServiceSpi {
 
     private final CoachConverter coachConverter;
     private final CoachIntermediateRepository repository;
+    private final TeamIntermediateServiceSpi2 teamIntermediateService;
     private static final String CANT_PURCHASE_MORE_COACHES = "You have 6 coaches from 6. You can't purchase more";
     private static final String HAVENT_MONEY_TO_ADD_THIS_COACH = "Your club haven't money to add this coach";
     private static final String NONE = "N/N";
 
     @Override
+    public Coach save(Coach coach) {
+        return repository.save(coach);
+    }
+
+    @Override
     @Transactional
     public List<CoachDto> getAllCoachFromUserTeam() {
         var user  = UserHolder.user;
-        var userTeam = user.getUserTeam();
+        var userTeamId = user.getUserTeam().getId();
+        var userTeam = teamIntermediateService.getById(userTeamId);
         return userTeam.getCoaches().stream()
                 .map(coachConverter::getCoachDtoFromIntermediateEntity)
+                .sorted(Comparator.comparing(CoachDto::getId))
                 .collect(Collectors.toList());
     }
 
     @Override
     @Transactional
-    public void newCoachPurchaseResponce() {
-        var userTeam = UserHolder.user.getUserTeam();
+    public void newCoachPurchaseResponse() {
+        var userTeamId = UserHolder.user.getUserTeam().getId();
+        var userTeam = teamIntermediateService.getById(userTeamId);
         if (userTeam.getCoaches().size() == MAX_VALUE_OF_COACHES)
             throw new CoachException(CANT_PURCHASE_MORE_COACHES);
     }
@@ -61,22 +68,22 @@ public class CoachIntermediateService implements CoachIntermediateServiceSpi {
     @Override
     @Transactional
     public void createNewCoach(CoachDto coachDto) {
-        var userTeam = UserHolder.user.getUserTeam();
-        var wealth = userTeam.getWealth();
+        var userTeamId = UserHolder.user.getUserTeam().getId();
+        var userTeam = teamIntermediateService.getById(userTeamId);
         var coach = coachConverter.getIntermediateEntityFromCoachDto(coachDto);
         var coachPrice = coach.getPrice();
         coach.setTeam(userTeam);
-        newCoachPurchaseResponce();
+        newCoachPurchaseResponse();
 
-        if(coachPrice.compareTo(wealth) > 0)
+        if (coachPrice.compareTo(userTeam.getWealth()) > 0) {
             throw new CoachException(HAVENT_MONEY_TO_ADD_THIS_COACH);
-        else {
-            var coaches = userTeam.getCoaches();
-            userTeam.setWealth(wealth.subtract(coachPrice));
-            userTeam.substractPersonalExpenses(coachPrice);
-            coaches.add(coach);
         }
-        repository.save(coach);
+
+        var coaches = userTeam.getCoaches();
+        userTeam.setWealth(userTeam.getWealth().subtract(coachPrice)); //todo разобраться почему за тренеров не взимаются деньги
+        userTeam.substractPersonalExpenses(coachPrice);
+        coaches.add(save(coach));
+        teamIntermediateService.save(userTeam);
     }
 
     @Override
@@ -89,7 +96,8 @@ public class CoachIntermediateService implements CoachIntermediateServiceSpi {
     @Transactional
     public void changePlayerOnTrain(CoachDto coachDto) {
         var coachId = coachDto.getId();
-        var userTeam = UserHolder.user.getUserTeam();
+        var userTeamId = UserHolder.user.getUserTeam().getId();
+        var userTeam = teamIntermediateService.getById(userTeamId);
         var coach = userTeam.getCoachById(coachId);
         var players = getPlayerComparingByNumberAndPositionOfCoach(coach);
         Player player;
@@ -112,7 +120,8 @@ public class CoachIntermediateService implements CoachIntermediateServiceSpi {
     @Override
     @Transactional
     public List<Player> getPlayerComparingByNumberAndPositionOfCoach(Coach coach){
-        var userTeam = coach.getTeam();
+        var userTeamId = UserHolder.user.getUserTeam().getId();
+        var userTeam = teamIntermediateService.getById(userTeamId);
         return userTeam.getPlayerList().stream()
                 .filter(p -> p.getPosition().equals(coach.getPosition()))
                 .sorted(Comparator.comparing(Player::getNumber))
@@ -160,7 +169,8 @@ public class CoachIntermediateService implements CoachIntermediateServiceSpi {
     @Override
     @Transactional
     public void deleteByid(Long id) {
-        var userTeam = UserHolder.user.getUserTeam();
+        var userTeamId = UserHolder.user.getUserTeam().getId();
+        var userTeam = teamIntermediateService.getById(userTeamId);
         var userTeamCoaches = userTeam.getCoaches();
         userTeamCoaches.removeIf(c -> c.getId().equals(id));
         repository.deleteById(id);
@@ -174,7 +184,8 @@ public class CoachIntermediateService implements CoachIntermediateServiceSpi {
     @Override
     @Transactional
     public void changeTrainingProgram(Long id, Integer programValue) {
-        var userTeam = UserHolder.user.getUserTeam();
+        var userTeamId = UserHolder.user.getUserTeam().getId();
+        var userTeam = teamIntermediateService.getById(userTeamId);
         var coach = userTeam.getCoachById(id);
         var coachPrograms = Coach.CoachProgram.values();
         coach.setCoachProgram(coachPrograms[programValue]);
@@ -182,4 +193,6 @@ public class CoachIntermediateService implements CoachIntermediateServiceSpi {
         var playerOnTraining = coach.getPlayerOnTraining();
         guessTrainingAble(coach, playerOnTraining);
     }
+
+
 }

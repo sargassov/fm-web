@@ -1,15 +1,6 @@
 angular.module('training_balance', ['ngStorage']).controller('training_balanceController', function ($scope, $rootScope, $http, $localStorage) {
     const contextPath = 'http://localhost:7777/fm';
 
-    // $scope.loadPlayers = function () {
-    //     $http.get(contextPath + '/team/players')
-    //         .then(function successCallback(response) {
-    //             $scope.Players = response.data;
-    //         }, function errorCallback(response) {
-    //             alert('PLAYERS OF YOUR TEAM NOT FOUND');
-    //         });
-    // };
-
     $scope.loadPlayersOnTrainSort = function (parameter) {
         $http.get(contextPath + '/team/players_on_training/' + parameter)
             .then(function successCallback(response) {

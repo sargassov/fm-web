@@ -24,7 +24,7 @@ public class CoachController {
     @GetMapping("/coach/new/responce")
     public void newCoachPurchaseResponce() {
         log.info("CoachController.newCoachPurchaseResponce");
-        coachIntermediateService.newCoachPurchaseResponce();
+        coachIntermediateService.newCoachPurchaseResponse();
     }
 
     @PostMapping("/coach/new/cost")
