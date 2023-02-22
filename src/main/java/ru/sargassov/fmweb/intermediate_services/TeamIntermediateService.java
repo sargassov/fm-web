@@ -192,7 +192,8 @@ public class TeamIntermediateService implements TeamIntermediateServiceSpi {
 
     private Player getPlayerByNameFromUserTeam(String name) {
         var user = UserHolder.user;
-        var userTeam = user.getUserTeam();
+        var userTeamId = user.getUserTeam().getId();
+        var userTeam = getById(userTeamId);
         return userTeam.findPlayerByName(name);
     }
 
@@ -223,7 +224,8 @@ public class TeamIntermediateService implements TeamIntermediateServiceSpi {
         var noteOfChanges = new ArrayList<String>();
         var user = UserHolder.user;
         var teams = repository.findByUser(user);
-        var userTeam = user.getUserTeam();
+        var userTeamId = user.getUserTeam().getId();
+        var userTeam = getById(userTeamId);
         for (var t : teams) {
             if (!t.equals(userTeam)) {
                 noteOfChanges.addAll(t.setRandomTrainingEffects());
@@ -259,7 +261,8 @@ public class TeamIntermediateService implements TeamIntermediateServiceSpi {
     @Override
     @Transactional
     public List<String> setFinanceUpdates() {
-        var userTeam = UserHolder.user.getUserTeam();
+        var userTeamId = UserHolder.user.getUserTeam().getId();
+        var userTeam = getById(userTeamId);
         var day = dayIntermediateService.findByPresent();
         return setFinanceUpdates(userTeam, day);
     }
@@ -316,7 +319,8 @@ public class TeamIntermediateService implements TeamIntermediateServiceSpi {
     }
 
     public List<String> setMarketingChanges(Day day) {
-        var userTeam = UserHolder.user.getUserTeam();
+        var userTeamId = UserHolder.user.getUserTeam().getId();
+        var userTeam = getById(userTeamId);
         var notesOfChanges = new ArrayList<String>();
         var markets = marketIntermediateService.findByTeam(userTeam);
         var stadium = userTeam.getStadium();

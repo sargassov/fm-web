@@ -130,6 +130,8 @@ public class TransferService implements TransferServiceSpi {
         sellerTeam.getPlayerList().remove(purchasedPlayer);
         teamService.addJuniorToTeam(sellerTeam, purchasedPlayer.getPosition());
         teamIntermediateService.captainAppointment(sellerTeam);
+        teamIntermediateService.save(sellerTeam);
+        teamIntermediateService.save(userTeam);
     }
 
     @Transactional
