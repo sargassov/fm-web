@@ -8,10 +8,8 @@ import ru.sargassov.fmweb.constants.UserHolder;
 import ru.sargassov.fmweb.converters.PlacementConverter;
 import ru.sargassov.fmweb.dto.PlacementData;
 import ru.sargassov.fmweb.dto.PlacementOnPagePlacementsDto;
-import ru.sargassov.fmweb.dto.player_dtos.PlayerOnPagePlacementsDto;
 import ru.sargassov.fmweb.entity_repositories.PlacementRepository;
 import ru.sargassov.fmweb.enums.PositionType;
-import ru.sargassov.fmweb.exceptions.PlayerNotFoundException;
 import ru.sargassov.fmweb.form.TeamPlacementPowerForm;
 import ru.sargassov.fmweb.intermediate_entities.Placement;
 import ru.sargassov.fmweb.intermediate_entities.Player;
@@ -29,7 +27,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static ru.sargassov.fmweb.constants.Constant.DEFAULT_STRATEGY_PLACE;
 
 @Service
 @Data

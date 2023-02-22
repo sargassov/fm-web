@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.sargassov.fmweb.converters.SponsorConverter;
-import ru.sargassov.fmweb.intermediate_entities.Sponsor;
 import ru.sargassov.fmweb.intermediate_entities.Team;
 import ru.sargassov.fmweb.entity_repositories.SponsorRepository;
 import ru.sargassov.fmweb.intermediate_entities.User;
@@ -13,7 +12,6 @@ import ru.sargassov.fmweb.intermediate_spi.TeamIntermediateServiceSpi;
 import ru.sargassov.fmweb.spi.SponsorServiceSpi;
 
 import javax.transaction.Transactional;
-import java.util.List;
 import java.util.stream.Collectors;
 
 @Service

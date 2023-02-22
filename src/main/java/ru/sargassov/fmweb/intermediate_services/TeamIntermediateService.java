@@ -2,7 +2,6 @@ package ru.sargassov.fmweb.intermediate_services;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.sargassov.fmweb.comparators.TeamsPlayersComparators;
@@ -24,7 +23,6 @@ import ru.sargassov.fmweb.intermediate_spi.BankIntermediateServiceSpi;
 import ru.sargassov.fmweb.intermediate_spi.CoachIntermediateServiceSpi;
 import ru.sargassov.fmweb.intermediate_spi.DayIntermediateServiceSpi;
 import ru.sargassov.fmweb.intermediate_spi.MarketIntermediateServiceSpi;
-import ru.sargassov.fmweb.intermediate_spi.PlayerIntermediateServiceSpi;
 import ru.sargassov.fmweb.intermediate_spi.PlayerIntermediateServiceSpi2;
 import ru.sargassov.fmweb.intermediate_spi.RoleIntermediateServiceSpi;
 import ru.sargassov.fmweb.intermediate_spi.TeamIntermediateServiceSpi;
@@ -34,7 +32,6 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static ru.sargassov.fmweb.constants.Constant.DEFAULT_STRATEGY_PLACE;

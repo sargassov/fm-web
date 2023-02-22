@@ -9,7 +9,6 @@ import ru.sargassov.fmweb.intermediate_entities.User;
 import java.util.List;
 
 public interface CityIntermediateServiceSpi {
-//    City findExistsOrSave(City city, Team team);
 
     List<City> save(List<City> notSavedCities);
 

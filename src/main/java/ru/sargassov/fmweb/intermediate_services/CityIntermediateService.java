@@ -4,15 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ru.sargassov.fmweb.entities.CityEntity;
 import ru.sargassov.fmweb.intermediate_entities.City;
-import ru.sargassov.fmweb.intermediate_entities.Stadium;
 import ru.sargassov.fmweb.intermediate_entities.Team;
 import ru.sargassov.fmweb.intermediate_entities.User;
 import ru.sargassov.fmweb.intermediate_repositories.CityIntermediateRepository;
 import ru.sargassov.fmweb.intermediate_spi.CityIntermediateServiceSpi;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 

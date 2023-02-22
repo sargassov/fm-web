@@ -3,18 +3,14 @@ package ru.sargassov.fmweb.services;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.sargassov.fmweb.converters.DayConverter;
-import ru.sargassov.fmweb.converters.MatchConverter;
 import ru.sargassov.fmweb.intermediate_entities.*;
 import ru.sargassov.fmweb.entities.DayEntity;
 import ru.sargassov.fmweb.entity_repositories.DayRepository;
 import ru.sargassov.fmweb.intermediate_spi.DayIntermediateServiceSpi;
-import ru.sargassov.fmweb.intermediate_spi.DrawIntermediateServiceSpi;
 import ru.sargassov.fmweb.intermediate_spi.MatchIntermediateServiceSpi;
 import ru.sargassov.fmweb.spi.DayServiceSpi;
-import ru.sargassov.fmweb.spi.UserServiceSpi;
 
 import javax.transaction.Transactional;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;

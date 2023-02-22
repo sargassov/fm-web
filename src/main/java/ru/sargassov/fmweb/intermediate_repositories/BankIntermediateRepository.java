@@ -7,7 +7,6 @@ import ru.sargassov.fmweb.intermediate_entities.Team;
 import ru.sargassov.fmweb.intermediate_entities.User;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface BankIntermediateRepository extends JpaRepository<Bank, Long> {

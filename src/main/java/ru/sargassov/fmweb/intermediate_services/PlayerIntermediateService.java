@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.sargassov.fmweb.constants.UserHolder;
 import ru.sargassov.fmweb.converters.PlayerConverter;
-import ru.sargassov.fmweb.dto.PlacementOnPagePlacementsDto;
 import ru.sargassov.fmweb.dto.PriceResponce;
 import ru.sargassov.fmweb.dto.player_dtos.CreatedPlayerDto;
 import ru.sargassov.fmweb.dto.player_dtos.IdNamePricePlayerDto;
@@ -20,7 +19,6 @@ import ru.sargassov.fmweb.validators.CreatedPlayersValidator;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Data

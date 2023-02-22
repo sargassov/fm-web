@@ -2,15 +2,9 @@ package ru.sargassov.fmweb.intermediate_entities;
 
 import lombok.*;
 import ru.sargassov.fmweb.constants.BaseUserEntity;
-import ru.sargassov.fmweb.dto.BankDto;
-import ru.sargassov.fmweb.dto.FinalPayment;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "bank")

@@ -5,18 +5,13 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.sargassov.fmweb.converters.PlayerConverter;
-import ru.sargassov.fmweb.dto.player_dtos.CreatedPlayerDto;
-import ru.sargassov.fmweb.dto.PriceResponce;
-import ru.sargassov.fmweb.dto.player_dtos.IdNamePricePlayerDto;
 import ru.sargassov.fmweb.intermediate_entities.League;
 import ru.sargassov.fmweb.intermediate_entities.Player;
-import ru.sargassov.fmweb.dto.player_dtos.PlayerSoftSkillDto;
 import ru.sargassov.fmweb.intermediate_entities.Team;
 import ru.sargassov.fmweb.entity_repositories.PlayerRepository;
 import ru.sargassov.fmweb.intermediate_entities.User;
 import ru.sargassov.fmweb.intermediate_spi.PlayerIntermediateServiceSpi;
 import ru.sargassov.fmweb.spi.PlayerServiceSpi;
-import ru.sargassov.fmweb.validators.CreatedPlayersValidator;
 
 import javax.transaction.Transactional;
 import java.util.List;

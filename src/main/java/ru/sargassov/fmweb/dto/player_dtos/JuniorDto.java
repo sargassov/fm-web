@@ -1,6 +1,5 @@
 package ru.sargassov.fmweb.dto.player_dtos;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -4,7 +4,6 @@ import lombok.Data;
 import ru.sargassov.fmweb.intermediate_entities.Coach;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 import static ru.sargassov.fmweb.intermediate_entities.Coach.CoachType.LOCAL;
 import static ru.sargassov.fmweb.intermediate_entities.Coach.CoachType.PROFESSIONAL;

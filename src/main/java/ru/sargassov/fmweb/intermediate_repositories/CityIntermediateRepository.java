@@ -1,9 +1,7 @@
 package ru.sargassov.fmweb.intermediate_repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-import ru.sargassov.fmweb.entities.CityEntity;
 import ru.sargassov.fmweb.intermediate_entities.City;
 import ru.sargassov.fmweb.intermediate_entities.User;
 

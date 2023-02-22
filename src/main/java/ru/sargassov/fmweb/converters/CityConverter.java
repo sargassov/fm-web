@@ -6,7 +6,6 @@ import ru.sargassov.fmweb.intermediate_entities.City;
 import ru.sargassov.fmweb.intermediate_entities.League;
 import ru.sargassov.fmweb.entities.CityEntity;
 import ru.sargassov.fmweb.intermediate_entities.User;
-import ru.sargassov.fmweb.intermediate_spi.CityIntermediateServiceSpi;
 
 @Component
 @AllArgsConstructor

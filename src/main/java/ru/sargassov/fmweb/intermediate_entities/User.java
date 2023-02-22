@@ -1,7 +1,6 @@
 package ru.sargassov.fmweb.intermediate_entities;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import ru.sargassov.fmweb.constants.IntermediateEntity;

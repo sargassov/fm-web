@@ -9,9 +9,7 @@ import ru.sargassov.fmweb.dto.PlacementOnPagePlacementsDto;
 import ru.sargassov.fmweb.dto.player_dtos.PlayerOnPagePlacementsDto;
 import ru.sargassov.fmweb.intermediate_entities.*;
 import ru.sargassov.fmweb.entities.PlacementEntity;
-import ru.sargassov.fmweb.intermediate_services.PlayerIntermediateService;
 import ru.sargassov.fmweb.intermediate_services.TeamIntermediateService;
-import ru.sargassov.fmweb.intermediate_spi.PlayerIntermediateServiceSpi;
 import ru.sargassov.fmweb.intermediate_spi.PlayerIntermediateServiceSpi2;
 import ru.sargassov.fmweb.intermediate_spi.RoleIntermediateServiceSpi;
 

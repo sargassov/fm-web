@@ -9,10 +9,7 @@ import ru.sargassov.fmweb.converters.CalendarConverter;
 import ru.sargassov.fmweb.dto.IntegerDto;
 import ru.sargassov.fmweb.dto.NameOfMonthDto;
 import ru.sargassov.fmweb.dto.days_dtos.EventDto;
-import ru.sargassov.fmweb.exceptions.MatchException;
-import ru.sargassov.fmweb.intermediate_entities.Team;
 import ru.sargassov.fmweb.intermediate_entities.Day;
-import ru.sargassov.fmweb.intermediate_entities.Match;
 import ru.sargassov.fmweb.intermediate_spi.DayIntermediateServiceSpi;
 import ru.sargassov.fmweb.spi.CalendarServiceSpi;
 

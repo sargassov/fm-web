@@ -15,7 +15,6 @@ import ru.sargassov.fmweb.intermediate_entities.Player;
 import ru.sargassov.fmweb.intermediate_entities.User;
 import ru.sargassov.fmweb.spi.CheatServiceSpi;
 import ru.sargassov.fmweb.spi.PlayerServiceSpi;
-import ru.sargassov.fmweb.spi.UserServiceSpi;
 
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
@@ -23,7 +22,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 

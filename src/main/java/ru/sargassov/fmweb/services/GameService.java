@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.sargassov.fmweb.constants.UserHolder;
 import ru.sargassov.fmweb.dto.UserData;
-import ru.sargassov.fmweb.intermediate_spi.HeadCoachIntermediateServiceSpi;
 import ru.sargassov.fmweb.intermediate_spi.UserIntermediateServiceSpi;
 import ru.sargassov.fmweb.spi.*;
 

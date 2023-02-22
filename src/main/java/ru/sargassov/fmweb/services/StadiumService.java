@@ -3,21 +3,15 @@ package ru.sargassov.fmweb.services;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ru.sargassov.fmweb.constants.StadiumAnalytics;
 import ru.sargassov.fmweb.converters.StadiumConverter;
-import ru.sargassov.fmweb.dto.text_responses.InformationDto;
-import ru.sargassov.fmweb.exceptions.StadiumException;
 import ru.sargassov.fmweb.intermediate_entities.Stadium;
-import ru.sargassov.fmweb.intermediate_entities.Team;
 import ru.sargassov.fmweb.entity_repositories.StadiumRepository;
 import ru.sargassov.fmweb.intermediate_entities.User;
 import ru.sargassov.fmweb.intermediate_spi.LeagueIntermediateServiceSpi;
 import ru.sargassov.fmweb.intermediate_spi.StadiumIntermediateServiceSpi;
-import ru.sargassov.fmweb.spi.LeagueServiceSpi;
 import ru.sargassov.fmweb.spi.StadiumServiceSpi;
 
 import javax.transaction.Transactional;
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 

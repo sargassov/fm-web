@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.*;
 import ru.sargassov.fmweb.constants.UserHolder;
 import ru.sargassov.fmweb.dto.PlacementData;
 import ru.sargassov.fmweb.dto.PlacementOnPagePlacementsDto;
-import ru.sargassov.fmweb.dto.player_dtos.PlayerOnPagePlacementsDto;
 import ru.sargassov.fmweb.intermediate_spi.DayIntermediateServiceSpi;
 import ru.sargassov.fmweb.intermediate_spi.PlacementIntermediateServiceSpi;
 import ru.sargassov.fmweb.intermediate_spi.TeamIntermediateServiceSpi;

@@ -3,12 +3,10 @@ package ru.sargassov.fmweb.intermediate_repositories;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-import ru.sargassov.fmweb.dto.days_dtos.DayDto;
 import ru.sargassov.fmweb.intermediate_entities.Day;
 import ru.sargassov.fmweb.intermediate_entities.User;
 
 import java.time.LocalDate;
-import java.time.Month;
 import java.util.List;
 
 @Repository

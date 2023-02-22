@@ -11,7 +11,6 @@ import ru.sargassov.fmweb.intermediate_entities.Day;
 import ru.sargassov.fmweb.intermediate_entities.Goal;
 import ru.sargassov.fmweb.intermediate_entities.Team;
 import ru.sargassov.fmweb.intermediate_entities.Match;
-import ru.sargassov.fmweb.services.UserService;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -24,7 +23,6 @@ public class CalendarConverter {
 
     private static final String PASSED = "Passed";
     private static final String EMPTY = "";
-    private final UserService userService;
 
     public EventDto getEventDtoFromTourDayEntity(Day matchDay){
         var eventDto = new EventDto();
