@@ -454,6 +454,16 @@ public class Team extends BaseUserEntity {
                 .orElseThrow();
     }
 
+    public Bank getLoanById(Long id) {
+        var bank = loans.stream()
+                .filter(l -> l.getId().equals(id))
+                .findFirst();
+        if (bank.isEmpty()) {
+            throw new BankNotFoundException("Bank with number #" + id + " not found");
+        }
+        return bank.get();
+    }
+
     //    public Team(String info) {
 //        //        markets = new ArrayList<>();
 //        coaches = new ArrayList<>();

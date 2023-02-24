@@ -14,6 +14,7 @@ import ru.sargassov.fmweb.intermediate_entities.Sponsor;
 import ru.sargassov.fmweb.intermediate_entities.User;
 import ru.sargassov.fmweb.intermediate_repositories.SponsorIntermediateRepository;
 import ru.sargassov.fmweb.intermediate_spi.SponsorIntermediateServiceSpi;
+import ru.sargassov.fmweb.intermediate_spi.TeamIntermediateServiceSpi;
 
 import javax.persistence.EntityExistsException;
 import javax.transaction.Transactional;
@@ -27,6 +28,7 @@ import java.util.stream.Collectors;
 public class SponsorIntermediateService implements SponsorIntermediateServiceSpi {
 
     private SponsorIntermediateRepository repository;
+    private TeamIntermediateServiceSpi teamIntermediateService;
 
     private SponsorConverter sponsorConverter;
 
@@ -68,7 +70,8 @@ public class SponsorIntermediateService implements SponsorIntermediateServiceSpi
 
     @Override
     public TextResponse getStartSponsorMessage() {
-        var userTeam = UserHolder.user.getUserTeam();
+        var userTeamId = UserHolder.user.getUserTeam().getId();
+        var userTeam = teamIntermediateService.getById(userTeamId);
         var response = new TextResponse();
         var answer = TextConstant.permissionToChangeSponsor(userTeam.isChangeSponsor());
         response.setResponse(answer);
@@ -87,7 +90,8 @@ public class SponsorIntermediateService implements SponsorIntermediateServiceSpi
     @Override
     @Transactional
     public void changeSponsor(SponsorDto sponsorDto) {
-        var userTeam = UserHolder.user.getUserTeam();
+        var userTeamId = UserHolder.user.getUserTeam().getId();
+        var userTeam = teamIntermediateService.getById(userTeamId);
         var sponsor = userTeam.getSponsor();
         userTeam.setWealth(userTeam.getWealth().subtract(sponsor.getContractBonusWage()));
 

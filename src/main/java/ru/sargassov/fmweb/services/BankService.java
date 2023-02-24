@@ -14,6 +14,7 @@ import ru.sargassov.fmweb.intermediate_entities.Team;
 import ru.sargassov.fmweb.entity_repositories.BankRepository;
 import ru.sargassov.fmweb.intermediate_entities.User;
 import ru.sargassov.fmweb.intermediate_spi.BankIntermediateServiceSpi;
+import ru.sargassov.fmweb.intermediate_spi.TeamIntermediateServiceSpi;
 import ru.sargassov.fmweb.spi.BankServiceSpi;
 import ru.sargassov.fmweb.validators.LoanValidator;
 
@@ -30,6 +31,7 @@ public class BankService implements BankServiceSpi {
     private final BankRepository bankRepository;
     private final BankConverter bankConverter;
     private final BankIntermediateServiceSpi bankIntermediateService;
+    private final TeamIntermediateServiceSpi teamIntermediateService;
     private final LoanValidator loanValidator;
 
     @Transactional
@@ -58,7 +60,8 @@ public class BankService implements BankServiceSpi {
     @Transactional
     @Override
     public void remainCurrentLoan(LoanDto loan) {
-        var userteam = UserHolder.user.getUserTeam();
+        var userteamId = UserHolder.user.getUserTeam().getId();
+        var userteam = teamIntermediateService.getById(userteamId);
 
         if (userteam.getWealth().compareTo(loan.getRemainsToPay()) < 0){
             throw new TooExpensiveException(userteam.getName() + " haven't enough money (" + loan.getRemainsToPay() + ") to remains this loan!");
@@ -69,23 +72,23 @@ public class BankService implements BankServiceSpi {
         var banks = bankIntermediateService.findAllByUser(UserHolder.user);
         var bank = bankIntermediateService.findById(loan.getId());
         bank.remainLoan();
-        userteam.getLoans().remove(bank);
     }
 
     @Transactional
     @Override
     public void takeNewLoan(BankDto loan) {
         loanValidator.validate(loan);
-        var userTeam = UserHolder.user.getUserTeam();
+        var userTeamId = UserHolder.user.getUserTeam().getId();
+        var userTeam = teamIntermediateService.getById(userTeamId);
+        var userTeamLoans = userTeam.getLoans();
         var bank = bankIntermediateService.findById(loan.getId());
-        bankConverter.getFullLoanInformation(bank, loan);
+        bankConverter.getFullLoanInformation(bank, loan, userTeam);
         bank.setActive(false);
-        userTeam.getLoans().add(bank);
+        userTeamLoans.add(bank);
         userTeam.setWealth(userTeam.getWealth().add(bank.getTookMoney()));
     }
 
     @Override
-    @Transactional
     public List<LoanDto> getLoanDtoFromIntermediateEntity(Team userTeam) {
         return userTeam.getLoans().stream()
                 .map(bankConverter::getLoanDtoFromIntermediateEntity)

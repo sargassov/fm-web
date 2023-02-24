@@ -273,7 +273,7 @@ public class TeamIntermediateService implements TeamIntermediateServiceSpi {
         team.setWealth(team.getWealth().add(teamSponsor.getDayWage()));
         notesOfChanges.add("Sponsor " + teamSponsor.getName() + " gave your team " + teamSponsor.getDayWage() + " Euro. It is day wage.");
 
-        if(day.isMatch()){
+        if (day.isMatch()){
             team.setWealth(team.getWealth().add(teamSponsor.getMatchWage()));
             notesOfChanges.add("Sponsor " + teamSponsor.getName() + " gave your team " + teamSponsor.getMatchWage() + " Euro. It is match wage.");
         }

@@ -1,6 +1,7 @@
 package ru.sargassov.fmweb.services;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.sargassov.fmweb.constants.FinanceAnalytics;
 import ru.sargassov.fmweb.constants.TextConstant;
@@ -12,11 +13,11 @@ import ru.sargassov.fmweb.intermediate_spi.TeamIntermediateServiceSpi;
 import ru.sargassov.fmweb.spi.BankServiceSpi;
 import ru.sargassov.fmweb.spi.FinanceServiceSpi;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class FinanceService implements FinanceServiceSpi {
 
     private final BankServiceSpi bankService;
@@ -36,7 +37,6 @@ public class FinanceService implements FinanceServiceSpi {
         return FinanceAnalytics.getExpenses(userTeam);
     }
 
-    @Transactional
     @Override
     public List<LoanDto> loadCurrentLoans() {
         var userTeamId = UserHolder.user.getUserTeam().getId();

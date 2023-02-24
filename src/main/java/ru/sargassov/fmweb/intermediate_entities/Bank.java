@@ -76,6 +76,7 @@ public class Bank extends BaseUserEntity {
 
     public void remainLoan() {
         dateOfLoan = null;
+        team = null;
         remainsDate = null;
         payPerDay = null;
         payPerWeek = null;

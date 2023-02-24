@@ -7,6 +7,7 @@ import ru.sargassov.fmweb.dto.LoanDto;
 import ru.sargassov.fmweb.intermediate_entities.Bank;
 import ru.sargassov.fmweb.entities.BankEntity;
 import ru.sargassov.fmweb.intermediate_entities.Day;
+import ru.sargassov.fmweb.intermediate_entities.Team;
 import ru.sargassov.fmweb.intermediate_entities.User;
 import ru.sargassov.fmweb.intermediate_spi.DayIntermediateServiceSpi;
 
@@ -57,10 +58,10 @@ public class BankConverter {
                 .multiply(BigDecimal.valueOf(percent));
     }
 
-    public void getFullLoanInformation(Bank bank, BankDto loan) {
+    public void getFullLoanInformation(Bank bank, BankDto loan, Team team) {
         bank.setTypeOfReturn(Bank.guessTypeOfReturn(loan.getTypeOfReturn()));
-        bank.setId(loan.getId());
         setExpenses(bank, loan);
+        bank.setTeam(team);
         bank.setAlreadyPaid(BigDecimal.ZERO);
         bank.setRemainMoney(loan.getFullLoanCoeff());
         bank.setTookMoney(loan.getTookMoney());
