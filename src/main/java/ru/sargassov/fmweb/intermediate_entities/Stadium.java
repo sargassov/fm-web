@@ -129,7 +129,7 @@ public class Stadium extends BaseUserEntity {
         } else if (type.startsWith("Away")) {
             awayTicketCost = typeTicketCost;
         } else {
-            throw new StadiumException("Using unavaliable type");
+            throw new StadiumException("Using unavailable type");
         }
     }
 

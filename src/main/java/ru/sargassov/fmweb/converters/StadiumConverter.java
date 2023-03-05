@@ -14,17 +14,18 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class StadiumConverter {
     private final CityIntermediateServiceSpi cityIntermediateService;
-    public Stadium getIntermediateEntityFromEntity(StadiumEntity enitity, User user, League league) {
-        var cityEntityId = enitity.getCityEntity().getId();
+    public Stadium getIntermediateEntityFromEntity(StadiumEntity entity, User user, League league) {
+        var cityEntityId = entity.getCityEntity().getId();
         Stadium stadium = new Stadium();
         stadium.setUser(user);
-        stadium.setStadiumEntityId(enitity.getId());
-        stadium.setTitle(enitity.getTitle());
+        stadium.setStadiumEntityId(entity.getId());
+        stadium.setTitle(entity.getTitle());
         stadium.setLeague(league);
-        stadium.setFullCapacity(enitity.getFullCapacity());
+        stadium.setFullCapacity(entity.getFullCapacity());
         stadium.setUsualAverageCapacity((int) (stadium.getFullCapacity() * 0.3));
         stadium.setSimpleCapacity(stadium.getUsualAverageCapacity());
-        stadium.setSimpleTicketCost(BigDecimal.valueOf(0.00004));
+
+        stadium.setSimpleTicketCost(new BigDecimal(40));
         stadium.setFamilyTicketCost(BigDecimal.ZERO);
         stadium.setFanTicketCost(BigDecimal.ZERO);
         stadium.setAwayTicketCost(BigDecimal.ZERO);

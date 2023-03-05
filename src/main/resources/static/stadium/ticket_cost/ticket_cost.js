@@ -5,7 +5,7 @@ angular.module('ticket_cost', ['ngStorage']).controller('ticket_costController',
         $http.get(contextPath + '/stadium/status_info')
             .then(function successCallback(response) {
                 $scope.StadiumCurrentInfo = response.data;
-            }, function errorCallback(response) {
+            }, function errorCallback() {
                 alert('STADIUM CURRENT INFO NOT FOUND');
             });
     };
@@ -14,7 +14,7 @@ angular.module('ticket_cost', ['ngStorage']).controller('ticket_costController',
         $http.get(contextPath + '/stadium/ticket_cost/information')
             .then(function successCallback(response) {
                 $scope.TicketCostInformation = response.data;
-            }, function errorCallback(response) {
+            }, function errorCallback() {
                 alert('TICKET COST INFORMATION NOT FOUND');
             });
     };
@@ -22,11 +22,11 @@ angular.module('ticket_cost', ['ngStorage']).controller('ticket_costController',
     $scope.changeTicketCost = function (type, delta) {
         var obj = {type: type, value: delta}
         $http.post(contextPath + '/stadium/ticket_cost/change', obj)
-            .then(function successCallback(response) {
+            .then(function successCallback() {
                 $scope.loadCurrentStadiumStatus();
                 $scope.loadTicketCostInformation();
-            }, function errorCallback(response) {
-                alert('CHANGE OF TICKET COSY NOT AVAILABLE');
+            }, function errorCallback() {
+                alert('CHANGE OF TICKET COST NOT AVAILABLE');
             });
     };
 
@@ -34,7 +34,7 @@ angular.module('ticket_cost', ['ngStorage']).controller('ticket_costController',
         $http.get(contextPath + '/dates')
             .then(function successCallback(response) {
                 $scope.today = response.data;
-            }, function errorCallback(response) {
+            }, function errorCallback() {
                 alert('PRESENT DAY NOT FOUND');
             });
     };
@@ -43,7 +43,7 @@ angular.module('ticket_cost', ['ngStorage']).controller('ticket_costController',
         $http.get(contextPath + '/team/name')
             .then(function successCallback(response) {
                 $scope.team = response.data;
-            }, function errorCallback(response) {
+            }, function errorCallback() {
                 alert('TEAM NAME NOT FOUND');
             });
     };

@@ -43,17 +43,17 @@ public final class StadiumAnalytics {
                 new InformationDto(STADIUM_TITLE, stadium.getTitle()),
                 new InformationDto(FULL_STADIUM_CAPACITY, stadium.getFullCapacity()),
                 new InformationDto(SIMPLE_CAPACITY, stadium.getSimpleCapacity()),
-                new InformationDto(SIMPLE_TICKET_COST, milliomMulty(stadium.getSimpleTicketCost())),
+                new InformationDto(SIMPLE_TICKET_COST, stadium.getSimpleTicketCost()),
                 new InformationDto(FAMILY_CAPACITY, stadium.getFamilyCapacity()),
-                new InformationDto(FAMILY_TICKET_COST, milliomMulty(stadium.getFamilyTicketCost())),
+                new InformationDto(FAMILY_TICKET_COST, stadium.getFamilyTicketCost()),
                 new InformationDto(FAN_CAPACITY, stadium.getFanCapacity()),
-                new InformationDto(FAN_TICKET_COST, milliomMulty(stadium.getFanTicketCost())),
+                new InformationDto(FAN_TICKET_COST, stadium.getFanTicketCost()),
                 new InformationDto(AWAY_CAPACITY, stadium.getAwayCapacity()),
-                new InformationDto(AWAY_TICKET_COST, milliomMulty(stadium.getAwayTicketCost())),
+                new InformationDto(AWAY_TICKET_COST, stadium.getAwayTicketCost()),
                 new InformationDto(VIP_CAPACITY, stadium.getVipCapacity()),
-                new InformationDto(VIP_TICKET_COST, milliomMulty(stadium.getVipTicketCost())),
+                new InformationDto(VIP_TICKET_COST, stadium.getVipTicketCost()),
                 new InformationDto(USUAL_AVERAGE_CAPACITY, stadium.getUsualAverageCapacity()),
-                new InformationDto(MATCH_TICKET_REVENUE, milliomMulty(stadium.getMatchTicketRevenue())),
+                new InformationDto(MATCH_TICKET_REVENUE, stadium.getMatchTicketRevenue()),
                 new InformationDto(TOTAL_STADIUM_EXPENSES, userTeam.getStadiumExpenses())
         ));
     }
@@ -78,11 +78,11 @@ public final class StadiumAnalytics {
     public static List<InformationDto> getTicketCostInfo(Team userTeam) {
         Stadium stadium = userTeam.getStadium();
         return new ArrayList<>(List.of(
-                new InformationDto(SIMPLE_TICKET_COST, milliomMulty(stadium.getSimpleTicketCost())),
-                new InformationDto(FAN_TICKET_COST, milliomMulty(stadium.getFanTicketCost())),
-                new InformationDto(FAMILY_TICKET_COST, milliomMulty(stadium.getFamilyTicketCost())),
-                new InformationDto(VIP_TICKET_COST, milliomMulty(stadium.getVipTicketCost())),
-                new InformationDto(AWAY_TICKET_COST, milliomMulty(stadium.getAwayTicketCost()))
+                new InformationDto(SIMPLE_TICKET_COST,stadium.getSimpleTicketCost()),
+                new InformationDto(FAN_TICKET_COST, stadium.getFanTicketCost()),
+                new InformationDto(FAMILY_TICKET_COST, stadium.getFamilyTicketCost()),
+                new InformationDto(VIP_TICKET_COST, stadium.getVipTicketCost()),
+                new InformationDto(AWAY_TICKET_COST, stadium.getAwayTicketCost())
         ));
     }
 

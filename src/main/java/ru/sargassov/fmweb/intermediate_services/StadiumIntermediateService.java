@@ -13,6 +13,7 @@ import ru.sargassov.fmweb.intermediate_entities.Team;
 import ru.sargassov.fmweb.intermediate_entities.User;
 import ru.sargassov.fmweb.intermediate_repositories.StadiumIntermediateRepository;
 import ru.sargassov.fmweb.intermediate_spi.StadiumIntermediateServiceSpi;
+import ru.sargassov.fmweb.intermediate_spi.TeamIntermediateServiceSpi2;
 
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
@@ -25,6 +26,8 @@ import java.util.stream.Collectors;
 @Slf4j
 public class StadiumIntermediateService implements StadiumIntermediateServiceSpi {
     private final StadiumIntermediateRepository repository;
+    private final TeamIntermediateServiceSpi2 teamIntermediateService;
+
     @Override
     public List<Stadium> save(List<Stadium> notSavedStadiums) {
         return repository.saveAll(notSavedStadiums);
@@ -56,58 +59,73 @@ public class StadiumIntermediateService implements StadiumIntermediateServiceSpi
 
     @Override
     public List<InformationDto> getInfo() {
-        var userTeam = UserHolder.user.getUserTeam();
+        var userTeamId = UserHolder.user.getUserTeam().getId();
+        var userTeam = teamIntermediateService.getById(userTeamId);
         return StadiumAnalytics.getStadiumInforamtion(userTeam);
     }
 
     @Override
     @Transactional
     public List<InformationDto> getCurrentStatusInfo() {
-        var userTeam = UserHolder.user.getUserTeam();
+        var userTeamId = UserHolder.user.getUserTeam().getId();
+        var userTeam = teamIntermediateService.getById(userTeamId);
         return StadiumAnalytics.getCurrentStadiumStatus(userTeam);
     }
 
     @Override
-    @Transactional
     public List<InformationDto> getTicketCostInfo() {
-        var userTeam = UserHolder.user.getUserTeam();
+        var userTeamId = UserHolder.user.getUserTeam().getId();
+        var userTeam = teamIntermediateService.getById(userTeamId);
         return StadiumAnalytics.getTicketCostInfo(userTeam);
     }
 
     @Override
     @Transactional
     public void changeTicketCost(InformationDto dto) {
-        var stadium = UserHolder.user.getUserTeam().getStadium();
+        var userTeamId = UserHolder.user.getUserTeam().getId();
+        var userTeam = teamIntermediateService.getById(userTeamId);
+        var stadium = findByTeam(userTeam);
         var typeTicketCost = stadium.getCostByTypeOfSector(dto.getType());
-        var decimalDelta = BigDecimal.valueOf((Integer) dto.getValue()).divide(BigDecimal.valueOf(1_000_000));
+        var decimalDelta = BigDecimal.valueOf((Integer) dto.getValue());
         var zero = BigDecimal.ZERO;
+        var newTypeTicketCost = typeTicketCost.add(decimalDelta);
 
-        if (typeTicketCost.add(decimalDelta).compareTo(zero) < 0) {
+        if (newTypeTicketCost.compareTo(zero) < 0) {
             log.error("Cost of place on sector can't be less than 0!");
             throw new StadiumException("Cost of place on sector can't be less than 0!");
         }
 
-        typeTicketCost = typeTicketCost.add(decimalDelta);
-        stadium.setTicketCostByTypeOfSector(dto.getType(), typeTicketCost);
+        stadium.setTicketCostByTypeOfSector(dto.getType(), newTypeTicketCost);
+    }
+
+    private Stadium findByTeam(Team team) {
+        var stadium = repository.findByTeam(team);
+        if (stadium.isEmpty()) {
+            throw new StadiumException("Stadium for " + team.getName() + " not found!" );
+        }
+        return stadium.get();
     }
 
     @Override
     @Transactional
     public List<InformationDto> getSectorsCapacityInfo() {
-        var userTeam = UserHolder.user.getUserTeam();;
+        var userTeamId = UserHolder.user.getUserTeam().getId();
+        var userTeam = teamIntermediateService.getById(userTeamId);
         return StadiumAnalytics.getSectorsCapacityInfo(userTeam);
     }
     @Override
     @Transactional
     public List<InformationDto> getSplitSectorsInfo() {
-        var userTeam = UserHolder.user.getUserTeam();;
+        var userTeamId = UserHolder.user.getUserTeam().getId();
+        var userTeam = teamIntermediateService.getById(userTeamId);
         return StadiumAnalytics.getSplitSectorsInfo(userTeam);
     }
 
     @Override
     @Transactional
     public void changeSectorCapacity(InformationDto dto) {
-        var userTeam = UserHolder.user.getUserTeam();;
+        var userTeamId = UserHolder.user.getUserTeam().getId();
+        var userTeam = teamIntermediateService.getById(userTeamId);
         var stadium = userTeam.getStadium();
         var delta = (int) dto.getValue();
         var description = dto.getType();
@@ -123,19 +141,22 @@ public class StadiumIntermediateService implements StadiumIntermediateServiceSpi
 
     @Override
     public Boolean getShowOtherMarketProgramsCondition() {
-        var userTeam = UserHolder.user.getUserTeam();
+        var userTeamId = UserHolder.user.getUserTeam().getId();
+        var userTeam = teamIntermediateService.getById(userTeamId);
         return userTeam.getMarkets().size() < 5;
     }
 
     @Override
     public List<InformationDto> getFullCapacityInformation() {
-        var userTeam = UserHolder.user.getUserTeam();
+        var userTeamId = UserHolder.user.getUserTeam().getId();
+        var userTeam = teamIntermediateService.getById(userTeamId);
         return StadiumAnalytics.getFullCapacityInformation(userTeam);
     }
     @Transactional
     @Override
     public void expandTheStadium(Integer delta) {
-        var userTeam = UserHolder.user.getUserTeam();
+        var userTeamId = UserHolder.user.getUserTeam().getId();
+        var userTeam = teamIntermediateService.getById(userTeamId);
         var stadium = userTeam.getStadium();
         if (userTeam.getWealth().compareTo(BigDecimal.ONE) < 0) {
             log.error("Too little money to expand the stadium");
