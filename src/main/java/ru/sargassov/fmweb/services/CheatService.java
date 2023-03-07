@@ -13,6 +13,9 @@ import ru.sargassov.fmweb.enums.PositionType;
 import ru.sargassov.fmweb.exceptions.CheatException;
 import ru.sargassov.fmweb.intermediate_entities.Player;
 import ru.sargassov.fmweb.intermediate_entities.User;
+import ru.sargassov.fmweb.intermediate_spi.LeagueIntermediateServiceSpi;
+import ru.sargassov.fmweb.intermediate_spi.PlayerIntermediateServiceSpi;
+import ru.sargassov.fmweb.intermediate_spi.TeamIntermediateServiceSpi;
 import ru.sargassov.fmweb.spi.CheatServiceSpi;
 import ru.sargassov.fmweb.spi.PlayerServiceSpi;
 
@@ -43,6 +46,9 @@ public class CheatService implements CheatServiceSpi {
     private static final String YOUR_CLUB_HAD_ALREADY = TextConstant.YOUR_CLUB_HAD_ALREADY;
     private CheatApi cheatApi;
     private PlayerServiceSpi playerService;
+    private TeamIntermediateServiceSpi teamIntermediateService;
+    private LeagueIntermediateServiceSpi leagueIntermediateService;
+    private PlayerIntermediateServiceSpi playerIntermediateService;
 
     @SneakyThrows
     @Override
@@ -101,32 +107,42 @@ public class CheatService implements CheatServiceSpi {
         player.guessPower();
         playerService.guessPrice(player, user);
 
-        var userTeam = user.getUserTeam();
+        var userTeamId = user.getUserTeam().getId();
+        var userTeam = teamIntermediateService.getById(userTeamId);
         if (userTeam.isPlayerExists(player.getName())) {
             throw new CheatException(YOUR_CLUB_HAD_ALREADY + MESSI_LEONEL);
         }
-        userTeam.getPlayerList().add(player);
         player.setTeam(userTeam);
         player.setNumber(10);
         player.guessNumber(10);
         player.setTrainingAble(10);
         player.setTimeBeforeTreat(0);
         player.setTire(0);
+        player.setTrainingBalance(0);
+        var league = leagueIntermediateService.getLeague(user);
+        player.setLeague(league);
+        player.setUser(user);
+        player.setTire(0);
+        userTeam.getPlayerList().add(playerIntermediateService.save(player));
     }
 
     @Transactional
     public void noInjuriesCheatActivate() {
-        var userTeam = UserHolder.user.getUserTeam();
+        var userTeamId = UserHolder.user.getUserTeam().getId();
+        var userTeam = teamIntermediateService.getById(userTeamId);
         var playerList = userTeam.getPlayerList();
         for (Player player : playerList) {
             player.setInjury(false);
         }
+        teamIntermediateService.save(userTeam);
     }
 
     @Transactional
     public void tenMillionEuroCheat() {
-        var userTeam = UserHolder.user.getUserTeam();
+        var userTeamId = UserHolder.user.getUserTeam().getId();
+        var userTeam = teamIntermediateService.getById(userTeamId);
         BigDecimal wealthBefore = userTeam.getWealth();
         userTeam.setWealth(wealthBefore.add(BigDecimal.valueOf(10)));
+        teamIntermediateService.save(userTeam);
     }
 }
