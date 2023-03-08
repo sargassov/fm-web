@@ -20,7 +20,7 @@ public interface TeamIntermediateServiceSpi {
 
     void fillPlacementForCurrentTeam (Team team);
 
-    void autoFillPlacement(Team team);
+    void autoFillPlacement(Team team, boolean matchPrepare);
 
     List<Player> getSuitablePlayers(List<Player> playerList, Role role);
 

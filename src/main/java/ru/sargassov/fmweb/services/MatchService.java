@@ -56,7 +56,8 @@ public class MatchService implements MatchServiceSpi {
         var preMatchDtos = new ArrayList<PreMatchDto>();
 
         var currentDay = dayIntermediateService.findByPresent();
-        var userTeam = UserHolder.user.getUserTeam();
+        var userTeamId = UserHolder.user.getUserTeam().getId();
+        var userTeam = teamIntermediateService.getById(userTeamId);
         var userTeamMatch = currentDay.getUserTeamMatch(userTeam);
         var userTeamMatchHomeId = userTeamMatch.getHome().getId();
         var userTeamMatchAwayId = userTeamMatch.getAway().getId();

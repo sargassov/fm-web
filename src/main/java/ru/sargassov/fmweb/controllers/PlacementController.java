@@ -38,7 +38,7 @@ public class PlacementController {
         log.info("PlacementController.autoFillCurrentPlacement");
         var userTeamId = UserHolder.user.getUserTeam().getId();
         var team = teamIntermediateService.getById(userTeamId);
-        placementIntermediateService.autoFillCurrentPlacement(team);
+        placementIntermediateService.autoFillCurrentPlacement(team, false);
     }
 
     @DeleteMapping("/placement/delete/{name}")

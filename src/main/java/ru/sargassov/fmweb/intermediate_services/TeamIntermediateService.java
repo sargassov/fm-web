@@ -75,7 +75,7 @@ public class TeamIntermediateService implements TeamIntermediateServiceSpi {
 
     @Override
     public void fillPlacementForCurrentTeam (Team team) {
-        autoFillPlacement(team);
+        autoFillPlacement(team, false);
         captainAppointment(team);
         powerTeamCounter(team);
     }
@@ -116,11 +116,13 @@ public class TeamIntermediateService implements TeamIntermediateServiceSpi {
 
     @Override
     @Transactional
-    public void autoFillPlacement(Team t) {
+    public void autoFillPlacement(Team t, boolean matchPrepare) {
         log.info("TeamService.autoFillPlacement for " + t.getName());
 
         var healhtyPlayersSelect = healhtyPlayersSelect(t); // только здоровые игроки
-        var roles = roleIntermediateService.findByPlacement(t.getPlacement());
+        var roles = matchPrepare
+                ? t.getPlacement().getRoles()
+                : roleIntermediateService.findByPlacement(t.getPlacement());
         roles.forEach(role -> {
             log.info(t.getName() + " " + role.getTitle());
             var suitablePlayers = getSuitablePlayers(healhtyPlayersSelect, role).stream()

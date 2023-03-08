@@ -17,7 +17,7 @@ public interface PlacementIntermediateServiceSpi {
 
     void deletePlayerFromCurrentPlacement(String name);
 
-    void autoFillCurrentPlacement(Team team);
+    void autoFillCurrentPlacement(Team team, boolean matchPrepare);
 
     void changePlayerInPlacement(Integer place);
 

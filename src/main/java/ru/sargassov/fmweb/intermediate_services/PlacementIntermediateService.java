@@ -78,8 +78,8 @@ public class PlacementIntermediateService implements PlacementIntermediateServic
 
     @Override
     @Transactional
-    public void autoFillCurrentPlacement(Team team) {
-        teamIntermediateService.autoFillPlacement(team);
+    public void autoFillCurrentPlacement(Team team, boolean matchPrepare) {
+        teamIntermediateService.autoFillPlacement(team, matchPrepare);
         teamIntermediateService.powerTeamCounter(team);
     }
 
@@ -159,7 +159,7 @@ public class PlacementIntermediateService implements PlacementIntermediateServic
         for (var p : allIntermediatePlacements) {
             var desc = p.getName();
             save(p);
-            setAndAutoFillCurrentPlacement(team, p);
+            setAndAutoFillCurrentPlacementOpponentTeamBeforeMatch(team, p);
             var currentPlacementTeamPower = team.getTeamPower();
             forms.add(new TeamPlacementPowerForm(desc, currentPlacementTeamPower, p));
             team.resetAllStrategyPlaces();
@@ -168,12 +168,12 @@ public class PlacementIntermediateService implements PlacementIntermediateServic
         var optimalPlacement = forms.stream()
                 .max(Comparator.comparing(TeamPlacementPowerForm::getCurrentPlacementTeamPower))
                 .orElseThrow(); //todo обработать
-        setAndAutoFillCurrentPlacement(team, optimalPlacement.getPlacement());
+        setAndAutoFillCurrentPlacementOpponentTeamBeforeMatch(team, optimalPlacement.getPlacement());
         teamIntermediateService.captainAppointment(team);
     }
 
-    private void setAndAutoFillCurrentPlacement(Team team, Placement placement) {
+    private void setAndAutoFillCurrentPlacementOpponentTeamBeforeMatch(Team team, Placement placement) {
         team.setPlacement(placement);
-        autoFillCurrentPlacement(team);
+        autoFillCurrentPlacement(team, true);
     }
 }
