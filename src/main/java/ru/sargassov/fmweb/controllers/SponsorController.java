@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import ru.sargassov.fmweb.dto.SponsorDto;;
-import ru.sargassov.fmweb.intermediate_spi.SponsorIntermediateServiceSpi;
+import ru.sargassov.fmweb.spi.intermediate_spi.SponsorIntermediateServiceSpi;
 
 import java.util.List;
 

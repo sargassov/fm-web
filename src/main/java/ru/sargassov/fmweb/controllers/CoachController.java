@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import ru.sargassov.fmweb.dto.CoachDto;
 import ru.sargassov.fmweb.dto.PriceResponce;
-import ru.sargassov.fmweb.intermediate_spi.CoachIntermediateServiceSpi;
+import ru.sargassov.fmweb.spi.intermediate_spi.CoachIntermediateServiceSpi;
 
 import java.util.List;
 

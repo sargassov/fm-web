@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import ru.sargassov.fmweb.dto.BankDto;
-import ru.sargassov.fmweb.spi.BankServiceSpi;
+import ru.sargassov.fmweb.spi.entity.BankServiceSpi;
 
 import java.util.List;
 

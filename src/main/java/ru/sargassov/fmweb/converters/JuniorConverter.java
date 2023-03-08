@@ -10,7 +10,7 @@ import ru.sargassov.fmweb.intermediate_entities.Junior;
 import ru.sargassov.fmweb.intermediate_entities.Player;
 import ru.sargassov.fmweb.entities.JuniorEntity;
 import ru.sargassov.fmweb.intermediate_entities.User;
-import ru.sargassov.fmweb.services.PlayerPriceSetter;
+import ru.sargassov.fmweb.services.entity.PlayerPriceSetter;
 
 import java.util.Random;
 

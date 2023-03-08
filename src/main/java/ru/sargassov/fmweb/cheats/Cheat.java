@@ -1,7 +1,7 @@
 package ru.sargassov.fmweb.cheats;
 
 import lombok.Data;
-import ru.sargassov.fmweb.services.CheatService;
+import ru.sargassov.fmweb.services.entity.CheatService;
 
 @Data
 public abstract class Cheat {

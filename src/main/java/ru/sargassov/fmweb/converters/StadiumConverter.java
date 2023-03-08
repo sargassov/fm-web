@@ -6,7 +6,7 @@ import ru.sargassov.fmweb.intermediate_entities.League;
 import ru.sargassov.fmweb.intermediate_entities.Stadium;
 import ru.sargassov.fmweb.entities.StadiumEntity;
 import ru.sargassov.fmweb.intermediate_entities.User;
-import ru.sargassov.fmweb.intermediate_spi.CityIntermediateServiceSpi;
+import ru.sargassov.fmweb.spi.intermediate_spi.CityIntermediateServiceSpi;
 
 import java.math.BigDecimal;
 

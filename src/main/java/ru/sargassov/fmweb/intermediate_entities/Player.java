@@ -5,7 +5,7 @@ import lombok.*;
 import ru.sargassov.fmweb.constants.BaseUserEntity;
 import ru.sargassov.fmweb.constants.UserHolder;
 import ru.sargassov.fmweb.enums.PositionType;
-import ru.sargassov.fmweb.services.PlayerPriceSetter;
+import ru.sargassov.fmweb.services.entity.PlayerPriceSetter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;

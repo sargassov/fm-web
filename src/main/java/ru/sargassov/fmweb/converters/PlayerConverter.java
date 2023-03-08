@@ -9,8 +9,8 @@ import ru.sargassov.fmweb.enums.PositionType;
 import ru.sargassov.fmweb.exceptions.CoachException;
 import ru.sargassov.fmweb.intermediate_entities.*;
 import ru.sargassov.fmweb.entities.PlayerEntity;
-import ru.sargassov.fmweb.intermediate_spi.TeamIntermediateServiceSpi;
-import ru.sargassov.fmweb.services.PlayerPriceSetter;
+import ru.sargassov.fmweb.spi.intermediate_spi.TeamIntermediateServiceSpi;
+import ru.sargassov.fmweb.services.entity.PlayerPriceSetter;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

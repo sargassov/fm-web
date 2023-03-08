@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.sargassov.fmweb.dto.days_dtos.DayDto;
 import ru.sargassov.fmweb.dto.text_responses.PostMatchDto;
 import ru.sargassov.fmweb.dto.text_responses.PreMatchDto;
-import ru.sargassov.fmweb.spi.MatchServiceSpi;
+import ru.sargassov.fmweb.spi.entity.MatchServiceSpi;
 
 import java.util.List;
 

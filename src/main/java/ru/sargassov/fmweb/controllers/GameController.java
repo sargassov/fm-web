@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import ru.sargassov.fmweb.dto.UserData;
-import ru.sargassov.fmweb.spi.GameServiceSpi;
+import ru.sargassov.fmweb.spi.entity.GameServiceSpi;
 
 @RestController
 @AllArgsConstructor

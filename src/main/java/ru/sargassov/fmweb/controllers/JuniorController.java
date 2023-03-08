@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import ru.sargassov.fmweb.dto.player_dtos.JuniorDto;
 import ru.sargassov.fmweb.dto.text_responses.TextResponse;
-import ru.sargassov.fmweb.intermediate_spi.JuniorIntermediateServiceSpi;
-import ru.sargassov.fmweb.spi.JuniorServiceSpi;
+import ru.sargassov.fmweb.spi.intermediate_spi.JuniorIntermediateServiceSpi;
+import ru.sargassov.fmweb.spi.entity.JuniorServiceSpi;
 
 import java.util.List;
 

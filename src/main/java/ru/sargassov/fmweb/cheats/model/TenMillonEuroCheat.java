@@ -3,7 +3,7 @@ package ru.sargassov.fmweb.cheats.model;
 import lombok.Getter;
 import lombok.Setter;
 import ru.sargassov.fmweb.cheats.Cheat;
-import ru.sargassov.fmweb.spi.UserServiceSpi;
+import ru.sargassov.fmweb.spi.entity.UserServiceSpi;
 
 
 @Getter

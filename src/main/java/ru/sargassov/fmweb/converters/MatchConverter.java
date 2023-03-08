@@ -3,7 +3,7 @@ package ru.sargassov.fmweb.converters;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.sargassov.fmweb.intermediate_entities.*;
-import ru.sargassov.fmweb.intermediate_spi.TeamIntermediateServiceSpi;
+import ru.sargassov.fmweb.spi.intermediate_spi.TeamIntermediateServiceSpi;
 
 import java.util.ArrayList;
 

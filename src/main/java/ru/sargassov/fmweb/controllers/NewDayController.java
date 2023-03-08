@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.sargassov.fmweb.dto.text_responses.BooleanDto;
 import ru.sargassov.fmweb.dto.text_responses.TextResponse;
-import ru.sargassov.fmweb.spi.NewDayServiceSpi;
+import ru.sargassov.fmweb.spi.entity.NewDayServiceSpi;
 
 import java.util.List;
 

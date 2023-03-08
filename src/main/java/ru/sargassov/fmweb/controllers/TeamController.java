@@ -12,14 +12,14 @@ import ru.sargassov.fmweb.dto.team_dtos.TeamTransInformationDto;
 import ru.sargassov.fmweb.dto.text_responses.InformationDto;
 import ru.sargassov.fmweb.dto.text_responses.StartFinishInformationDto;
 import ru.sargassov.fmweb.dto.text_responses.TextResponse;
-import ru.sargassov.fmweb.intermediate_spi.SponsorIntermediateServiceSpi;
-import ru.sargassov.fmweb.intermediate_spi.StadiumIntermediateServiceSpi;
-import ru.sargassov.fmweb.intermediate_spi.TeamIntermediateServiceSpi;
-import ru.sargassov.fmweb.intermediate_spi.TeamIntermediateServiceSpi2;
-import ru.sargassov.fmweb.spi.FinanceServiceSpi;
-import ru.sargassov.fmweb.spi.MarketServiceSpi;
-import ru.sargassov.fmweb.spi.TrainingServiceSpi;
-import ru.sargassov.fmweb.spi.TransferServiceSpi;
+import ru.sargassov.fmweb.spi.intermediate_spi.SponsorIntermediateServiceSpi;
+import ru.sargassov.fmweb.spi.intermediate_spi.StadiumIntermediateServiceSpi;
+import ru.sargassov.fmweb.spi.intermediate_spi.TeamIntermediateServiceSpi;
+import ru.sargassov.fmweb.spi.intermediate_spi.TeamIntermediateServiceSpi2;
+import ru.sargassov.fmweb.spi.entity.FinanceServiceSpi;
+import ru.sargassov.fmweb.spi.entity.MarketServiceSpi;
+import ru.sargassov.fmweb.spi.entity.TrainingServiceSpi;
+import ru.sargassov.fmweb.spi.entity.TransferServiceSpi;
 
 import java.util.List;
 

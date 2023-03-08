@@ -9,7 +9,7 @@ import ru.sargassov.fmweb.entities.BankEntity;
 import ru.sargassov.fmweb.intermediate_entities.Day;
 import ru.sargassov.fmweb.intermediate_entities.Team;
 import ru.sargassov.fmweb.intermediate_entities.User;
-import ru.sargassov.fmweb.intermediate_spi.DayIntermediateServiceSpi;
+import ru.sargassov.fmweb.spi.intermediate_spi.DayIntermediateServiceSpi;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

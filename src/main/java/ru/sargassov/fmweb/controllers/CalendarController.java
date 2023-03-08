@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.sargassov.fmweb.dto.IntegerDto;
 import ru.sargassov.fmweb.dto.NameOfMonthDto;
 import ru.sargassov.fmweb.dto.days_dtos.EventDto;
-import ru.sargassov.fmweb.spi.CalendarServiceSpi;
+import ru.sargassov.fmweb.spi.entity.CalendarServiceSpi;
 
 import java.util.List;
 

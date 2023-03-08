@@ -8,9 +8,9 @@ import ru.sargassov.fmweb.intermediate_entities.HeadCoach;
 import ru.sargassov.fmweb.intermediate_entities.League;
 import ru.sargassov.fmweb.intermediate_entities.Team;
 import ru.sargassov.fmweb.intermediate_entities.User;
-import ru.sargassov.fmweb.intermediate_spi.HeadCoachIntermediateServiceSpi;
-import ru.sargassov.fmweb.intermediate_spi.PlayerIntermediateServiceSpi2;
-import ru.sargassov.fmweb.intermediate_spi.StadiumIntermediateServiceSpi;
+import ru.sargassov.fmweb.spi.intermediate_spi.HeadCoachIntermediateServiceSpi;
+import ru.sargassov.fmweb.spi.intermediate_spi.PlayerIntermediateServiceSpi2;
+import ru.sargassov.fmweb.spi.intermediate_spi.StadiumIntermediateServiceSpi;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

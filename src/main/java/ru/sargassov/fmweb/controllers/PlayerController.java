@@ -7,8 +7,8 @@ import ru.sargassov.fmweb.constants.UserHolder;
 import ru.sargassov.fmweb.dto.*;
 import ru.sargassov.fmweb.dto.player_dtos.CreatedPlayerDto;
 import ru.sargassov.fmweb.dto.player_dtos.PlayerSoftSkillDto;
-import ru.sargassov.fmweb.intermediate_spi.PlayerIntermediateServiceSpi;
-import ru.sargassov.fmweb.spi.PlayerServiceSpi;
+import ru.sargassov.fmweb.spi.intermediate_spi.PlayerIntermediateServiceSpi;
+import ru.sargassov.fmweb.spi.entity.PlayerServiceSpi;
 
 @RestController
 @AllArgsConstructor
