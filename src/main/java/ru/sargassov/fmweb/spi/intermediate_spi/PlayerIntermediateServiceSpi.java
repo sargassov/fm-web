@@ -31,4 +31,6 @@ public interface PlayerIntermediateServiceSpi {
     void createNewPlayer(CreatedPlayerDto createdPlayerDto);
 
     IdNamePricePlayerDto getIdNamePricePlayerDtoFromPlayer(Player p);
+
+    public Integer guessNumber(Team team, Integer number);
 }

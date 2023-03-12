@@ -14,4 +14,6 @@ public interface PlayerIntermediateServiceSpi2 {
     Player findCaptainByTeam(Team userTeam);
 
     void remove(Player player);
+
+    public Integer guessNumber(Team team, Integer number);
 }

@@ -13,6 +13,7 @@ import ru.sargassov.fmweb.intermediate_entities.Market;
 import ru.sargassov.fmweb.spi.intermediate_spi.DayIntermediateServiceSpi;
 import ru.sargassov.fmweb.spi.intermediate_spi.MarketIntermediateServiceSpi;
 import ru.sargassov.fmweb.spi.entity.MarketServiceSpi;
+import ru.sargassov.fmweb.spi.intermediate_spi.TeamIntermediateServiceSpi;
 
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
@@ -26,11 +27,12 @@ public class MarketService implements MarketServiceSpi {
 
     private final DayIntermediateServiceSpi dayIntermediateService;
     private final MarketIntermediateServiceSpi marketIntermediateService;
+    private final TeamIntermediateServiceSpi teamIntermediateService;
 
     @Override
     public List<StartFinishInformationDto> getCurrentmarketsInfo() {
         var team = UserHolder.user.getUserTeam();
-        var markets = team.getMarkets();
+        var markets = marketIntermediateService.findByTeam(team);
         var dtos = new ArrayList<StartFinishInformationDto>();
 
         for (var market : markets) {
@@ -61,7 +63,8 @@ public class MarketService implements MarketServiceSpi {
     @Override
     public void addNewMarketProgram(InformationDto dto) {
         var user = UserHolder.user;
-        var team = user.getUserTeam();
+        var teamId = user.getUserTeam().getId();
+        var team = teamIntermediateService.getById(teamId);
         var market = Market.getMarketByTitle(dto.getType());
         var multyCoeff = (Integer) dto.getValue();
         var askingCost = market.getMarketType().getOneWeekCost().multiply(BigDecimal.valueOf(multyCoeff));

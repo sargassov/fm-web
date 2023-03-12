@@ -183,13 +183,6 @@ public class Team extends BaseUserEntity {
         return expenses;
     }
 
-    public List<Coach> getCoaches() {
-        if (CollectionUtils.isEmpty(coaches)) {
-            coaches = new ArrayList<>();
-        }
-        return coaches;
-    }
-
     public void addPersonalExpenses(BigDecimal value){
         personalExpenses = personalExpenses.add(value);
     }

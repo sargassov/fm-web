@@ -15,6 +15,7 @@ import ru.sargassov.fmweb.intermediate_entities.Team;
 import ru.sargassov.fmweb.intermediate_entities.User;
 import ru.sargassov.fmweb.repositories.intermediate_repositories.PlayerIntermediateRepository;
 import ru.sargassov.fmweb.spi.intermediate_spi.PlayerIntermediateServiceSpi;
+import ru.sargassov.fmweb.spi.intermediate_spi.TeamIntermediateServiceSpi;
 import ru.sargassov.fmweb.validators.CreatedPlayersValidator;
 
 import javax.transaction.Transactional;
@@ -29,6 +30,7 @@ public class PlayerIntermediateService implements PlayerIntermediateServiceSpi {
     private final PlayerIntermediateRepository repository;
     private final PlayerConverter playerConverter;
     private final CreatedPlayersValidator createdPlayersValidator;
+    private final TeamIntermediateServiceSpi teamIntermediateService;
 
     @Override
     public List<Player> save(List<Player> newPlayersWithoutIds) {
@@ -95,12 +97,30 @@ public class PlayerIntermediateService implements PlayerIntermediateServiceSpi {
     }
 
     @Override
+    public Integer guessNumber(Team team, Integer number) {
+        var playerList = repository.findByTeam(team);
+        while (true) {
+            int finalNumber = number;
+            var flag = playerList.stream().anyMatch(p -> p.getNumber() == finalNumber);
+            if (!flag) {
+                break;
+            }
+            number++;
+            if(number == 100) {
+                number = 1;
+            }
+        }
+        return number;
+    }
+
+    @Override
     @Transactional
     public void createNewPlayer(CreatedPlayerDto createdPlayerDto) {
         createdPlayersValidator.newPlayervValidate(createdPlayerDto);
         Team team = UserHolder.user.getUserTeam();
 
         Player player = playerConverter.getIntermediateEntityFromCreatedDto(createdPlayerDto);
+        player.setNumber(guessNumber(player.getTeam(), createdPlayerDto.getNumber()));
         createdPlayersValidator.teamEnoughCreditsValidate(player, team);
         team.setWealth(team.getWealth().subtract(player.getPrice()));
         team.substractTransferExpenses(player.getPrice());

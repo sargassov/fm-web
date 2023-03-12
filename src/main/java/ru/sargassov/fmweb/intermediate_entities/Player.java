@@ -157,23 +157,6 @@ public class Player extends BaseUserEntity {
         trainingAble = random.nextInt(trainingAbleValue) + trainingAbleBottomValue;
     }
 
-    public void guessNumber(int number) {
-        boolean flag = true;
-        do {
-            int finalNumber = number;
-            flag = team.getPlayerList().stream().anyMatch(p -> p.getNumber() == finalNumber);
-
-            if(flag){
-                number++;
-                System.out.println(number);
-                if(number == 100)
-                    number = 1;
-            } else{
-                this.number = number;
-            }
-        } while (flag);
-    }
-
     public void levelUpCheckAuto() {
         if(trainingBalance >= LEVEL_UP_TRAINING_BALANCE) {
             switch (position) {

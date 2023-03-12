@@ -114,7 +114,7 @@ public class CheatService implements CheatServiceSpi {
         }
         player.setTeam(userTeam);
         player.setNumber(10);
-        player.guessNumber(10);
+        player.setNumber(playerIntermediateService.guessNumber(player.getTeam(), 10));
         player.setTrainingAble(10);
         player.setTimeBeforeTreat(0);
         player.setTire(0);

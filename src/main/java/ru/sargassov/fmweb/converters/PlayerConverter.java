@@ -9,6 +9,8 @@ import ru.sargassov.fmweb.enums.PositionType;
 import ru.sargassov.fmweb.exceptions.CoachException;
 import ru.sargassov.fmweb.intermediate_entities.*;
 import ru.sargassov.fmweb.entities.PlayerEntity;
+import ru.sargassov.fmweb.spi.intermediate_spi.PlayerIntermediateServiceSpi;
+import ru.sargassov.fmweb.spi.intermediate_spi.PlayerIntermediateServiceSpi2;
 import ru.sargassov.fmweb.spi.intermediate_spi.TeamIntermediateServiceSpi;
 import ru.sargassov.fmweb.services.entity.PlayerPriceSetter;
 
@@ -142,7 +144,6 @@ public class PlayerConverter {
         p.setStrategyPlace(DEFAULT_STRATEGY_PLACE);
         p.guessPower();
         p.setTeam(user.getUserTeam());
-        p.guessNumber(createdPlayerDto.getNumber());
         p.guessTrainigAble();
         p.setTimeBeforeTreat(0);
         p.setTire(0);
@@ -188,7 +189,8 @@ public class PlayerConverter {
     }
 
     public PlayerOnTrainingDto getPlayerOnTrainingDtoFromPlayer(Player p) {
-        var userTeam = UserHolder.user.getUserTeam();
+        var userTeamId = UserHolder.user.getUserTeam().getId();
+        var userTeam = teamIntermediateService.getById(userTeamId);
         var coaches = userTeam.getCoaches();
         var coachPlayers = coaches.stream()
                 .map(Coach::getPlayerOnTraining)

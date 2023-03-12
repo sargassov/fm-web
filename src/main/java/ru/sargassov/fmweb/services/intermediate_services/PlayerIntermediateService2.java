@@ -38,4 +38,21 @@ public class PlayerIntermediateService2 implements PlayerIntermediateServiceSpi2
     public void remove(Player player) {
         repository.delete(player);
     }
+
+    @Override
+    public Integer guessNumber(Team team, Integer number) {
+        var playerList = repository.findByTeam(team);
+        while (true) {
+            int finalNumber = number;
+            var flag = playerList.stream().anyMatch(p -> p.getNumber() == finalNumber);
+            if (!flag) {
+                break;
+            }
+            number++;
+            if(number == 100) {
+                number = 1;
+            }
+        }
+        return number;
+    }
 }

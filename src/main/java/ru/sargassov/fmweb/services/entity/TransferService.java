@@ -125,7 +125,7 @@ public class TransferService implements TransferServiceSpi {
         purchasedPlayer.setCapitan(false);
         purchasedPlayer.setTeam(userTeam);
         userTeam.getPlayerList().add(purchasedPlayer);
-        purchasedPlayer.guessNumber(purchasedPlayer.getNumber());
+        purchasedPlayer.setNumber(playerIntermediateService.guessNumber(purchasedPlayer.getTeam(), purchasedPlayer.getNumber()));
 
         sellerTeam.getPlayerList().remove(purchasedPlayer);
         teamService.addJuniorToTeam(sellerTeam, purchasedPlayer.getPosition());
@@ -144,7 +144,7 @@ public class TransferService implements TransferServiceSpi {
         if (soldPlayer == null) {
             throw new TransferException("Player with id #" + id + " not found in " + userTeam.getName());
         }
-        if (userTeam.getPlayerList().size() == 18) {
+        if (userTeamPlayerList.size() == 18) {
             throw new TransferException("You can't have less than 18 players in your team");
         }
         teamIntermediateService.removePlayerFromTeam(userTeam, soldPlayer);

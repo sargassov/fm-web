@@ -16,8 +16,12 @@ import ru.sargassov.fmweb.intermediate_entities.Junior;
 import ru.sargassov.fmweb.intermediate_entities.Player;
 import ru.sargassov.fmweb.intermediate_entities.User;
 import ru.sargassov.fmweb.repositories.intermediate_repositories.JuniorIntermediateRepository;
+import ru.sargassov.fmweb.services.entity.UserService;
+import ru.sargassov.fmweb.spi.entity.UserServiceSpi;
 import ru.sargassov.fmweb.spi.intermediate_spi.JuniorIntermediateServiceSpi;
 import ru.sargassov.fmweb.spi.intermediate_spi.PlayerIntermediateServiceSpi;
+import ru.sargassov.fmweb.spi.intermediate_spi.TeamIntermediateServiceSpi;
+import ru.sargassov.fmweb.spi.intermediate_spi.UserIntermediateServiceSpi;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -33,7 +37,9 @@ public class JuniorIntermediateService implements JuniorIntermediateServiceSpi {
 
     private PlayerConverter playerConverter;
     private JuniorConverter juniorConverter;
+    private UserIntermediateServiceSpi userIntermediateService;
     private PlayerIntermediateServiceSpi playerIntermediateService;
+    private TeamIntermediateServiceSpi teamIntermediateService;
 
     private JuniorIntermediateRepository repository;
     @Override
@@ -96,7 +102,9 @@ public class JuniorIntermediateService implements JuniorIntermediateServiceSpi {
     @Override
     @Transactional
     public TextResponse invokeYoungPlayerInUserTeam(JuniorDto juniorDto) {
-        var userTeam = UserHolder.user.getUserTeam();
+        var user = UserHolder.user;
+        var userTeamId = user.getUserTeam().getId();
+        var userTeam = teamIntermediateService.getById(userTeamId);
         var userTeamWealth = userTeam.getWealth();
         var youngPlayerPrice = juniorDto.getPrice();
         if (userTeamWealth.compareTo(youngPlayerPrice) < 0) {
@@ -118,7 +126,8 @@ public class JuniorIntermediateService implements JuniorIntermediateServiceSpi {
         userTeam.setWealth(userTeamWealth.subtract(savedPlayer.getPrice()));
         userTeam.getPlayerList().add(savedPlayer);
         delete(juniorDto.getId());;
-        UserHolder.user.setYouthAcademyVisited(true);
+        user.setYouthAcademyVisited(true);
+        userIntermediateService.save(user);
         return new TextResponse("Player " + savedPlayer.getName() + " was invoked in Your team");
     }
 }

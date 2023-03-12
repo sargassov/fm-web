@@ -11,6 +11,8 @@ import ru.sargassov.fmweb.intermediate_entities.Player;
 import ru.sargassov.fmweb.entities.JuniorEntity;
 import ru.sargassov.fmweb.intermediate_entities.User;
 import ru.sargassov.fmweb.services.entity.PlayerPriceSetter;
+import ru.sargassov.fmweb.spi.intermediate_spi.PlayerIntermediateServiceSpi;
+import ru.sargassov.fmweb.spi.intermediate_spi.PlayerIntermediateServiceSpi2;
 
 import java.util.Random;
 
@@ -20,6 +22,7 @@ import static ru.sargassov.fmweb.constants.Constant.DEFAULT_STRATEGY_PLACE;
 @RequiredArgsConstructor
 public class JuniorConverter {
     private final PlayerPriceSetter playerPriceSetter;
+    private final PlayerIntermediateServiceSpi2 playerIntermediateService;
     private final Random random = getRandom();
 
     public Junior getIntermediateEntityFromEntity(JuniorEntity juniorEntity, User user){
@@ -107,7 +110,7 @@ public class JuniorConverter {
         p.setStrategyPlace(DEFAULT_STRATEGY_PLACE);
         var userTeam = UserHolder.user.getUserTeam();
         p.setTeam(userTeam);
-        p.guessNumber(random.nextInt(99) + 1);
+        p.setNumber(playerIntermediateService.guessNumber(p.getTeam(), random.nextInt(99) + 1));
         p.guessTrainigAble();
         p.setTire(0);
         p.setTimeBeforeTreat(0);
