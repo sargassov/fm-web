@@ -137,6 +137,7 @@ public class Team extends BaseUserEntity {
     public static final int MAX_VALUE_OF_LOANS = 5;
     public static final int MAX_VALUE_OF_MARKETS = 5;
     public static final int MAX_VALUE_OF_COACHES = 6;
+    public static final int MAX_VALUE_FIRST_ELEVEN_STRATEGY_PLACES = 11;
     //////////////////////////
 
 
@@ -384,10 +385,17 @@ public class Team extends BaseUserEntity {
     }
 
     public List<Player> getMatchApplication() {
-        return playerList.stream()
-                .filter(p -> p.getStrategyPlace() >= 0 && p.getStrategyPlace() < 11)
-                .sorted(Comparator.comparing(Player::getStrategyPlace, Comparator.reverseOrder()))
-                .collect(Collectors.toList());
+        var matchApplication = new ArrayList<Player>();
+        for (var x = 0; x < MAX_VALUE_FIRST_ELEVEN_STRATEGY_PLACES; x++) {
+            final var finalX = x;
+            var currentPlayer = playerList
+                    .stream()
+                    .filter(p -> p.getStrategyPlace() == finalX)
+                    .findFirst()
+                    .orElse(null);
+            matchApplication.add(currentPlayer);
+        }
+        return matchApplication;
     }
 
     public Long getInjuriesValue() {

@@ -41,6 +41,9 @@ public class ConstantUtils {
     }
 
     public static String preMatchPlayerFormUtil(Player player) {
+        if (player == null) {
+            return "N/N";
+        }
         var playerInfo = player.getNumber() + "." + SPACE +
                 player.getPosition().getDescription().charAt(0) + SPACE +
                 player.getName() + SPACE + "[" + player.getPower() + "]";

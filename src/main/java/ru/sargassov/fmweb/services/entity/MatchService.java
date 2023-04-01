@@ -26,6 +26,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -75,7 +76,6 @@ public class MatchService implements MatchServiceSpi {
                 ? userTeamMatchAway
                 : userTeamMatchHome;
         placementIntermediateService.optimalOpponentPlacement(opponentTeam);
-
         var preMatchDto = new PreMatchDto();
         preMatchDto.setPreMatchHomeInfo(userTeamMatchHomeDesc.toUpperCase() + " ((" + userTeamMatchHome.getTeamPower() + ")) ");
         preMatchDto.setPreMatchAwayInfo(userTeamMatchAwayDesc.toUpperCase() + " ((" + userTeamMatchAway.getTeamPower() + ")) ");
@@ -94,6 +94,17 @@ public class MatchService implements MatchServiceSpi {
     @Override
     @Transactional
     public void imitate(DayDto dayDto) {
+        var userTeamId = UserHolder.user.getUserTeam().getId();
+        var userTeam = teamIntermediateService.getById(userTeamId);
+        var emptyStrategyPlace = userTeam.getMatchApplication()
+                .stream()
+                .filter(Objects::isNull)
+                .findFirst()
+                .orElse(null);
+        if (emptyStrategyPlace != null) {
+            throw new IllegalStateException("Team is not complete");
+        }
+
         var day = dayDto.getDay();
         var month = ConstantUtils.monthsGetint(dayDto.getMonth());
         var year = dayDto.getYear();
