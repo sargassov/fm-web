@@ -17,8 +17,8 @@ public interface DayIntermediateRepository extends JpaRepository<Day, Long> {
     @Query("select d from Day d where d.isPresent = true and d.user = ?1")
     Day findByPresentIsTrueAndUser(User user);
 
-    @Query("select d from Day d where d.isMatch = true and d.user = ?1")
-    List<Day> loacAllMatchDates(User user);
+    @Query("select d from Day d where d.isLeagueDay = true and d.user = ?1")
+    List<Day> loadAllLeagueDates(User user);
 
     Day findByCountOfTourAndUser(Integer parameter, User user);
 

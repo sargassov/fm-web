@@ -12,11 +12,11 @@ public interface DrawServiceSpi {
 
     List<String> drawListMaker();
 
-    List<List<String>> toursProject();
-
     List<DrawService.Basket> drawBasket(User user);
 
     String findIf(List<DrawService.Basket> baskets, int condition);
 
-    void loadShedule(User user);
+    void loadLeagueSchedule(User user);
+
+    void loadCupSchedule(User user);
 }

@@ -8,6 +8,8 @@ CREATE TABLE IF NOT EXISTS match (
                                     id_cortage BIGINT,
                                     count_of_tour INTEGER,
                                     impossible_match BOOLEAN,
+                                    is_league_day BOOLEAN,
+                                    is_cup_day BOOLEAN,
                                     home_score INTEGER,
                                     away_score INTEGER,
                                     match_passed BOOLEAN

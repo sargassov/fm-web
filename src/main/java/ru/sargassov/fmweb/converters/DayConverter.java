@@ -19,29 +19,12 @@ public class DayConverter {
         day.setUser(user);
         day.setDate(dayEntity.getDate());
         day.setPassed(dayEntity.isPassed());
-        day.setMatch(dayEntity.isMatch());
+        day.setLeagueDay(dayEntity.isLeagueDay());
+        day.setCupDay(dayEntity.isCupDay());
         day.setPresent(dayEntity.isPresent());
 
         return day;
     }
-
-//    public List<Match> descriptionOfTourToMatches(List<String> descriptionOfTour) {
-//        List<Match> matches = new ArrayList<>();
-//        String deliver = "-";
-//
-//        for(String s : descriptionOfTour){
-//            String[] homeGuest = s.split(deliver);
-//
-//            Match m = new Match();
-//            m.setHome(teamApi.findByName(homeGuest[0]));
-//            m.setAway(teamApi.findByName(homeGuest[1]));
-//            m.setStadium(m.getHome().getStadium());
-//            m.setScorePlayers(new ArrayList<>());
-//            matches.add(m);
-//        }
-//
-//        return matches;
-//    }
 
     public DayDto dtoToPresentDayRequest(Day presentDay) {
         DayDto dayDto = new DayDto();

@@ -91,7 +91,7 @@ public class CalendarConverter {
     }
 
     private String eventFormer(Day day) {
-        if (!day.isMatch()) {
+        if (!day.isLeagueDay()) {
             return "";
         }
         var response = new StringBuilder();
@@ -104,7 +104,7 @@ public class CalendarConverter {
     }
 
     private String typeFormer(Day day) {
-        if (day.isMatch()) {
+        if (day.isLeagueDay()) {
             return "Russian Premier League";
         }
         return "Train";

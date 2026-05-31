@@ -7,6 +7,7 @@ import ru.sargassov.fmweb.spi.intermediate_spi.TeamIntermediateServiceSpi;
 
 import java.util.ArrayList;
 
+import static java.util.Objects.nonNull;
 import static ru.sargassov.fmweb.constants.TextConstant.DASH_DELIVER;
 
 @Component
@@ -19,6 +20,8 @@ public class MatchConverter {
         var matchDescription = draw.getMatch().split(DASH_DELIVER);
         var homeTeam = teamIntermediateService.findByNameAndUser(matchDescription[0], user);
         var awayTeam = teamIntermediateService.findByNameAndUser(matchDescription[1], user);
+        var leagueDay = nonNull(draw.getLeague());
+        var cupDay = nonNull(draw.getCup());
         match.setUser(user);
         match.setHome(homeTeam);
         match.setAway(awayTeam);
@@ -27,6 +30,8 @@ public class MatchConverter {
         match.setImpossibleMatch(false);
         match.setGoals(new ArrayList<>());
         match.setMatchPassed(false);
+        match.setLeagueDay(leagueDay);
+        match.setCupDay(cupDay);
         return match;
     }
 }

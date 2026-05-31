@@ -53,8 +53,8 @@ public class DayIntermediateService implements DayIntermediateServiceSpi {
     }
 
     @Override
-    public List<Day> loacAllMatchDates() {
-        return repository.loacAllMatchDates(UserHolder.user);
+    public List<Day> loadAllLeagueDates() {
+        return repository.loadAllLeagueDates(UserHolder.user);
     }
 
     @Override
@@ -80,7 +80,7 @@ public class DayIntermediateService implements DayIntermediateServiceSpi {
     @Override
     public boolean isMatchDay() {
         var day = findByPresent();
-        if (!day.isMatch()) {
+        if (!day.isLeagueDay()) {
             return false;
         }
 
@@ -110,6 +110,6 @@ public class DayIntermediateService implements DayIntermediateServiceSpi {
     @Override
     public Boolean getShowCondition() {
         var currentDay = findByPresent();
-        return !currentDay.isMatch();
+        return !currentDay.isLeagueDay();
     }
 }

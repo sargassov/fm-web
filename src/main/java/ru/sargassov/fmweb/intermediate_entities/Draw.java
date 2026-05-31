@@ -5,9 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import ru.sargassov.fmweb.constants.BaseUserEntity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "draw")
@@ -21,4 +19,12 @@ public class Draw extends BaseUserEntity {
 
     @Column(name = "tour_number")
     private Integer tourNumber;
+
+    @ManyToOne
+    @JoinColumn(name = "id_league")
+    private League league;
+
+    @ManyToOne
+    @JoinColumn(name = "id_cup")
+    private Cup cup;
 }

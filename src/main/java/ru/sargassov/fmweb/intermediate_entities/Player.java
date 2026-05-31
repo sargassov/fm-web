@@ -31,17 +31,22 @@ public class Player extends BaseUserEntity {
 
     @Column(name = "natio")
     private String natio;
+
     @Column(name = "gk_able")
     private Integer gkAble;
+
     @Column(name = "def_able")
     private Integer defAble;
+
     @Column(name = "mid_able")
     private Integer midAble;
+
     @Column(name = "forw_able")
     private Integer forwAble;
 
     @Column(name = "captain_able")
     private Integer captainAble;
+
     @Column(name = "number")
     private Integer number;
 

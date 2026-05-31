@@ -8,7 +8,9 @@ import ru.sargassov.fmweb.intermediate_entities.User;
 import java.util.List;
 
 public interface MatchServiceSpi {
-    void loadmatches(User user);
+
+    void loadMatches(User user);
+
     List<PreMatchDto> getPreMatchInfo();
 
     void imitate(DayDto dayDto);

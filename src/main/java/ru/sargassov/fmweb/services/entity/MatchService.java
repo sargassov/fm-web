@@ -3,6 +3,7 @@ package ru.sargassov.fmweb.services.entity;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import ru.sargassov.fmweb.constants.ConstantUtils;
 import ru.sargassov.fmweb.constants.UserHolder;
@@ -41,8 +42,10 @@ public class MatchService implements MatchServiceSpi {
     private MatchConverter matchConverter;
     private GoalIntermediateServiceSpi goalIntermediateService;
     private MatchIntermediateRepository repository;
+
     @Override
-    public void loadmatches(User user) {
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void loadMatches(User user) {
         var drawList = drawIntermediateService.findAllByUser(user);
         var notSavedMatches = new ArrayList<Match>();
         for (var draw : drawList) {
@@ -120,7 +123,7 @@ public class MatchService implements MatchServiceSpi {
     @Override
     public List<PostMatchDto> getPostMatchInfo() {
         var currentDay = dayIntermediateService.findByPresent();
-        if (!currentDay.isMatch()) {
+        if (!currentDay.isLeagueDay()) {
             throw new IllegalStateException("Present day without matches");
         }
 

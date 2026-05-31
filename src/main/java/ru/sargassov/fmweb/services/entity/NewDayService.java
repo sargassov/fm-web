@@ -29,7 +29,7 @@ public class NewDayService implements NewDayServiceSpi {
     @Transactional
     public Boolean createNewDay() {
         var currentDay = dayIntermediateService.findByPresent();
-        if (currentDay.isMatch()) {
+        if (currentDay.isLeagueDay()) {
             var userTeamMatch = currentDay.getUserTeamMatch(UserHolder.user.getUserTeam());
             if (!userTeamMatch.isMatchPassed()) {
                 return false;

@@ -1,8 +1,13 @@
 package ru.sargassov.fmweb.services.entity;
 
 import lombok.AllArgsConstructor;
+import org.springframework.data.annotation.Transient;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 import ru.sargassov.fmweb.converters.DayConverter;
+import ru.sargassov.fmweb.enums.PlayOffStage;
 import ru.sargassov.fmweb.intermediate_entities.*;
 import ru.sargassov.fmweb.entities.DayEntity;
 import ru.sargassov.fmweb.repositories.entity.DayRepository;
@@ -10,8 +15,8 @@ import ru.sargassov.fmweb.spi.intermediate_spi.DayIntermediateServiceSpi;
 import ru.sargassov.fmweb.spi.intermediate_spi.MatchIntermediateServiceSpi;
 import ru.sargassov.fmweb.spi.entity.DayServiceSpi;
 
-import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,7 +28,6 @@ public class DayService implements DayServiceSpi {
     private final DayIntermediateServiceSpi dayIntermediateService;
     private final MatchIntermediateServiceSpi matchIntermediateService;
 
-    @Transactional
     @Override
     public List<DayEntity> findAll(){
         return dayRepository.findAll();
@@ -32,34 +36,61 @@ public class DayService implements DayServiceSpi {
 
     @Override
     public List<Day> getDayIntermediateEntities(User user){
-        return findAll().stream()
+        return dayIntermediateService.save(findAll().stream()
                 .map(de -> dayConverter.getIntermediateEntityFromEntity(de, user))
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()));
     }
 
-
+    @Transactional
     @Override
     public void loadCalendar(User user){
         var calendar = getDayIntermediateEntities(user);
         var dayList = new ArrayList<Day>();
         var matchList = new ArrayList<Match>();
-        int countSheduleTours = 1;
+        int countScheduleLeagueTours = 1;
+        int countScheduleCupTours = 1;
 
         for(Day d : calendar){
-            if(d.isMatch()){
-                var countOfTour = countSheduleTours++;
-                d.setCountOfTour(countOfTour);
-                var currentTourMatches = matchIntermediateService.findByUserAndCountOfTour(user, countOfTour);
+            if(d.isLeagueDay()){
+                var currentTourMatches = matchIntermediateService.findByUserAndCountOfTourAndLeagueDay(user, countScheduleLeagueTours);
+                d.setCountOfTour(countScheduleLeagueTours);
                 d.setMatches(currentTourMatches);
                 for (var currentMatch : currentTourMatches) {
                     currentMatch.setTourDay(d);
                 }
                 matchList.addAll(currentTourMatches);
+                countScheduleLeagueTours++;
             }
+
+            if (d.isCupDay()) {
+                var currentTourMatches = matchIntermediateService.findByUserAndCountOfTourAndCupDay(user, countScheduleCupTours);
+                d.setCountOfTour(countScheduleCupTours);
+                d.setPlayOffStage(definePlayOffStageByCountOfTour(countScheduleCupTours));
+                if (!currentTourMatches.isEmpty()) {
+                    d.setMatches(currentTourMatches);
+                    for (var currentMatch : currentTourMatches) {
+                        currentMatch.setTourDay(d);
+                    }
+                    matchList.addAll(currentTourMatches);
+                }
+                countScheduleCupTours++;
+            }
+
             dayList.add(d);
         }
-        dayIntermediateService.save(dayList);
-        matchIntermediateService.save(matchList);
+    }
+
+    private PlayOffStage definePlayOffStageByCountOfTour(int countOfTour) {
+        if (countOfTour < 3) {
+            return PlayOffStage._1_8_FINAL;
+        } else if (countOfTour < 5) {
+            return PlayOffStage.QUARTERFINAL;
+        } else if (countOfTour < 7) {
+            return PlayOffStage.SEMIFINAL;
+        } else if (countOfTour == 7) {
+            return PlayOffStage.FINAL;
+        }
+        throw new IllegalStateException("Undefined play off stage because count of tour = %s".formatted(countOfTour));
     }
 
 //    @Transactional

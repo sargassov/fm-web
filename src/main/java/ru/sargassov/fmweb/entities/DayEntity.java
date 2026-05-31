@@ -23,6 +23,9 @@ public class DayEntity extends BaseEntity {
     @Column(name = "is_present")
     private boolean isPresent;
 
-    @Column(name = "is_match")
-    private boolean isMatch;
+    @Column(name = "is_league_day")
+    private boolean isLeagueDay;
+
+    @Column(name = "is_cup_day")
+    private boolean isCupDay;
 }

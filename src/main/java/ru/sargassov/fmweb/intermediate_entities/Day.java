@@ -5,6 +5,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Type;
 import ru.sargassov.fmweb.constants.BaseUserEntity;
+import ru.sargassov.fmweb.enums.PlayOffStage;
+import ru.sargassov.fmweb.enums.PositionType;
 import ru.sargassov.fmweb.exceptions.CalendarException;
 
 import javax.persistence.*;
@@ -27,8 +29,15 @@ public class Day extends BaseUserEntity {
     @Column(name = "is_present")
     private boolean isPresent;
 
-    @Column(name = "is_match")
-    private boolean isMatch;
+    @Column(name = "is_league_day")
+    private boolean isLeagueDay;
+
+    @Column(name = "is_cup_day")
+    private boolean isCupDay;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "play_off_stage")
+    private PlayOffStage playOffStage;
 
     @Column(name = "count_of_tour")
     private Integer countOfTour;

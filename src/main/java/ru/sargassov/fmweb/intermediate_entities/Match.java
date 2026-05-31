@@ -36,6 +36,12 @@ public class Match extends BaseUserEntity {
     @Column(name = "impossible_match")
     private boolean impossibleMatch;
 
+    @Column(name = "is_league_day")
+    private boolean isLeagueDay;
+
+    @Column(name = "is_cup_day")
+    private boolean isCupDay;
+
     @Column(name = "count_of_tour")
     private Integer countOfTour;
 
@@ -67,6 +73,4 @@ public class Match extends BaseUserEntity {
                 ", matchPassed=" + matchPassed +
                 '}';
     }
-
-
 }

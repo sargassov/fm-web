@@ -94,7 +94,7 @@ public class CalendarService implements CalendarServiceSpi {
     public IntegerDto getTourParameter() {
         var actualDay = dayIntermediateService.findByPresent();
         var actualLocalDate = actualDay.getDate();
-        var allTourDates = dayIntermediateService.loacAllMatchDates();
+        var allTourDates = dayIntermediateService.loadAllLeagueDates();
 
         var currentTour = allTourDates.stream()
                 .filter(md -> !md.getDate().isBefore(actualLocalDate))

@@ -3,6 +3,7 @@ package ru.sargassov.fmweb.services.entity;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.sargassov.fmweb.constants.UserHolder;
 import ru.sargassov.fmweb.dto.UserData;
 import ru.sargassov.fmweb.spi.entity.*;
@@ -31,24 +32,29 @@ public class GameService implements GameServiceSpi {
 
     @Override
     public void createNewGame(UserData userData) {
-        log.info("GameService.createNewGame");
-        var user = userService.constructNewUser(userData);
-        leagueService.loadRussianLeague(user);
-        cupService.loadRussianCup(user);
-        bankService.loadBanks(user);
-        juniorService.loadYouthList(user);
-        cityService.loadCities(user);
-        stadiumService.loadStadiums(user);
-        sponsorService.loadSponsors(user);
-        teamService.loadTeams(user);
-        placementService.loadPlacements(user);
-        drawService.loadShedule(user);
-        matchService.loadmatches(user);
-        dayService.loadCalendar(user);
-        matrixService.createMatrix(user);
-        userService.setUserTeam(userData, user);
-        cheatService.constructCheats(user);
-        UserHolder.user = user;
+        try {
+            log.info("GameService.createNewGame");
+            var user = userService.constructNewUser(userData);
+            leagueService.loadRussianLeague(user);
+            cupService.loadRussianCup(user);
+            bankService.loadBanks(user);
+            juniorService.loadYouthList(user);
+            cityService.loadCities(user);
+            stadiumService.loadStadiums(user);
+            sponsorService.loadSponsors(user);
+            teamService.loadTeams(user);
+            placementService.loadPlacements(user);
+            drawService.loadLeagueSchedule(user);
+            drawService.loadCupSchedule(user);
+            matchService.loadMatches(user);
+            dayService.loadCalendar(user);
+            matrixService.createMatrix(user);
+            userService.setUserTeam(userData, user);
+            cheatService.constructCheats(user);
+            UserHolder.user = user;
+        } catch (Exception e) {
+            log.error("Exception during creating new game %s".formatted(e.getStackTrace().toString()), e);
+        }
     }
 
     @Override

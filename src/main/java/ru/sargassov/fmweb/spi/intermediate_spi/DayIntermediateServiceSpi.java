@@ -18,7 +18,7 @@ public interface DayIntermediateServiceSpi {
 
     Day findByPresent();
 
-    List<Day> loacAllMatchDates();
+    List<Day> loadAllLeagueDates();
 
     Day getTour(Integer parameter);
 

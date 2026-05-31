@@ -15,7 +15,9 @@ public interface MatchIntermediateServiceSpi {
 
     List<Match> findAllByUser(User user);
 
-    List<Match> findByUserAndCountOfTour(User user, int countOfTour);
+    List<Match> findByUserAndCountOfTourAndLeagueDay(User user, int countOfTour);
+
+    List<Match> findByUserAndCountOfTourAndCupDay(User user, int countOfTour);
 
     void assignTourDayToMatches(User user);
 }

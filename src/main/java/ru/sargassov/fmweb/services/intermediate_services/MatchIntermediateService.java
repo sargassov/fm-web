@@ -35,7 +35,7 @@ public class MatchIntermediateService implements MatchIntermediateServiceSpi {
 
     @Override
     public Match findCurrentMatch(Team homeTeam, Team awayTeam, User user) {
-        return repository.findByHomeAndAwayAndUser(homeTeam, awayTeam, user);
+        return repository.findLeagueMatchesByHomeAndAwayAndUser(homeTeam, awayTeam, user);
     }
 
     @Override
@@ -44,8 +44,13 @@ public class MatchIntermediateService implements MatchIntermediateServiceSpi {
     }
 
     @Override
-    public List<Match> findByUserAndCountOfTour(User user, int countOfTour) {
-        return repository.findByUserAndCountOfTour(user, countOfTour);
+    public List<Match> findByUserAndCountOfTourAndLeagueDay(User user, int countOfTour) {
+        return repository.findByUserIdAndCountOfTourAndLeagueDay(user, countOfTour);
+    }
+
+    @Override
+    public List<Match> findByUserAndCountOfTourAndCupDay(User user, int countOfTour) {
+        return repository.findByUserIdAndCountOfTourAndCupDay(user, countOfTour);
     }
 
     @Override
@@ -55,8 +60,8 @@ public class MatchIntermediateService implements MatchIntermediateServiceSpi {
         var calendar = dayIntermediateService.findByUser(user);
         var matchList = new ArrayList<Match>();
         for (var day : calendar) {
-            if (day.isMatch()) {
-                var allMatchesFromCurrentTour = repository.findByUserAndCountOfTour(user, tourCounter);
+            if (day.isLeagueDay()) {
+                var allMatchesFromCurrentTour = repository.findByUserIdAndCountOfTourAndLeagueDay(user, tourCounter);
                 for (var match : allMatchesFromCurrentTour) {
                     match.setTourDay(day);
                 }
