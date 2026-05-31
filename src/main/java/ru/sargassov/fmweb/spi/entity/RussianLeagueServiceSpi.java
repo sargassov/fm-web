@@ -7,12 +7,15 @@ import ru.sargassov.fmweb.intermediate_entities.User;
 
 import java.util.List;
 
-public interface LeagueServiceSpi {
+public interface RussianLeagueServiceSpi {
 
-   void getRussianLeague(User user);
+   void loadRussianLeague(User user);
 
    LeagueDto getLeagueName();
+
    List<TeamResultDto> loadTeamTable();
 
    List<CortageDto> loadResultMatrix();
+
+
 }

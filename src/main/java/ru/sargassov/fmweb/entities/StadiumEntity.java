@@ -1,19 +1,18 @@
 package ru.sargassov.fmweb.entities;
 
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "stadiums")
-@Data
+@Setter
+@Getter
 @NoArgsConstructor
-public class StadiumEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+public class StadiumEntity extends BaseEntity {
 
     @Column(name = "title")
     private String title;

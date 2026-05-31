@@ -10,11 +10,7 @@ import java.util.List;
 @Table(name = "teams")
 @Data
 @NoArgsConstructor
-public class TeamEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+public class TeamEntity extends BaseEntity {
 
     @Column(name = "name")
     private String name;

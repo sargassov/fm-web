@@ -9,11 +9,7 @@ import javax.persistence.*;
 @Table(name = "banks")
 @Data
 @NoArgsConstructor
-public class BankEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+public class BankEntity extends BaseEntity{
 
     @Column(name = "title")
     private String title;

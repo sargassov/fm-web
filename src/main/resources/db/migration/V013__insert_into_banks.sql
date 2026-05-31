@@ -9,5 +9,3 @@ insert into banks (
     ('Omega Bank',	        4,	          14,	        66,	           1.8,	            85.00),
     ('Air Bank',	        1,	          7,	        34,	           3.2,	            24.00),
     ('TrainsCapitalBank',	3,	          25,	        105,	       1.2,	            80.00);
-
-INSERT INTO leagues (name) VALUES ('Российская Футбольная Премьер Лига');

@@ -9,12 +9,5 @@ import javax.persistence.*;
 @Table(name = "leagues")
 @Data
 @NoArgsConstructor
-public class LeagueEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
-
-    @Column(name = "name")
-    private String name;
+public class LeagueEntity extends BaseChallengeEntity {
 }

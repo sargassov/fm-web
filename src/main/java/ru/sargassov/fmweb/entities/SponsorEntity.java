@@ -9,11 +9,7 @@ import javax.persistence.*;
 @Table(name = "sponsors")
 @Data
 @NoArgsConstructor
-public class SponsorEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+public class SponsorEntity extends BaseEntity {
 
     @Column(name = "name")
     private String name;

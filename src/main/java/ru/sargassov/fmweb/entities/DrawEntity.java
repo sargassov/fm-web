@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Table(name = "draws")
 @Data
 @NoArgsConstructor
-public class DrawEntity {
+public class DrawEntity extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

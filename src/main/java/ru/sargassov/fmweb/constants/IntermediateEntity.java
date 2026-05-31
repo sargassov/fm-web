@@ -36,10 +36,10 @@ public class IntermediateEntity {
             return false;
         }
         var other = (IntermediateEntity) obj;
-        if (this.getId() == null) {
+        if (getId() == null) {
             return other.getId() == null;
         } else {
-            return this.getId().equals(other.getId());
+            return getId().equals(other.getId());
         }
     }
 

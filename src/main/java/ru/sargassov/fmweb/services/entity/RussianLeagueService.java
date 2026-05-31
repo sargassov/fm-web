@@ -9,13 +9,16 @@ import ru.sargassov.fmweb.converters.LeagueConverter;
 import ru.sargassov.fmweb.dto.LeagueDto;
 import ru.sargassov.fmweb.dto.matrix_dto.CortageDto;
 import ru.sargassov.fmweb.dto.team_dtos.TeamResultDto;
+import ru.sargassov.fmweb.exceptions.CupNotFoundException;
 import ru.sargassov.fmweb.exceptions.LeagueNotFoundException;
 import ru.sargassov.fmweb.intermediate_entities.Team;
+import ru.sargassov.fmweb.repositories.entity.CupRepository;
 import ru.sargassov.fmweb.repositories.entity.LeagueRepository;
 import ru.sargassov.fmweb.intermediate_entities.User;
+import ru.sargassov.fmweb.spi.intermediate_spi.CupIntermediateServiceSpi;
 import ru.sargassov.fmweb.spi.intermediate_spi.LeagueIntermediateServiceSpi;
 import ru.sargassov.fmweb.spi.intermediate_spi.TeamIntermediateServiceSpi;
-import ru.sargassov.fmweb.spi.entity.LeagueServiceSpi;
+import ru.sargassov.fmweb.spi.entity.RussianLeagueServiceSpi;
 import ru.sargassov.fmweb.spi.entity.MatrixServiceSpi;
 
 import javax.transaction.Transactional;
@@ -27,21 +30,21 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 @Slf4j
-public class LeagueService implements LeagueServiceSpi {
+public class RussianLeagueService implements RussianLeagueServiceSpi {
     private final LeagueRepository leagueRepository;
     private final LeagueIntermediateServiceSpi leagueIntermediateService;
     private final LeagueConverter leagueConverter;
     private final CortageConverter cortageConverter;
     private final MatrixServiceSpi matrixService;
     private final TeamIntermediateServiceSpi teamIntermediateService;
-    private static final long RussianLeagueNumber = 1;
+    private static final long RUSSIAN_LEAGUE_ID = 1L;
 
     @Override
     @Transactional
-    public void getRussianLeague(User user){
+    public void loadRussianLeague(User user){
         log.info("LeagueService.getRussianLeague");
-        var leagueEntity = leagueRepository.findById(RussianLeagueNumber)
-                .orElseThrow(() -> new LeagueNotFoundException(String.format("League '%s' not found", "RussianLeagueNumber")));
+        var leagueEntity = leagueRepository.findById(RUSSIAN_LEAGUE_ID)
+                .orElseThrow(() -> new LeagueNotFoundException(String.format("League '%s' not found", "RussianLeague")));
         var newLeague = leagueConverter.getIntermediateEntityFromEntity(leagueEntity, user);
         leagueIntermediateService.save(newLeague);
     }
@@ -105,9 +108,8 @@ public class LeagueService implements LeagueServiceSpi {
     @Override
     public List<CortageDto> loadResultMatrix() {
         var matrix = matrixService.getActualMatrix();
-        var dtos = matrix.stream()
+        return matrix.stream()
                 .map(cortageConverter::getCortageDtoFromCortage)
                 .collect(Collectors.toList());
-        return dtos;
     }
 }

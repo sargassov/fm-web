@@ -7,7 +7,6 @@ public final class Constant {
         FEBRUARY, MARCH, APRIL, MAY, JUNE
     }
 
-    public static final int DEFAULT_BATCH_SIZE = 100;
     public static final int DEFAULT_STRATEGY_PLACE = -100;
 
     public static int MAX_TIRE_FOR_TRAIN = 50;

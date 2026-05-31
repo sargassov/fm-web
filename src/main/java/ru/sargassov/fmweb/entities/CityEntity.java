@@ -10,11 +10,7 @@ import java.util.List;
 @Table(name = "cities")
 @Data
 @NoArgsConstructor
-public class CityEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+public class CityEntity extends BaseEntity{
 
     @Column(name = "name")
     private String name;

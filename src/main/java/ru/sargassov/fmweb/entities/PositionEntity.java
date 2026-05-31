@@ -1,5 +1,6 @@
 package ru.sargassov.fmweb.entities;
 
+import com.fasterxml.jackson.databind.ser.Serializers;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,11 +10,7 @@ import javax.persistence.*;
 @Table(name = "positions")
 @Data
 @NoArgsConstructor
-public class PositionEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+public class PositionEntity extends BaseEntity {
 
     @Column(name = "title")
     private String title;

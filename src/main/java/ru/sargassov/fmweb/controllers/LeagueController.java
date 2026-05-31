@@ -10,7 +10,7 @@ import ru.sargassov.fmweb.dto.matrix_dto.CortageDto;
 import ru.sargassov.fmweb.dto.player_dtos.PlayerSoftSkillDto;
 import ru.sargassov.fmweb.dto.team_dtos.TeamResultDto;
 import ru.sargassov.fmweb.spi.intermediate_spi.TeamIntermediateServiceSpi;
-import ru.sargassov.fmweb.spi.entity.LeagueServiceSpi;
+import ru.sargassov.fmweb.spi.entity.RussianLeagueServiceSpi;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 @Slf4j
 public class LeagueController {
-    private final LeagueServiceSpi leagueService;
+    private final RussianLeagueServiceSpi leagueService;
     private final TeamIntermediateServiceSpi teamIntermediateService;
 
     @GetMapping("/league/name")

@@ -11,11 +11,7 @@ import java.time.LocalDate;
 @Table(name = "days")
 @Data
 @NoArgsConstructor
-public class DayEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+public class DayEntity extends BaseEntity {
 
     @Column(name = "day")
     @DateTimeFormat(pattern = "dd-MM-yyyy")
